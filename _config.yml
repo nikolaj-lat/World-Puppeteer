@@ -5,11 +5,7 @@ exclude:
   - .claude/rules
   - .claude/skills/orchestrator
   - .claude/skills/reflect
+  - .claude/skills/build-skill
+  - .claude/skills/charts
   - .claude/skills/review-npcs
   - .claude/skills/npc-type-review
-  - .claude/skills/build-skill
-  - .claude/skills/count
-  - .claude/skills/charts
-  - .claude/skills/canon-npcs
-  - .claude/skills/species-rules.md
-  - .claude/skills/name-filter-settings
