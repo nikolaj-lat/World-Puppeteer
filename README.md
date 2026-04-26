@@ -66,7 +66,7 @@ count (size tracking), charts (trigger flowcharts), maps (visual geography), rev
 - (Optional) Gemini API key — for image generation
 
 **To get started:**
-- Clone the World-Puppeteer repository
+- Clone the World-Puppeteer repository: https://github.com/nikolaj-lat/World-Puppeteer
 - Follow `.claude/SETUP.md` for installation steps
 - Open the project in VS Code or Cursor with the Claude Code extension
 - Start a Claude Code session — it reads `.claude/CLAUDE.md` and everything builds itself
