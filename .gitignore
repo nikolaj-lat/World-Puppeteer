@@ -13,5 +13,5 @@ config.json
 .claude/skills/ai-instructions/references/npc-details-reference.md
 .claude/skills/ai-instructions/references/new-npc-reference.md
 .claude/skills/archetypes/references/archetype-overrides.md
-.claude/skills/npcs/references/voice-previews
+.claude/skills/npcs/references/voice-previews-old
 .claude/skills/npcs/references/voice-tags.md
