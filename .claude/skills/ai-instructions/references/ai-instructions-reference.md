@@ -40,7 +40,7 @@ aiInstructions: {
 
 | Task | Editable Keys |
 |------|---------------|
-| `generateStory` | `Character Behavior`, `Style Principles`, `custom` |
+| `generateStory` | `Victory and Downtime`, `Character Behavior`, `Style Principles`, `custom` |
 | `generateInitialStart` | `Opening Structure`, `Style Principles`, `custom` |
 | `generateActionInfo` | `custom` |
 | `generateCharacterBackground` | `prompt`, `custom` |
@@ -61,6 +61,7 @@ Main story narration for game turns.
 
 | Key | Purpose |
 |-----|---------|
+| `Victory and Downtime` | How to handle scene resolution after combat or major story beats — pacing of cooldown, recovery, and transition |
 | `Character Behavior` | How characters act, speak, and interact |
 | `Style Principles` | Writing style, tone, and formatting |
 | `custom` | World-specific additions (speech patterns, magic rules, etc.) |

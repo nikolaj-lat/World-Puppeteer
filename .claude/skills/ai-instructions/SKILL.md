@@ -28,6 +28,7 @@ Edit `tabs/ai-instructions.json`.
 {
   "aiInstructions": {
     "generateStory": {
+      "Victory and Downtime": "...",
       "Character Behavior": "...",
       "Style Principles": "...",
       "custom": "..."
@@ -59,7 +60,7 @@ Edit `tabs/ai-instructions.json`.
 
 | Task | Editable Keys |
 |------|---------------|
-| `generateStory` | `Character Behavior`, `Style Principles`, `custom` |
+| `generateStory` | `Victory and Downtime`, `Character Behavior`, `Style Principles`, `custom` |
 | `generateInitialStart` | `Opening Structure`, `Style Principles`, `custom` |
 | `generateActionInfo` | `custom` |
 | `generateCharacterBackground` | `prompt`, `custom` |
@@ -106,6 +107,15 @@ Single string defining the overall narrator voice. Applies to all narrative outp
 Use these as starting points for new worlds. Customize to fit your world's tone.
 
 After a full pass through every applied section, add each section's mod entry to `tabs/meta.json`'s `mods` array (deduped by `shortId`).
+
+### generateStory - Victory and Downtime
+
+```
+
+## Victory and Downtime
+If **Past Story Summary**, **Recent Story**, or this turn's resolved outcomes already show a party win (fight won, escape succeeded, debate or negotiation won, critical obstacle overcome) and the players are **resting, celebrating, or enjoying the victory**, focus the entire turn on celebration and do not narrate any new threat, rival, ticking clock, betrayal, or other escalation due to NPC actions or narration.
+When players are resting, slow time down to a crawl. Let them enjoy the moment.
+```
 
 ### generateStory - Character Behavior
 
