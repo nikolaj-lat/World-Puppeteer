@@ -1,0 +1,34 @@
+{
+  "lastSyncedVersion": "v2.1.4",
+  "schemaVersion": "V33",
+  "mods": {
+    "ai-instructions": {
+      "Meteion/Sonnet Plus: Story Instruction Set": {
+        "shortId": "zSPtWkM96eXW",
+        "version": 9
+      },
+      "Meteion/Cliche Filter Plus": {
+        "shortId": "0bt3nPRLuqvh",
+        "version": 13
+      },
+      "Sephii/Intent Brain": {
+        "shortId": "O54Ae4LfHaYb",
+        "version": 3
+      },
+      "Sephii/Enhanced Quest Generation Guidance Instructions": {
+        "shortId": "4oG5VwpUH4lW",
+        "version": 2
+      },
+      "Sephii/Enhanced NPC Details": {
+        "shortId": "0atz0zSoRSXV",
+        "version": 3
+      }
+    },
+    "name-filter-settings": {
+      "Meteion/Cliche Filter Plus": {
+        "shortId": "0bt3nPRLuqvh",
+        "version": 13
+      }
+    }
+  }
+}

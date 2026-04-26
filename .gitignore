@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# World specific files
+config-backups/
+images/
+stuff/
+tabs/
+config.json
+
+# Internal-only or unpolished reference docs
+.claude/skills/ai-instructions/references/intents-reference.md
+.claude/skills/ai-instructions/references/character-background-defaults.md
+.claude/skills/ai-instructions/references/npc-details-reference.md
+.claude/skills/ai-instructions/references/new-npc-reference.md
+.claude/skills/archetypes/references/archetype-overrides.md
+.claude/skills/npcs/references/voice-previews
+.claude/skills/npcs/references/voice-tags.md

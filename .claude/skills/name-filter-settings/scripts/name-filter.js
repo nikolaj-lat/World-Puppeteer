@@ -1,0 +1,134 @@
+#!/usr/bin/env node
+// Injects default nameFilterSettings into tabs/meta.json, then rebuilds config.json
+const fs = require('fs');
+const path = require('path');
+const { execFileSync } = require('child_process');
+
+const META_PATH = path.resolve(__dirname, '../../../../tabs/meta.json');
+
+const DEFAULT_FILTERS = {
+  "Marcus": { "replacements": ["Alex","Ethan","Jason","Ryan","Owen","Nathaniel","Adrian","Colin","Scott","Blake","Tyler","Brandon","Mitchell","Douglas","Kenneth"] },
+  "Chen": { "replacements": ["Zhang","Wang","Li","Zhao","Liu","Yang","Huang","Wu","Zhou","Xu","Sun","Ma","Zhu","Hu","Guo"] },
+  "Wei": { "replacements": ["Wang","Zhang","Huang","Guo","Shen","Tang","Song","Han","Feng","Jiang","Yao","Qin","Zhu","Hu","Luo"] },
+  "Lin": { "replacements": ["Liu","Yang","Zhou","Zhao","Wu","Xu","Sun","Ma","Zhu","Hu","Guo","He","Gao","Luo","Zheng"] },
+  "Mira": { "replacements": ["Maya","Maria","Myra","Mina","Mara","Mila","Maia","Mena","Mora","Maia","Melia","Mara","Moira","Maris","Mabel"] },
+  "Elara": { "replacements": ["Thea","Cora","Nova","Vega","Astra","Selene","Orion","Lyssa","Cassia","Calista","Daphne","Nerida","Sable","Zara","Cressida"] },
+  "Pip": { "replacements": ["Bramble","Flicker","Nim","Sprout","Wren","Lark","Remy","Trinket","Fidget","Twig","Pebble","Cricket","Thistle","Wisp","Clover"] },
+  "Kira": { "replacements": ["Lena","Anya","Nyla","Isla","Freya","Ruby","Sasha","Zara","Nina","Maya","Vera","Talia","Raina","Sienna","Jade"] },
+  "Malik": { "replacements": ["Amir","Zahir","Khalid","Rashid","Tariq","Jamal","Samir","Karim","Omar","Hassan","Yusuf","Farid","Nasir","Ibrahim","Hakeem"] },
+  "Serra": { "replacements": ["Silvana","Thalia","Rowan","Linnea","Briar","Celeste","Faela","Sorina","Lorelei","Gwendolyn","Elysia","Vivienne","Rosalind","Minerva","Adeline"] },
+  "Vance": { "replacements": ["Dale","Grant","Brock","Travis","Derek","Wade","Kent","Craig","Lance","Brett","Chase","Heath","Todd","Shane","Keith"] },
+  "Kael": { "replacements": ["Roran","Jace","Darin","Kieran","Brennan","Rhys","Soren","Corwin","Eamon","Flynn","Garrick","Leif","Ronan","Talon","Balen","Aldren","Thane","Weylin","Mercer","Hadric","Oren","Lorcan","Calder","Kellan","Orin"] },
+  "Thorne": { "replacements": ["Ashton","Flint","Reed","Wolfe","Drake","Pierce","Rook","Slate","Stone","Rivers","Hayes","Brooks","Vale","Heath","Frost","Marsh","Birch","Shaw","Ward","Locke","Hale","Royce","Crane","Stowe","Harte"] },
+  "Ramirez": { "replacements": ["Torres","Morales","Ortiz","Rivera","Gutierrez","Mendoza","Vargas","Reyes","Flores","Castro","Diaz","Cruz","Ramos","Herrera","Vega"] },
+  "Valerius": { "replacements": ["Aurelius","Severus","Octavius","Tiberius","Septimus","Claudius","Lucius","Quintus","Maximus","Antonius","Flavius","Gaius","Silvanus","Marcellus","Decimus"] },
+  "Lyra": { "replacements": ["Aria","Vera","Iris","Stella","Aurora","Rhea","Nora","Clara","Celia","Dora","Flora","Luna","Rosa","Vita","Petra"] },
+  "Zephyr": { "replacements": ["Winters","Templeton","Gale","Storme","Weatherby","Skye","Fairweather","Windham","Breeze","Cloud","Rainier","Mistral","Gust","Squall","Aeris"] },
+  "Vex": { "replacements": ["Wren","Jinx","Sly","Trick","Rook","Kite","Snare","Glint","Shade","Flick","Dagger","Quirk","Raze","Grift","Gambit","Dash","Blink","Prowl","Scorch","Razor","Sparks","Knack","Pike","Ruse"] },
+  "Voss": { "replacements": ["Beck","Rust","Graf","Knox","Kurtz","Kruger","Steele","Bauer","Wolf","Stark","Braun","Keller","Fischer","Schwarz","Vogel","Brandt","Hagen","Roth","Schafer","Muller","Kraus","Richter","Weber","Holtz","Strauss"] },
+  "Tanaka": { "replacements": ["Yamada","Nakamura","Kobayashi","Suzuki","Takahashi","Watanabe","Ito","Kimura","Hayashi","Shimizu","Yamaguchi","Matsumoto","Inoue","Sasaki","Nomura"] },
+  "Aldric": { "replacements": ["Roderick","Bernard","Edmund","Harold","Gilbert","Walter","Raymond","Geoffrey","Godfrey","Humphrey","Oswald","Reginald","Wilfred","Alfred","Herbert"] },
+  "Alistair": { "replacements": ["Duncan","Malcolm","Angus","Fergus","Hamish","Callum","Lachlan","Ewan","Gregor","Niall","Rory","Fraser","Iain","Tavish","Findlay"] },
+  "Cassie": { "replacements": ["Rosie","Millie","Lucy","Emma","Sophie","Hannah","Katie","Jessie","Molly","Ellie","Abby","Sadie","Gracie","Lily","Poppy"] },
+  "Cedric": { "replacements": ["Edgar","Oswald","Bertram","Aldwin","Godwin","Leofric","Wulfric","Aelfric","Ethelred","Eadric","Sigurd","Dunstan","Cuthbert","Aethelstan","Beorn"] },
+  "Celestia": { "replacements": ["Diana","Helena","Serena","Valeria","Adriana","Marcella","Livia","Cornelia","Octavia","Aurelia","Portia","Lavinia","Calpurnia","Flavia","Lucretia"] },
+  "Elias": { "replacements": ["Amos","Jonas","Tobias","Matthias","Josiah","Micah","Caleb","Ezra","Isaiah","Jeremiah","Nehemiah","Malachi","Zachariah","Obadiah","Hezekiah"] },
+  "Elena": { "replacements": ["Sofia","Lucia","Bianca","Giulia","Chiara","Francesca","Alessia","Valentina","Isabella","Gabriella","Martina","Carlotta","Beatrice","Vittoria","Eleonora"] },
+  "Elowen": { "replacements": ["Branwen","Anwen","Cerys","Hafwen","Seren","Carys","Rhiannon","Nerys","Gwen","Bronwen","Myfanwy","Arianwen","Angharad","Lowri","Catrin"] },
+  "Gareth": { "replacements": ["Garrick","Garrett","Gordon","Graham","Griffin","Gideon","Gregory","Grant","Gavin","Gerald","Gilbert","Geoffrey","Glenn","Glen","Grady"] },
+  "Garret": { "replacements": ["Barrett","Jarrett","Emmett","Corbett","Everett","Beckett","Wyatt","Elliott","Bennett","Barnett","Hewitt","Merritt","Rhett","Garrett","Nolan"] },
+  "Julian": { "replacements": ["Adrian","Damian","Sebastian","Tristan","Lucian","Dorian","Fabian","Florian","Maximilian","Christian","Vincent","Laurent","Dominic","Octavian"] },
+  "Kaelen": { "replacements": ["Declan","Ronan","Cormac","Finnian","Lorcan","Ciaran","Oisin","Tiernan","Conall","Padraig","Eoin","Niall","Riordan","Fiachra","Cillian","Darragh","Cathal","Tadhg","Fergal","Colm","Ruairi","Senan","Donal","Aengus","Bran"] },
+  "Kaelis": { "replacements": ["Tavian","Severin","Corvus","Kyros","Thane","Valen","Zander","Marius","Orion","Caspian","Evander","Lysander","Sorin","Darian","Matthias"] },
+  "Kaelin": { "replacements": ["Aiden","Caden","Braden","Jayden","Hayden","Grayson","Carson","Mason","Colton","Preston","Jackson","Landon","Payton","Camden","Hudson"] },
+  "Kaelith": { "replacements": ["Aldhelm","Malakai","Ezekiel","Azriel","Raziel","Cassian","Dorian","Lysander","Thaddeus","Mordecai","Zephaniah","Balthazar","Zachariah","Obadiah","Jedidiah"] },
+  "Thaddeus": { "replacements": ["Barnabas","Cornelius","Ignatius","Augustus","Ambrose","Percival","Reginald","Bartholomew","Theodosius","Maximilian","Horatio","Octavian","Septimus","Aurelius","Phineas"] },
+  "Theron": { "replacements": ["Demetrius","Evander","Leander","Lysander","Phaedrus","Alexios","Nikos","Stavros","Costas","Petros","Andreas","Dimitrios","Konstantinos","Georgios","Theodoros"] },
+  "Vane": { "replacements": ["Kane","Bane","Dane","Lane","Blaine","Shane","Zane","Wayne","Cain","Thane","Drake","Tate","Wade","Gabe","Nate"] },
+  "Vesper": { "replacements": ["Ember","Raven","Wren","Indigo","Scarlet","Jade","Violet","Hazel","Rowan","Ivy","Sage","Juniper","Willow","Autumn","Winter"] },
+  "Blackwood": { "replacements": ["Ashford","Whitmore","Redfield","Fairfax","Greywood","Hawthorne","Oakley","Grayson","Ashwood","Birchwood","Elmwood","Maplewood","Pinehurst","Cedarwood","Willowbrook"] },
+  "Ironheart": { "replacements": ["Steelworth","Strongbow","Brightblade","Truehammer","Goldenshield","Silverhand","Swiftaxe","Stormforge","Bronzefist","Ironside","Steelheart","Stonefist","Battleborn","Warhammer","Shieldbearer"] },
+  "Moonwhisper": { "replacements": ["Starling","Evenwood","Nightshade","Shadowbrook","Mistwood","Twilight","Duskmantle","Dawnbringer","Starfire","Moonshadow","Nightwind","Darkwater","Shadowmere","Moonbrook","Starfall"] },
+  "Nightbreeze": { "replacements": ["Windcaller","Stormrider","Cloudwalker","Skyborne","Galeforce","Thundersong","Mistwalker","Tempest","Stormchaser","Windrunner","Skywhisper","Cloudstrider","Galewind","Stormsinger","Weathervane"] },
+  "Starweaver": { "replacements": ["Spellwright","Runebinder","Shadowmancer","Lightbringer","Flamewarden","Frostweaver","Stormcaller","Voidwalker","Dreamwalker","Soulbinder","Mindshaper","Spiritseeker","Timekeeper","Fateweaver","Truthseer"] },
+  "Sterlington": { "replacements": ["Worthington","Pennington","Harrington","Covington","Huntington","Remington","Lexington","Kensington","Barrington","Darrington","Carrington","Arlington","Wellington","Paddington","Warrington"] },
+  "Thornefield": { "replacements": ["Briarfield","Rosefield","Stonebridge","Millbrook","Riverdale","Meadowcroft","Woodhaven","Hillside","Fairfield","Greenfield","Clearwater","Brookfield","Ridgemont","Valleyview","Springdale"] },
+  "Thornvale": { "replacements": ["Ravendale","Windermere","Silverdale","Greenhollow","Brookshire","Ashdale","Fernwood","Elmhurst","Oakvale","Pinehurst","Birchdale","Maplewood","Cedarbrook","Willowmere","Hazelwood"] },
+  "Kade": { "replacements": ["Wade","Cole","Seth","Reed","Tate","Miles","Nash","Drew","Cade","Chase","Brett","Flynn","Kyle","Luke","Rhys"] },
+  "Draven": { "replacements": ["Darius","Damien","Dominic","Dante","Dorian","Duncan","Dalton","Devon","Donovan","Declan","Derek","Devin","Desmond","Dimitri","Damon"] },
+  "Lira": { "replacements": ["Nina","Faye","Mina","Tara","Sara","Rina","Lena","Gina","Tina","Dina","Lara","Vera","Zara","Nora","Rosa"] },
+  "Veyra": { "replacements": ["Kyra","Myra","Lydia","Sybil","Freya","Celia","Delia","Thea","Vera","Leia","Keira","Meira","Nayla","Zara","Nyla"] },
+  "Vonn": { "replacements": ["Bran","Ross","Moss","Lars","Kurt","Dirk","Sven","Rolf","Erik","Bjorn","Thor","Leif","Olaf","Gunnar","Ragnar"] },
+  "Dorn": { "replacements": ["Bram","Gorn","Vorn","Torn","Horn","Korn","Morn","Bjorn","Zorn","Thorin","Bron","Krom","Drog","Grom","Throk"] },
+  "Jax": { "replacements": ["Rex","Dex","Fox","Max","Zak","Cade","Jett","Knox","Rax","Pax","Tex","Lex","Hex","Nix"] },
+  "Chan": { "replacements": ["Tan","Lan","Fan","Pan","Shan","Wan","Yan","Ran","Han","Kan","San","Ban","Dan","Man","Van"] },
+  "Patel": { "replacements": ["Shah","Desai","Mehta","Joshi","Gandhi","Kumar","Singh","Gupta","Sharma","Reddy","Rao","Nair","Iyer","Chopra","Kapoor"] },
+  "Nyx": { "replacements": ["Rue","Mab","Eris","Sable","Circe","Hecate","Moira","Ravenna","Lilith","Morrigan","Sibyl","Damara","Ondine","Brenna","Rowena"] },
+  "Kenji": { "replacements": ["Takeshi","Hiroshi","Daichi","Ryota","Shota","Yuto","Haruto","Riku","Souta","Kaito","Akira","Shinji","Masato","Junichi","Satoshi"] },
+  "O'Connor": { "replacements": ["Murphy","Sullivan","Brennan","Donovan","Callahan","Gallagher","Finnegan","Doyle","Keegan","Ryan","Kennedy","Byrne","Flynn","Doherty","Malone"] },
+  "O'Connolly": { "replacements": ["McCarthy","McDermott","McBride","McGrath","McLaughlin","McNamara","McGuire","McGowan","McHugh","McEvoy","McFadden","McCabe","McMahon","McCann","McIntyre"] },
+  "Sato": { "replacements": ["Kato","Mori","Ando","Kudo","Endo","Kondo","Goto","Hara","Ogawa","Fujita","Maeda","Okada","Hasegawa","Murakami","Ishikawa"] },
+  "Santos": { "replacements": ["Silva","Costa","Ferreira","Alves","Pereira","Lima","Gomes","Ribeiro","Carvalho","Rocha","Martins","Sousa","Dias","Fernandes","Oliveira"] },
+  "Ruiz": { "replacements": ["Lopez","Garcia","Martinez","Hernandez","Gonzalez","Perez","Rodriguez","Sanchez","Fernandez","Gomez","Jimenez","Alvarez","Romero","Navarro","Castillo"] },
+  "Lila": { "replacements": ["Bella","Ella","Stella","Della","Nola","Isla","Mila","Tessa","Luna","Nora","Vera","Cora","Thea","Greta","Freya"] },
+  "Carver": { "replacements": ["Fletcher","Cooper","Miller","Carter","Walker","Turner","Baker","Weaver","Taylor","Mason","Potter","Wright","Smith","Thatcher","Brewster"] },
+  "Holt": { "replacements": ["Bolt","Colt","Jolt","Volt","Frost","Moss","Ross","Cross","Blake","Chase","Drake","Grant","Hunt","Reed","Stone"] },
+  "Tessa": { "replacements": ["Becca","Jenna","Lena","Gemma","Megan","Brianna","Leah","Kendra","Jessa","Renna","Willa","Sienna","Kenna","Dessa","Reyna"] },
+  "Lirien": { "replacements": ["Mirelle","Rosalinde","Thessaly","Clarion","Evanthe","Alesara","Niamh","Melisande","Thessaly","Verity","Solene","Auriane","Elspeth","Viveka","Jessamine"] },
+  "Toren": { "replacements": ["Garren","Theron","Aldren","Cassian","Branwen","Kellan","Varden","Alden","Merrick","Dorian","Cedren","Fenwick","Greyson","Aldwin","Warrick"] },
+  "Kaelden": { "replacements": ["Braden","Caden","Hayden","Aiden","Jayden","Camden","Holden","Colden","Warden","Arden","Belden","Elden","Grayden","Ryden","Tyden"] },
+  "Thordrin": { "replacements": ["Thorvald","Torvald","Tormund","Torsten","Thorsten","Baldric","Gunther","Ragnar","Sigurd","Gunnar","Ulfric","Einar","Hakon","Jorund","Vidar"] },
+  "Thorgrim": { "replacements": ["Thorald","Thorstein","Grimwald","Grimnar","Balder","Bardric","Ingvar","Rurik","Hjalmar","Egil","Torkel","Sweyn","Hrolf","Arnulf","Rorik"] },
+  "Bronzebeard": { "replacements": ["Copperforge","Orehand","Anvilheart","Hammerfist","Gemcutter","Stonecarver","Rockbreaker","Coalfury","Tinwright","Brasshammer","Leadstone","Pewteraxe","Silverdelve","Goldvein","Steelshaper"] },
+  "Alaric": { "replacements": ["Theodoric","Emeric","Roderic","Baldric","Gunther","Wulfgar","Sigmund","Osric","Hedric","Leoric","Beric","Garric","Kendric","Merric","Fredric"] },
+  "Caelan": { "replacements": ["Callum","Seamus","Rory","Brendan","Conor","Dermot","Colm","Liam","Tadhg","Donal","Cathal","Shane","Aidan","Ferris","Cillian"] },
+  "Caelum": { "replacements": ["Stellan","Altair","Rigel","Corvus","Pollux","Hadrian","Titus","Atticus","Cato","Lucan","Aurel","Silvius","Regulus","Sorin","Lazarus"] },
+  "Caspian": { "replacements": ["Florian","Lucien","Bastian","Cyprian","Damien","Leander","Percival","Roland","Tristan","Raphael","Dashiell","Emeric","Stellan","Gideon","Remington"] },
+  "Cassius": { "replacements": ["Titus","Brutus","Atticus","Cato","Regulus","Corvinus","Varro","Gallus","Nerva","Aulus","Tullus","Rufus","Crispus","Seneca","Primus"] },
+  "Cyrus": { "replacements": ["Darius","Kaveh","Rostam","Bahram","Farhad","Navid","Arash","Kamran","Jamshid","Shahpur","Hormuz","Parviz","Ardalan","Kasra","Xerxes"] },
+  "Eldric": { "replacements": ["Fredric","Godric","Osric","Wulfric","Kendric","Hedric","Rodric","Leoric","Garrick","Merrick","Derrick","Warwick","Fenwick","Aldwin","Broderic"] },
+  "Quinn": { "replacements": ["Finn","Bryn","Blair","Drew","Reese","Sloane","Darcy","Teagan","Fallon","Tierney","Shea","Casey","Kelly","Rory","Morgan"] },
+  "Silas": { "replacements": ["Ambrose","Felix","Jasper","Rufus","Barnaby","Clement","Edgar","Edmund","Luther","Conrad","Hugo","Cyril","Rupert","Emmett","Phineas"] },
+  "Torin": { "replacements": ["Broderic","Callum","Kellan","Osmund","Halden","Stellan","Brogan","Corbin","Anders","Lennox","Murdoch","Tavish","Finley","Barrett","Cormac"] },
+  "Eira": { "replacements": ["Ffion","Mair","Olwen","Eleri","Bethan","Rhian","Dilys","Enid","Glynis","Tegan","Adara","Brielle","Neve","Arwen","Siân"] },
+  "Vespera": { "replacements": ["Isabeau","Solenne","Calantha","Lysandra","Amaranth","Thessaly","Elodie","Corisande","Fiora","Orianna","Celestine","Eulalia","Ondine","Althea","Bellamy"] },
+  " with practiced efficiency": { "replacements": [""] },
+  " with deliberate precision": { "replacements": [""] },
+  " with practiced ease": { "replacements": [""] },
+  "protocol": { "replacements": ["procedure","method","process","system","routine","guideline","standard","policy","approach","practice","technique","strategy","framework","scheme","plan"] },
+  "protocols": { "replacements": ["procedures","methods","processes","systems","routines","guidelines","standards","policies","approaches","practices","techniques","strategies","frameworks","schemes","plans"] },
+  "efficiency": { "replacements": ["speed","effectiveness","skill","proficiency","competence","capability","productivity","performance","expertise","aptitude","ability","mastery","prowess","capacity","facility"] },
+  "practiced": { "replacements": ["skilled","experienced","trained","adept","proficient","versed","seasoned","expert","accomplished","capable","competent","deft","masterful","qualified","veteran"] },
+  "precision": { "replacements": ["accuracy","exactness","care","attention","sharpness","finesse","control","detail","meticulousness","exactitude","correctness","rigor","thoroughness","delicacy","refinement"] },
+  "ease": { "replacements": ["grace","fluidity","smoothness","comfort","confidence","assurance","skill","naturalness","facility","dexterity","poise","elegance","simplicity","effortlessness","readiness"] },
+  "Seraphine": { "replacements": ["Rosalinde","Vivienne","Evangeline","Jessamine","Melisande","Solange","Christabel","Guinevere","Gwendolen","Rosamund","Emmeline","Clementine","Marguerite","Beatrix","Celestine"] },
+  "Isolde": { "replacements": ["Iseult","Elspeth","Gwendolyn","Morgaine","Rowena","Brienne","Alienor","Blanche","Heloise","Mathilde","Philippa","Aveline","Clemence","Genevieve","Yolande"] },
+  "Silverpaw": { "replacements": ["Graypelt","Ironmane","Duskclaw","Stormfang","Ashfur","Coalfoot","Mistcoat","Nightfang","Redmaw","Frostbite","Blacktail","Copperback","Goldeneye","Stonehide","Brindle"] },
+  "Swiftpaw": { "replacements": ["Quickclaw","Fleetfoot","Sharpfang","Keeneye","Surestep","Boldstrike","Longtooth","Darkhowl","Ironjaw","Steelclaw","Roughcoat","Wildmane","Strongjaw","Surefoot","Hardback"] },
+  "sandalwood": { "replacements": ["cedar","pine","juniper","cypress","rosewood","sage","myrrh","amber","musk","incense","woodsmoke","cinnamon","clove","cardamom","vetiver"] },
+  "breath hitches": { "replacements": ["pulse quickens","stomach drops","skin prickles","throat tightens","heart stutters","hands clench","jaw tightens","spine stiffens","eyes widen","muscles tense","grip tightens","mouth goes dry","nerves fire","chest tightens","blood runs cold"] },
+  "breath catches": { "replacements": ["pulse spikes","gut clenches","skin crawls","vision sharpens","heart hammers","fists tighten","teeth clench","body tenses","focus snaps","shoulders lock","hands tremble","composure cracks","throat closes","spine tingles","awareness sharpens"] },
+  "sharp intake of breath": { "replacements": ["involuntary flinch","visible shudder","sudden stillness","reflexive step back","quick blink","sharp look","muttered curse","clenched jaw","startled silence","tightened grip","widened eyes","stiffened posture","caught stare","hard swallow","locked muscles"] },
+  "ozone": { "replacements": ["electricity","petrichor","rain","lightning","metal","bleach","static","copper","antiseptic","chemicals","burnt air","ionized air","sterility","chlorine","heated metal"] }
+};
+
+const meta = JSON.parse(fs.readFileSync(META_PATH, 'utf8'));
+
+if (meta.nameFilterSettings && Object.keys(meta.nameFilterSettings).length > 0) {
+  console.log(`nameFilterSettings already exists with ${Object.keys(meta.nameFilterSettings).length} entries. Skipping.`);
+  process.exit(0);
+}
+
+meta.nameFilterSettings = DEFAULT_FILTERS;
+
+const MOD_ATTRIBUTION = { shortId: "0bt3nPRLuqvh", version: 13 };
+meta.mods = meta.mods || [];
+if (!meta.mods.some(m => m.shortId === MOD_ATTRIBUTION.shortId)) {
+  meta.mods.push(MOD_ATTRIBUTION);
+}
+
+fs.writeFileSync(META_PATH, JSON.stringify(meta, null, 2) + '\n');
+console.log(`Injected ${Object.keys(DEFAULT_FILTERS).length} name filter entries into tabs/meta.json`);
+
+const buildScript = path.resolve(__dirname, '../../../scripts/build.js');
+execFileSync('node', [buildScript], { stdio: 'inherit' });

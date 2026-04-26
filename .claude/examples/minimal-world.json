@@ -1,0 +1,179 @@
+{
+  "configVersion": "V33",
+  "heroesVersion": 33,
+
+  "aiInstructions": {
+    "generateStory": {
+      "Character Behavior": "",
+      "Style Principles": "",
+      "custom": ""
+    },
+    "generateInitialStart": {
+      "Opening Structure": "",
+      "Style Principles": "",
+      "custom": ""
+    },
+    "generateActionInfo": {
+      "custom": ""
+    },
+    "generateCharacterBackground": {
+      "character_profile_generator": "",
+      "character_profile_background": "",
+      "character_profile_appearance": "",
+      "do_not_include": "",
+      "style": "",
+      "structure": "",
+      "context": "",
+      "final_notes": "",
+      "custom": ""
+    },
+    "generateNPCDetails": {
+      "custom": ""
+    },
+    "generateLocationDetails": {
+      "custom": ""
+    },
+    "generateRegionDetails": {
+      "custom": ""
+    },
+    "generateFactionDetails": {
+      "custom": ""
+    },
+    "generateEncounters": {
+      "custom": ""
+    },
+    "ItemGenerationAndUsage": {
+      "custom": ""
+    }
+  },
+  "storySettings": { "worldBackground": "", "questGenerationGuidance": "" },
+  "narratorStyle": "",
+  "worldLore": {},
+  "embeddings": {},
+  "triggers": {},
+
+  "storyStarts": {
+    "Start": {
+      "name": "Start",
+      "description": "",
+      "storyStart": "",
+      "locations": [],
+      "locationAreas": [],
+      "isDefault": true
+    }
+  },
+
+  "abilities": {},
+  "npcTypes": {},
+  "items": {},
+  "realms": {},
+  "regions": {},
+  "locations": {},
+  "factions": {},
+  "npcs": {},
+  "quests": {},
+  "skills": {},
+  "traits": {},
+  "traitCategories": {},
+
+  "premadeCharacters": [],
+  "mods": [],
+  "authorSeeds": {},
+  "characterArchetypes": {},
+  "locationArchetypes": {},
+  "regionArchetypes": {},
+  "encounterElements": {},
+  "randomNames": { "male": [], "female": [] },
+
+  "attributeSettings": {
+    "attributeNames": [],
+    "startingAttributeValue": 0,
+    "startingAttributePoints": 0,
+    "attributeStatModifiers": {},
+    "maxStartingAttribute": 0,
+    "lowAttributeThreshold": 8,
+    "lowAttributeTraits": {},
+    "attributeBonusModifier": 2.5
+  },
+
+  "skillSettings": {
+    "trainingCooldown": 10,
+    "skillXPRewards": { "small": 50, "medium": 100, "large": 150, "huge": 200 },
+    "skillBonusModifier": 1,
+    "xpFromNewSkill": 200,
+    "maxSkillLevel": 999,
+    "maxSkillSuccessLevel": 999,
+    "charXPPerSkillLevel": 100,
+    "baseXPFromSkillUpgrade": 100,
+    "additionalXPRequiredPerSkillLevel": 50,
+    "startingXPToLevelUpSkill": 50,
+    "baseChanceToLearnNewSkill": 1,
+    "skillLearningBonusModifier": 1,
+    "skillTypeDifficultyBonus": {}
+  },
+
+  "locationSettings": {
+    "regionSize": 100,
+    "simpleRadius": 5,
+    "complexRadius": 10,
+    "regionLocationCount": 0,
+    "regionFactionCount": 0,
+    "avgTravelDistance": 40,
+    "minTravelDistance": 20,
+    "newRegionGenerationEnabled": false,
+    "encountersEnabled": false
+  },
+
+  "itemSettings": {
+    "currencyName": "",
+    "itemCategories": ["Consumable"],
+    "itemSlots": [],
+    "startingItems": []
+  },
+
+  "combatSettings": {
+    "minCombatXP": 50,
+    "baseCombatXP": 200,
+    "abilityCooldown": 0,
+    "abilityBonus": 10,
+    "npcDailyHealingAmount": 999,
+    "damageTypes": []
+  },
+
+  "otherSettings": {
+    "startingCharacterLevelUpRequirement": 500,
+    "extraRequiredXPPerCharacterLevel": 100,
+    "maxCharacterLevel": 999,
+    "npcHealthPerLevel": 10,
+    "npcMinHealth": 0
+  },
+
+  "tipSettings": {
+    "tips": [],
+    "tipDisplayEnabled": false,
+    "tipTurnInterval": 5,
+    "tipMinimumTurns": 1,
+    "tipMaximumTurns": 50
+  },
+
+  "resourceSettings": {
+    "health": {
+      "name": "health",
+      "initialValue": 0,
+      "maxValue": 0,
+      "gainPerLevel": 10,
+      "rechargeRate": 1,
+      "restRechargeMultiplier": 1,
+      "color": "#ef4444",
+      "isHealth": true,
+      "usageInstructions": ""
+    }
+  },
+
+  "death": {
+    "permadeath": false,
+    "instructions": ""
+  },
+
+  "nameFilterSettings": {}
+}
