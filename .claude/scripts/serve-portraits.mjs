@@ -7,7 +7,7 @@
  */
 
 import { createServer } from 'node:http';
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir, readFile, mkdir } from 'node:fs/promises';
 import { watch } from 'node:fs';
 import { join, extname, resolve } from 'node:path';
 import { execSync } from 'node:child_process';
@@ -15,6 +15,11 @@ import { execSync } from 'node:child_process';
 const PORT = 3456;
 const ROOT = resolve(process.cwd());
 const IMG_DIR = join(ROOT, 'images', 'generated');
+
+//make sure image folder exist
+try {
+  await mkdir(IMG_DIR, { recursive: true });
+} catch {}
 
 let manifest = {};
 
@@ -450,11 +455,26 @@ const server = createServer(async (req, res) => {
   }
 });
 
+
+//multi-platform browser open thingy (supports mac,windows and *nix)
+function openBrowser(url) {
+  const { platform } = process;
+  let command;
+  if (platform === 'darwin') {
+    command = `open "${url}"`;
+  } else if (platform === 'win32') {
+    command = `start "" "${url}"`;
+  } else {
+    command = `xdg-open "${url}"`;
+  }
+  try {
+    execSync(command);
+  } catch {}
+}
+
 server.listen(PORT, () => {
   console.log(`Portrait picker running at http://localhost:${PORT}`);
   console.log(`Watching ${IMG_DIR} for changes...`);
-  // Open in browser
-  try {
-    execSync(`open http://localhost:${PORT}`);
-  } catch {}
+
+  openBrowser(`http://localhost:${PORT}`);
 });
