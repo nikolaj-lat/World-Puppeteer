@@ -11,6 +11,7 @@ import { readdir, readFile, mkdir } from 'node:fs/promises';
 import { watch } from 'node:fs';
 import { join, extname, resolve } from 'node:path';
 import { execSync } from 'node:child_process';
+import { createHash } from "node:crypto"; //added hashing
 
 const PORT = 3456;
 const ROOT = resolve(process.cwd());
@@ -31,8 +32,11 @@ async function buildManifest() {
     const m = f.match(/^(.+)-(\d{3})\.png$/);
     if (!m) continue;
     const [, name, num] = m;
+	const fullPath = `${IMG_DIR}/${f}`;
+    const buf = await readFile(fullPath);
+	const h = createHash("md5").update(buf).digest("hex"); //simple md5 should be enough
     if (!groups[name]) groups[name] = [];
-    groups[name].push({ file: f, num });
+    groups[name].push({ file: f, num, h }); //added hash to manifest
   }
   // Sort variants within each group
   for (const name of Object.keys(groups)) {
@@ -48,6 +52,7 @@ await buildManifest();
 watch(IMG_DIR, { persistent: true }, () => {
   buildManifest();
 });
+setInterval(buildManifest, 3000);
 
 const MIME = {
   '.html': 'text/html',
@@ -208,7 +213,7 @@ function render() {
         card.oncontextmenu = function(e) { e.preventDefault(); pick(npc, v.num); };
 
         const img = document.createElement('img');
-        img.src = '/images/generated/' + v.file;
+        img.src = '/images/generated/'+v.file+'?v='+v.h;
         img.alt = npc + ' ' + v.num;
         img.loading = 'lazy';
 
@@ -219,7 +224,14 @@ function render() {
         card.appendChild(img);
         card.appendChild(label);
         varContainer.appendChild(card);
-      }
+      }else{
+	    const img = card.querySelector('img');
+	    const nsrc = '/images/generated/'+v.file+'?v='+v.h;
+	    if (img && img.src !== nsrc) {
+		  img.removeAttribute('src');
+		  img.src = nsrc;
+	    }
+	  }
 
       // Apply state
       card.classList.toggle('rejected', ns.rejected.includes(v.num));
@@ -427,7 +439,7 @@ const server = createServer(async (req, res) => {
 
   // Serve index
   if (path === '/' || path === '/index.html') {
-    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.writeHead(200, { 'Content-Type': 'text/html', 'Cache-Control': 'no-cache' });
     res.end(HTML);
     return;
   }
@@ -450,7 +462,7 @@ const server = createServer(async (req, res) => {
     });
     res.end(data);
   } catch {
-    res.writeHead(404);
+    res.writeHead(404, { 'Cache-Control': 'no-cache' });
     res.end('Not found');
   }
 });
