@@ -26,7 +26,7 @@ Edit `tabs/npcs.json`.
 | `level` | Always set - each level adds +1 to damage output (see guidelines below) |
 | `hpMax` | Always set - see HP guidelines below |
 | `known` | Always set to `true` |
-| `voiceTag` | Voice tag for speech synthesis (see [voice-tags reference](references/voice-tags.md)) |
+| `voiceTag` | Voice tag for speech synthesis (see [voice-previews](references/voice-previews/voice-previews.md)) |
 
 ## Conditional Fields
 
