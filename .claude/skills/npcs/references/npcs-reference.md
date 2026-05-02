@@ -19,7 +19,7 @@ interface NPC {
   personality?: string[]          // ✅ Prose descriptions of personality traits
   abilities?: string[]            // ✅ Prose descriptions of abilities
   aliases?: string[]              // ✅ Alternate names/titles matched during dialogue speaker attribution (e.g. "the captain", "Reed")
-  level?: number                  // ⚠️ Calculated from party level if undefined. Each level adds +1 base damage
+  level?: number                  // ⚠️ For premade NPCs, defaults to a 50/50 roll between 1 and 2 — set explicitly for any NPC that should be stronger. Each level adds +1 base damage
   hpMax?: number                  // ⚠️ Calculated from level + tier if undefined
   hpCurrent?: number              // ⚠️ Defaults to hpMax if undefined
   tier?: 'trivial' | 'weak' | 'average' | 'strong' | 'elite' | 'boss' | 'mythic'                  // ✅ Affects HP calculation AND combat intent complexity.
@@ -58,10 +58,10 @@ interface NPC {
 ```typescript
 interface ActiveBuff {
   type: 'resource' | 'resistance' | 'vulnerability' | 'immunity'  // Buff type
-  amount: number                // Buff magnitude, only used for type 'resource': 'health'
+  amount: number                // Buff magnitude, only used for type 'resource' (NPC health)
   duration: number              // Ticks remaining before buff expires
   source: string                // Description of buff source
-  resource: string              // For type 'resource': 'health' (only valid resource for NPCs). Otherwise use ""
+  resource: string              // For type 'resource': the world's health resource — accepts 'health', 'hp', or the configured isHealth resource name. NPCs have no other resources, so any non-health name is ignored. Otherwise use ""
   attribute: string             // Always "" for NPCs (they have no attributes)
   skill: string                 // Always "" for NPCs (they have no skills)
   damageType?: string           // For type 'resistance'|'vulnerability'|'immunity': the damage type as a string
