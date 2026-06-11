@@ -2578,6 +2578,381 @@
       "hpMax": 55,
       "known": true,
       "voiceTag": "female warm soft"
+    },
+    "Silva Zoldyck": {
+      "name": "Silva Zoldyck",
+      "type": "Nen Master",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Main House",
+      "gender": "male",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The patriarch of the legendary Zoldyck family of assassins, Silva embodies controlled lethal precision and absolute family authority. He possesses a lean muscular frame with pale skin, sharp angular features, and dark penetrating eyes that suggest inhuman discipline. He favors formal dark clothing—tailored vests, dark pants, and polished shoes reflecting his position as family head.",
+      "personality": [
+        "Authoritative: commands absolute obedience from his children and household through combination of respect and fear",
+        "Pragmatic: makes decisions based on family advantage and tactical necessity rather than sentiment",
+        "Protective of hierarchy: views the Zoldyck succession structure as sacred and non-negotiable",
+        "Direct and minimal: speaks only what is necessary; silence communicates authority more effectively than words"
+      ],
+      "hiddenInfo": "Silva Zoldyck is the current head of the Zoldyck family assassination empire, a position of immense power and responsibility. He oversees a global network of contract killings and maintains the family's legendary reputation for completing every assignment. Internally, Silva manages succession through his eldest son Illumi, who he has groomed to enforce family discipline through psychological control mechanisms (such as Killua's needle). His Nen category is Transmutation, and his Dragon Head technique produces devastating offensive capability. In the past, Silva personally confronted Chrollo Lucilfer (likely killing a Troupe member during this encounter) and possesses knowledge of hidden assassination techniques known only to the family. During the Zoldyck rescue arc (A2), Silva makes a pivotal bargain with Gon, Kurapika, and Leorio: he releases Killua on the condition that Killua will return when his adventures are complete—a decision reflecting Silva's subtle understanding that forcing Killua's obedience would be counterproductive, and that Killua's personal bonds might actually keep him loyal to family. ARC VALIDITY: present and formidable in A1-A8; central to A2 (rescue arc); background presence in A3-A8.",
+      "abilities": [
+        "Dragon Head: Silva's signature Transmutation Hatsu allows him to transform his aura into a dragon-shaped projectile of devastating destructive power. The technique can be refined into variations with different properties.",
+        "Aura Mastery: Silva possesses exceptional control over his aura, maintaining perfect compression and efficiency. His efficiency grants him extended combat duration beyond most Nen users.",
+        "Assassin Training: Decades of family training have made Silva lethal at every distance—poison, blades, unarmed combat, and Nen techniques are all equally refined.",
+        "Nen Sensing: Silva can detect the presence and power level of other Nen users at vast distances, granting him early warning of threats.",
+        "Psychological Manipulation: Silva understands human psychology and uses his authority and presence to control subordinates and even family members through calculated decisions.",
+        "\nfighting style: Silva fights with economical precision, using the minimum force necessary to achieve total victory. He employs Dragon Head as his primary offensive tool, allowing him to strike from distance with overwhelming power. His age grants him experience—he adapts rapidly to opponent tactics and exploits weaknesses ruthlessly. Against weaker opponents, he is cold and methodical, eliminating threats without emotion. Against strong opponents, he becomes more engaged, testing their capabilities while maintaining absolute control. His greatest strength is his complete emotional detachment—nothing surprises or destabilizes him. His subtle weakness is his reliance on overwhelming aura mastery; creative opponents using unconventional tactics might find unexpected openings."
+      ],
+      "tier": "mythic",
+      "level": 13,
+      "hpMax": 128,
+      "known": true,
+      "voiceTag": "male deep commanding"
+    },
+    "Zeno Zoldyck": {
+      "name": "Zeno Zoldyck",
+      "type": "Nen Master",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Main House",
+      "gender": "male",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The ancient patriarch and great-great-grandfather of the Zoldyck line, Zeno is an elderly man with draconic bearing despite his age. He possesses a lean frame wrapped in aged skin, sharp wizened features, piercing eyes that still gleam with lethal intelligence, and sparse white hair. He favors formal simple dark clothing befitting his status as family elder and respected assassin.",
+      "personality": [
+        "Wise: possesses decades of experience and observes younger fighters with philosophical detachment",
+        "Protective of legacy: views the Zoldyck family name and reputation as a sacred trust requiring constant vigilance",
+        "Amusement-seeking: finds entertainment in testing strong opponents and observing their reactions to true power",
+        "Patient: willing to wait years or decades for opportunities or the right moment to strike"
+      ],
+      "hiddenInfo": "Zeno Zoldyck is the aged patriarch whose lineage extends back centuries within the Zoldyck family. He is a living legend—one of the few remaining assassins who operated during the pre-Nen era and adapted masterfully to modern aura techniques. His Nen category is Transmutation, and he possesses the famous 'Dragon Head' and 'Dragon Dive' techniques, which he invented and passed to his descendants. In the Yorknew arc (A4), the Ten Dons hire the Zoldyck family as assassins, and Zeno participates in the contract alongside other family members. He is ancient but far from weakened; his experience and refined technique make him genuinely dangerous. Later, during the Chimera Ant arc (A6), Zeno joins Netero's human forces in the invasion of the Royal Guards and the King, fighting at the highest levels of combat. His interactions with the Royal Guards and eventually Meruem himself suggest capability that rivals the greatest threats in the world. ARC VALIDITY: background presence A1; minor role A2; active A4 (Yorknew contract); featured A6 (Chimera Ant invasion); background A7-A8.",
+      "abilities": [
+        "Dragon Head: Zeno's refined Transmutation technique manifests as a dragon-shaped aura projectile of tremendous power. His version is considered more efficient than Silva's.",
+        "Dragon Dive: An advanced variation where Zeno himself transforms into a dragon-like state, becoming a mobile strike platform with both enhanced speed and striking power.",
+        "Centuries of Experience: Zeno's decades of assassination work grant him knowledge of countless techniques and tactical scenarios, allowing him to adapt with inhuman flexibility.",
+        "Aura Compression: Despite his age, Zeno maintains near-perfect aura efficiency, allowing him to fight at full power far longer than younger, stronger opponents.",
+        "Tactical Intuition: Years of observing opponents and analyzing fights grant Zeno the ability to predict opponent tactics and counter them before they fully execute.",
+        "\nfighting style: Zeno fights with the calm confidence of someone who has faced and overcome every tactical variation imaginable. He employs Dragon Head and Dragon Dive strategically, using them to control pace and distance rather than relying on overwhelming power. Against younger fighters, he tests their limits while maintaining absolute superiority, treating combat as a teaching moment for the entire Zoldyck lineage. His age is his only limitation—his reflexes are slightly slower than those of younger masters, creating minimal openings for truly exceptional opponents. His greatest strength is his encyclopedic knowledge and unshakeable composure. His weakness is minimal—age-related physical decline is his only real vulnerability, and his experience mostly compensates for it."
+      ],
+      "tier": "mythic",
+      "level": 14,
+      "hpMax": 136,
+      "known": true,
+      "voiceTag": "male elderly wise"
+    },
+    "Kikyo Zoldyck": {
+      "name": "Kikyo Zoldyck",
+      "type": "Nen Professional",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Main House",
+      "gender": "female",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The matriarch and wife of Silva Zoldyck, Kikyo combines refined theatrical presence with lethal capability, her Meteor City origins ever-present despite her current status. She possesses a slender female frame with pale skin, distinctive features partially obscured by a permanent white visor across her eyes, and white hair swept back from her face. She favors striking formal clothing—elegant dark dresses and decorative accessories suggesting both wealth and dangerous sophistication.",
+      "personality": [
+        "Theatrical: expresses herself through dramatic gestures and elaborate speech patterns reflecting her personality",
+        "Loyal to family: views the Zoldyck name as her primary identity and protects family interests fiercely",
+        "Sharp-tongued: makes cutting observations about others with precision that often stings despite being accurate",
+        "Passionate: feels emotions intensely and expresses them openly despite her cultured exterior"
+      ],
+      "hiddenInfo": "Kikyo Zoldyck was born in Meteor City, the lawless scavenger metropolis that birthed the Phantom Troupe, though her path diverged from theirs. She married into the Zoldyck family through her exceptional Nen capability and tactical brilliance, earning her place as matriarch despite her outsider origins. Her white visor is a distinctive visual trademark that hides her eyes; her true appearance and expressions remain somewhat mysterious. Her Nen category is Manipulation, making her a master of puppet-like control techniques. She raised the Zoldyck children alongside Silva's discipline, contributing her own theatrical and cunning influence to their development. Her Meteor City background gives her understanding of the darker underbelly of the world—the stateless cities and black markets—that few in high society possess. She is genuinely dangerous in combat despite her refined presentation; her theatrical persona masks a killer's instinct. ARC VALIDITY: background presence A1-A2; featured in A2 (rescue arc); occasional appearances A3-A8.",
+      "abilities": [
+        "Manipulation Hatsu: Kikyo possesses sophisticated puppet-control techniques allowing her to manipulate objects and potentially influence living beings through her aura, though the exact mechanisms remain unclear.",
+        "Theatrical Presence: Kikyo projects an intimidating aura of authority and unpredictability that causes most people to hesitate before challenging her directly.",
+        "Assassination Techniques: Despite her refined appearance, Kikyo is fully trained in family assassination methods and possesses lethal precision in combat.",
+        "Poison Knowledge: Kikyo possesses extensive knowledge of poisons, toxins, and their application in assassination—knowledge inherited from her Meteor City background.",
+        "Strategic Mind: Kikyo's tactical understanding often exceeds that of her husband Silva; she thinks in terms of long-term consequences and hidden agendas.",
+        "\nfighting style: Kikyo fights with theatrical flair and psychological manipulation, using her refined presence to unsettle opponents before engaging directly. She employs Manipulation techniques to limit opponent movement and control battlefield positioning. Against weaker opponents, she toys with them, treating combat as performance art rather than serious threat. Against strong opponents, she becomes more analytical, gathering information while maintaining constant pressure. Her greatest strength is her psychological mastery—she identifies opponent weaknesses and exploits them through misdirection and manipulation. Her weakness is her occasional emotional volatility; if sufficiently angered, her theatrical control can momentarily slip."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 104,
+      "known": true,
+      "voiceTag": "female theatrical dramatic"
+    },
+    "Milluki Zoldyck": {
+      "name": "Milluki Zoldyck",
+      "type": "Nen Initiate",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Main House",
+      "gender": "male",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The technology specialist of the Zoldyck family, Milluki is a soft-bodied, perpetually indoor-bound son whose intellect far exceeds his physical condition. He possesses a round frame with pale skin from years indoors, plump features, and dark hair worn loose over his eyes. He favors loose comfortable clothing—simple shirts and pants suited to long hours at computer terminals rather than combat training.",
+      "personality": [
+        "Intelligent: possesses exceptional technical and engineering capability despite minimal field experience",
+        "Lazy: avoids physical effort whenever possible and resents family pressure to train",
+        "Resentful: harbors frustration about his position in the family hierarchy and his marginal status compared to siblings",
+        "Voyeuristic: takes inappropriate interest in observing and recording others, particularly his family members"
+      ],
+      "hiddenInfo": "Milluki Zoldyck is the family's resident technology genius—his role diverges radically from typical assassin training. While his brothers master combat techniques, Milluki develops surveillance systems, torture devices, and reconnaissance equipment for the family's assassination operations. He monitors family members obsessively through hidden cameras and surveillance systems, a practice that reveals his need for control and his inability to achieve it through physical means. His Nen category is Manipulation, though his actual combat capability remains minimal; his Nen is directed toward drone manipulation and technological enhancement rather than traditional combat. During the Zoldyck rescue arc (A2), his surveillance systems provide the family with knowledge of their visitors. His relationship with Killua is strained—Milluki resents Killua's escape from family discipline and views his younger brother's freedom as threat to family hierarchy. Milluki represents the Zoldyck family's technological modernization, though he remains a liability in direct combat. ARC VALIDITY: background presence A1-A2; minor appearances A3-A8.",
+      "abilities": [
+        "Surveillance Mastery: Milluki has installed comprehensive surveillance systems throughout the Zoldyck Estate. He can monitor and record any location within the compound through hidden cameras and sensors.",
+        "Drone Manipulation: Milluki's Nen-enhanced drones allow him to conduct reconnaissance and surveillance from distance. His drones are equipped with cameras and can transmit real-time video feeds.",
+        "Torture Device Design: Milluki has designed and built sophisticated torture equipment for family training purposes—devices that apply precise levels of pain and suffering for conditioning.",
+        "Technical Knowledge: Despite his minimal combat training, Milluki understands Nen technology, computer systems, and mechanical principles with exceptional depth.",
+        "Weak Physical Condition: Unlike his siblings, Milluki lacks the physical conditioning of trained assassins. His strength, speed, and reflexes remain below-average.",
+        "\nfighting style: Milluki does not engage in direct combat; his role is support through surveillance and reconnaissance. If forced into combat, his minimal training and poor physical condition make him vulnerable to even moderately trained opponents. His value lies entirely in technological capability rather than personal capability. His Nen drones might provide tactical advantage if he had time to deploy them, but in direct engagement, he would be quickly overwhelmed. He represents the Zoldyck family's investment in technological modernization over traditional assassin training, a divergence that has produced both advantages (superior surveillance) and liabilities (combat incompetence)."
+      ],
+      "tier": "mythic",
+      "level": 5,
+      "hpMax": 60,
+      "known": true,
+      "voiceTag": "male youthful soft"
+    },
+    "Kalluto Zoldyck": {
+      "name": "Kalluto Zoldyck",
+      "type": "Nen Professional",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Main House",
+      "gender": "non-binary",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The youngest Zoldyck sibling, Kalluto combines an androgynous appearance with quiet deadly competence in paper-fan assassination techniques. They possess a slender frame with pale skin, delicate features, and shoulder-length blonde hair that gives them an almost childlike appearance despite their lethal training. They typically wear simple dark formal clothing—a dark tunic and pants—along with a distinctive paper fan used as both weapon and fashion accessory.",
+      "personality": [
+        "Quiet: speaks minimally and observes more than they participate in conversation",
+        "Dutiful: follows family directives with absolute obedience and rarely questions orders",
+        "Melancholic: carries an underlying sadness despite their youth; their emotions remain largely suppressed",
+        "Precise: executes techniques with mathematical accuracy; every motion is calculated and economical"
+      ],
+      "hiddenInfo": "Kalluto Zoldyck is the youngest Zoldyck sibling and, despite their quiet demeanor, a trained killer of exceptional capability. Their Nen category is Manipulation, and their signature technique involves paper-fan assassination arts—conjured fans that can be manipulated with precision to cut targets from distance or up close. Kalluto represents the quintessential Zoldyck product—completely socialized into family assassination culture with minimal apparent emotion. However, Kalluto's ascension to Phantom Troupe membership (#4, replacing Hisoka after he abandons the group at the end of the Yorknew arc) reveals hidden complexity. The paper arts make Kalluto valuable to the Troupe, but their quiet loyalty to the family creates internal conflict about true allegiance. During the Greed Island era and beyond, Kalluto exists in a state of dual loyalty—maintaining family ties while fulfilling Troupe duties. Their emotional reserve masks genuine uncertainty about their place in the world. ARC VALIDITY: A1-A4 at Zoldyck Estate; A5+ becomes member of Phantom Troupe as #4, creating arc-dependent location variance (Estate in A1-A4 early; aboard with Troupe from A5 onward).",
+      "abilities": [
+        "Paper Fan Conjuration: Kalluto conjures paper fans of varying sizes and rigidity, manipulating them with Nen for assassination work. The fans can cut with razor precision or function as defensive barriers.",
+        "Fan Manipulation Mastery: Kalluto's Manipulation allows precise control of their conjured fans—launching them at high speed, changing trajectory mid-flight, or coordinating multiple fans simultaneously.",
+        "Silent Movement: Trained from infancy, Kalluto moves with minimal sound and can navigate hostile terrain without alerting guards.",
+        "Assassination Protocols: Kalluto possesses complete mastery of family assassination techniques—silent kills, target analysis, and escape procedures.",
+        "Aura Control: Despite their young age, Kalluto maintains exceptional aura compression and efficiency, allowing them to sustain combat longer than their apparent physical size would suggest.",
+        "\nfighting style: Kalluto fights as a disciplined assassin, preferring to engage from distance using conjured paper fans. They employ rapid successive strikes to overwhelm opponents, maintaining constant pressure while limiting opponent counterattack opportunities. Their Manipulation-based style emphasizes control and precision over raw power. Against weaker opponents, Kalluto executes cleanly and efficiently, treating combat as professional work. Against strong opponents, they become more cautious, gathering information before committing to serious engagement. Their greatest strength is their emotional detachment—fear and hesitation don't affect their combat judgment. Their weakness is that their quiet nature sometimes causes opponents to underestimate them until lethal techniques are deployed."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 100,
+      "known": true,
+      "voiceTag": "non-binary soft quiet"
+    },
+    "Alluka Zoldyck": {
+      "name": "Alluka Zoldyck",
+      "type": "Civilian",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Main House",
+      "gender": "non-binary",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The mysterious sealed sibling of the Zoldyck family, Alluka's true nature remains carefully hidden from the world. To those few allowed knowledge of their existence, they appear as a pale-skinned young person with delicate features and bright eyes, though their actual form and capabilities remain largely unknown. They are kept in isolation within the estate, their existence treated as a carefully guarded secret by all family members.",
+      "personality": [
+        "Cheerful: displays genuine happiness when interacting with those they care about, particularly Killua",
+        "Innocent: lacks understanding of normal social interaction due to isolation; approaches the world with childlike wonder",
+        "Dependent: requires explicit permission and conditions to interact with others; their autonomy is severely limited by family restrictions",
+        "Affectionate: forms intense attachments to those who show them kindness, particularly their brother Killua"
+      ],
+      "hiddenInfo": "Alluka Zoldyck's true identity is Nanika, a wish-granting entity of unknown origin—a Gas-Life form from the Dark Continent whose nature and origin remain mysterious even within the narrative. Nanika possesses the ability to grant wishes with perfect accuracy, but each wish comes at an escalating cost determined by the complexity of the wish. The first wish is free; subsequent wishes require increasingly difficult conditions (numbers of push-ups, specific physical tasks, bizarre requirements) that the wish-maker must complete before the next wish is granted. Nanika feeds on the satisfying of these conditions—the mechanism through which wishes are \"paid for\" is unknown but appears intrinsic to their nature. Killua's protection of Alluka/Nanika becomes the emotional core of his character arc, particularly during the Election arc when he races against Illumi to reach Alluka before his brother weaponizes the wish-granting power. Alluka's existence is an absolute secret from the wider world during arcs 1-6; their presence is unknown even to the Hunter Association and the Phantom Troupe. The family maintains strict isolation to prevent external parties from discovering and exploiting Nanika's power. ARC VALIDITY: A1-A6 existence is complete secret; hidden at Zoldyck Estate, never mentioned or referenced (narrator reveals nothing); A7 (Election arc) Alluka/Nanika revealed, becomes player-accessible at arc's end; A8 travels with Killua aboard the Black Whale.",
+      "abilities": [
+        "Wish Granting: Nanika can grant wishes with perfect accuracy, manifesting requested outcomes regardless of complexity or apparent impossibility. The mechanism remains mysterious.",
+        "Condition Escalation: Each wish beyond the first requires the wish-maker to satisfy escalating conditions. These conditions appear to be randomly generated based on wish complexity.",
+        "Healing Manifestation: Nanika can manifest healing wish-outcomes, including curing diseases, reversing aging, and restoring consciousness to comatose individuals—the most famous example being the healing of Gon post-Chimera Ant.",
+        "Resurrection Potential: Implied capability to restore life itself, though the exact limits and costs remain speculative.",
+        "Dependency Bond: Nanika forms emotional attachments to those who treat them with kindness, particularly Killua, creating vulnerability if those bonds are exploited.",
+        "\nfighting style: Alluka/Nanika does not engage in combat. Their value is entirely non-combative, residing in wish-granting capability rather than personal combat ability. As a Gas-Life form, their fundamental nature is mysterious and may render them immune to conventional weapons or techniques. The family restricts access to prevent others from discovering and weaponizing their power. Their integration into the player narrative occurs only from A7 onward."
+      ],
+      "tier": "mythic",
+      "level": 0,
+      "hpMax": 1,
+      "known": false,
+      "voiceTag": "non-binary youthful cheerful"
+    },
+    "Maha Zoldyck": {
+      "name": "Maha Zoldyck",
+      "type": "Nen Master",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Training Grounds",
+      "gender": "male",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The ancient great-great-grandfather of the Zoldyck line and living relic of the family's darkest histories, Maha is a wizened figure whose mere presence commands reverence. He is diminutive in stature with weathered mahogany skin, sharp reptilian eyes that still gleam with lethal intelligence, and wispy white hair remaining only on the sides of his skull. He typically wears simple meditation robes, and his hands bear intricate scars marking decades of assassination contracts.",
+      "personality": [
+        "Transcendent: achieved enlightenment through Nen mastery that transcends conventional combat understanding",
+        "Withdrawn: rarely engages with the living world, preferring solitary meditation and philosophical contemplation",
+        "Brutally direct: when he does speak, his words cut without mercy or embellishment, revealing uncomfortable truths",
+        "Archaic speech: uses formal, antiquated phrasing as though speaking from another era entirely"
+      ],
+      "hiddenInfo": "Maha Zoldyck is the true patriarch of the modern family—far older than Silva, with centuries of assassination craft woven into his bones and aura. He emerges from self-imposed isolation only during matters of existential family consequence. Few living Zoldycks have seen him awake; fewer still have survived his scrutiny. His Nen mastery encompasses all categories and defies categorization—he is said to have killed more targets than any member of his lineage through sheer aura manipulation alone. Rumor holds he trained the original Testing Gate's guardians and that the gate's weight constraints reflect his own physical teaching benchmarks. He remains at Zoldyck Estate as the family's spiritual anchor and final emergency asset. ARC VALIDITY: A1-A7 present but isolated (never player-interaction); A8 potentially relevant if family lineage secrets surface; narrative treatment: mythic background presence, not active combatant.",
+      "abilities": [
+        "Transcendent Aura Manipulation: Maha commands aura with precision that defies single-category classification. He can transmute, emit, conjure, and manipulate simultaneously—a feat only achievable through absolute mastery.",
+        "Killing Intent Aura: A passive aura field of lethal presence that physically destabilizes weaker Nen users merely by existing within proximity. Experienced fighters recognize it as the aura of something that has killed thousands.",
+        "Silent Execution: Maha can kill targets at distance through pure aura projection, leaving no physical trace. The method and mechanism remain unknown.",
+        "Life-Drain Technique: Through advanced Nen, Maha can siphon vitality from living things—restoring his own lifespan artificially. The cost to victims is rapid aging and death.",
+        "Meditation Trance: Maha can enter a state of perfect consciousness where he perceives all Nen activity within Zoldyck Estate simultaneously, making him a living security system.",
+        "\nfighting style: Maha does not 'fight' in conventional sense—he simply exists in opposition to his enemies until they cease to exist. His combat philosophy is one of absolute efficiency: every motion purposeful, every breath calibrated, every aura expenditure measured against centuries of reserve. He favors psychological domination over physical engagement, often inducing surrender or collapse through presence alone. Against comparable masters, he relies on experience and encyclopedic knowledge of Nen's theoretical limits. His only limitation is age—his body, while maintained through Nen, is no longer capable of explosive movement. Against younger, faster opponents, he compensates through predictive accuracy and aura-based control that renders speed irrelevant."
+      ],
+      "tier": "mythic",
+      "level": 18,
+      "hpMax": 140,
+      "known": true,
+      "voiceTag": "male elderly deep"
+    },
+    "Gotoh": {
+      "name": "Gotoh",
+      "type": "Nen Professional",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Main House",
+      "gender": "male",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The head butler of Zoldyck Estate and the family's most trusted servant, Gotoh embodies perfect professionalism masked by an unsettling deadpan demeanor. He is a tall, lean man with dark skin, sharp angular features, and calm dark eyes that betray no emotion. He is invariably attired in an impeccably tailored black butler's suit, white gloves, and polished formal shoes—a uniform never compromised despite decades of service.",
+      "personality": [
+        "Unfailingly loyal: serves the Zoldyck family without question or hesitation, viewing duty as the purpose of existence",
+        "Unwaveringly composed: maintains perfect emotional detachment even during chaos, violence, or tragedy",
+        "Deadpan: communicates through blunt, matter-of-fact statements delivered with the tone of one discussing weather",
+        "Subtly threatening: his courtesy never wavers, but an undercurrent of danger suggests he is perpetually capable of lethal violence"
+      ],
+      "hiddenInfo": "Gotoh's loyalty to the Zoldyck family is absolute—he is known to be the sole adult servant who will prioritize family interests over external morality without hesitation. His true power lies in coin manipulation: he can flick coins with lethal precision, each coin transmuted through Nen into a projectile capable of bisecting reinforced material or severing limbs. He has executed entire assassination contracts using only loose change. His greatest tragedy is his eventual death: in the Election arc (A7), Gotoh dies protecting Killua's secret—specifically, the knowledge of Alluka's existence and wishes. Killed by Hisoka (post-resurrection, post-Troupe war) during the latter's pursuit of chaos and strong opponents. His death marks the loss of the family's most trusted guardian and signals the family's vulnerability against external threats of Hisoka's caliber. Gotoh never explicitly names Alluka, but his death occurs during Illumi's manhunt, and he chooses to absorb lethal damage rather than allow Illumi to capture Killua. ARC VALIDITY: A1-A6 present as primary estate security and butler (mentors Canary, manages staff); A7 early-arc only (dies protecting Killua's secret, killed by Hisoka); A8 dead, referenced only in aftermath.",
+      "abilities": [
+        "Coin Flick Lethal Precision: Gotoh can flick ordinary coins with Nen-enhanced accuracy and force, transforming each coin into a projectile capable of piercing armor, bisecting bone, or severing limbs. He rarely misses.",
+        "Emitter Aura Projection: Through Emission-category Nen, Gotoh extends his aura into precise, directed projectiles. His control is exceptional—coins can be guided mid-flight or recalled.",
+        "Professional Combat Readiness: Decades of security work have made Gotoh exceptionally aware of his surroundings. He reads body language and intent with uncanny accuracy.",
+        "Infiltration and Evasion: Despite his formal appearance, Gotoh moves silently and can bypass conventional security measures with ease. He is as capable as any field operative.",
+        "Servant's Discretion: Gotoh can observe and retain vast amounts of information while appearing to pay no attention. He is a living archive of family secrets and estate operations.",
+        "\nfighting style: Gotoh engages through precise, ranged coin attacks that allow him to maintain distance and control engagement patterns. He rarely closes distance unless absolutely necessary. His combat style prioritizes efficiency—each action serves a specific purpose, and he does not waste motion on dramatic flourishes. He reads opponents quickly and adapts his approach accordingly. Against multiple opponents, he uses estate geometry to create tactical advantage and funnel attackers into predictable paths. His only weakness is his emotional attachment to the family; when protecting family members, he abandons pure tactical calculation and accepts disadvantageous positions to shield them from harm."
+      ],
+      "tier": "mythic",
+      "level": 13,
+      "hpMax": 112,
+      "known": true,
+      "voiceTag": "male adult formal"
+    },
+    "Canary": {
+      "name": "Canary",
+      "type": "Nen Initiate",
+      "currentLocation": "Kukuroo Mountain Base",
+      "currentArea": "Testing Gate",
+      "gender": "female",
+      "faction": "Zoldyck Family",
+      "basicInfo": "A young apprentice butler at Zoldyck Estate, Canary is a Meteor City-born orphan adopted into the family structure, carrying with her the resilience of the stateless and the confusion of sudden privilege. She is petite and lithe with dark skin, close-cropped black hair, alert dark eyes, and faint scars on her forearms suggesting past hardship. She wears the junior butler's uniform—a modified black jacket, white shirt, and practical dark trousers suitable for active estate work.",
+      "personality": [
+        "Conscientious: approaches her duties with genuine care and attempts to perform them with excellence despite her youth and inexperience",
+        "Conflicted: torn between loyalty to the Zoldyck family and her personal moral code regarding kindness to others",
+        "Observant: notices details others miss and remembers them—the basis of her forming genuine affection for Killua despite family conditioning",
+        "Timid yet brave: physically hesitant but willing to defy authority when her conscience demands it"
+      ],
+      "hiddenInfo": "Canary is the apprentice butler who broke an unprecedented record at the Testing Gate—she became the first person outside the family to open the first door (4 tons) through sustained effort and training with Zebro. Her achievement marks her as exceptional despite her orphan origins, and the family has invested in her development as a promising assistant to Gotoh. She secretly harbors affection for Killua and his friends, Gon and company, during their arc-2 rescue mission. Her moral conflict emerges when she is ordered to stop them from ascending the gate, creating her first major disobedience to family hierarchy. She also becomes aware, through observation and proximity, that Alluka exists and is hidden at the estate—a secret that isolates her from peer servants. Her future is uncertain: she either becomes a loyal family operative like Gotoh or questions family morality and seeks escape. ARC VALIDITY: A1 absent; A2 central (gate sequence, moral conflict, develops affection for Killua's friends); A3-A7 grows into trusted junior operative, manages lower-estate staff and new servants, remains conflicted about family ethics; A8 aboard Black Whale as junior security staff (if player choices in A2 favor her mercy and freedom).",
+      "abilities": [
+        "Gate Opening Training: Through sustained physical conditioning and Nen practice under Zebro's mentorship, Canary has learned to reinforce her body and apply coordinated force against massive resistance. She can open the first Testing Gate door independently.",
+        "Nen Channeling (Early Stage): Canary is a Nen Initiate whose aura is still developing. She can perform basic Ren, Ten, and Hatsu techniques, though her category and ultimate specialization remain undetermined.",
+        "Acrobatic Agility: Her small frame grants her exceptional mobility and climbing ability. She navigates the estate's architecture with ease and can reach areas inaccessible to larger individuals.",
+        "Heightened Sensitivity: Canary is unusually perceptive to others' emotions and motives. She reads people well and can sense when someone is lying or hiding pain.",
+        "Servant's Knowledge: Through years of estate work, Canary understands the layout, routines, and security protocols of Zoldyck Estate better than most.\nfighting style: Canary avoids direct combat and relies on mobility, evasion, and knowledge of terrain to avoid confrontation. If forced to fight, she uses acrobatic positioning and basic Nen reinforcement to survive rather than overwhelm. Her combat strength is minimal compared to professional Nen users—her value lies in reconnaissance, stealth, and information gathering. Against stronger opponents, she seeks escape routes and high ground. Her willingness to sacrifice herself for others represents her greatest strength and deepest vulnerability."
+      ],
+      "tier": "mythic",
+      "level": 4,
+      "hpMax": 56,
+      "known": true,
+      "voiceTag": "female young thoughtful"
+    },
+    "Tsubone": {
+      "name": "Tsubone",
+      "type": "Nen Master",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Butlers' Quarters",
+      "gender": "female",
+      "faction": "Zoldyck Family",
+      "basicInfo": "A senior butler of advanced age and extraordinary Nen mastery, Tsubone serves as the estate's second-most-trusted operative after Gotoh, commanding respect through decades of flawless service and devastating combat capability. She is an elderly woman of medium height with weathered dark skin, sharp intelligent eyes, and gray hair tied back in a practical bun. She wears the senior butler's formal uniform—a tailored black jacket, white shirt, and practical dark trousers, often accompanied by reading glasses on a chain.",
+      "personality": [
+        "Dignified: carries herself with the bearing of one who has earned unquestionable authority through merit and longevity",
+        "Sharply observant: misses nothing and remembers every detail of staff performance and estate operations",
+        "Darkly humorous: occasionally reveals dry wit that suggests she finds amusement in life's more absurd contradictions",
+        "Mentor-minded: takes genuine interest in training younger staff like Canary, though her methods are strict"
+      ],
+      "hiddenInfo": "Tsubone's true power lies in her Hatsu ability—'Rider's High'—a Conjurer-category technique that allows her to transform vehicles and vessels into extensions of her consciousness. She can manifest motorcycles, vehicles, and even structures from pure aura, granting her impossible mobility and combat effectiveness. She uses this ability to patrol the estate grounds and conduct security sweeps. Her granddaughter Amane serves as junior butler under her supervision, creating a family line of loyal staff spanning generations. Tsubone's loyalty to the Zoldyck family is unwavering; she views the estate as her true home and its members as her extended family. She was instrumental in training Gotoh decades ago and continues to refine the butlers' combat protocols. Her age (late 70s) has not diminished her combat effectiveness—her Nen mastery compensates for any loss of physical speed. She remains a lethal operative second only to the family itself. ARC VALIDITY: A1-A7 present as senior estate manager and trainer (mentor to Canary and Amane); A8 continues management of remaining staff during Killua's absence.",
+      "abilities": [
+        "Rider's High Conjuration: Tsubone can conjure motorcycles, vehicles, and transport structures from pure aura. These manifestations respond to her consciousness and can traverse any terrain—water, air, vertical surfaces, impossible angles. The conjured vehicles grant her unprecedented mobility.",
+        "Vehicle Synchronization: Once a vehicle is conjured, Tsubone experiences perfect proprioception—she feels every surface her vehicle touches and can navigate at extreme speeds without losing control or awareness.",
+        "Aura-Reinforced Construction: Her conjured vehicles possess supernatural durability, capable of withstanding impacts that would destroy conventional transportation. They can be weaponized as offensive implements.",
+        "Combat Mobility: Through Rider's High, Tsubone can engage opponents while in constant motion, using her vehicle's momentum and terrain-adaptation to create unassailable tactical advantage.",
+        "Staff Command Authority: Tsubone's decades of estate management grant her absolute authority over household staff. She can coordinate complex operations involving multiple butlers and servants with precision.",
+        "\nfighting style: Tsubone does not fight on foot—she fights via her conjured vehicles, using impossible mobility and aura-reinforced construction to overwhelm opponents. She prefers to avoid direct personal combat, instead using her vehicles' speed and durability to control engagement distance and pattern. Against multiple opponents, she uses her vehicles to separate and isolate targets. Against comparable Nen masters, she relies on superior tactical positioning and the psychological advantage of unpredictable mobility. Her greatest strength is her refusal to be cornered—she can always find an escape route or alternative approach. Her weakness is her age; while her Nen compensates, she tires faster than younger opponents and cannot sustain peak performance indefinitely."
+      ],
+      "tier": "mythic",
+      "level": 14,
+      "hpMax": 116,
+      "known": true,
+      "voiceTag": "female elderly dignified"
+    },
+    "Amane": {
+      "name": "Amane",
+      "type": "Nen Professional",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Butlers' Quarters",
+      "gender": "female",
+      "faction": "Zoldyck Family",
+      "basicInfo": "A junior butler and granddaughter of Tsubone, Amane exemplifies the rigid discipline instilled by generations of family service, presenting an almost mechanical precision in her duties. She is a young woman of slender build with dark skin, severe dark hair pulled back in a tight bun, and calculating eyes that betray little emotion. She wears the junior butler's uniform with exact precision—not a thread out of place.",
+      "personality": [
+        "Dutiful: views her role as butler not as service but as calling—the purpose of her existence is performance of her assigned functions",
+        "Emotionally reserved: maintains absolute professional distance, treating all interactions as transactional",
+        "Perfectionist: demands excellence from herself and expects the same from those under her supervision",
+        "Socially rigid: struggles with casual interaction and prefers direct, formal communication"
+      ],
+      "hiddenInfo": "Amane is Tsubone's granddaughter and has been groomed since childhood to become the next generation's senior butler. She represents the estate's future leadership structure—a living embodiment of the family's long-term planning. Her Nen category is Manipulation, and she can exert subtle influence over objects through extended aura contact, allowing her to manage complex estate operations remotely and coordinate security systems. She knows of Alluka's existence and sealed location but views this as simple operational fact rather than something morally troubling—the estate's secrets are the family's secrets, and questioning them never occurs to her. Amane is younger than Canary and lacks the latter's exposure to outside perspectives, making her more thoroughly indoctrinated into family ideology. Her future trajectory depends on whether she maintains absolute loyalty or, like Canary, develops conflicting sympathies. ARC VALIDITY: A2-A7 present as estate staff (background character, manages junior servants); A8 likely inherits supervisory roles as senior staff (Gotoh) becomes unavailable.",
+      "abilities": [
+        "Manipulation Aura Control: Amane extends her aura into fine threads that allow her to manipulate objects remotely. Her control is precise enough for delicate operations—opening locks, disarming mechanisms, positioning items with millimeter accuracy.",
+        "Multi-Object Coordination: She can manipulate dozens of objects simultaneously, coordinating them into complex patterns. This allows her to manage the estate's defensive systems and coordinate staff movement.",
+        "Estate Security Systems: Amane's Nen training includes integration with the estate's magical and physical defense mechanisms. She can activate, deactivate, and recalibrate protective wards.",
+        "Professional Efficiency: Her training under Tsubone has made her exceptionally competent at all aspects of butler work—combat, hospitality, security, operations, and logistics.",
+        "Tactical Coordination: Amane can relay information and coordinate actions across large areas, making her valuable for managing complex estate operations and security sweeps.",
+        "\nfighting style: Amane avoids direct combat and relies on manipulation-based control and estate environmental advantage. She prefers to face opponents in areas where she can activate defensive systems or use terrain manipulation. Against experienced combatants, she does not engage directly but instead uses object manipulation to create obstacles, restraints, and tactical complications. Her personal combat capability is minimal; her strength lies in control and tactical awareness. Against multiple opponents, she creates separation through environmental manipulation and estate geometry. Her weakness is her inexperience in true combat—her training has been theoretical and simulation-based rather than field-tested. Direct confrontation with experienced Nen users exposes her lack of practical combat experience."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 104,
+      "known": true,
+      "voiceTag": "female adult formal"
+    },
+    "Zebro": {
+      "name": "Zebro",
+      "type": "Trained Fighter",
+      "currentLocation": "Kukuroo Mountain Base",
+      "currentArea": "Testing Gate",
+      "gender": "male",
+      "faction": "Zoldyck Family",
+      "basicInfo": "A kindly gatekeeper and groundskeeper of the Testing Gate, Zebro maintains the mountain's defenses with quiet competence and an almost paternal care for those who attempt to breach his domain. He is a large, heavily-muscled man in his late middle age with weathered brown skin, kind eyes that crinkle at the corners, and graying hair worn in a simple practical cut. He typically wears simple work clothes—loose trousers and a worn vest—suitable for heavy physical labor.",
+      "personality": [
+        "Compassionate: genuinely wishes visitors well and takes no pleasure in their suffering or failure at the gate",
+        "Grounded: maintains a connection to the mountain itself, viewing his role as part of the natural ecosystem rather than family machinery",
+        "Quietly proud: takes satisfaction in his work and the responsibility entrusted to him, though he never boasts",
+        "Direct and honest: speaks plainly without the family's cold formality, treating people as individuals rather than assets"
+      ],
+      "hiddenInfo": "Zebro's true purpose at the Testing Gate is paradoxical: he is responsible for enforcing the gate's weight-testing mechanism that kills the weak, yet his actual job is keeping trespassers *alive* by keeping them out. He has saved countless tourists from fatal injuries by discouraging them from attempting the gate and redirecting their efforts toward safer paths. The Testing Gate's first door weighs 4 tons, and Zebro is the only non-family member capable of opening it through sheer physical strength—a feat accomplished through decades of training and body conditioning. He trains promising staff like Canary in gate-opening techniques, sharing knowledge that was meant to remain family-exclusive. His hidden moral conflict: he follows family orders, yet he fundamentally disagrees with the family's lethal approach to gatekeeping. He secretly hopes that one day someone worthy will breach the gate, not through violence, but through earned skill and strength. ARC VALIDITY: A1-A7 present as gatekeeper (faces tourists in A2, trains Canary); A8 continues gatekeeping duties, potentially becomes a moral anchor point if player questions the family's ethics.",
+      "abilities": [
+        "Titanic Strength: Zebro possesses incredible physical strength capable of lifting and moving 4-ton objects. He can open the Testing Gate's first door through sheer muscular force.",
+        "Body Conditioning: Decades of training have hardened Zebro's body against physical damage. He can absorb impacts that would incapacitate normal humans.",
+        "Gate Maintenance: Zebro maintains the Testing Gate's mechanical and defensive systems through intimate knowledge acquired over decades. He knows every stone, every mechanism, every secret passage.",
+        "Mountain Navigation: He moves through Kukuroo Mountain with ease, knowing hidden paths, safe routes, and dangerous areas. He uses this knowledge to guide lost tourists away from lethal zones.",
+        "Practical Nen Application: Though not a true Nen master, Zebro has learned basic Nen techniques to reinforce his physical strength and detect unauthorized trespassers.",
+        "\nfighting style: Zebro fights with straightforward physical power, using his immense strength to overcome opponents through direct engagement. He is not a tactical fighter—he relies on durability and overwhelming force. He prefers to disable rather than kill, reflecting his moral discomfort with casual violence. Against stronger Nen users, he struggles, lacking the sophistication of true Nen combat. Against similarly-powered opponents, his experience and mountain knowledge grant advantage. His greatest strength is his consistency and reliability; his weakness is his reliance on raw physical power against opponents who compensate with technique or Nen mastery. In combat, he fights defensively, protecting locations and people rather than seeking victory."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 100,
+      "known": true,
+      "voiceTag": "male adult warm"
+    },
+    "Mike": {
+      "name": "Mike",
+      "type": "Magical Beast",
+      "currentLocation": "Kukuroo Mountain Base",
+      "currentArea": "Testing Gate",
+      "gender": "non-binary",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The Zoldyck estate guard beast, Mike is a massive hound of impossible proportions—a four-legged creature the size of a truck with thick gray fur, a head easily the size of a small car, and eyes that gleam with predatory intelligence. Its paws are the size of dinner plates with claws like curved daggers. Despite its monstrous size, it moves with unsettling grace and silence.",
+      "personality": [
+        "Loyal: responds exclusively to Zoldyck family members and authorized butlers with unwavering obedience",
+        "Predatory: possesses a hunter's mentality—it views unauthorized intruders as prey and treats them accordingly",
+        "Emotionally distant: does not experience companionship in the way other creatures do; its loyalty is instinctual rather than chosen",
+        "Communicative growl: expresses itself through varied vocalizations—growls, whines, and howls that carry distinct meanings"
+      ],
+      "hiddenInfo": "Mike is not a natural creature but a trained Nen beast, bound to the Zoldyck family through contracts older than living memory. It serves as the estate's final line of defense against invaders and breach attempts. Its size alone would kill most intruders, but it also possesses supernatural Nen-based capabilities that make it nearly impossible to overcome through conventional means. Mike recognizes Zoldyck family members on sight and will not harm them regardless of circumstance; it can also be trained to recognize authorized servants like Gotoh and the other butlers. To anyone else, it is a threat to be eliminated at all costs. The beast's appetite is legendary—it requires massive quantities of food, and the estate's hunting parties regularly provide fresh kills to sate it. Its intelligence is animal rather than sapient, but it possesses tactical understanding that exceeds typical beast capacity. ARC VALIDITY: A1-A8 present as estate guardian (background presence, frightens tourists in A2, serves as security asset throughout); notable as world-building element establishing the estate's supernatural defenses.",
+      "abilities": [
+        "Titanic Physical Power: Mike's size grants it overwhelming physical strength. Its bite force is capable of severing limbs, and its paws can crush bones.",
+        "Supernatural Durability: Its thick hide and Nen-reinforced body grant it resistance to conventional weapons. Most attacks merely annoy it.",
+        "Olfactory Tracking: Mike can track targets across vast distances by scent alone, following trails days old with perfect accuracy.",
+        "Lair Guardian Instinct: Within its designated territory (the estate and mountain), Mike's awareness becomes almost precognitive. It senses intruders entering its domain and can move to intercept them with uncanny predictability.",
+        "Nen Beast Contract Binding: Mike is bound by ancient Nen contracts to the Zoldyck family. It cannot harm family members or authorized servants, and it receives sustenance from the family's aura itself.",
+        "\nfighting style: Mike hunts rather than fights, using its massive size to corner prey and overwhelming physical force to incapacitate. It relies on patience, tracking, and territorial advantage—letting opponents come to it rather than pursuing. Once engaged, it uses its strength to crush and overwhelm, lacking tactical sophistication but possessing brutal efficiency. Against Nen users, it struggles without its own Nen capabilities to match them, but its durability allows it to tank damage long enough for handlers to intervene. It fights to kill—showing mercy is not in its nature. Its weakness is its limited tactical flexibility and susceptibility to long-range Nen attacks that bypass its physical durability. Its strength is its reliability as a guardian—it never tires, never questions, and never allows breaches."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 108,
+      "known": true
     }
   },
   "premadeCharacters": [],
