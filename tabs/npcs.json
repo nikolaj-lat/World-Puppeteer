@@ -2024,6 +2024,498 @@
       "hpMax": 128,
       "known": true,
       "voiceTag": "male calm serene"
+    },
+    "Meruem": {
+      "name": "Meruem",
+      "type": "Chimera Ant King",
+      "currentLocation": "East Gorteau Royal Palace",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "The Chimera Ant King born prematurely from a Queen's womb, Meruem is a towering humanoid creature of impossible perfection and devastating power. He possesses a sleek, pale-white chitinous body with an anthropomorphic frame, compound eyes, and an elegant aesthetic suggesting predatory grace combined with regal authority. He wears minimal clothing—primarily high-collared royal vestments befitting his station as supreme monarch.",
+      "personality": [
+        "Intellectually voracious: consumes knowledge and games with singular focus; treats every encounter as a strategic puzzle to master",
+        "Emotionally evolving: begins as an amoral force of nature but transforms through exposure to Komugi and human connection",
+        "Authoritative: commands absolute loyalty from subordinates; expects obedience and efficiency from all subjects",
+        "Pragmatic and direct: speaks with clinical precision; rarely engages in unnecessary verbosity or performative speech"
+      ],
+      "hiddenInfo": "Meruem is the ultimate apex predator born when the Chimera Ant Queen's heteromorphic genetics fused with human DNA consumed during her development. His birth is premature—he kills the Queen upon emergence, consuming her aura and achieving immediately incomprehensible power. His Nen category is Specialist; he possesses aura-synthesis, allowing him to grow stronger by consuming other Nen users' auras, adapting and integrating their techniques into his own power. His transformation is catalyzed by Komugi, a blind Gungi world champion whose mastery of the game system awakens in Meruem an unexpected capacity for human connection and aesthetic appreciation. He falls in love with Gungi, and through Komugi, begins understanding humanity. However, Netero's suicide bombing via the Miniature Rose (a banned human chemical weapon) poisons him with radioactive contamination. Meruem dies blind, his vision destroyed, cradling Komugi as she chooses to die beside him rather than live without him. His final moments represent the arc's thematic pinnacle—even the world's perfect predator discovers something worth dying for. ARC VALIDITY: born and present only in A6 (Chimera Ant arc); dies at arc's end.",
+      "abilities": [
+        "Aura Synthesis: Meruem can consume the auras of other Nen users, absorbing their techniques and adding them permanently to his own arsenal. Each consumption makes him measurably stronger—there is no ceiling to his power growth.",
+        "Nen Mastery Beyond Category: Meruem transcends standard Nen classification; he can employ any technique from any category with perfect fluency, adapting instantly to exploit opponent weaknesses.",
+        "Royal Sense: Meruem perceives the aura of all living things within an enormous radius, detecting their exact locations, power levels, and emotional states. He cannot be surprised.",
+        "Perfect Physical Form: Meruem's body is the ultimate expression of predatory evolution—his speed, strength, and durability are unmatched by any Nen user in the world. He can move at speeds that blur before observers.",
+        "Meruem's Roar: A devastatingly powerful aura projection that causes immediate psychological submission in weak-willed subjects and physical damage in close proximity.",
+        "\nfighting style: Meruem fights with the certainty of absolute dominance, approaching each confrontation as an intellectual puzzle to solve through overwhelming application of power. He integrates new techniques from consumed Nen users seamlessly, adapting his strategy within seconds of encountering unexpected abilities. Against individual opponents, he typically employs only a fraction of his true power, treating the encounter as entertainment or education. Against coordinated teams (such as the Hunter Association's assault), he gradually increases intensity while analyzing their combined tactics. His greatest strength is his unlimited capacity for power growth and perfect adaptability; his weakness emerges only when confronted with human emotion and meaning—Komugi's influence represents the singular force that threatens his dominance by offering him something he never anticipated wanting."
+      ],
+      "tier": "mythic",
+      "level": 20,
+      "hpMax": 180,
+      "known": true,
+      "voiceTag": "male calm authoritative"
+    },
+    "Neferpitou": {
+      "name": "Neferpitou",
+      "type": "Royal Guard",
+      "currentLocation": "East Gorteau Royal Palace",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "One of the King's Royal Guards and the most powerful among them, Neferpitou is a feline-humanoid Chimera Ant of terrifying grace and unsettling playfulness. She possesses an elegant cat-like form with pointed ears, whisker-markings, sharp claws, and an unnervingly beautiful feminine frame. She wears minimal regal attire, moving with the liquid grace of a predatory cat stalking prey.",
+      "personality": [
+        "Devotedly loyal: views the King as the absolute center of existence; all actions motivated by service and protection of Meruem",
+        "Playfully sadistic: finds entertainment in combat and suffering; treats life-or-death situations as games",
+        "Intellectually curious: obsessively studies human behavior and Nen techniques; collects knowledge like others collect treasures",
+        "Mercurial and emotional: mood shifts suddenly from playfulness to terrifying violence; expresses feelings with theatrical intensity"
+      ],
+      "hiddenInfo": "Neferpitou is the first of the three Royal Guards born, and she serves as the King's most trusted subordinate—her loyalty is absolute and pathological, bordering on obsessive. Her Nen category is Specialist. She possesses two devastating abilities: Terpsichora, which allows her to puppeteer bodies by inserting her aura into a corpse or living target, granting her perfect control and multiple simultaneous bodies; and Doctor Blythe, a surgical technique allowing her to manipulate a subject's body at the aura level, repairing damage or altering physiology with god-like precision. She famously uses Doctor Blythe to repair the King's body after Netero's Guanyin Bodhisattva strikes and to resurrect Kite as a Chimera Ant after his defeat. Neferpitou is the NPC who kills Kite, one of the arc's most pivotal moments. She is defeated and killed by the transformed Gon (who sacrifices his future as a Nen user to achieve adult strength) in a battle that represents the series' emotional turning point—Gon's rage at Kite's death overwhelming his fundamental nature. ARC VALIDITY: born and present A6 (Chimera Ant arc); dies mid-to-late A6.",
+      "abilities": [
+        "Terpsichora Puppet Mastery: Neferpitou can insert her aura into corpses or living subjects, achieving perfect puppeteering control over their bodies. She can maintain multiple puppet bodies simultaneously, each operating independently.",
+        "Doctor Blythe Surgical Precision: Neferpitou can manipulate aura at the cellular level, performing god-like surgery on any living organism—healing catastrophic wounds, altering physiology, or reconstructing the dead.",
+        "Surgical Excellence: Neferpitou demonstrates unparalleled medical knowledge and precision, capable of resurrecting the recently deceased or restoring individuals from near-death states.",
+        "En Mastery: Neferpitou's aura field is extraordinarily powerful, extending across vast distances and allowing her to perceive all movement within her radius with perfect accuracy.",
+        "Combat Genius: Neferpitou is a naturally gifted combatant, adapting instantly to opponent tactics and employing optimal strike patterns with predatory instinct.",
+        "\nfighting style: Neferpitou fights with playful cruelty, approaching combat as entertainment rather than serious competition. She combines feline grace with devastating Specialist abilities—using Terpsichora to create multiple attack vectors while maintaining puppeted bodies for reconnaissance or support. Her En allows her to perceive attacks before they manifest, granting near-precognitive defense. She is most dangerous when toying with opponents, gradually increasing intensity only when genuinely challenged. Against Gon's adult transformation, she finally confronts an opponent she cannot manipulate or overwhelm—and her shock at her own mortality marks her final moments. Her greatest strength is her versatility and ability to control multiple bodies; her weakness is her tendency toward arrogance and assumption of victory, which blinds her to genuine threats until they materialize."
+      ],
+      "tier": "mythic",
+      "level": 18,
+      "hpMax": 168,
+      "known": true,
+      "voiceTag": "female calm playful"
+    },
+    "Shaiapouf": {
+      "name": "Shaiapouf",
+      "type": "Royal Guard",
+      "currentLocation": "East Gorteau Royal Palace",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "One of the King's three Royal Guards, Shaiapouf is a butterfly-humanoid Chimera Ant of sublime aesthetic beauty and concealed moral corruption. He possesses gossamer wings of iridescent rainbow hues, a humanoid torso of otherworldly grace, and features suggesting serene beauty. He wears form-fitting royal vestments in pastel colors, adorned with jewels that catch light like his wings.",
+      "personality": [
+        "Aesthetically obsessed: values beauty, harmony, and perfection in all things; finds ugliness and disorder genuinely distressing",
+        "Manipulative deceiver: lies habitually and strategically; believes his deceptions serve greater good by protecting the King from unpleasant truths",
+        "Devoted to the King: framing himself as the King's most loyal guard; will commit heinous acts in the King's supposed interest",
+        "Refined and eloquent: speaks with poetic precision and cultural sophistication; employs flowery language suggesting gentleness masking violence"
+      ],
+      "hiddenInfo": "Shaiapouf is the second Royal Guard born, and he represents the most subtly dangerous threat to the King's sovereignty. His Nen category is Manipulator. He possesses Beelzebub, an ability allowing him to create small scale-clones of himself—miniature butterfly Nen constructs that operate independently and can be deployed for espionage, messaging, or combat support. Shaiapouf's true horror lies in his obsession with controlling the King's perception of reality. He lies constantly to Meruem about external events, concealing information about Gungi and Komugi to prevent the King's emotional attachment (which he perceives as beneath dignity). These lies ultimately protect Gon's life and enable the Hunter invasion—Shaiapouf's deception becomes the arc's greatest irony. He is poisoned alongside Meruem by the Miniature Rose's radiation and dies during the final moments of the arc, still devoted to the King while desperately trying to rationalize why the King's love for Komugi contradicts his own vision of perfection. ARC VALIDITY: born and present A6 (Chimera Ant arc); dies at arc's end.",
+      "abilities": [
+        "Beelzebub Scale Clones: Shaiapouf creates miniature butterfly-scale constructs that operate semi-independently, capable of reconnaissance, messaging, or coordinated combat support. He can create dozens simultaneously.",
+        "Telepathic Communication: Shaiapouf maintains constant telepathic contact with his scale-clones, perceiving through their senses and issuing commands instantaneously.",
+        "Aura Manipulation: Shaiapouf can shape and project his aura with unusual precision, creating illusions, suppressing his presence, or generating false readings of his power level.",
+        "Strategic Deception: Shaiapouf is a master manipulator, capable of constructing elaborate falsehoods and presenting them convincingly even under interrogation or emotional pressure.",
+        "En Extension: Shaiapouf's aura field extends across considerable distances, allowing him to monitor large areas and detect threat approach.",
+        "\nfighting style: Shaiapouf fights with defensive prioritization, using his clones and deception to maintain distance while gathering information about opponent capabilities. He rarely engages in direct combat, preferring to direct clones while he remains hidden or disguised. Against overwhelming power (such as Netero's assault), he adapts by deploying greater numbers of clones and focusing on intelligence gathering and communication with allies. His greatest strength is his network of clones, information advantage, and ability to remain hidden or deceptive even under direct observation; his greatest weakness is his overconfidence in deception and tendency toward philosophical inflexibility—when his beautiful worldview is challenged, he often falters emotionally."
+      ],
+      "tier": "mythic",
+      "level": 17,
+      "hpMax": 160,
+      "known": true,
+      "voiceTag": "male calm refined"
+    },
+    "Menthuthuyoupi": {
+      "name": "Menthuthuyoupi",
+      "type": "Royal Guard",
+      "currentLocation": "East Gorteau Royal Palace",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "The third and final Royal Guard, Menthuthuyoupi is a massive humanoid Chimera Ant of overwhelming physical power and surprising emotional depth. He possesses a bulky, red-skinned humanoid form with pronounced facial features suggesting a cross between human and beast, muscular build rivaling professional wrestlers, and an overall aesthetic of concentrated strength. He wears minimal royal vestments, his physique dominating all visual presence.",
+      "personality": [
+        "Honorably loyal: views the King's will as absolute and pursues his commands with unwavering commitment and surprising dignity",
+        "Rage-prone: anger triggers physical metamorphosis and power surge; his emotions are worn openly and dramatically",
+        "Gradually learning: demonstrates capacity for growth and ethical understanding through repeated interactions; begins questioning blind obedience",
+        "Direct and emotionally transparent: speaks with raw honesty; hides nothing about his feelings or intentions despite their volatility"
+      ],
+      "hiddenInfo": "Menthuthuyoupi is the third Royal Guard born, and notably he possesses no human genes in his composition—he is pure Chimera Ant, which contributes to his alien perspective and occasional difficulty understanding human motivations. His Nen category is Enhancer. He possesses Rage Metamorphosis, an ability allowing him to transform into increasingly powerful forms as his anger intensifies, gaining corresponding increases in strength, speed, and durability. Unlike the other Guards, Menthuthuyoupi demonstrates surprising capacity for learning and ethical growth—he gradually becomes less blindly obedient and more critically thoughtful about the King's behavior. He shows honor in his commitments and surprising respect for worthy opponents. Like Shaiapouf, he is poisoned by the Miniature Rose's radiation alongside Meruem and dies in the final arc moments, though his death comes after he has begun questioning whether Meruem's emotional attachment to Komugi is truly a weakness or perhaps a strength the Guard failed to understand. ARC VALIDITY: born and present A6 (Chimera Ant arc); dies at arc's end.",
+      "abilities": [
+        "Rage Metamorphosis Transformation: Menthuthuyoupi transforms into progressively more powerful forms as his anger increases, with each transformation boosting all physical capabilities. The stronger his rage, the greater his power—there appears to be no upper limit to his transformation capacity.",
+        "Overwhelming Strength: Even in base form, Menthuthuyoupi possesses strength exceeding most Nen Masters. His transformed states approach that of the King himself.",
+        "Aura Enhancement: Menthuthuyoupi reinforces his already-powerful body with concentrated aura, enabling him to execute strikes of devastating force and withstand injuries that would destroy normal organisms.",
+        "Fortitude and Resilience: Menthuthuyoupi demonstrates extraordinary resistance to pain and psychological trauma; even grave injuries do not diminish his combat effectiveness significantly.",
+        "Spiritual Strength: Menthuthuyoupi's aura radiates pure physical power; his presence alone is psychologically intimidating to Nen users of lesser tier.",
+        "\nfighting style: Menthuthuyoupi fights with straightforward brutality, employing overwhelming physical power and allowing his rage to fuel increasingly devastating transformations. He charges into combat with minimal tactical subtlety, relying on raw strength to break through opposition. Against coordinated tactics or multiple opponents, he escalates his rage-form transformations to compensate, becoming progressively more powerful as battle extends. His emotional transparency sometimes costs him—opponents can predict his escalation patterns. His greatest strength is his unlimited capacity for power growth through rage and his surprising ethical flexibility—by arc's end, he begins questioning his own nature; his weakness is his reliance on emotional intensity and occasional inflexibility in approach."
+      ],
+      "tier": "mythic",
+      "level": 17,
+      "hpMax": 160,
+      "known": true,
+      "voiceTag": "male deep aggressive"
+    },
+    "Colt": {
+      "name": "Colt",
+      "type": "Chimera Ant Squadron Leader",
+      "currentLocation": "NGL Interior",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "The first squadron leader born from the Chimera Ant Queen, Colt is a winged humanoid ant with surprising gentleness masking warrior capability. He possesses white/pale chitinous skin, translucent wings reminiscent of insects, and humanoid features that suggest intelligence and careful restraint. He wears minimal clothing, his form suggesting more grace than aggression.",
+      "personality": [
+        "Protective: demonstrates genuine care for younger ants and for the rebirth of Kite; prioritizes safety of vulnerable companions",
+        "Queen-devoted: maintains absolute loyalty to the Chimera Ant Queen's legacy and authority even as the monarchy shifts",
+        "Conflicted about humanity: recognizes human individuality and worth while existing in a species predicated on human consumption",
+        "Soft-spoken and measured: speaks with consideration; avoids aggression except when truly necessary; carries sadness beneath calm exterior"
+      ],
+      "hiddenInfo": "Colt was originally a human child named Kurt before being transformed into a Chimera Ant. He retains a measure of his human consciousness and emotional capacity, making him unique among the Queen's creations. He serves as the first squadron leader born and demonstrates unusual loyalty to the Queen even after her death. Colt's critical role is protecting the larval Kite-rebirth—after Neferpitou kills Kite and uses Doctor Blythe to resurrect him as a Chimera Ant, Kite exists in a vulnerable larval state. Colt instinctively protects this younger ant-child despite the orders of higher-ranking individuals, demonstrating that his human emotional nature persists despite his chimeric transformation. When the Hunters invade, Colt eventually chooses surrender rather than continued violence—one of the few ants to genuinely accept the possibility of human-ant coexistence. ARC VALIDITY: born early in A6 (Chimera Ant arc); survives the arc and is alive into A7+.",
+      "abilities": [
+        "Wing Flight: Colt possesses translucent wings capable of sustained flight, enabling him to traverse terrain quickly and maintain aerial advantage during combat.",
+        "Protective Aura: Colt can extend his aura defensively around others, shielding them from basic attacks or environmental hazards.",
+        "Queen's Command: As the first squadron leader, Colt retains direct communication channels with the Chimera Ant hierarchy and can transmit orders with authority.",
+        "Hybrid Cognition: Colt's combination of human and ant consciousness grants him unique perspective—he can predict human behavior patterns while maintaining ant-level physical capability.",
+        "Maternal Instinct: Colt demonstrates unusual capacity for care-taking and protective behavior, particularly toward younger or vulnerable ants.",
+        "\nfighting style: Colt fights defensively, primarily using his flight to maintain distance and protect rather than engage in aggressive assault. He prefers negotiation and communication to violence, and only fights when protecting others becomes necessary. Against determined opponents, he demonstrates competence but shows reluctance to escalate beyond necessary force. His greatest strength is his unique perspective combining human emotion with ant physiology, and his willingness to challenge orders when they conflict with his protective instincts; his weakness is his unwillingness to commit fully to violence, which limits his effectiveness against opponents willing to show no mercy."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 96,
+      "known": true,
+      "voiceTag": "male calm gentle"
+    },
+    "Zazan": {
+      "name": "Zazan",
+      "type": "Chimera Ant Squadron Leader",
+      "currentLocation": "NGL Interior",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "A scorpion-humanoid Chimera Ant squadron leader with ambitions toward throne and dominion, Zazan embodies predatory elegance and cruel intelligence. She possesses a humanoid upper body with dark exoskeletal plating, a long scorpion-like tail with a venomous stinger, and features suggesting predatory beauty. She wears regal armor and adorns herself with symbols of authority.",
+      "personality": [
+        "Ambitious for power: views the Chimera Ant hierarchy as a ladder to climb; constantly schemes toward increasing her status and authority",
+        "Strategically ruthless: employs any tactic including betrayal and sacrifice if it advances her position",
+        "Commanding presence: demands loyalty through combination of strength and charisma; inspires both fear and respect",
+        "Boastful and theatrical: celebrates victories loudly and dramatically; speaks with arrogance about her future dominion"
+      ],
+      "hiddenInfo": "Zazan is a powerful squadron leader with ambitions that extend beyond serving the King. She maintains a private army of mutant Chimera Ants and harbors plans to claim dominion for herself following the Ant era. After the Chimera Ant arc ends, Zazan survives with her followers intact and relocates to Meteor City, where she establishes a power base and begins claiming territory. She is later killed by Feitan of the Phantom Troupe in a post-arc encounter, suggesting she represents a lingering threat beyond the mainline Ant invasion. Her abilities include the 'Pitcher of Trouble,' an ability generating whirlwind-force attacks of devastating power. During the arc proper, she demonstrates significant threat level and becomes one of the Squadron Leaders encountered by Hunter teams. ARC VALIDITY: born and active throughout A6 (Chimera Ant arc); survives A6; post-arc activities in early A7 (note: killed by Feitan offscreen).",
+      "abilities": [
+        "Pitcher of Trouble Vortex: Zazan can generate whirlwind-force attacks of devastating power, creating tornado-like vortices that shred terrain and nearby targets. She can generate multiple vortices simultaneously.",
+        "Venomous Stinger Strike: Her scorpion tail possesses a venomous stinger capable of injecting lethal toxins directly into living tissue. The venom works rapidly and is often fatal without immediate treatment.",
+        "Exoskeletal Armor: Zazan's chitinous exterior provides natural armor resistant to basic physical trauma and projectile attacks.",
+        "Swarm Command: Zazan maintains control over a personal army of mutant Chimera Ants, capable of coordinating complex group tactics and overwhelming targets through sheer numbers.",
+        "Predatory Instinct: Zazan possesses uncanny ability to read opponent weakness and exploit it ruthlessly; she adapts tactics instantly to counter opposition strategy.",
+        "\nfighting style: Zazan fights with aggressive expansion of power, using her Pitcher of Trouble vortices to control battlefield space while her mutant swarm applies constant pressure from multiple angles. She combines ranged vortex attacks with melee stinger strikes, forcing opponents to manage threats from multiple vectors simultaneously. Against individual opponents, she summons her swarm to overwhelm through attrition. Her greatest strength is her ability to overwhelm through numbers and area-denial vortex attacks; her weakness is her reliance on her swarm—isolated from her forces, she becomes significantly more vulnerable."
+      ],
+      "tier": "mythic",
+      "level": 13,
+      "hpMax": 120,
+      "known": true,
+      "voiceTag": "female bold commanding"
+    },
+    "Cheetu": {
+      "name": "Cheetu",
+      "type": "Chimera Ant Squadron Leader",
+      "currentLocation": "NGL Interior",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "A cheetah-humanoid Chimera Ant squadron leader obsessed with speed and games, Cheetu embodies predatory velocity and juvenile arrogance. He possesses a lean, muscular humanoid form with feline features, spotted markings suggesting his cheetah heritage, and an aesthetic of constant motion. He wears minimal clothing, decorated with speed-themed ornaments.",
+      "personality": [
+        "Speed-obsessed: views speed as the ultimate metric of superiority; constantly seeks faster opponents to test himself against",
+        "Easily bored: loses interest quickly in situations without challenge; requires constant stimulation or grows frustrated",
+        "Arrogantly competitive: believes himself undefeatable due to speed advantage; underestimates non-speed-based tactics",
+        "Playfully vicious: treats combat like a game; speaks in excited, rapid patterns; maintains juvenile excitement even during lethal confrontations"
+      ],
+      "hiddenInfo": "Cheetu is a squadron leader specialized entirely in speed-based combat. His Nen category is Transmutation, and he develops multiple speed-enhancement conjurations. His primary ability creates specialized 'Game Fields' where he establishes rules and speed-based competition parameters, attempting to trap opponents in frameworks where his velocity superiority becomes absolute. However, his obsession with speed and underestimation of non-speed tactics becomes his fatal flaw. When confronted by Silva Zoldyck (Killua's father) during the Hunter invasion, Cheetu discovers that assassination expertise and strategic positioning overcome pure speed. He is killed offscreen during the broader Hunter invasion, defeated by an opponent who valued cunning over velocity. His death represents the arc's broader lesson: raw power advantage does not guarantee victory against superior tactical thinking. ARC VALIDITY: born and active throughout A6 (Chimera Ant arc); dies during Hunter invasion phase of A6.",
+      "abilities": [
+        "Transmutation Speed Enhancement: Cheetu transmutes his aura into kinetic acceleration, enabling movement speeds exceeding normal human perception. He can sustain these speeds for extended periods.",
+        "Conjured Speed Constructs: Cheetu creates specialized conjured devices—speed-amplifying gauntlets, footwear enhancements, or track-based game fields—that extend his velocity advantage.",
+        "Game Field Establishment: Cheetu can establish localized 'games' with speed-based parameters that, once entered, constrain all participants to his rules. Breaking the rules incurs penalties.",
+        "Predatory Reflexes: Cheetu's reaction time matches his movement speed; he perceives and responds to stimuli at accelerated rates compared to standard humans.",
+        "Evasion Mastery: Cheetu's velocity enables him to dodge incoming attacks with minimal effort; he rarely stands in place long enough to suffer direct hits.",
+        "\nfighting style: Cheetu fights with constant motion, using his speed to maintain overwhelming positional advantage and strike from unexpected angles before opponents react. He establishes Game Fields to formalize speed-based competition, assuming his velocity will guarantee victory within his defined parameters. Against multiple opponents, he attempts to separate and neutralize threats in sequence. His greatest strength is his pure speed and the difficulty of tracking his movement; his greatest weakness is his arrogance regarding speed superiority and his tendency to underestimate opponents whose strength lies in stationary positioning, tactics, or assassination expertise rather than velocity."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 112,
+      "known": true,
+      "voiceTag": "male fast playful"
+    },
+    "Leol": {
+      "name": "Leol",
+      "type": "Chimera Ant Squadron Leader",
+      "currentLocation": "NGL Interior",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "A lion-humanoid Chimera Ant squadron leader with DJ sensibilities and a talent for music-based manipulation, Leol is as charming as he is dangerous. He possesses a humanoid form with feline features suggesting leonine royalty, golden-hued coloring, and an aesthetic combining predatory grace with entertainment-focused style. He wears fashionable clothing adorned with musical motifs and carries sound-based weapons.",
+      "personality": [
+        "Charismatically entertaining: views life as performance; naturally draws others toward him through charm and music",
+        "Manipulative trader: exchanges favors and abilities as commodities; views relationships transactionally but maintains veneer of friendship",
+        "Confident showman: performs under pressure without apparent stress; maintains theatrical composure even in life-threatening situations",
+        "Musically analytical: speaks with rhythm and pattern; processes information in melodic frameworks rather than linear logic"
+      ],
+      "hiddenInfo": "Leol is a squadron leader whose Nen category is Conjuration, specializing in ability-borrowing through contractual exchange. His signature ability is 'Rental Pod'—he can temporarily rent other Nen users' Hatsu abilities in exchange for owed favors or debts that must be repaid later. This creates a complex web of borrowed powers and outstanding obligations. Leol maintains a system tracking who owes him what, and he leverages these debts strategically. During the Hunter invasion, he is cornered in the sewers beneath East Gorteau by Morel Mackernasey, a chain-smoking Hunter with Deep Purple smoke constructs. Morel defeats and kills Leol in a one-on-one confrontation, proving that superior fundamental strength and smoke-manipulation mastery overcome ability-borrowing tactics. His death during the arc marks the gradual attrition of squadron leaders as the Hunter assault progresses. ARC VALIDITY: born and active throughout A6 (Chimera Ant arc); dies during Hunter invasion phase of A6.",
+      "abilities": [
+        "Rental Pod Ability Borrowing: Leol can temporarily rent other Nen users' Hatsu abilities for limited duration, paying for use through incurred debts or favors. The borrowed ability functions at roughly 80% of original user's capability.",
+        "Debt Tracking: Leol maintains perfect memory of all agreements and obligations; he can recall exact terms of any contract instantaneously and enforce payment with supernatural certainty.",
+        "Manipulative Negotiation: Leol is exceptionally skilled at negotiating favorable terms and extracting agreements from targets; his charm makes people willing to accept disadvantageous contracts.",
+        "Musical Aura Projection: Leol can infuse his aura with rhythm and melody, creating disorienting sonic effects or subtly influencing emotional states of nearby individuals.",
+        "Entertainment-Based Deception: Leol uses performance and music as cover for tactical repositioning or agreement-making; audiences watching him perform often miss his true intentions.",
+        "\nfighting style: Leol fights using borrowed Hatsu abilities rented from other users, adapting his arsenal constantly based on available rentals and opponent vulnerabilities. He maintains distance and uses entertainment/distraction to create openings for borrowed-ability strikes. Against opponents resistant to his manipulation (like Morel), he lacks sufficient fundamental strength to overcome superior Nen mastery. His greatest strength is his flexibility through ability-borrowing and his manipulative skill in negotiation; his weakness is his reliance on rentals—without available borrowed powers, he becomes significantly less threatening than top-tier combatants."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 104,
+      "known": true,
+      "voiceTag": "male smooth charismatic"
+    },
+    "Ikalgo": {
+      "name": "Ikalgo",
+      "type": "Chimera Ant Soldier",
+      "currentLocation": "East Gorteau Royal Palace",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "An octopus-humanoid Chimera Ant soldier with a sniper's precision and an unexpectedly heroic heart, Ikalgo possesses a form combining humanoid torso with octopus-like tentacles, intelligent eyes reflecting deep thinking, and an aesthetic suggesting both predatory capability and intellectual contemplation. He wears minimal clothing, his form emphasizing the tentacle-based morphology.",
+      "personality": [
+        "Thoughtfully introspective: contemplates morality and purpose; questions the nature of his existence and identity frequently",
+        "Heroically loyal: forms genuine bonds with companions and prioritizes their safety above personal survival",
+        "Strategically analytical: approaches problems methodically; prefers planning to impulsive action",
+        "Haunted by conscience: carries guilt about his nature as a carnivorous predator; seeks redemption through moral action"
+      ],
+      "hiddenInfo": "Ikalgo is a soldier-class Chimera Ant whose Nen category is Emitter. He possesses an unusual ability called 'Fleadom'—he can separate his consciousness from his body and inhabit corpses or freshly-dead bodies, puppeteering them as remote operational units. This grants him tremendous reconnaissance capability and allows him to operate multiple bodies simultaneously. Unlike most ants, Ikalgo develops genuine moral awareness about the nature of predation and begins questioning whether the ant species' treatment of humans as food is ethically defensible. When the Hunters invade, Ikalgo makes a critical choice: he defects and allies with Killua, providing intelligence and assistance despite his formal loyalty to the Chimera Ant Colony. His defection marks a significant turning point—one of the few ants to actively betray the colony in favor of human values. He survives the arc and likely continues into A7+. ARC VALIDITY: born in A6 (Chimera Ant arc); transforms and survives through arc; continues alive in A7+.",
+      "abilities": [
+        "Fleadom Consciousness Transfer: Ikalgo can separate his consciousness from his body and inhabit corpses or recently-deceased beings, achieving perfect puppeteering control. He can transfer between corpses repeatedly.",
+        "Multi-Body Operation: While inhabiting a corpse, Ikalgo can leave his original body independently mobile, effectively operating two bodies simultaneously with shared consciousness.",
+        "Reconnaissance Network: Ikalgo can deploy multiple corpse-bodies as scouts, maintaining perfect sensory awareness through all inhabited vessels simultaneously.",
+        "Tentacle Manipulation: Ikalgo's octopus-like tentacles provide enhanced grasping strength and flexibility, enabling him to climb, manipulate objects, or restrain targets.",
+        "Sniper Precision: Ikalgo demonstrates exceptional accuracy with ranged weapons; his marksmanship rivals professional snipers despite his Nen focus.",
+        "\nfighting style: Ikalgo fights from distance and concealment, using Fleadom to operate corpse-bodies from hidden locations while his true body remains protected. He coordinates multi-body attacks to overwhelm targets from multiple vectors. His moral transformation leads him away from lethal combat against humans—post-defection, he focuses on reconnaissance, support roles, and non-lethal incapacitation rather than killing. His greatest strength is his intelligence-gathering capability and ability to operate multiple bodies simultaneously; his weakness is his reliance on corpses (in locations without nearby dead bodies, his fighting capability diminishes) and his moral constraints once he defects from the Ant colony."
+      ],
+      "tier": "mythic",
+      "level": 9,
+      "hpMax": 88,
+      "known": true,
+      "voiceTag": "male calm thoughtful"
+    },
+    "Meleoron": {
+      "name": "Meleoron",
+      "type": "Chimera Ant Squadron Leader",
+      "currentLocation": "East Gorteau Royal Palace",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "A chameleon-humanoid Chimera Ant squadron leader with chain-smoking habits and surprising pacifist philosophy, Meleoron possesses a form enabling perfect camouflage, reptilian features, and an aesthetic suggesting adaptability. He wears minimal clothing, carrying cigarettes and maintaining constant smoking habit even during critical moments. His form color-shifts constantly to match surroundings.",
+      "personality": [
+        "Pacifistically inclined: prefers negotiation and understanding to violence; seeks non-lethal solutions even in combat situations",
+        "Chemically dependent: maintains chain-smoking habit; uses cigarettes as stress-relief and centering mechanism",
+        "Pragmatically strategic: recognizes reality of situations and adjusts expectations accordingly; plans carefully before commitment",
+        "Darkly philosophical: speaks with acceptance about death and transience; maintains calm perspective even facing existential threats"
+      ],
+      "hiddenInfo": "Meleoron is a squadron leader whose Nen category is Specialist. He possesses two remarkable abilities: Perfect Plan, which grants him complete invisibility to all senses (sight, sound, smell, aura detection) for unlimited duration, and God's Accomplice, which extends his Perfect Plan invisibility to include a partner he's in physical contact with—provided he holds his breath continuously. These abilities make him extraordinarily valuable for reconnaissance and support roles. Meleoron maintains a human foster-father (whose identity and fate remain largely unexplored), representing his unusual connection to humanity despite his predatory nature. When the Hunters mount their invasion, Meleoron recognizes the futility of continued resistance and becomes an unlikely ally to Gon and his companions, using his invisibility abilities to support their infiltration and assault. He survives the arc and continues to A7+, representing one of the most significant examples of ant-human cooperation. ARC VALIDITY: born and active throughout A6 (Chimera Ant arc); defects to support Hunters; survives arc and continues into A7+.",
+      "abilities": [
+        "Perfect Plan Invisibility: Meleoron achieves complete invisibility to all senses—sight, sound, smell, aura perception—for unlimited duration. No Nen user can detect him once activated.",
+        "God's Accomplice Extension: Meleoron can extend his Perfect Plan invisibility to include a partner in continuous physical contact, provided he maintains constant breath-holding. Breaking contact or breathing ends the effect for both participants.",
+        "Chameleon Camouflage: Even without Perfect Plan active, Meleoron can match his coloration to surroundings, enabling exceptional concealment in natural environments.",
+        "Aura Suppression: Meleoron can minimize his aura output to near-undetectable levels, allowing him to bypass casual aura-sensing by weak-willed observers.",
+        "Smoke Perception: Despite his invisibility, Meleoron demonstrates uncanny ability to perceive through smoke or obscuring fog, suggesting his senses function on different perceptual planes.",
+        "\nfighting style: Meleoron avoids direct combat entirely, preferring reconnaissance and support roles enabled by his invisibility abilities. He uses Perfect Plan to scout enemy positions and God's Accomplice to provide invisible assistance to partners engaged in actual combat. Against direct threats, he employs invisibility as escape mechanism rather than combat tactic. His greatest strength is his undetectable nature and ability to guide partners through invisible support; his weakness is his reliance on invisibility—opponents with abilities that bypass sight-based detection (like Shaiapouf's En) can potentially locate him, and his pacifist inclinations limit his willingness to engage in lethal combat."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 104,
+      "known": true,
+      "voiceTag": "male calm contemplative"
+    },
+    "Welfin": {
+      "name": "Welfin",
+      "type": "Chimera Ant Soldier",
+      "currentLocation": "East Gorteau Royal Palace",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Chimera Ant Colony",
+      "basicInfo": "A wolf-humanoid Chimera Ant soldier afflicted with human-origin paranoia and anxiety, Welfin possesses a lupine humanoid form with wolf-like features, nervous energy reflected in his posture, and an aesthetic suggesting predatory capability undermined by psychological fragility. He wears clothing layered for security, moving with constant wariness.",
+      "personality": [
+        "Deeply paranoid: assumes others harbor malicious intent; constantly fears betrayal and conspiracy against himself",
+        "Anxiety-ridden: experiences intense stress responses to perceived threats; his panic often exceeds actual danger level",
+        "Psychologically fragile: his human-origin mind struggles with the cognitive dissonance of his predatory existence",
+        "Obsessively cautious: over-plans and second-guesses decisions; struggles with commitment and action due to perceived risks"
+      ],
+      "hiddenInfo": "Welfin is a soldier-class Chimera Ant whose Nen category is Manipulator. He possesses 'Missileman,' an ability allowing him to fire explosive projectiles from his body. However, his most significant characteristics are his human-origin psychology and his complicated relationship with the colony hierarchy. Welfin carries human memories and emotional patterns that create constant internal conflict—he experiences genuine anxiety and paranoia in ways that pure-born ants don't. He was originally Zaiqahal of Gyro's criminal circle before his transformation into an Ant. Most significantly, Welfin harbors a specific memory: the word 'Komugi,' spoken by a human in his past, creates an inexplicable emotional response. When he encounters the King's obsession with Komugi, this familiarity triggers recognition and eventually contributes to the King's memory recovery following Shaiapouf's deceptions. Welfin's inadvertent betrayal of Shaiapouf's lies—through speaking the name Komugi—becomes one of the arc's pivotal moments, ultimately saving Gon's life. He survives the arc and likely continues toward Meteor City. ARC VALIDITY: born and active throughout A6 (Chimera Ant arc); inadvertently contributes to arc resolution; survives and heads toward Meteor City.",
+      "abilities": [
+        "Missileman Projectile Generation: Welfin can fire explosive projectiles from his body, creating ranged attack capability. The projectiles detonate on impact or on Welfin's command.",
+        "Explosive Aura Manipulation: Welfin can infuse his aura into projectiles, enabling detonation timing control and adjustable blast radius.",
+        "Paranoia-Enhanced Threat Assessment: Welfin's anxiety-driven analysis often identifies genuine threats that casual observers miss, providing occasional tactical advantage through excessive caution.",
+        "Psychological Manipulation Resistance: Welfin's paranoia paradoxically makes him resistant to deception and mental manipulation—he assumes everything he hears is a lie anyway.",
+        "Explosive Demolition: Welfin demonstrates expertise in using his projectiles for environmental destruction and barrier-breaking, enabling tactical terrain alteration.",
+        "\nfighting style: Welfin fights defensively, maintaining distance and using Missileman projectiles for ranged attacks while remaining cautious about approaching opponents. His paranoia causes him to retreat frequently and avoid commitment to sustained engagement. Against overwhelming opponents, he abandons combat entirely in favor of flight. His greatest strength is his range and paranoia-driven threat identification; his weakness is his psychological fragility and unwillingness to sustain combat despite adequate physical capability. His significance lies not in combat but in his accidental contribution to the arc's resolution through his recognition of Komugi's name."
+      ],
+      "tier": "mythic",
+      "level": 9,
+      "hpMax": 88,
+      "known": true,
+      "voiceTag": "male anxious nervous"
+    },
+    "Komugi": {
+      "name": "Komugi",
+      "type": "Civilian",
+      "currentLocation": "East Gorteau Royal Palace",
+      "currentArea": "",
+      "gender": "female",
+      "basicInfo": "The Gungi world champion despite being completely blind, Komugi is a fragile young woman whose vulnerability masks transcendent mastery of a single game. She possesses a thin, delicate frame suggesting physical weakness, blind eyes reflecting inner focus, and simple clothing suggesting poverty and minimal material connection. She moves with careful deliberation, guided by memory and aura sensitivity rather than sight.",
+      "personality": [
+        "Humble and self-effacing: expresses no pride despite world-championship status; constantly defers to others and apologizes unnecessarily",
+        "Emotionally perceptive: despite her blindness, perceives emotional states in others through subtle voice and aura cues",
+        "Dedicated to mastery: possesses singular focus on Gungi perfection; displays unexpected determination within her game",
+        "Tragically fatalistic: accepts her vulnerability and mortality with quiet resignation; holds no expectations beyond survival"
+      ],
+      "hiddenInfo": "Komugi is the world's greatest Gungi player—a feat rendered impossible by her complete blindness, suggesting her mastery transcends normal perception. Her Gungi expertise functions as an unconscious Nen genius manifestation; her game-playing represents the purest expression of strategic brilliance without formal Nen training. She is brought to the King as a game opponent and becomes the singular force capable of establishing emotional connection with Meruem. Through their Gungi games, the King—previously an amoral force of pure predatory instinct—begins developing genuine affection, wonder, and appreciation for beauty and meaning. Komugi reshapes the King's understanding of purpose itself. However, her transformation comes at devastating cost: when Netero's poisoned bomb kills Meruem, Komugi, helpless and dependent on the King, chooses to die beside him rather than survive without him. Her death alongside Meruem represents the arc's emotional pinnacle—even the helpless, fragile human possesses the power to reshape destiny. ARC VALIDITY: A6 featured (Chimera Ant arc only); dies at arc's end.",
+      "abilities": [
+        "Unconscious Nen Genius: Komugi's Gungi mastery represents unconscious Nen manifestation at Master level—her strategic intuition functions as a Specialist ability without formal training.",
+        "Perceptive Intuition: Despite complete blindness, Komugi perceives opponents' intentions and strategies through subtle cues in voice, aura fluctuation, and behavioral patterns.",
+        "Strategic Brilliance: Komugi demonstrates unparalleled capacity for multidimensional strategic thinking, enabling her to predict opponent responses and adapt tactics instantaneously.",
+        "Emotional Perception: Komugi's sensitivity enables her to read emotional states and psychological conditions in others despite her inability to see them.",
+        "Game Transcendence: Komugi's mastery extends beyond mechanical rule-knowledge into the spiritual and philosophical meaning of strategic play.",
+        "\nfighting style: Komugi is entirely non-combatant; she cannot and will not engage in violence. Her strength lies entirely in Gungi—a strategic game that becomes her only significant interaction vector. Her significance emerges through her capacity to reshape others' understanding of purpose, meaning, and connection. Against the King himself, her only weapon is her willingness to play Gungi with absolute authenticity, and this proves more transformative than any Nen technique could be. Her vulnerability is absolute, yet her emotional impact proves immeasurable."
+      ],
+      "tier": "mythic",
+      "level": 1,
+      "hpMax": 20,
+      "known": true,
+      "voiceTag": "female soft gentle"
+    },
+    "Morel Mackernasey": {
+      "name": "Morel Mackernasey",
+      "type": "Nen Master",
+      "currentLocation": "NGL Border Checkpoint",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "A legendary double-star Hunter and mentor figure with chain-smoking habits and calm confidence, Morel is a seasoned veteran of dangerous expeditions. He possesses a large, imposing frame with mature features suggesting years of field experience, weathered skin, and a calm demeanor. He constantly smokes a giant pipe, carrying it even during combat situations with seeming casualness.",
+      "personality": [
+        "Unflappable mentor: maintains composure under extreme pressure; serves as emotional anchor for less-experienced teammates",
+        "Thoughtfully strategic: approaches complex problems through careful analysis rather than impulsive action",
+        "Darkly humorous: uses dry humor to process traumatic situations; maintains perspective through sardonic commentary",
+        "Honorably pragmatic: values competence and dedication; respects worthy opponents regardless of alignment"
+      ],
+      "hiddenInfo": "Morel is a chain-smoking Hunter and double-star specialist known for dangerous expeditions and sea-based exploration. His Nen category is Manipulator, and his signature ability is 'Deep Purple'—a technique allowing him to generate and control an army of smoke constructs through a specialized vow. The vow requires him to maintain perfect consciousness and control over all his smoke soldiers simultaneously; falling asleep or losing focus causes the entire army to dissipate. This creates a constant drain on his mental resources but grants him extraordinary fighting power. He serves as mentor to the younger hunters Knuckle and Shoot, and he demonstrates genuine care for their development. During the Chimera Ant invasion, Morel proves himself a skilled combatant—he defeats Leol in single combat during the sewerinfiltration phase, demonstrating that his smoke mastery exceeds ability-borrowing tactics. He survives the arc and continues to A7+. ARC VALIDITY: A1-A5 offstage; A6 featured (Chimera Ant Hunter taskforce); survives A6; continues into A7+.",
+      "abilities": [
+        "Deep Purple Smoke Army: Morel generates an army of smoke-construct soldiers from his pipe, maintaining perfect control over each individual unit through continuous aura connection. The army can grow to dozens or hundreds of soldiers.",
+        "Smoke Manipulation Mastery: Morel can reshape his smoke constructs instantaneously, adapting their forms to match tactical requirements—walls, platforms, spears, or complex geometric structures.",
+        "Mental Multitasking: Morel maintains simultaneous control over numerous smoke soldiers, coordinating complex group tactics while perceiving through each unit's senses.",
+        "Strategic Smoke Deployment: Morel uses smoke to control battlefield space, create barriers, enable climbing/traversal for allies, and overwhelm opponents through attrition.",
+        "Pipe Mastery: Morel's actual pipe serves as a conduit for his Nen and contains his smoke constructs in concentrated form; he can deploy or withdraw smoke through pipe manipulation.",
+        "\nfighting style: Morel fights by deploying his Deep Purple smoke army to control battlefield space and apply constant pressure from multiple directions simultaneously. He positions his physical body strategically while his smoke soldiers engage opponents directly. Against single powerful opponents, he uses swarm tactics to overwhelm through attrition. His greatest strength is his smoke army's versatility and sheer numbers; his weakness is his reliance on consciousness and focus—unconsciousness or extreme distraction causes immediate collapse of his entire strategy. Against opponents capable of rapid smoke dispersal (like fire-users), he must adapt by creating denser or more numerous constructs."
+      ],
+      "tier": "mythic",
+      "level": 15,
+      "hpMax": 136,
+      "known": true,
+      "voiceTag": "male mature calm"
+    },
+    "Knov": {
+      "name": "Knov",
+      "type": "Nen Master",
+      "currentLocation": "NGL Border Checkpoint",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "An impeccably groomed single-star Hunter specializing in portal conjuration and stealth infiltration, Knov maintains a facade of perfect composure and refined elegance despite extraordinary psychological strain. He possesses an average build with meticulous grooming suggesting obsessive attention to appearance, calm features, and clothing of immaculate formal quality. He carries specialized equipment for portal manifestation.",
+      "personality": [
+        "Obsessively controlled: maintains extreme discipline over appearance, demeanor, and emotional expression",
+        "Strategically brilliant: plans infiltration operations with meticulous attention to detail and contingency preparation",
+        "Professionally detached: maintains emotional distance from colleagues and situations; treats relationships transactionally",
+        "Psychologically fragile: his composure masks deep anxiety and trauma responses to direct threats or overwhelming power"
+      ],
+      "hiddenInfo": "Knov is a single-star Hunter whose Nen category is Conjurer, specializing in spatial manipulation. His signature ability is 'Hide and Seek'—a conjured dimensional apartment existing in a separate spatial pocket. The apartment contains multiple rooms, and critically, a fourth-floor exit enabling him to emerge from any location outside the building. This grants him extraordinary reconnaissance and escape capability. During the Chimera Ant invasion, Knov's psychological resilience is tested when he encounters Shaiapouf directly. Faced with Pouf's overwhelming En (aura field) and the Royal Guard's casual display of power, Knov's composure breaks. He experiences genuine psychological trauma from the encounter—his hair visibly whitens and his nerve shatters. Despite surviving, he becomes psychologically scarred by confrontation with power he cannot counter. He survives the arc but continues into A7 damaged. ARC VALIDITY: A1-A5 offstage; A6 featured (Chimera Ant Hunter taskforce); survives A6 but psychologically traumatized; continues into A7+ with lasting damage.",
+      "abilities": [
+        "Hide and Seek Dimensional Apartment: Knov conjures a spatial pocket containing a multi-floor apartment structure. He can enter and exit the space at will, and the fourth-floor exit enables emergence anywhere within range.",
+        "Spatial Pocket Mastery: Knov can expand his dimensional apartment's storage capacity significantly, enabling him to transport multiple allies and equipment inside the pocket.",
+        "Portal Manifestation: Knov can conjure temporary portals enabling rapid transit between locations, though this requires significant aura expenditure.",
+        "Infiltration Planning: Knov demonstrates exceptional capability for planning complex infiltration operations, identifying security weaknesses and establishing contingency escape routes.",
+        "Reconnaissance Coordination: Knov uses his dimensional apartment as a base of operations for coordinating team reconnaissance and planning group assaults.",
+        "\nfighting style: Knov avoids direct combat entirely, instead using his dimensional apartment and portal abilities to enable reconnaissance, supply transport, and escape. When directly threatened, he prioritizes escape through his dimensional exits. His greatest strength is his infiltration capability and spatial manipulation enabling team coordination; his weakness is his inability to engage in direct combat and his psychological vulnerability to overwhelming displays of power. Against enemies like Shaiapouf, his composed facade collapses entirely, leaving him traumatized and ineffective."
+      ],
+      "tier": "mythic",
+      "level": 14,
+      "hpMax": 128,
+      "known": true,
+      "voiceTag": "male calm refined"
+    },
+    "Knuckle Bine": {
+      "name": "Knuckle Bine",
+      "type": "Nen Professional",
+      "currentLocation": "NGL Border Checkpoint",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "A soft-hearted young Hunter with distinctive pompadoured hair and surprising emotional depth, Knuckle embodies compassionate strength and sincere care for others. He possesses a muscular build suggesting athletic training, a distinctive pompadour hairstyle styled dramatically upward, and facial features reflecting genuine warmth. He wears casual athletic clothing and carries practical gear.",
+      "personality": [
+        "Compassionately soft-hearted: demonstrates genuine empathy for suffering individuals and animals; often cries when witnessing pain",
+        "Earnestly straightforward: speaks with honest conviction; lacks sophistication but compensates with sincerity",
+        "Determinedly brave: despite his emotional sensitivity, commits fully to dangerous missions and confronts threats with determination",
+        "Mentor-driven: values learning from experienced Hunters and demonstrates respect for established hierarchy and teaching"
+      ],
+      "hiddenInfo": "Knuckle is a young Hunter mentored by Morel, demonstrating impressive capability despite his junior status. His Nen category is Emitter, and his signature ability is 'Hakoware' (also called A.P.R. — Amortizing Power Redirector), a complex ability functioning as a Nen-based financial system. Hakoware allows him to redirect incoming damage into a metaphorical 'debt' that accumulates interest at a brutal rate. Opponents who fail to pay off the accumulated debt through specific actions find themselves physically incapacitated. This creates fascinating tactical depth—Knuckle essentially lends opponents 'power' they must repay or suffer complete physical shutdown. During the Chimera Ant invasion, Knuckle confronts significant moral challenges but persists through determination and loyalty to his mentor's leadership. He survives the arc and continues to A7+. ARC VALIDITY: A3-A5 offstage; A6 featured (Chimera Ant Hunter taskforce); survives A6; continues into A7+.",
+      "abilities": [
+        "Hakoware Debt Redistribution: Knuckle redirects incoming damage into metaphorical debt accumulating interest. Opponents must 'pay' the debt through specific agreed-upon actions or face progressive physical incapacitation.",
+        "A.P.R. Interest Calculation: Knuckle's Hakoware applies compound interest to accumulated debt, ensuring that delayed repayment dramatically increases the total owed.",
+        "Debt Enforcement: Knuckle can force repayment of outstanding debt, incapacitating opponents who refuse or cannot pay the accumulated amount.",
+        "Nen Lending: Knuckle can share his aura with allies as 'loan,' granting them temporary power increases that must be repaid or risk damage.",
+        "Earnest Determination: Knuckle's sincere emotional commitment to protecting others grants him surprising resilience against psychological manipulation or despair.",
+        "\nfighting style: Knuckle fights by establishing Hakoware debts with opponents, gradually accumulating damage-based loans they must repay. As time extends, accumulated interest makes repayment increasingly difficult, eventually forcing opponent submission or incapacitation. He combines this with straightforward physical combat, using his substantial Emitter aura to enhance strikes. Against opponents refusing to engage with his financial framework, he relies on direct Nen-enhanced fighting. His greatest strength is his debt-accumulation system which grows more devastating over time; his weakness is his reliance on opponent cooperation with the debt system—opponents who refuse engagement or quickly overwhelm him before debt becomes problematic can bypass his ability."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 96,
+      "known": true,
+      "voiceTag": "male warm earnest"
+    },
+    "Shoot McMahon": {
+      "name": "Shoot McMahon",
+      "type": "Nen Professional",
+      "currentLocation": "NGL Border Checkpoint",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "A quiet and reserved Hunter mentored by Morel, Shoot possesses surprising combat capability despite his introverted demeanor and the loss of his left arm. He has an athletic build, calm features suggesting thoughtfulness, dark coloring, and wears practical clothing. He fights with his remaining right arm while his left side, where his arm was lost, remains carefully covered.",
+      "personality": [
+        "Quietly reserved: speaks minimally; expresses himself through action rather than words",
+        "Strategically analytical: observes situations carefully before acting; plans thoroughly despite minimal dialogue",
+        "Humble about capability: demonstrates exceptional fighting ability while maintaining modest demeanor about his strengths",
+        "Determined to prove worthiness: carries unspoken drive to demonstrate capability despite physical disability"
+      ],
+      "hiddenInfo": "Shoot is a younger Hunter mentored by Morel, demonstrating talent despite his introverted nature and the loss of his left arm prior to the arc. His Nen category is Manipulator, and his signature ability is 'Hotel Rafflesia'—a conjured trap ability that creates a spatial pocket resembling an elaborate hotel interior. Opponents drawn into Hotel Rafflesia find themselves unable to escape without solving the hotel's puzzle framework, effectively trapping them indefinitely. Shoot also possesses floating hand constructs he maintains through continuous Nen expenditure, which serve reconnaissance, combat support, and spatial manipulation purposes. During the Chimera Ant invasion, Shoot engages directly with significant threats but ultimately becomes hospitalized after severe injuries from Menthuthuyoupi, spending much of the post-arc period in recovery. He survives but damaged. ARC VALIDITY: A3-A5 offstage; A6 featured (Chimera Ant Hunter taskforce); severely injured during invasion; survives into A7+ but hospitalized.",
+      "abilities": [
+        "Hotel Rafflesia Trap Conjuration: Shoot conjures a spatial pocket resembling a multi-floor hotel structure where trapped opponents find themselves unable to escape without solving puzzle sequences. He maintains control over the trap's parameters.",
+        "Floating Hand Manipulation: Shoot maintains multiple floating hand constructs through continuous aura expenditure, enabling reconnaissance, combat support, and spatial manipulation from distance.",
+        "Puzzle Design: Shoot demonstrates exceptional capability for designing complex spatial traps and puzzle sequences that confound even intelligent opponents.",
+        "One-Armed Combat Mastery: Despite his disability, Shoot fights effectively with his remaining arm, using momentum and positioning to compensate for reduced limbs.",
+        "Tactical Awareness: Shoot perceives battlefield dynamics with exceptional clarity, identifying vulnerabilities and planning optimal positioning.",
+        "\nfighting style: Shoot fights by deploying Hotel Rafflesia as a trap for single opponents, immobilizing them while he engages other threats or awaits their puzzle-solving attempts. He supports with floating hand constructs for reconnaissance and supplementary attacks. Against multiple opponents simultaneously, he struggles—his trap ability functions optimally against isolated targets. His greatest strength is his spatial trap system which renders escape nearly impossible once activated; his weakness is his reliance on trapping single opponents and his vulnerability when facing coordinated multi-target assault."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 96,
+      "known": true,
+      "voiceTag": "male quiet calm"
+    },
+    "Palm Siberia": {
+      "name": "Palm Siberia",
+      "type": "Nen Professional",
+      "currentLocation": "Harbview Hospital",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Hunter Association",
+      "basicInfo": "A young female Hunter student of Knov with burgeoning psychic abilities and surprising emotional intensity, Palm demonstrates passion and dedication despite her limited experience. She possesses an average build, expressive features reflecting strong emotions, medium-length dark hair, and wears practical training clothing. She carries herself with notable intensity despite her junior status.",
+      "personality": [
+        "Passionately intense: experiences emotions deeply and expresses them openly; rarely hides genuine feelings",
+        "Developing psychic sensitivity: demonstrates emerging clairvoyant ability through her 'Wink Blue' technique; increasingly trusts intuitive perception",
+        "Loyally dedicated: commits absolutely to her mentor Knov and her teammates; protective of their wellbeing",
+        "Emotionally volatile: her passion sometimes manifests as dramatic mood swings; she responds intensely to perceived slights or team setbacks"
+      ],
+      "hiddenInfo": "Palm is a young Nen Professional mentored by Knov, demonstrating surprising psychic capability for someone of her experience level. Her Nen category is Enhancer, though her signature ability 'Wink Blue' suggests Specialist-level complexity. Wink Blue activates a third eye on her forehead, granting clairvoyant perception—she can see near-future events and perceive supernatural threats invisible to normal sight. Her clairvoyance develops throughout the Chimera Ant arc, becoming increasingly reliable. Notably, Palm exists in an interesting state: before the arc, she is entirely human; however, during the arc she ingests Chimera Ant blood or cellular material, and by late arc she shows signs of ant-hybrid transformation, partially reverting toward human form depending on arc state. Her status remains ambiguous—she may be permanently ant-hybrid or revert entirely to human depending on interpretation. Post-arc, she focuses on helping Gon during his recovery, demonstrating genuine care for her incapacitated ally. ARC VALIDITY: A1-A5 largely offstage; A6 featured (Chimera Ant Hunter taskforce); undergoes ant-hybrid transformation mid-to-late arc; status varies (human/hybrid) depending on arc phase; continues into A7+ focusing on Gon recovery.",
+      "abilities": [
+        "Wink Blue Clairvoyance: Palm activates a third eye on her forehead, granting temporary clairvoyant perception enabling her to see near-future events and perceive supernatural entities.",
+        "Precognitive Warning: Palm receives intuitive warnings about incoming danger, allowing her to predict opponent actions or environmental hazards before they manifest.",
+        "Psychic Sensitivity: Palm perceives emotional states and supernatural presences through extrasensory means; she often knows things through intuition she cannot logically explain.",
+        "Ant-Hybrid Physiology: Post-transformation, Palm demonstrates hybrid human-ant capabilities, granting her enhanced strength, durability, and potential aura capabilities beyond normal human baseline.",
+        "Emotional Empowerment: Palm's passionate emotional investment in protecting allies grants her surprising resilience and determination to continue fighting despite injury.",
+        "\nfighting style: Palm fights using her Wink Blue clairvoyance to maintain tactical advantage—she perceives opponent actions before they manifest and warns allies of incoming threats. She combines this with straightforward Enhancer-based Nen reinforcement for direct combat capability. Post-transformation, she gains ant-hybrid physical capability, increasing her striking power and durability. Her greatest strength is her precognitive warning system and her emotional dedication to protecting teammates; her weakness is her limited combat experience and reliance on intuitive perception—opponents capable of acting with perfect spontaneity or suppressing intent can potentially bypass her precognitive advantage."
+      ],
+      "tier": "mythic",
+      "level": 9,
+      "hpMax": 88,
+      "known": true,
+      "voiceTag": "female warm intense"
     }
   }
 }
