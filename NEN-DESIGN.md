@@ -122,9 +122,9 @@ Awakening recipe (Exam/Zoldyck starts): player starts `Nen-Unawakened` with ~0 a
 
 Nen categories of NPCs improvised in play (AI instructions give the hexagon vocabulary); emotional aura reading; Manipulator control rules; conditions of individual canon Hatsu beyond their description text. Rationale: V33 triggers cap at 200 semantic / 500 mechanical — spend them on vows, arc state, awakening, and quest wiring, not on simulating every aura interaction.
 
-## Open design choices for sign-off
+## Design choices — RESOLVED (creator sign-off 2026-06-11)
 
-1. **Tier ladder numbers** (§3) — aura amounts and skill bonuses are first-pass; tune during P3?
-2. **Jajanken as 3 abilities vs 1** — proposed 3 (Rock/Paper/Scissors with distinct costs/cooldowns).
-3. **"Hatsu" trait category visible at creation** (original characters pick a generic category-matched Hatsu seed) — proposed yes.
-4. **En gate** (§6) — canon says any master can learn En but it's rare; proposed gating to Enhancer/Specialist traits OR Nen Master tier. Pick: tier-gated instead of category-gated?
+1. **Tier ladder numbers** (§3) — first-pass approved; tune freely during P3.
+2. **Jajanken = 3 abilities** — Rock (huge bonus, long cooldown), Scissors (medium, cutting), Paper (ranged emission), all gated on `Hatsu: Jajanken` trait.
+3. **"Hatsu" trait category visible at creation** — yes; one generic seed per Nen category, player names/develops it in play; premades carry canon Hatsu marker traits through the same category.
+4. **En = both paths** — available at Nen Master tier (any category) OR Nen Adept + Enhancer/Specialist. V33 ability requirements are AND-only, so implement as sibling ability entries (e.g. `En` req. Nen Master; `En (Prodigy)` req. Nen Adept + Enhancer; `En (Aberrant)` req. Nen Adept + Specialist) with identical effect text.

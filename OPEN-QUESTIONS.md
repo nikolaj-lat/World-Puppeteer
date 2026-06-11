@@ -42,8 +42,8 @@ No Gemini key → image-gen utility will NOT be run. Plan: populate `imagePrompt
 ### Q-003: Premade roster of ≤100
 Roster proposal will be submitted for approval before authoring (per locked instructions) — see build plan phase 6.
 
-### Q-004: NEN-DESIGN.md sign-off
-Drafted 2026-06-11 (with WORLD-BIBLE.md). Awaiting creator sign-off, including four sub-decisions listed at the bottom of NEN-DESIGN.md (tier numbers, Jajanken as 3 abilities, visible Hatsu category, En gating).
+### Q-004: NEN-DESIGN.md sign-off — RESOLVED → D-009
+**D-009 (creator, 2026-06-11):** NEN-DESIGN.md + WORLD-BIBLE.md signed off. Sub-decisions: tier numbers tunable in P3; Jajanken = 3 abilities; Hatsu trait category visible at creation; En gated both ways (Master any-category OR Adept+Enhancer/Specialist, via sibling ability entries since requirements are AND-only).
 
 ### D-008: Era scoping mechanism (design finding, 2026-06-11)
 V33 Story Starts carry no traits/known-entities/world-state. Era-correct state is implemented via one mechanical trigger per arc keyed on `game-tick ≤ 1` + the start's unique location → `write-string arc=<id>` + `known-entity` sets + a `story` era-summary effect; AI instructions route spoiler behavior on the arc flag. Documented in NEN-DESIGN.md §8 and WORLD-BIBLE.md.
