@@ -1473,7 +1473,7 @@ function validateUnknownFields(config, errors) {
       'startingXPToLevelUpSkill', 'additionalXPRequiredPerSkillLevel',
       'baseXPFromSkillUpgrade', 'charXPPerSkillLevel', 'baseChanceToLearnNewSkill',
       'skillLearningBonusModifier', 'xpFromNewSkill', 'skillTypeDifficultyBonus',
-      'skillXPRewards',
+      'skillXPRewards', 'newSkillGenerationEnabled',
     ]),
     locationSettings: new Set([
       'regionSize', 'simpleRadius', 'complexRadius', 'regionLocationCount',

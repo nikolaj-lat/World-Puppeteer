@@ -38,12 +38,15 @@ No Gemini key → image-gen utility will NOT be run. Plan: populate `imagePrompt
 ### D-010: Validator conflict on `newSkillGenerationEnabled` (2026-06-11)
 Confirmed two-way conflict: local `post-edit-validate.js` flags the field as "Unknown field — not in schema" while the remote validator REQUIRES it. Field kept (remote is authority per D-005); the local hook's complaint is non-fatal noise on every settings edit. **Proposal pending creator OK (per .claude rules, config edits need approval): patch the local validator schema in `.claude/scripts/` to accept the field.**
 
+### D-011: Roster approved (creator, 2026-06-11)
+ROSTER.md approved as proposed (87 entries incl. non-combat challenge premades), PLUS era variants: **two versions each of Gon and Killua** (Hunter-Exam-era Unawakened + Chimera-Ant-era Adept) → **91 total**, 9 slots free.
+
+### D-012: Local validator patched (creator-approved, 2026-06-11)
+`.claude/scripts/validate.js` allowed-keys set for skillSettings extended with `newSkillGenerationEnabled`. Local + remote validators now both pass with 0 errors.
+
 ## OPEN QUESTIONS (batched for creator)
 
-*Q-001 resolved → D-005. Q-002 resolved → D-006.*
-
-### Q-003: Premade roster of ≤100
-Roster proposal will be submitted for approval before authoring (per locked instructions) — see build plan phase 6.
+*Q-001 → D-005. Q-002 → D-006. Q-003 → D-011. Q-004 → D-009.*
 
 ### Q-004: NEN-DESIGN.md sign-off — RESOLVED → D-009
 **D-009 (creator, 2026-06-11):** NEN-DESIGN.md + WORLD-BIBLE.md signed off. Sub-decisions: tier numbers tunable in P3; Jajanken = 3 abilities; Hatsu trait category visible at creation; En gated both ways (Master any-category OR Adept+Enhancer/Specialist, via sibling ability entries since requirements are AND-only).

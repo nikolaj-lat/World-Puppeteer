@@ -1,6 +1,6 @@
-# ROSTER.md — Proposed Premade Characters (≤100 cap)
+# ROSTER.md — Premade Characters (≤100 cap) — APPROVED (D-011)
 
-Proposal for creator approval before authoring (Q-003). **87 entries** — deliberate headroom under the 100 cap for creator additions. Each premade carries: Nen category trait, training-tier trait (canonical power baseline), Hatsu marker trait(s) gating their canon abilities, `replacesNpc` pointing at their NPC entry, and an arc-suitability note in the description.
+Approved 2026-06-11. **91 entries**: the 87 below plus era variants — Gon Freecss (Hunter Exam era, Unawakened) / Gon Freecss (Chimera Ant era, Adept) and Killua Zoldyck (Hunter Exam era) / Killua Zoldyck (Chimera Ant era) replace the single Gon/Killua rows. Non-combat challenge premades (Komugi, Tonpa, Zepile, Oito) confirmed in. 9 slots free. Each premade carries: Nen category trait, training-tier trait (canonical power baseline), Hatsu marker trait(s) gating their canon abilities, `replacesNpc` pointing at their NPC entry, and an arc-suitability note in the description.
 
 Tier key (NEN-DESIGN §3): U=Unawakened, I=Initiate, P=Practitioner, A=Adept, M=Master.
 
