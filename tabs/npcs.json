@@ -1634,6 +1634,96 @@
       "hpMax": 100,
       "known": true,
       "voiceTag": "male soft quiet"
+    },
+    "Biscuit Krueger": {
+      "name": "Biscuit Krueger",
+      "type": "Nen Master",
+      "currentLocation": "Masadora",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Hunter Association",
+      "basicInfo": "A legendary double-star Stone Hunter of fifty-seven years whose true form contradicts her deceptive appearance, Biscuit masquerades as a sweet twelve-year-old child in frilly pink attire—a disguise that conceals her actual muscular physique and ruthless training methods. Despite her youthful presentation, her eyes carry the weight of decades of experience and her voice carries maternal authority beneath its childlike pitch. She wears deliberately cutesy pink clothing with bows and ribbons, playing the role of young girl to perfection.",
+      "personality": [
+        "Patient mentorship: takes time to develop her students' understanding rather than rushing results",
+        "Perfectionistic: demands absolute precision and refuses to accept mediocrity from those she trains",
+        "Theatrical deception: maintains her child disguise with complete commitment, never breaking character",
+        "Candid and direct: beneath her disguise, speaks with brutal honesty about her students' capabilities and shortcomings"
+      ],
+      "hiddenInfo": "Biscuit Krueger is a double-star Stone Hunter who specializes in searching for and analyzing stones of value—her expertise made her invaluable to Ging's Greed Island game masters. Her true form is that of a mountain of muscle and raw physical power, a physique she despises and deliberately hides beneath a sophisticated illusion that presents her as a sweet twelve-year-old child. This transformation is genuine and complete—when she removes the disguise (rare and traumatic), her actual body emerges. Her Nen category is Transmutation, and she possesses the 'Magical Esthetician: Cookie-chan' ability, which allows her to perform deep tissue massage and aura restoration, healing injuries and fatigue in those she trains. She served as Wing's protégé in the past, learning the foundational Nen techniques from him, and she became a legendary trainer through her brutal but effective methods. In the Greed Island arc (A5), she poses as 'Bisky,' befriends Gon and Killua, and pushes them through agonizing Ren and physical conditioning training that accelerates their growth by months. Her maternal side emerges through training—she cares deeply for her students but refuses to soften the difficulty of the work. ARC VALIDITY: A1-A4 background (Hunter Association Stone Hunter); A5 central (Greed Island trainer); A6-A8 references as legendary trainer.",
+      "abilities": [
+        "Transmutation Mastery: Biscuit transforms her aura with exceptional precision, allowing for both offensive techniques and the healing capability of Cookie-chan.",
+        "Magical Esthetician—Cookie-chan: Biscuit's signature Hatsu allows her to perform restorative massage that heals injuries, restores aura, and alleviates fatigue in those she touches. The technique requires physical contact and sustained effort but is remarkably effective.",
+        "Disguise Technique: Biscuit maintains a complete physical transformation that presents her as a young child. This transformation is genuine—her actual body is hidden, not merely masked.",
+        "Advanced Ren Training: Biscuit is a master teacher of fundamental Nen techniques, capable of identifying student weaknesses and designing targeted training regimens.",
+        "Mineral Expertise: As a Stone Hunter, Biscuit possesses encyclopedic knowledge of stones, gems, and geological formations—she can identify rare stones instantly and assess their value.",
+        "Physical Conditioning: Beneath her disguise, Biscuit possesses tremendous physical strength developed through decades of rigorous self-training and Stone hunting expeditions.",
+        "\nfighting style: Biscuit fights with overwhelming physical power when forced to reveal her true form, leveraging her mountain-like musculature and years of combat experience. In her child disguise, she avoids direct combat, preferring to teach or withdraw. Her true combat style involves transforming her aura through Transmutation to create powerful strikes and defensive capabilities. She is notably patient—she observes opponent tactics before committing to strategy, adapting her approach based on what she learns. Her greatest strength is her experience and refusal to be underestimated—opponents who dismiss 'a child' often commit fatal errors. Her weakness is minimal when fighting seriously; her only limitation is her reluctance to abandon her disguise except in absolute emergencies."
+      ],
+      "tier": "mythic",
+      "level": 14,
+      "hpMax": 136,
+      "known": true,
+      "voiceTag": "female child sweet"
+    },
+    "Razor": {
+      "name": "Razor",
+      "type": "Nen Master",
+      "currentLocation": "Soufrabi",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Greed Island Game Masters",
+      "basicInfo": "A colossal dreadlocked colossus of a man with deep dark skin and an aura of sportsmanlike menace, Razor combines physical enormity with surprising gentleness of manner. He possesses a massive muscular frame standing over seven feet tall, with long dreadlocked hair, intense dark eyes, and a broad face marked by scarification. He wears simple practical clothing—loose dark shirts and pants that accommodate his immense frame—and carries himself with the bearing of a natural apex predator.",
+      "personality": [
+        "Sportsmanlike honor: views competition as sacred; respects worthy opponents and keeps his word absolutely",
+        "Laid-back: maintains calm demeanor despite his intimidating presence; rarely shows aggression unless provoked",
+        "Playful: finds enjoyment in games and challenges, taking pleasure in testing strong opponents fairly",
+        "Directly honest: speaks plainly without deception; his word is his bond"
+      ],
+      "hiddenInfo": "Razor is one of Ging Freecss's original eleven game masters, a position reserved for fighters of exceptional capability whom Ging personally selected and trusted. His true name and history are less documented than most masters; what is known is that he was a death-row convict before Ging recruited him—a brutal criminal offered redemption through the game. His Nen category is Emission, and his primary technique is the creation of explosive aura constructs employed in deadly dodgeball. His signature ability is the 'Nen Dodgeball' game where he and other masters use Emission to weaponize a simple ball, making it a tool of lethal force. Beyond this, Razor is capable of creating Nen constructs—the 'Fourteen Devils' are his conjured demons, spiritual entities bound to his will. His relationship with other game masters is collegial; he respects them as peers and enforces the rules of the Greed Island game with absolute fairness. His fight against Hisoka (an alliance of Gon, Killua, and Hisoka united temporarily for dodgeball) became legendary—his defeat was a shock to both other masters and players. ARC VALIDITY: A5 featured (Greed Island game master); A6-A8 background references.",
+      "abilities": [
+        "Nen Dodgeball Mastery: Razor's primary technique employs Emission to weaponize a simple ball. The ball becomes a projectile of tremendous force, capable of causing serious injury or death.",
+        "Fourteen Devils Conjuration: Razor can summon fourteen Nen-constructed demon entities ('devils') bound to his will. These creatures possess independent agency within limits and can engage in combat on his behalf.",
+        "Emission Mastery: Razor possesses exceptional control of aura projection, allowing him to maintain multiple constructs simultaneously and create explosive effects from distance.",
+        "Supernatural Strength: Razor's physical frame grants him strength far exceeding human norms. He can throw objects (including living opponents) with casual ease.",
+        "Durability Embodiment: Razor's massive body absorbs tremendous punishment; his physical construction makes him difficult to injure through conventional means.",
+        "Game Mastery Knowledge: Razor understands the full mechanics of Greed Island and possesses intimate knowledge of all game rules, card interactions, and spell mechanics.",
+        "\nfighting style: Razor fights with a player's mindset—he approaches combat as a game where victory is achieved through fair competition and tactical superiority. He employs his Fourteen Devils as force multipliers, allowing them to flank and attack while he maintains distance and throws his weaponized ball. Against single opponents, he is methodical, testing their defensive capabilities before committing to serious attacks. His greatest strength is his combination of personal physical power and summoned creature support—opponents must manage multiple simultaneous threats. His weakness is minimal when fighting fairly; his only vulnerability emerges when opponents are willing to employ tactics Razor considers 'unsporting'—strategies he may refuse to counter on principle."
+      ],
+      "tier": "mythic",
+      "level": 15,
+      "hpMax": 144,
+      "known": true,
+      "voiceTag": "male deep resonant"
+    },
+    "Genthru": {
+      "name": "Genthru",
+      "type": "Nen Master",
+      "currentLocation": "Dorias Wastes",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "",
+      "basicInfo": "The Bomber, an affable blond murderer whose sunny demeanor masks a psychopath farming Greed Island players for card collections, Genthru presents a deceptively trustworthy appearance that belies his nature. He possesses a lean athletic frame with pale skin, distinctive bleached blonde hair, and regular features arranged in a perpetually friendly smile. He favors casual contemporary clothing—modern shirts and pants suggesting a harmless young man rather than a predatory killer.",
+      "personality": [
+        "Sociable: presents himself as friendly and trustworthy, engaging in pleasant conversation with apparent sincerity",
+        "Ruthless: views other players as resources to exploit rather than as fellow human beings deserving consideration",
+        "Methodical: plans his operations with precision, carefully managing risk and maximizing returns from his farming activities",
+        "Emotionally detached: smiles while committing atrocities; his cheerfulness is a mask, not an indication of actual emotional content"
+      ],
+      "hiddenInfo": "Genthru is the leader of a small trio of conjurer-class Nen users (himself, Sub, and Bara) who enter Greed Island with the explicit goal of farming other players for card collections. His strategy is to steal players' cards through coercion, trading, and outright murder, assembling a massive collection he then sells to achieve permanent victory in the game. His Nen category is Conjuration, and his signature technique is 'Little Flower'—an ominous conjured construct that generates a 'Countdown' timer embedded in victims' chests. When the timer reaches zero, the victim explodes. This ability makes him devastatingly dangerous; victims cannot remove the bomb without Nen exorcism, and the psychological pressure of knowing they will die in a fixed timeframe breaks most opponents quickly. His complete lack of empathy and willingness to murder makes him a genuine threat despite not being individually as powerful as some other players. His defeat at the hands of Gon (through a rock-throwing sacrifice play) represents one of the arc's most pivotal moments. ARC VALIDITY: A5 featured (Greed Island—farming operation, conflict with protagonist party); A6-A8 absent or dead.",
+      "abilities": [
+        "Little Flower Conjuration: Genthru can conjure a small plant-like construct that embeds itself in a victim's chest, generating a countdown timer visible only to the victim. When the timer reaches zero, the victim explodes.",
+        "Countdown Implantation: The Little Flower can be transferred between victims through physical contact, allowing Genthru to spread the threat across multiple players simultaneously.",
+        "Conjuration Efficiency: Genthru's conjured constructs are stable and long-lasting, capable of functioning for extended periods without requiring constant concentration.",
+        "Card Valuation Expertise: Genthru understands the complete trading market for Greed Island cards and possesses knowledge of which cards are most valuable for game completion.",
+        "Psychological Manipulation: Genthru is skilled at identifying victim vulnerabilities and exploiting them through the pressure of his countdown timer.",
+        "Alliance Management: Despite his murderous nature, Genthru maintains effective working relationships with Sub and Bara, coordinating their farming operation efficiently.",
+        "\nfighting style: Genthru rarely engages in direct combat, instead relying on Little Flower implantation to neutralize threats. Once a countdown is active on an opponent, he maintains distance and lets psychological pressure do the work—most victims become increasingly desperate and irrational as their timer nears zero. Against opponents who resist psychological pressure or who possess exorcism capability, he becomes more aggressive, employing direct Nen techniques and physical attacks. His greatest strength is his combination of lethality and psychological devastation—opponents are fighting not just him but their own mortality. His weakness is his overconfidence and willingness to toy with victims; opponents who refuse to panic or who find unexpected solutions (like Gon's sacrifice play) can exploit his arrogance."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 112,
+      "known": true,
+      "voiceTag": "male friendly young"
     }
   }
 }
