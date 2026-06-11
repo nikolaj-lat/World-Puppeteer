@@ -39,7 +39,7 @@ Eight-arc multi-start world. Permadeath off, per-arc power baselines, per-start 
 
 **P8 — Story Starts + AI instructions**
 - 8 starts with era-correct state, spoiler scoping, power baselines, starting gear/abilities.
-- ai-instructions: narrator voice, content rules (mature; sexual content deferred to Voyage's filter), per-start spoiler scoping rules, Nen adjudication guidance, summarization memory rules. Name filters for HxH naming conventions.
+- ai-instructions: narrator voice, content rules (mature; sexual content is part of the tone and in-scope — Voyage's platform filter alone handles prohibited categories like non-consent/SCIM), per-start spoiler scoping rules, Nen adjudication guidance, summarization memory rules. Name filters for HxH naming conventions.
 
 **P9 — Full validation + playtest sanity**
 - count + local validator + remote validate on compiled config.json; fix all errors; review warnings.

@@ -15,6 +15,15 @@ A running log of decisions made and questions still open. Updated every phase.
 ### D-003: Multi-start architecture (locked by creator)
 One world, eight Story Starts: Hunter Exam, Zoldyck Family, Heavens Arena, Yorknew City, Greed Island, Chimera Ant, 13th Chairman Election, Dark Continent Expedition. Era-correct world state per start; spoiler scoping per start; per-arc power baselines; permadeath OFF.
 
+### D-005: `skillSettings.newSkillGenerationEnabled` = `true` (creator, 2026-06-11)
+Live-validator-only field (forward drift, see Q-001 history below). Set `true`: practitioners develop techniques in play, constrained via AI instructions to stay Nen-coherent. Remote validator is final schema authority for the rest of the build.
+
+### D-006: Images = hotlink official/wiki URLs AND strong imagePromptConfiguration (creator, 2026-06-11)
+Populate `portraitUrl`/`imageUrl` with the most stable official/wiki image URLs available, AND write strong `imagePromptConfiguration` art direction as fallback for anything ungenerated/rotted. Link-rot risk accepted by creator.
+
+### D-007: Content tone (creator, 2026-06-11)
+Sexual content is part of the world's tone — written into the narrator instructions as in-scope, not deferred away. Voyage's own platform filter is the only line of defense for prohibited categories (non-consent, SCIM); our instructions do not re-implement that filter, but also never steer toward it. Graphic violence and dark themes fully in scope (matches source).
+
 ### D-004: Image mechanism (recon finding)
 The schema supports direct image URLs without generation:
 - `npcs[].portraitUrl` (.png portrait URL)
@@ -28,19 +37,16 @@ No Gemini key → image-gen utility will NOT be run. Plan: populate `imagePrompt
 
 ## OPEN QUESTIONS (batched for creator)
 
-### Q-001: Schema drift — `skillSettings.newSkillGenerationEnabled`
-The **remote validator** (version 2026-06-10, newer than the repo's v2.10.3 sync) requires `skillSettings.newSkillGenerationEnabled`; the repo's local validator, settings skill, and template `tabs/settings.json` do not know this field (zero grep hits in `.claude/`).
-- **Flagged per instructions** (repo vs wiki disagreement). This is forward drift, not a conflict of meaning: the live schema added a field the repo hasn't synced yet.
-- **Proposed resolution:** add the field; recommend `true` (Nen practitioners plausibly develop new skills in play, guided by AI instructions). Mitigation for further drift: treat the remote validator as final authority and run it after every phase.
-
-### Q-002: Official image URLs
-`portraitUrl`/`imageUrl` accept arbitrary URLs, but hotlinking fan-wiki/official images is brittle (CDN blocks, takedowns) and of unclear licensing. Options: (a) leave all URL fields empty + rich `imagePromptConfiguration` text (current plan), (b) creator supplies a hosted image set later. Defaulting to (a) unless told otherwise.
+*Q-001 resolved → D-005. Q-002 resolved → D-006.*
 
 ### Q-003: Premade roster of ≤100
 Roster proposal will be submitted for approval before authoring (per locked instructions) — see build plan phase 6.
 
 ### Q-004: NEN-DESIGN.md sign-off
-Required before any abilities are authored — see build plan phase 2.
+Drafted 2026-06-11 (with WORLD-BIBLE.md). Awaiting creator sign-off, including four sub-decisions listed at the bottom of NEN-DESIGN.md (tier numbers, Jajanken as 3 abilities, visible Hatsu category, En gating).
+
+### D-008: Era scoping mechanism (design finding, 2026-06-11)
+V33 Story Starts carry no traits/known-entities/world-state. Era-correct state is implemented via one mechanical trigger per arc keyed on `game-tick ≤ 1` + the start's unique location → `write-string arc=<id>` + `known-entity` sets + a `story` era-summary effect; AI instructions route spoiler behavior on the arc flag. Documented in NEN-DESIGN.md §8 and WORLD-BIBLE.md.
 
 ---
 
