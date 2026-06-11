@@ -253,6 +253,451 @@
       ],
       "bonus": 1,
       "cooldown": 1
+    },
+    "Jajanken: Rock": {
+      "name": "Jajanken: Rock",
+      "description": "Gon's most devastating technique—a fully charged fist strike enhanced with total aura concentration. The mandatory chant is a binding vow that channels his entire Enhancement prowess into a single, unstoppable blow. Consumes 35-40% aura in one catastrophic impact and requires a full turn to charge; known for piercing through all defenses.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Jajanken",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Enhancement",
+          "amount": 3
+        }
+      ],
+      "bonus": 7,
+      "cooldown": 3
+    },
+    "Jajanken: Scissors": {
+      "name": "Jajanken: Scissors",
+      "description": "An aura blade formed between Gon's fingers, extended mid-range with sharp, cutting efficiency. Costs 12-18% aura and allows quick slashing strikes or mid-combat repositioning. Less devastating than Rock but far more flexible, enabling rapid offensive and evasive maneuvers.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Jajanken",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Enhancement",
+          "amount": 3
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 1
+    },
+    "Jajanken: Paper": {
+      "name": "Jajanken: Paper",
+      "description": "Gon launches a flat, emitted wave of concentrated aura that travels outward as an expanding projectile. Costs 12-18% aura and provides ranged suppression, area denial, or defensive coverage. Weaker individually than Rock or Scissors but enables flexibility in spacing and crowd control.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Jajanken",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Enhancement",
+          "amount": 3
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 1
+    },
+    "Lightning Palm": {
+      "name": "Lightning Palm",
+      "description": "Killua discharges electrical aura through his grip, supercharging a melee contact into a paralytic shock. Costs 8-12% aura per strike and can be applied to grapples, throws, or close-quarters holds for devastating effect. The electrical charge lingers briefly on contact, potentially spreading to nearby targets.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Lightning Aura",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Transmutation",
+          "amount": 3
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 0
+    },
+    "Thunderbolt": {
+      "name": "Thunderbolt",
+      "description": "Killua releases a lance of electrical aura from his fingertips, striking with speed and precision over mid-range. Costs 15-20% aura per shot and allows rapid-fire volleys or precise targeting. The lightning arcs slightly, making it difficult to predict the final impact point.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Lightning Aura",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Transmutation",
+          "amount": 3
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 1
+    },
+    "Godspeed": {
+      "name": "Godspeed",
+      "description": "Killua's ultimate technique—a whirlwind of electricity that grants both automatic defensive reactions and willed hyperspeed movement. Combines Whirlwind's passive evasion with Speed of Lightning's devastating mobility, but drains 25-40% aura per turn while active. The sustained output is catastrophic; only Masters can maintain it long-term. Requires advanced Transmutation mastery and kills all other auras nearby.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Lightning Aura",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Transmutation",
+          "amount": 6
+        }
+      ],
+      "bonus": 7,
+      "cooldown": 3
+    },
+    "Holy Chain": {
+      "name": "Holy Chain",
+      "description": "Kurapika conjures a thin golden chain from his thumb, capable of borrowing the enhancement aura of allies to facilitate healing or restoration. Costs 10-15% aura to activate and serves as both utility support and medium for Enhancement-based recovery. The chain dissolves if broken and must be recharged to reform.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Chains of the Kurta",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Conjuration",
+          "amount": 3
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 1
+    },
+    "Chain Jail": {
+      "name": "Chain Jail",
+      "description": "Kurapika conjures a thick middle-finger chain that wraps around and binds an opponent, forcing them into Zetsu (complete aura shutdown). Costs 18-25% aura and requires the target to be restrained; once activated, the bound target cannot access Nen. WARNING: This ability only works on members of the Phantom Troupe due to an ancient Kurta clan vow—using it on anyone else triggers an automatic death curse.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Chains of the Kurta",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Conjuration",
+          "amount": 3
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 2
+    },
+    "Dowsing Chain": {
+      "name": "Dowsing Chain",
+      "description": "Kurapika manifests a chain with a spinning ball attached, which gravitates toward objects or people based on Kurapika's will. Costs 8-12% aura and serves as a truth-detection tool and tracking device; the chain cannot lie about what it finds. Useful for locating targets and verifying truthfulness in interrogations.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Chains of the Kurta",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Conjuration",
+          "amount": 3
+        }
+      ],
+      "bonus": 3,
+      "cooldown": 0
+    },
+    "Judgment Chain": {
+      "name": "Judgment Chain",
+      "description": "Kurapika's most fearsome ability—a chain conjured from the little finger that transforms into a razor-sharp blade capable of inscribing two binding conditions on a target. Costs 20-30% aura; the conditions are permanent and enforced by the chain itself—violation of either condition stops the target's heart instantly. The narrator must strictly enforce the stated conditions.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Chains of the Kurta",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Conjuration",
+          "amount": 3
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 3
+    },
+    "Emperor Time": {
+      "name": "Emperor Time",
+      "description": "Kurapika's Scarlet Eyes ascend into absolute Nen efficiency—100% mastery across all Nen categories simultaneously. Costs 1 hour of lifespan per second of use. The narrator enforces this merciless price mechanically; continued use visibly ages Kurapika and threatens permanent death. All aura expenditures are optimized; no waste occurs. An ability that trades mortality for omnipotence.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Chains of the Kurta",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Specialization",
+          "amount": 1
+        }
+      ],
+      "bonus": 7,
+      "cooldown": 3
+    },
+    "Remote Punch": {
+      "name": "Remote Punch",
+      "description": "Leorio conjures a warp-portal haymaker that travels through space, striking from unexpected angles and distances. Costs 15-20% aura per punch and allows targeting of distant or obscured enemies. The portal effect prevents interception mid-flight; the impact lands with full force regardless of distance.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Remote Punch",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 1
+    },
+    "Bungee Gum": {
+      "name": "Bungee Gum",
+      "description": "Hisoka's signature technique—manifests elastic aura with the dual properties of rubber and gum. Costs 15-20% aura and enables versatile attachment/retraction mechanics for attack, defense, traversal, or trapping. The gum-like adhesion is nearly impossible to break; the rubber elasticity grants enormous flexibility in application and rebound.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Bungee Gum",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 0
+    },
+    "Texture Surprise": {
+      "name": "Texture Surprise",
+      "description": "Hisoka forges aura-skin over his own body to assume convincing false appearances or tactile mimicry. Costs 8-12% aura per transformation and serves as deception utility for infiltration, interrogation misdirection, or psychological warfare. The illusion is detailed enough to fool casual observation but may fail under intense scrutiny.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Bungee Gum",
+          "amount": 1
+        }
+      ],
+      "bonus": 3,
+      "cooldown": 1
+    },
+    "Needle People": {
+      "name": "Needle People",
+      "description": "Illumi conjures hair-thin needles that pierce flesh and enslave the nervous system or reshape physical form entirely. Costs 15-25% aura per insertion and allows both offensive domination (controlling a host) and modification (altering appearance, implanting suggestions). The host can serve as a living puppet or undergo permanent physical transformation.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Needle People",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 2
+    },
+    "Skill Hunter": {
+      "name": "Skill Hunter",
+      "description": "Chrollo's foundational ability—casts stolen Hatsu abilities directly from the Bandit's Secret, a conjured book that must remain open and held in hand. Costs 10-15% aura per ability cast and grants perfect execution of any stolen technique. The book is a binding limitation; closing or losing it ends all active stolen abilities instantly.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Skill Hunter",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 2
+    },
+    "Steal the Ability": {
+      "name": "Steal the Ability",
+      "description": "Chrollo permanently steals a single Hatsu ability from an opponent through a four-step ritual: witness the technique in use, ask the target about it directly, receive their answer (they must respond truthfully or willfully ignore), and perform palm-to-palm contact to complete the theft. Costs 20-30% aura for the transfer. This is a narrative heist tool with strict conditions—all four steps must occur within one hour and the target must survive the encounter for the theft to take permanent hold.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Skill Hunter",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 3
+    },
+    "Battōjutsu: Severing Circle": {
+      "name": "Battōjutsu: Severing Circle",
+      "description": "Nobunaga draws his sword with blinding iaido speed, severing anything within a 4-meter radius of his En simultaneously. Costs 18-25% aura and requires precise distance management to be effective. The cutting arc occurs in an instant; targets caught within his En range cannot escape the strike.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Battōjutsu En",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 1
+    },
+    "Pain Packer: Rising Sun": {
+      "name": "Pain Packer: Rising Sun",
+      "description": "Feitan transforms accumulated pain into a miniature sun that explodes outward with devastating radiance. Costs 25-40% aura and scales in power based on accumulated damage to Feitan before use—greater pain yields greater output. The sun's armor punishes nearby combatants with heat damage; the technique is as much punishment for opponents as it is cathartic release for Feitan.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Pain Packer",
+          "amount": 1
+        }
+      ],
+      "bonus": 7,
+      "cooldown": 3
+    },
+    "Nen Stitches": {
+      "name": "Nen Stitches",
+      "description": "Machi manifests aura-threads from her fingertips, capable of sewing flesh together, tracking movement via airborne strands, or garroting targets from distance. Costs 10-15% aura per stitch-application and allows sustained control of threads across a wide area. The threads are nearly invisible and difficult to cut without specialized techniques.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Nen Stitches",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 0
+    },
+    "Ripper Cyclotron": {
+      "name": "Ripper Cyclotron",
+      "description": "Phinks winds his aura tighter with each rotation, building exponential power that culminates in a devastating spin strike. Costs 15-25% aura and scales unpredictably based on winding speed—the number of rotations must be called before execution, but precise metering is difficult in combat. More winds equal more power, but also more time and commitment required.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Ripper Cyclotron",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 1
+    },
+    "Double Machine Gun": {
+      "name": "Double Machine Gun",
+      "description": "Franklin emits torrents of aura bullets from his fingertips with machine-gun rapidity. Costs 15-20% aura per volley and allows sustained fire across wide areas, excellent for area denial and suppressive tactics. The bullets lack piercing power individually but overwhelm through sheer volume.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Double Machine Gun",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 1
+    },
+    "Black Voice": {
+      "name": "Black Voice",
+      "description": "Shalnark implants an antenna into a target's body, granting him absolute control over their actions and perceptions. Costs 18-25% aura to implant and allows sustained puppet-mastery of the victim. WARNING: If Shalnark uses Black Voice on himself via 'Autopilot,' he becomes a blind, paralyzed passenger while his body acts autonomously—a terrible cost paid for unthinking combat efficiency.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Black Voice",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 2
+    },
+    "Blinky": {
+      "name": "Blinky",
+      "description": "Shizuku conjures a sentient vacuum that consumes anything Shizuku declares trash. Costs 12-18% aura per activation and functions as a traversal/storage/trap mechanism. The vacuum never consumes living creatures or Nen constructs that Shizuku consciously remembers; target selection is entirely subjective to Shizuku's definition of 'trash.'",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Blinky",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 1
+    },
+    "Memory Bomb": {
+      "name": "Memory Bomb",
+      "description": "Pakunoda touches an object or person to psychometrically read all associated memories, then fires those memories into another target's mind as a disorienting psychological assault. Costs 18-25% aura and serves as both intelligence-gathering tool and combat utility. The implanted memories overwhelm the target's senses; execution can be devastating or merely incapacitating.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Memory Bomb",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 2
+    },
+    "Big Bang Impact": {
+      "name": "Big Bang Impact",
+      "description": "Uvogin's signature finishing move—an aura-enhanced physical blow of unparalleled crushing force. Costs 25-40% aura and requires full body commitment; the impact creates a localized shockwave that devastates everything in its path. The Spider's heaviest physical strike, reserved for finishing opponents or breaking through major obstacles.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Big Bang Impact",
+          "amount": 1
+        }
+      ],
+      "bonus": 7,
+      "cooldown": 3
+    },
+    "Battle Cantabile: Jupiter": {
+      "name": "Battle Cantabile: Jupiter",
+      "description": "Bonolenov performs a martial dance accompanied by conjured music that materializes planetary mass at his position. Costs 18-25% aura per musical phrase and requires continuous movement/chanting to maintain. The conjured planet-scale force provides overwhelming area denial and devastating collision damage; the technique grows more powerful the longer the performance continues.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Battle Cantabile",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 2
+    },
+    "Gallery Fake": {
+      "name": "Gallery Fake",
+      "description": "Kortopi conjures perfect 24-hour copies of any object he has touched. Costs 15-20% aura per copy and allows sustained creation of duplicates for infiltration, misdirection, or substitution tactics. The copies remain linked to Kortopi's awareness; he can sense through them and track their locations indefinitely.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Gallery Fake",
+          "amount": 1
+        }
+      ],
+      "bonus": 3,
+      "cooldown": 1
+    },
+    "Dance of the Serpent's Bite": {
+      "name": "Dance of the Serpent's Bite",
+      "description": "Kalluto wields paper fans infused with aura, layering them with confetti misdirection to create visual chaos and slicing attacks. Costs 12-18% aura per maneuver and allows rapid repositioning and target confusion through layered fan strikes and scattered aura-paper. The confetti cloud obscures sight and tracking; precision targeting becomes nearly impossible.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Dance of the Serpent's Bite",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 1
+    },
+    "Dragon Lance": {
+      "name": "Dragon Lance",
+      "description": "Zeno conjures an enormous aura dragon that pierces through opposition with devastating penetrating force. Costs 20-30% aura and serves as both direct assault and immovable object; the dragon's trajectory is precise and difficult to evade. A variant form, Dragon Dive, sacrifices penetration for impact force, creating massive area damage on collision.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Dragon Lance",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 2
     }
   },
   "aiInstructions": {
