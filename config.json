@@ -3406,6 +3406,354 @@
       "hpMax": 128,
       "known": true,
       "voiceTag": "male sophisticated calculating"
+    },
+    "Chrollo Lucilfer": {
+      "name": "Chrollo Lucilfer",
+      "type": "Nen Master",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Phantom Troupe",
+      "basicInfo": "The visionary head of the Phantom Troupe and its strategist, Chrollo is a figure of magnetic charisma and surgical intelligence masked behind an almost courteous demeanor. He is a lean man of elegant bearing with pale skin, sharp refined features, and dark hair swept back from his forehead. He wears tailored dark formal clothing—high-collared coat, precisely pressed pants, and polished shoes—suggesting a man more at home in a concert hall than leading a criminal organization.",
+      "personality": [
+        "Intelligent: possesses a brilliant analytical mind capable of parsing complex situations and seeing solutions others miss",
+        "Composed: maintains absolute emotional control even during violence or chaos, never allowing circumstances to unsettle him",
+        "Manipulative: shapes situations and people toward his desired outcomes through subtle influence and psychological pressure",
+        "Eloquent and courteous: speaks with precise diction and old-fashioned courtesy that masks his utter indifference to human suffering"
+      ],
+      "hiddenInfo": "Chrollo Lucilfer is the founder and leader of the Phantom Troupe, born in Meteor City—a scavenger settlement of the stateless that the wider world barely acknowledges as existing. His signature Nen ability is Skill Hunter, a Specialist-category Hatsu that allows him to steal other Nen users' abilities and store them in a physical book. Each stolen ability requires specific conditions for theft (determined by the original user's vow); once stolen, Chrollo can use the ability as his own, though the copied abilities require manual page-turning between swaps and are slightly less potent than originals. His leadership of the Troupe is absolute—the Spider's organizational structure is a direct extension of his will, and members follow his orders with cult-like devotion born from respect and fear. During the Yorknew City arc (A4), Chrollo's Nen is permanently sealed by Kurapika's Judgment Chain curse, rendering him unable to use any Hatsu abilities or even basic Nen techniques. This seal persists through arcs 5 and 6, fundamentally weakening the Troupe and forcing them to adapt tactically. The seal is eventually broken by the exorcist Abengane near the end of arc 5 / early arc 6, restoring Chrollo's full power. However, his greatest secret and vulnerability is this: the Spider's leadership is not irreplaceable. While Chrollo is the head, the Troupe's core strength resides in its collective membership. If Chrollo falls, the Troupe can survive—it has protocols and contingency planning that allow continued operation under new leadership. This knowledge both stabilizes and destabilizes the group, as members simultaneously depend on and compete with each other. ARC VALIDITY: A1-A4 active and operational; A4 end sealed; A5-A6 sealed and incapacitated; A6 end unseal; A7+ free and dangerous; A8 aboard Black Whale, at war with Hisoka.",
+      "abilities": [
+        "Skill Hunter Acquisition: Chrollo's signature ability allows him to steal Nen abilities from other users through a Specialist ritual. The theft's execution depends on the original user's individual conditions, which must be discovered through observation or revealed by the user themselves.",
+        "Skill Hunter Usage: Once stolen, Chrollo stores abilities in a physical book and can access them by opening to the correct page. Stolen abilities function at approximately 90% of the original's potency, and rapid switching requires time to page through the book.",
+        "Aura Manipulation Mastery: Beyond Skill Hunter, Chrollo is a Specialist-level Nen user capable of complex aura manipulation—creating zones of control, reinforcing structures, and projecting aura in sophisticated patterns.",
+        "Strategic Mind: Chrollo combines tactical brilliance with psychological manipulation. He reads opponents, predicts actions, and maneuvers others into positions where they believe themselves in control while he orchestrates every detail.",
+        "Leadership Presence: Chrollo's presence commands absolute loyalty from those in his circle. Even members who resent him obey without question, driven by a combination of fear, respect, and genuine belief in his vision.",
+        "\nfighting style: Chrollo fights as a generalist stealing appropriate abilities for each situation. Against unprepared opponents, he overwhelms with stolen techniques; against prepared ones, he uses unconventional stolen abilities that his opponent didn't anticipate. His personal Nen is sophisticated—he creates tactical zones and uses aura manipulation to control engagement space. He is most vulnerable when unsealed or facing opponents with abilities he has not yet catalogued. When sealed (arcs 5-6), Chrollo becomes a strategist-only, orchestrating Troupe tactics without direct combat participation. His greatest strength is his adaptability; his greatest weakness is his dependence on his Skill Hunter book—destroy the book, and his stolen abilities become inaccessible."
+      ],
+      "tier": "mythic",
+      "level": 15,
+      "hpMax": 124,
+      "known": true,
+      "voiceTag": "male calm sophisticated"
+    },
+    "Nobunaga Hazama": {
+      "name": "Nobunaga Hazama",
+      "type": "Nen Master",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Phantom Troupe",
+      "basicInfo": "An Enhancer swordsman of exceptional skill and explosive temperament, Nobunaga is the Troupe's #1 and a deadly iaido master whose speed borders on supernatural. He is a strongly-built man of average height with tanned skin, sharp features, a prominent topknot of black hair bound with a red ribbon, and intense dark eyes. He wears traditional dark martial clothing—hakama pants and a sleeveless gi exposing his muscular shoulders—along with a katana at his hip and numerous rings on his fingers.",
+      "personality": [
+        "Fiercely loyal: bonds intensely with fellow Troupe members and shows surprising vulnerability when their deaths affect him",
+        "Explosive: prone to sudden violent outbursts and aggressive reactions when frustrated or challenged",
+        "Honorable: maintains a warrior's code about combat and genuine respect for worthy opponents",
+        "Gruff and direct: speaks bluntly with minimal pretense, expressing opinions without filter or diplomatic restraint"
+      ],
+      "hiddenInfo": "Nobunaga is the Troupe's second-ranking member (#1) and its most skilled swordsman—his iaido technique is legendary within the organization. His Nen category is Enhancement, and his signature ability is his 4-meter En (aura sensing field), which allows him to detect all living beings within his radius and sense their movements with perfect clarity. When an opponent enters his En, Nobunaga can draw and strike with supernatural speed, delivering an instant-kill cut before the target can react. His weapon of choice is a traditional katana, which he maintains with obsessive care. Nobunaga's emotional depth distinguishes him within the Troupe—he genuinely grieves the deaths of Troupe members, particularly Uvogin, whose demise at Kurapika's hands devastates him. He does not view other members as disposable tools but as brothers-in-arms. This emotional investment occasionally impairs his judgment but also makes him reliable and trustworthy to those closest to him. Surprisingly, Nobunaga harbors a soft spot for Gon specifically, finding the boy's earnest determination and refusal to abandon his goals admirable. This appreciation never translates into mercy—Nobunaga will kill without hesitation if ordered or if the situation demands—but it creates an unusual thread of respect across enemy lines. ARC VALIDITY: A1-A4 active and operational; A5-A7 continues Troupe operations and hunting; A8 aboard Black Whale hunting Hisoka.",
+      "abilities": [
+        "Iaido Mastery: Nobunaga's sword technique is honed through countless contracts and duels. His drawing and striking motion is faster than conscious reaction—opponents who see the draw are already struck.",
+        "Enhanced Strength: As an Enhancer, Nobunaga reinforces his body with aura, granting him exceptional strength and speed. His strikes carry enough force to cleave through reinforced barriers.",
+        "4-Meter En Field: Nobunaga's aura sensing field extends 4 meters in all directions, allowing him to detect and track all living beings within it. Movement within his En becomes impossible to hide.",
+        "Instant-Kill Strike: When opponents enter his En, Nobunaga can draw and strike with such speed that defensive reactions become impossible. The technique is functionally instant at close range.",
+        "Warrior's Endurance: Through Enhancement conditioning, Nobunaga can sustain extended combat without fatigue and absorb physical punishment that would incapacitate average fighters.",
+        "\nfighting style: Nobunaga establishes his 4-meter En immediately and waits for opponents to enter. Once they cross the threshold, he draws and executes the instant-kill strike. Against opponents fast enough to react, he transitions to rapid sword strikes emphasizing speed and momentum. He favors aggressive engagement and does not typically retreat or evade. His combat style is direct and brutal—he overpowers opponents through superior speed and strength rather than complex tactics. His emotional investment in Troupe loyalty sometimes causes him to take unnecessary risks to protect other members. Against vastly superior opponents, he fights to the death rather than flee, viewing survival without honor as unacceptable."
+      ],
+      "tier": "mythic",
+      "level": 14,
+      "hpMax": 116,
+      "known": true,
+      "voiceTag": "male deep intense"
+    },
+    "Feitan Portor": {
+      "name": "Feitan Portor",
+      "type": "Nen Master",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Phantom Troupe",
+      "basicInfo": "A small, reserved figure whose quiet demeanor masks the Troupe's most sadistic member, Feitan is an expert torturer and Transmuter of exceptional power. He is a diminutive man of slight build with sallow pale skin, sharp rat-like features, black hair, and dark unreadable eyes. He wears dark gloves perpetually, precise dark formal clothing, and a red or purple coat, presenting an almost prissy appearance that contradicts his vicious capabilities.",
+      "personality": [
+        "Methodical: approaches torture and violence with scientific precision, treating suffering as a craft to be perfected",
+        "Reserved: speaks minimally and often in broken syntax, yet his words carry significant weight when he does communicate",
+        "Sadistic: derives genuine satisfaction from inflicting pain and observing prolonged suffering in victims",
+        "Emotionless: maintains absolute emotional distance from victims, viewing them as objects rather than people"
+      ],
+      "hiddenInfo": "Feitan is the Troupe's #2 and its primary interrogator-torturer. His Nen category is Transmutation, and his signature ability is Pain Packer: Rising Sun—a Hatsu that converts his accumulated pain into a burning sun-like aura that explodes outward with tremendous destructive force. The more pain Feitan absorbs during combat, the more powerful his Rising Sun becomes, making him stronger the longer he endures injuries. This paradoxical ability rewards defensive commitment and punishment absorption. Beyond Rising Sun, Feitan is a skilled fighter capable of rapid strikes and excellent mobility despite his small size. His torture techniques are legendary within criminal underworld circles—targets under his care frequently confess secrets within hours, though many do not survive the experience. In certain arcs, when Chrollo's Nen is sealed, Feitan assumes interim leadership of the Troupe, demonstrating that he possesses strategic depth beyond torture and violence. His greatest secret is his background: Feitan comes from a region with non-standard Nen theory, explaining his broken syntax and unusual ability mechanics. His past is deliberately shrouded in mystery. ARC VALIDITY: A1-A4 active and operational; A5-A7 continues membership; A8 aboard Black Whale; in specific arc-dependent states, may temporarily lead when Chrollo is incapacitated.",
+      "abilities": [
+        "Pain Packer: Rising Sun: Feitan's signature ability converts accumulated pain into a destructive burning aura that he can release as an explosion. The longer he sustains injury without using the ability, the more powerful the eventual release becomes.",
+        "Transmutation Mastery: Feitan transmutes his aura into various forms for offense and defense, creating cutting auras, defensive barriers, and precision striking techniques.",
+        "Rapid Strikes: Despite his small frame, Feitan is exceptionally fast, capable of launching rapid hand-to-hand combinations that overwhelm opponents through sheer tempo.",
+        "Torture Expertise: Feitan possesses encyclopedic knowledge of human anatomy and psychological manipulation, allowing him to extract information or inflict maximal suffering through calculated technique.",
+        "Combat Resilience: Feitan's Pain Packer incentivizes absorbing damage, making him psychologically capable of sustaining injuries that would break other fighters' willpower.",
+        "\nfighting style: Feitan fights by absorbing damage and accumulating pain for a devastating Rising Sun release. Against impatient opponents, he intentionally provokes strikes, drawing aggression and building his sun's power. He uses rapid mobility to evade critical blows while accepting non-lethal damage. His strategy requires psychological fortitude—he must remain composed while injured and dangerous. Against opponents who recognize his ability and refuse to strike him, he becomes more aggressive, actively pursuing combat to damage opponents or forcing them to engage him. His greatest strength is his counterintuitive mechanic—damage makes him more dangerous. His greatest weakness is overcommitment to this strategy against opponents capable of one-shot kills, where accumulating power becomes irrelevant."
+      ],
+      "tier": "mythic",
+      "level": 15,
+      "hpMax": 124,
+      "known": true,
+      "voiceTag": "male soft dangerous"
+    },
+    "Machi Komacine": {
+      "name": "Machi Komacine",
+      "type": "Nen Master",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Phantom Troupe",
+      "basicInfo": "A skilled surgical Nen user whose mastery of thread-based manipulation makes her indispensable to the Troupe, Machi combines clinical precision with an unsettling calm. She is a slender woman with striking pink hair, pale skin, sharp intelligent features, and observant dark eyes that miss nothing. She typically wears revealing clothing—a sleeveless vest, short skirt, and boots—suggesting a warrior confident in her ability to handle any threat.",
+      "personality": [
+        "Pragmatic: approaches problems methodically, assessing situations for the most efficient solution regardless of emotional considerations",
+        "Intuitive: possesses exceptional instincts about people and situations, trusting her gut more than logical analysis",
+        "Controlled: maintains emotional composure and perfect professional distance even in chaotic situations",
+        "Subtly sarcastic: communicates with dry wit and understated humor that can be lost on those unfamiliar with her style"
+      ],
+      "hiddenInfo": "Machi is the Troupe's #3 and its primary medic and logistics operator. Her Nen category is Transmutation, and her signature ability involves conjuring and manipulating fine Nen threads with surgical precision. She uses these threads to sew wounds closed (capable of suturing severe injuries rapidly), create restraints, and establish tracking threads that allow her to monitor people remotely. Her intuition is trusted implicitly by the Troupe—when Machi senses something is wrong or advises caution, members take her seriously. She has complicated feelings about Hisoka: she knows his spider tattoo is fake, but she regards him with a mixture of attraction and wariness that keeps her relationship with him unpredictable and tense. During the Yorknew arc, she participates fully in the auction massacre and fake-death operation, cementing her role as a core member. Her greatest secret is the extent of her emotional investment in certain members—particularly her genuine concern for Pakunoda before her sacrifice, which Machi rarely voices but which shapes her decisions. ARC VALIDITY: A1-A4 active and operational; A5-A7 continues membership; A8 aboard Black Whale hunting Hisoka.",
+      "abilities": [
+        "Nen Thread Conjuration: Machi conjures thin, nearly invisible threads from her aura that possess supernatural durability. She can manipulate them with precision for surgical stitching, restraints, or detection.",
+        "Surgical Thread Work: Machi's threads can sew severe wounds closed with perfection, allowing rapid battlefield triage. She can seal internal injuries and restore functional capability to damaged bodies.",
+        "Tracking Threads: Machi can place invisible threads on targets that allow her to sense their location and movement remotely. Multiple tracking threads can be maintained simultaneously.",
+        "Thread Restraints: Her threads can create unbreakable bonds capable of restraining even enhanced Nen users. The restraints are invisible until deliberately revealed.",
+        "Aura Sensing Intuition: Beyond technical ability, Machi possesses exceptional intuition about aura and danger. Her instincts about threats or deception are remarkably accurate.",
+        "\nfighting style: Machi prefers ranged engagement using her threads, maintaining distance while establishing restraints or delivering precision strikes. She rarely commits to close combat unless forced. Her combat style emphasizes control and setup—she establishes thread networks that limit opponent movement, then attacks from safe distance. Against multiple opponents, she uses threads to separate and isolate them. Against physically superior opponents, she avoids direct engagement and instead uses threads defensively. Her greatest strength is her adaptability—she transitions fluidly between offense, defense, and support roles. Her greatest weakness is her reliance on established thread networks; against opponents who destroy or neutralize her threads, she becomes significantly weaker."
+      ],
+      "tier": "mythic",
+      "level": 14,
+      "hpMax": 116,
+      "known": true,
+      "voiceTag": "female adult calm"
+    },
+    "Phinks Magcub": {
+      "name": "Phinks Magcub",
+      "type": "Nen Master",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Phantom Troupe",
+      "basicInfo": "A powerfully-built fighter of Egyptian inspiration whose explosive strength makes him one of the Troupe's most direct offensive assets, Phinks is a barrel-chested man of above-average height with dark brown skin, close-cropped black hair, sharp features, and intense eyes. He wears a tracksuit typically in earth tones or bright colors, athletic shoes, and numerous golden rings and chains, giving him a striking street-athlete appearance.",
+      "personality": [
+        "Aggressive: favors direct confrontation and explosive action over subtle tactics or patience",
+        "Competitive: constantly compares himself to other Troupe members and pushes to prove his relative strength",
+        "Boisterous: expresses himself with enthusiasm and volume; his presence fills whatever space he occupies",
+        "Loyal but volatile: devoted to the Troupe but prone to friction with members he perceives as rivals or threats"
+      ],
+      "hiddenInfo": "Phinks is the Troupe's #5 and its specialist in raw offensive power. His Nen category is Enhancement, and his signature ability is Ripper Cyclotron—a technique where he winds his arm in rapid circular motions, accumulating kinetic energy. The longer he winds, the more powerful his eventual strike becomes, allowing him to generate devastating punches capable of obliterating opponents and structures. The windups are visible and time-consuming, making the technique dependent on getting uninterrupted setup time. Phinks is extremely competitive with other strong members of the Troupe and often initiates combat to test his relative power. He views strength as the primary metric of worth, and he has genuine respect for members like Uvogin and Franklin who demonstrate overwhelming force. His competitive nature occasionally puts him at odds with quieter, subtler members who accomplish objectives through strategy rather than power. ARC VALIDITY: A1-A4 active and operational; A5-A7 continues membership; A8 aboard Black Whale hunting Hisoka.",
+      "abilities": [
+        "Ripper Cyclotron Acceleration: Phinks winds his arm in rapid circles, accumulating rotational kinetic energy. Each rotation increases the power of his eventual strike exponentially.",
+        "Cyclotron Strike: Once he releases the accumulated energy, Phinks delivers a punch of tremendous force capable of shattering reinforced structures and penetrating defensive auras.",
+        "Enhanced Strength: As an Enhancer, Phinks reinforces his body with aura, granting him exceptional strength even without his Cyclotron technique. His baseline strength exceeds most fighters'.",
+        "Aggressive Mobility: Phinks moves with surprising speed for his bulky frame, using explosive footwork to close distance and overwhelm opponents.",
+        "Endurance: Through Enhancement conditioning, Phinks can sustain high-intensity combat for extended periods without fatigue.",
+        "\nfighting style: Phinks charges at opponents aggressively, either closing distance for direct strikes or spinning up his Cyclotron ability. He prefers continuous pressure and overwhelming force over tactical subtlety. He creates openings through sheer aggression, forcing opponents to react defensively while he sets up his devastating punches. Against opponents faster than him, he becomes frustrated and more aggressive, sometimes losing tactical judgment. Against comparable strength opponents, he demonstrates he can adapt to sustained competition. His greatest strength is his explosive power and willingness to engage directly. His greatest weakness is his Cyclotron's wind-up time—opponents who prevent him from spinning up can neutralize his most dangerous technique."
+      ],
+      "tier": "mythic",
+      "level": 14,
+      "hpMax": 116,
+      "known": true,
+      "voiceTag": "male adult forceful"
+    },
+    "Franklin Bordeau": {
+      "name": "Franklin Bordeau",
+      "type": "Nen Master",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Phantom Troupe",
+      "basicInfo": "A massive, scarred giant whose calm demeanor masks tremendous destructive capability, Franklin is one of the Troupe's most powerful and principled members. He is an enormous man of imposing stature with dark skin, extensive facial and body scars from countless contracts, large gentle eyes, and short dark hair. He wears minimal clothing—often just suspenders over his bare muscular chest—displaying the scars as evidence of his lethal experience.",
+      "personality": [
+        "Principled: maintains a consistent moral code regarding the Troupe's operations and holds other members accountable to agreed-upon rules",
+        "Quiet: speaks rarely, and when he does, his words carry significant weight due to his reputation and demonstrated competence",
+        "Melancholic: carries an underlying sadness suggesting deep moral conflict about the violence he commits",
+        "Protective: shows genuine concern for other Troupe members and willingly sacrifices personal advantage to ensure their safety"
+      ],
+      "hiddenInfo": "Franklin is the Troupe's #7 and its quiet conscience—the member most likely to argue against unnecessary cruelty or operations that violate the Troupe's internal ethics code. His Nen category is Emission, and his signature ability is Double Machine Gun—a technique where he converts aura into high-speed bullets that fire from his fingertips with gatling-gun rapidity. Early in his career, Franklin literally cut off his own fingertips as a vow to strengthen his ability, using his shed fingers as the foundation for his Nen projectile enhancement. This self-sacrifice created a permanent condition (he has no fingertips) that he maintains through Nen reinforcement. Beyond his obvious power, Franklin is the Troupe's moral anchor—he is the member most likely to express doubt about certain operations and the one members defer to when ethical questions arise. His greatest secret is his genuine belief that the Troupe's violence is necessary but his personal hope that the cycle can eventually end. This philosophical depth distinguishes him from members who enjoy violence for its own sake. ARC VALIDITY: A1-A4 active and operational; A5-A7 continues membership; A8 aboard Black Whale hunting Hisoka.",
+      "abilities": [
+        "Double Machine Gun Emission: Franklin converts his aura into high-speed projectiles that fire from his fingertips with gatling-gun speed. The bullets possess tremendous force capable of piercing armor and structures.",
+        "Fingertip Vow: Franklin's self-sacrifice (cutting off his own fingertips) permanently strengthened his Double Machine Gun ability. The vow creates a mechanical limitation—he cannot recover his fingertips—but grants exceptional power.",
+        "Aura Bullet Control: Franklin can fire in patterns, adjust trajectory, and coordinate multi-directional fire. His control allows precision targeting despite the rapid rate of fire.",
+        "Physical Fortitude: As a veteran of countless contracts, Franklin's body is conditioned to absorb tremendous punishment. His scars represent lethal encounters survived.",
+        "Strategic Restraint: Franklin possesses the discipline to limit his firepower when tactical situations call for controlled engagement rather than overwhelming force.",
+        "\nfighting style: Franklin establishes distance and uses his Double Machine Gun for constant harassment and area denial. He creates suppressive fire that forces opponents into movement patterns he can predict. Against weaker opponents, he overwhelms with continuous fire; against strong opponents, he uses fire to manage distance and prevent closing. His combat style emphasizes control through overwhelming volume rather than precision. He rarely engages in close combat, preferring to maintain distance where his gatling-gun technique is most effective. His moral nature sometimes causes him to limit his firepower in ways that other members would not, creating potential vulnerability. His greatest strength is his raw destructive capacity and psychological presence—opponents facing Franklin's gatling fire experience genuine psychological pressure. His greatest weakness is his reluctance to kill unnecessarily, which thoughtful opponents can exploit."
+      ],
+      "tier": "mythic",
+      "level": 14,
+      "hpMax": 116,
+      "known": true,
+      "voiceTag": "male deep quiet"
+    },
+    "Shalnark": {
+      "name": "Shalnark",
+      "type": "Nen Master",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Phantom Troupe",
+      "basicInfo": "A cheerful, tech-savvy blond whose disarmingly friendly demeanor contradicts his deadly efficiency, Shalnark is a young man with pale skin, shoulder-length blonde hair, bright cheerful eyes, and an easy smile. He typically wears casual modern clothing—a tank top, baggy pants, and sneakers—alongside technological gadgets and antennae-like appendages on his head suggesting cybernetic enhancement.",
+      "personality": [
+        "Cheerful: genuinely enjoys social interaction and expresses enthusiasm for most activities, making him approachable compared to darker Troupe members",
+        "Technically minded: passionate about technology and innovation; often tinkers with devices or conceptualizes improvements to existing tools",
+        "Surprisingly ruthless: beneath his friendly exterior lies absolute willingness to kill, torture, and betray without hesitation when the Troupe demands it",
+        "Impulsive: acts on impulses and enthusiasm without always considering consequences; his carefree nature masks dangerous unpredictability"
+      ],
+      "hiddenInfo": "Shalnark is the Troupe's #6 and its technology specialist. His Nen category is Manipulation, and his signature ability is Black Voice—antennae-like appendages conjured from aura that allow him to take mental control of other Nen users. Once his antennae attach to a target's body, Shalnark gains absolute control over their actions, movements, and abilities. The technique is devastating but requires direct physical contact to initiate. Beyond Black Voice, Shalnark is skilled in technology and maintains gadgets for the Troupe's operations. His fatal vulnerability: Shalnark is murdered during the Succession War arc (A8) by the revived Hisoka, who appears during the Troupe's aboard-the-Whale hunt for revenge. Shalnark's death marks the beginning of Hisoka's systematic destruction of the Troupe's membership. His cheerful nature makes his death poignant—a reminder that friendliness offers no protection against lethal opponents. ARC VALIDITY: A1-A4 active and operational; A5-A7 continues membership; A8 early only (dies mid-arc to Hisoka, murdered, does not appear thereafter).",
+      "abilities": [
+        "Black Voice Antennae: Shalnark conjures antennae-like appendages from his aura that can attach to other Nen users' bodies, granting him absolute mental control over their actions and abilities.",
+        "Motor Control Override: Once Black Voice antennae are attached, Shalnark can command any physical action, overriding the target's autonomy completely.",
+        "Ability Activation Control: Shalnark can force targets to activate their Hatsu abilities, making him capable of weaponizing other Nen users against their will.",
+        "Technology Integration: Shalnark maintains and operates specialized technology for Troupe operations, including communications systems and surveillance devices.",
+        "Autopilot Mode: Shalnark developed an autopilot mode where he can place himself in a trance state, allowing his body to execute combat protocols independently while his consciousness rests. This mode is dangerous because his unconscious body makes unpredictable decisions.",
+        "\nfighting style: Shalnark prioritizes establishing Black Voice antennae contact, which immediately neutralizes opponents by removing their autonomy. Before antennae contact is made, he relies on acrobatic evasion and ranged Nen projection to avoid damage. Once control is established, he can force targets to fight their allies or incapacitate themselves. His greatest vulnerability is the contact requirement—opponents who prevent him from touching them can avoid Black Voice entirely. His autopilot mode is unreliable and dangerous, sometimes causing him to take unnecessary risks or attack allies. His cheerful personality sometimes delays his deployment of lethal force, creating tactical windows. His greatest strength is his ability to neutralize opponents through control rather than direct combat."
+      ],
+      "tier": "mythic",
+      "level": 13,
+      "hpMax": 112,
+      "known": true,
+      "voiceTag": "male cheerful friendly"
+    },
+    "Shizuku Murasaki": {
+      "name": "Shizuku Murasaki",
+      "type": "Nen Professional",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Phantom Troupe",
+      "basicInfo": "A woman of absent-minded demeanor and supernatural vacuuming ability, Shizuku possesses an uncanny disconnection from normal social context. She is a slender woman with dark skin, dark hair typically covered by a headband, black-framed glasses, and a perpetually distant expression suggesting her consciousness exists elsewhere. She wears casual clothing—a loose shirt and simple pants—and is usually accompanied by a small sentient vacuum she uses as a tool.",
+      "personality": [
+        "Absent-minded: frequently forgets recent events, people's names, and previous conversations; her memory operates selectively and unpredictably",
+        "Innocent: possesses childlike innocence about violence and morality, treating killing as casual as organizing objects",
+        "Observant of triviality: focuses intently on minor details while missing obvious major context, creating a skewed perspective on situations",
+        "Quirky speech: speaks matter-of-factly about disturbing topics without emotional affect, making casual conversation unsettling"
+      ],
+      "hiddenInfo": "Shizuku is the Troupe's #8 and its logistics coordinator. Her Nen category is Conjuration, and her signature ability is Blinky—a sentient vacuum creature she conjured from pure aura. Blinky possesses an appetite for what Shizuku considers \"trash,\" which she defines subjectively; Blinky will swallow nearly anything she points to, storing it internally. Critically, Blinky will not consume living things that Shizuku remembers or has formed emotional attachment to—this limitation creates her only moral constraint. Her amnesia is genuine and disabling; she frequently forgets Troupe members' names, recent missions, and previous conversations, making her unreliable for complex operations but invaluable for simple task execution. Her disconnection from normal social context makes her both harmless-seeming and genuinely dangerous—she will execute orders without hesitation because she often forgets what the orders entail between execution and completion. ARC VALIDITY: A1-A4 active and operational; A5-A7 continues membership; A8 aboard Black Whale hunting Hisoka.",
+      "abilities": [
+        "Blinky Conjuration: Shizuku conjured a sentient vacuum creature (Blinky) from pure aura. Blinky possesses an insatiable appetite for items Shizuku designates as \"trash,\" swallowing them into its interdimensional storage.",
+        "Selective Appetite: Blinky will not consume living things that Shizuku remembers or has emotional attachment to. This creates Shizuku's only genuine moral limitation—she cannot weaponize Blinky against friends.",
+        "Storage Capacity: Blinky's internal storage appears limitless; it has consumed massive items, entire structures, and vast quantities of material without showing capacity limits.",
+        "Trash Designation Authority: Shizuku possesses absolute authority over what Blinky considers trash. She can expand or contract the definition subjectively.",
+        "Vacuum Locomotion: Blinky is mobile and responsive to Shizuku's commands, following her instructions and moving independently through environments.",
+        "\nfighting style: Shizuku does not fight directly—she relies on Blinky to incapacitate and remove obstacles from her path. She is vulnerable in personal combat due to her lack of physical training. Her value lies in logistics and problem-solving (consuming obstacles or storing vital objects). Against opponents she remembers or has formed attachment to, she becomes paralyzed because she cannot weaponize Blinky. Against opponents she considers \"trash,\" she can eliminate them through Blinky consumption. Her amnesia makes her unpredictable; she sometimes forgets she's in combat. Her greatest strength is Blinky's versatility; her greatest weakness is her personal fragility and mental disconnection from reality."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 108,
+      "known": true,
+      "voiceTag": "female absent-minded quiet"
+    },
+    "Pakunoda": {
+      "name": "Pakunoda",
+      "type": "Nen Professional",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Phantom Troupe",
+      "basicInfo": "A sharp-suited woman of striking presence whose memories flow like tangible things, Pakunoda is an elegant figure combining professional tailoring with lethal capability. She is a woman of dark skin, sharp features, alert intelligent eyes, and dark hair, typically wearing a sharp suit jacket, precise slacks, and formal shoes giving her an almost corporate appearance contrasting her Troupe membership.",
+      "personality": [
+        "Professional: approaches all tasks with business-like efficiency; her demeanor is courteous and measured regardless of violence involved",
+        "Intellectually sharp: possesses keen analytical ability; she reads people and situations with impressive accuracy",
+        "Loyal to the Troupe: genuine devotion to the collective, though her loyalty does not extend to specific members beyond professional respect",
+        "Direct and blunt: speaks plainly without diplomatic softening; her honesty sometimes creates friction with sensitive members"
+      ],
+      "hiddenInfo": "Pakunoda is the Troupe's #9 and its intelligence gatherer. Her Nen category is Specialist, and her signature ability is Memory Reading—she can touch a target's body and extract their memories, experiencing them as vividly as the original subject. This ability makes her invaluable for intelligence gathering and interrogation; she can determine truth, discover secrets, and understand enemy plans through direct memory access. Her counterpart ability is Memory Bomb, a technique where she condenses gathered memories into projectiles that explode on impact, dispersing the memories into nearby observers—effectively weaponizing information. Pakunoda's greatest sacrifice occurs at the end of the Yorknew arc: captured by enemy forces while protecting Gon and Killua (whom she had read memories from earlier), she activates Memory Bomb on herself, dispersing her memories and those of other Troupe members to the captured members. This sacrifice kills her, severing the Troupe's internal secrecy about member identities. Her death marks the arc's emotional climax and demonstrates her willingness to sacrifice herself for the Troupe's survival. ARC VALIDITY: A1-A4 active and operational; A4 end dies via Memory Bomb self-sacrifice (captures and released immediately after); A5-A8 dead, never appears.",
+      "abilities": [
+        "Memory Reading Touch: Pakunoda can touch a target and extract their memories, experiencing them with perfect clarity and sensory detail. She gains complete knowledge of the subject's past experiences.",
+        "Memory Accuracy: Her extracted memories are perfectly accurate; she experiences exactly what the target experienced from their perspective, making deception impossible.",
+        "Memory Bomb Condensation: Pakunoda can compress extracted memories into tangible projectiles that detonate on impact, dispersing memories to nearby observers.",
+        "Multiple Target Reading: Pakunoda can read memories from multiple people in succession, building a comprehensive intelligence picture from combined information.",
+        "Aura Resilience: Through professional conditioning, Pakunoda maintains psychological resilience against the emotional weight of reading disturbing memories.",
+        "\nfighting style: Pakunoda is not primarily a combatant; her value lies in intelligence gathering and memory-based weapons. In direct combat, she avoids engagement and uses Memory Bombs as area-denial weapons. Her bombs can eliminate multiple opponents by dispersing memories that disorient and psychologically damage targets. Against prepared opponents, she seeks memory extraction on peripheral targets, then uses those memories strategically. Her greatest strength is her information advantage; her greatest weakness is her lack of personal combat training—direct physical engagement overwhelms her quickly. Her self-sacrifice at the end of Yorknew marks her arc's completion: she chooses Troupe loyalty over survival."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 108,
+      "known": true,
+      "voiceTag": "female professional calm"
+    },
+    "Uvogin": {
+      "name": "Uvogin",
+      "type": "Nen Master",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Phantom Troupe",
+      "basicInfo": "A mountain of a man whose massive frame and explosive strength make him the Troupe's primary melee devastation asset, Uvogin is an imposing figure of raw physical presence. He is an enormous man of incredible muscularity with very dark skin, a shaved head, a prominent jaw with a slight underbite, intense dark eyes, and numerous scars across his body and face. He wears minimal clothing—typically just pants and heavy boots—displaying his massive frame without constraint.",
+      "personality": [
+        "Aggressive: actively seeks combat and views fighting as the primary problem-solving method",
+        "Honorable: respects worthy opponents and fights with professional codes about challenge and legitimate conquest",
+        "Emotionally direct: expresses feelings openly; his grief over deaths of Troupe members is visible and genuine",
+        "Confident bordering on arrogant: believes his strength is unquestionable and is shocked when challenged by comparable opponents"
+      ],
+      "hiddenInfo": "Uvogin is the Troupe's #11 and arguably its most physically powerful member—a mountain of muscle and aura whose enhancement capability borders on superhuman. His Nen category is Enhancement, and his signature ability is Big Bang Impact—a technique where he throws a massive punch that creates a shockwave of destructive force capable of obliterating buildings and vast areas. The ability's power scales with his emotional intensity; his most powerful strikes occur when he fights for revenge or to defend Troupe honor. Uvogin's emotional investment in the Troupe is genuine; he forms real bonds with members and grieves their deaths sincerely. His fatal vulnerability: Uvogin dies at the end of the Yorknew City arc, defeated by Kurapika's Judgment Chain ability. During their confrontation, Kurapika's Scarlet Eyes activate (triggered by Uvogin being a Troupe member), transforming Kurapika into a Specialist capable of sealing Uvogin's Nen permanently. Uvogin cannot adapt or escape the curse; he dies bound by chains that prevent his aura from flowing. His death devastates Nobunaga and marks the first major Troupe casualty in the narrative. ARC VALIDITY: A1-A4 active and operational; A4 end dies to Kurapika's Judgment Chain curse; A5-A8 dead, never appears.",
+      "abilities": [
+        "Big Bang Impact Shockwave: Uvogin throws a devastating punch that creates a massive shockwave extending far beyond his physical reach. The attack obliterates structures and causes devastating area damage.",
+        "Impact Scaling: The power of Big Bang Impact scales with Uvogin's emotional intensity. Defensive or revenge-motivated strikes achieve maximum power.",
+        "Enhanced Durability: As an Enhancer, Uvogin reinforces his entire body with aura, making him nearly impervious to physical trauma and capable of surviving impacts that would destroy normal humans.",
+        "Overwhelming Strength: Uvogin's baseline physical strength exceeds virtually all other fighters; he can carry or throw objects of impossible weight and destroy barriers through brute force.",
+        "Aggressive Presence: Uvogin's sheer physical dominance creates psychological pressure on opponents; his appearance alone intimidates.",
+        "\nfighting style: Uvogin charges directly at opponents using Big Bang Impact repeatedly, trusting his overwhelming strength and durability to overwhelm resistance. He does not employ subtle tactics or complex strategy; he simply applies more force than opponents can withstand. Against weaker opponents, he crushes them with minimal effort. Against comparable strength opponents, he demonstrates technical skill and controlled strikes. He becomes frustrated against opponents who evade rather than engage, as his combat style depends on direct confrontation. His emotional nature makes him predictable for opponents who understand how to provoke him. His greatest strength is his raw destructive power; his greatest weakness is his reliance on direct engagement against opponents capable of sealing his Nen or preventing impact damage through defensive techniques."
+      ],
+      "tier": "mythic",
+      "level": 15,
+      "hpMax": 124,
+      "known": true,
+      "voiceTag": "male deep intense"
+    },
+    "Bonolenov Ndongo": {
+      "name": "Bonolenov Ndongo",
+      "type": "Nen Professional",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Phantom Troupe",
+      "basicInfo": "A warrior-dancer whose entire body is wrapped in bandages and whose Nen abilities manifest through musical performance, Bonolenov is an enigmatic figure suggesting hidden depths beneath layers of cloth. He appears as a heavily-bandaged figure with only his eyes visible through gaps in the wrappings; his exact physical form remains concealed. He moves with fluid, rhythmic grace suggesting dance or martial discipline despite the restrictive bandaging.",
+      "personality": [
+        "Mysterious: deliberately conceals personal information and true identity; little is known about his background or motivations",
+        "Artistic: views combat as performance art; his Nen abilities manifest through musical and rhythmic expression",
+        "Disciplined: maintains rigorous protocols about his body, bandaging, and ritual preparation for combat",
+        "Socially distant: interacts minimally with other Troupe members; his communication is sparse and formal"
+      ],
+      "hiddenInfo": "Bonolenov is the Troupe's #10 and one of its most mysterious members. His Nen category is Conjuration, and his signature ability is Battle Cantabile—a technique where his body piercings function as wind instruments that produce sounds capable of manifesting conjured constructs (notably Jupiter, a massive conjured planet). Each piercing produces different notes; coordinated playing creates complex conjurations with devastating power. The exact mechanism by which sound translates to conjured matter remains unclear, suggesting Bonolenov comes from a non-standard Nen tradition. His bandaging serves both practical and philosophical purposes—it protects his body and conceals his true appearance. His background is deliberately vague; he is known primarily through his actions rather than personal revelation. ARC VALIDITY: A1-A4 active and operational; A5-A7 continues membership; A8 aboard Black Whale hunting Hisoka.",
+      "abilities": [
+        "Battle Cantabile Instrument Piercings: Bonolenov's body piercings function as wind instruments, each producing distinct musical notes that manifest conjured constructs through sound.",
+        "Jupiter Conjuration: By coordinating multiple piercings in specific patterns, Bonolenov can conjure Jupiter—a massive planet-sized construct capable of devastating area attacks.",
+        "Sound-Based Manifestation: The relationship between musical sound and conjured matter is non-standard, suggesting Bonolenov's Nen training comes from an unconventional tradition.",
+        "Bandage Integration: Bonolenov's bandages function as part of his Nen combat system; he can manipulate them as additional weapons or defensive tools.",
+        "Mystical Resilience: Despite his apparently fragile bandaged appearance, Bonolenov is physically durable, suggesting internal reinforcement or Nen-based body modification.",
+        "\nfighting style: Bonolenov maintains distance while playing his piercings to conjure battlefield-altering constructs. He coordinates different piercing combinations to create layered defenses and offensive manifestations. Against opponents who prevent him from playing, he transitions to close-combat using bandage manipulation and physical techniques. His combat philosophy emphasizes environmental control and conjured superiority rather than personal physical prowess. His greatest strength is his devastating Jupiter ability; his greatest weakness is his reliance on uninterrupted playing—opponents who disrupt his sound production can neutralize his primary offense."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 108,
+      "known": true,
+      "voiceTag": "male mysterious low"
+    },
+    "Kortopi": {
+      "name": "Kortopi",
+      "type": "Nen Professional",
+      "currentLocation": "Cemetery Building",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Phantom Troupe",
+      "basicInfo": "A diminutive figure whose unassuming appearance masks exceptional Nen capability, Kortopi is a small man with a mop-like head of unkempt hair, dark skin, innocent-seeming features, and a body that suggests youth or underdevelopment. He typically wears simple, casual clothing—a loose shirt and simple pants—presenting an almost childlike appearance that belies his lethal Nen mastery.",
+      "personality": [
+        "Quiet: speaks minimally and observes more than participates in group dynamics",
+        "Focused: maintains concentration on specific tasks; he approaches objectives with tunnel-vision dedication",
+        "Socially awkward: struggles with casual conversation and social cues; his interactions are stilted and uncomfortable",
+        "Proud of craft: displays subtle pride in his copying ability, though he rarely boasts or claims credit"
+      ],
+      "hiddenInfo": "Kortopi is the Troupe's #12 and its specialist in copying and counterfeiting. His Nen category is Conjuration, and his signature ability is Gallery Fake—a technique allowing him to create perfect 24-hour copies of any object he touches with his left hand. The copy possesses all properties of the original and functions identically; after 24 hours, the copy dissipates. The original must be touched by his left hand to initiate copying; his right hand is used to produce the copy. This mechanic creates powerful applications for currency duplication, artifact creation, and deception. Kortopi's fatal vulnerability: he is murdered during the Succession War arc (A8) by the revived Hisoka, who targets him as part of his systematic destruction of the Troupe. Kortopi's death, alongside Shalnark's, marks Hisoka's serious campaign of revenge against the organization. Kortopi's small, unassuming nature makes his death particularly poignant—he was never a major threat to Hisoka, yet he is eliminated regardless, demonstrating Hisoka's systematic brutality. ARC VALIDITY: A1-A4 active and operational; A5-A7 continues membership; A8 early only (dies mid-arc to Hisoka, murdered, does not appear thereafter).",
+      "abilities": [
+        "Gallery Fake Copying: Kortopi can touch an object with his left hand and conjure a perfect 24-hour duplicate from his right hand. The duplicate possesses all properties of the original and is functionally identical.",
+        "Object Duplication Versatility: Gallery Fake works on any object—currency, artifacts, weapons, complex mechanisms—allowing Kortopi to create duplicates of nearly anything.",
+        "Time-Limited Copies: Each duplicate automatically dissipates after exactly 24 hours, creating a temporal limitation that requires frequent recopying.",
+        "Perfect Reproduction: The copies are perfect in every way—they fool detection methods, pass physical tests, and function exactly as originals.",
+        "Rapid Deployment: Kortopi can create multiple copies in succession, allowing him to produce large quantities of duplicated material.",
+        "\nfighting style: Kortopi is not a combat specialist; his value lies entirely in his copying ability. In direct combat, he is vulnerable—he lacks combat training and physical conditioning. He typically avoids confrontation and relies on other Troupe members for protection during dangerous situations. His Gallery Fake ability can be weaponized (copying weapons or explosives), but he is not skilled at direct application. His greatest strength is his utility value—his ability enables the Troupe's financial independence and logistical flexibility. His greatest weakness is his personal fragility; a direct fighter of modest capability can eliminate him in personal combat."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 100,
+      "known": true,
+      "voiceTag": "male soft quiet"
     }
   },
   "premadeCharacters": [],
