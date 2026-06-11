@@ -1,3 +1,248 @@
 {
-  "premadeCharacters": []
+  "premadeCharacters": [
+    {
+      "name": "Gon Freecss (Hunter Exam)",
+      "gender": "male",
+      "description": "A boy from Whale Island with an infectious smile and unwavering determination. Gon left his home to become a Hunter and find his father, Ging Freecss, whose shadow stretches across his entire life. He is physically fit from years of island living but completely untrained in Nen—yet examiners immediately recognize his extraordinary natural potential. His optimism borders on recklessness; he trusts instinctively and acts without calculation. He forms instant bonds with those around him and would sacrifice anything for those he calls friends. Gon's Nen category (Enhancement) and his signature technique (Jajanken—Rock, Paper, Scissors channeled through pure aura) remain dormant, waiting for proper training. This is the Hunter Exam era: a 12-year-old boy at the threshold of legend, not yet knowing what he will become.",
+      "traits": [
+        "Nen-Unawakened",
+        "Undivined",
+        "No Hatsu Yet",
+        "Rookie Hunter Applicant"
+      ],
+      "replacesNpc": "Gon Freecss"
+    },
+    {
+      "name": "Gon Freecss (Chimera Ant)",
+      "gender": "male",
+      "description": "A young hunter transformed by despair and sacrifice. Years of adventure and power-building have awakened Gon's Nen fully. He channels Enhancement with masterful precision, his aura amplifying his body into a weapon. His signature Jajanken—Rock, Paper, Scissors—grew from simple technique into legendary martial art: Rock crushes with pure force, Paper flexes with defensive aura-weaving, Scissors cuts with devastating precision. But at the arc's climax, Gon made a vow that aged him into an adult Nen user capable of defeating Neferpitou—the Royal Guard who killed his mentor Kite. The cost was catastrophic: he spent his aura entirely, collapsing into comatose recovery with his full potential burned away in a single moment. This is not the optimistic boy anymore. This is what determination looks like at its absolute breaking point. ARC VALIDITY: post-Election era, Chimera Ant resolution and beyond.",
+      "traits": [
+        "Nen Adept",
+        "Enhancer",
+        "Hatsu: Jajanken",
+        "Licensed Hunter",
+        "Vow: Sworn Nemesis"
+      ],
+      "replacesNpc": "Gon Freecss"
+    },
+    {
+      "name": "Killua Zoldyck (Hunter Exam)",
+      "gender": "male",
+      "description": "The youngest Zoldyck heir and a prodigy assassin who walks away from everything. Killua is pale-skinned with distinctive white hair, large violet-blue eyes, and a deceptive boyish charm that masks a killer trained since infancy. He left the family to find his own path, but he carries the conditioning deep in his bones—and a Nen needle implanted in his brain by his eldest brother Illumi, a control mechanism he doesn't yet know exists. Killua's greatest strength is his loyal friendship with Gon, which becomes the catalyst for psychological liberation. His Nen category (Transmutation) lets him reshape aura into electricity, granting lightning-fast reflexes and stunning capability. But at the Exam's end, he is still untrained, still unknowingly controlled, still not fully himself. His needle remains in his head; his true potential sleeps. This is a brilliant, sarcastic boy caught between family and freedom, not yet aware of the chains around him.",
+      "traits": [
+        "Nen-Unawakened",
+        "Undivined",
+        "No Hatsu Yet",
+        "Zoldyck-Trained Assassin"
+      ],
+      "replacesNpc": "Killua Zoldyck"
+    },
+    {
+      "name": "Killua Zoldyck (Chimera Ant)",
+      "gender": "male",
+      "description": "A young assassin fully awakened to his potential and liberated from his chains. By the Chimera Ant arc, Killua's needle has been removed, unleashing his complete Nen mastery. His Transmutation transforms aura into electricity—and he has developed Godspeed, a forbidden technique that elevates him beyond human limits. Godspeed channels electricity through his nervous system, granting supernatural speed and reflex-reading capability; he can move and react faster than enemy perception allows. His lightning aura becomes visible as a corona of dancing electricity; his movements blur into invisibility. Killua is no longer the boy controlled by his family—he is the liberated prodigy, his loyalty now wholly devoted to Gon. He fights with assassin precision and overwhelming speed, capable of slaughtering threats that would terrify normal hunters. But underneath the power lies a young man still learning what it means to choose his own path, to act from desire rather than conditioning.",
+      "traits": [
+        "Nen Adept",
+        "Transmuter",
+        "Hatsu: Lightning Aura",
+        "Zoldyck-Trained Assassin"
+      ],
+      "replacesNpc": "Killua Zoldyck"
+    },
+    {
+      "name": "Kurapika",
+      "gender": "male",
+      "description": "A survivor of genocide and the last of his tribe, Kurapika carries a vow written in blood. Five years before the Hunter Exam, the Phantom Troupe slaughtered the Kurta clan and stole their Scarlet Eyes for the black market—a crime that killed everyone he loved. Kurapika became a Hunter to find the Troupe members and reclaim the eyes of his people. His Nen category is Conjuration, but his Scarlet Eyes unlock a hidden potential: when enraged, they glow crimson and grant him Specialist-level abilities forbidden to normal Conjurers. His signature technique—Chains of the Kurta—manifests five conjured chains that can bind, interrogate, and even execute with supernatural precision. Emperor Time allows him to activate all four advanced Nen applications (Gyo, Shu, In, Ken) simultaneously, burning his aura at terrifying rates but granting superhuman capability. Kurapika is controlled, methodical, and emotionally compartmentalized—a young man who turned grief into purpose. His vow is unbreakable: to hunt the Troupe until every member is accounted for and every stolen eye is returned. This is not a hero's journey. This is vengeance given the shape of law.",
+      "traits": [
+        "Nen Practitioner",
+        "Conjurer",
+        "Hatsu: Chains of the Kurta",
+        "Kurta Survivor",
+        "Vow: Sworn Nemesis"
+      ],
+      "replacesNpc": "Kurapika"
+    },
+    {
+      "name": "Leorio Paladiknight",
+      "gender": "male",
+      "description": "A young man driven by idealism and an aching debt. Leorio became a Hunter to earn money for medical school and cure his poverty—his childhood friend died from a disease he couldn't afford to treat, and Leorio swore he would not let that happen again. He is rough, loud, hot-blooded, and prone to anger, but his core is genuine compassion. Unlike the other Hunter Exam applicants, Leorio does not seek power for its own sake; he seeks the financial security that Hunterdom provides. His Nen category (Emission) lets him project aura outward, and he developed Remote Punch—a technique that channels his aura into a distant strike, allowing him to punch opponents from outside arm's reach. It is straightforward, effective, and utterly without artifice—much like Leorio himself. He is the moral compass of his friend group, often the one who questions dangerous choices and argues for caution. Later in his career, he becomes a member of the Zodiacs and joins the chairmanship election as a candidate. This is a man whose strength comes not from ruthlessness but from caring deeply about people, even when the world punishes him for it.",
+      "traits": [
+        "Nen Initiate",
+        "Emitter",
+        "Hatsu: Remote Punch",
+        "Rookie Hunter Applicant"
+      ],
+      "replacesNpc": "Leorio Paladiknight"
+    },
+    {
+      "name": "Hisoka Morow",
+      "gender": "male",
+      "description": "A predatory magician and professional killer wearing a clown's smile. Hisoka is among the world's most dangerous Nen users—a Nen Master whose Transmutation reshapes his aura into Bungee Gum, a substance that is simultaneously rubber and adhesive gum. Bungee Gum clings to opponents, stretches with impossible elasticity, and can be shaped into traps, slingshots, or binding restraints. He can attach it to his palms and feet, granting him superhuman mobility and control. Hisoka appears at Hunter Exams as a recurring participant, testing applicants and enjoying their terror as entertainment. He is beautiful, graceful, and utterly sociopathic—his smile reveals too many teeth; his laugh echoes wrong. He kills for pleasure, collects strong opponents like trophies, and views the world as a stage for his amusement. He is fascinated by raw potential and becomes obsessed with hunting down Gon and Kurapika as they grow stronger. Hisoka is not evil in the traditional sense; he is amoral, living entirely by his own appetites. He is a wild card in any narrative—unpredictable, charming, and absolutely lethal.",
+      "traits": [
+        "Nen Master",
+        "Transmuter",
+        "Hatsu: Bungee Gum",
+        "Arena Fighter"
+      ],
+      "replacesNpc": "Hisoka Morow"
+    },
+    {
+      "name": "Illumi Zoldyck",
+      "gender": "male",
+      "description": "The eldest Zoldyck heir and a true master of the family's assassination craft. Illumi is pale, elegant, and disturbingly serene—his black hair hangs long and straight; his eyes are dark and calculating. He appears almost doll-like, as if carved from porcelain and set in motion by invisible strings. Illumi's Nen category is Manipulation, and his signature technique—Needle People—allows him to conjure and control an army of aura needles. He uses these needles for devastating ranged attacks and for inserting into victims' brains, creating control mechanisms that suppress will and force obedience. He implanted one such needle in his youngest brother Killua's head at infancy, using it to manipulate him for years until Killua's liberation. Illumi views people as tools to be controlled or discarded. He appears throughout multiple arcs as an antagonist to Killua's freedom, representing the Zoldyck family's relentless grasp. His Nen mastery is absolute; his morality is absent. He is a perfect killer raised by perfect killers, incapable of viewing life as anything but a hierarchy of predators and prey.",
+      "traits": [
+        "Nen Master",
+        "Manipulator",
+        "Hatsu: Needle People",
+        "Zoldyck-Trained Assassin"
+      ],
+      "replacesNpc": "Illumi Zoldyck"
+    },
+    {
+      "name": "Isaac Netero",
+      "gender": "male",
+      "description": "The 12th Chairman of the Hunter Association and a living legend whose power defines an era. Isaac Netero is an elderly man of incredible vitality, his body still honed despite decades of age. He is the strongest Nen user of his generation—an Enhancer whose aura transcends normal limits. His signature technique, 100-Type Guanyin Bodhisattva, summons a colossal conjured deity with one hundred arms around his body. Each arm moves at blinding speed—faster than perception, faster than defense—channeled through a discipline of prayer and meditation that borders on the mystical. His Hatsu is not merely powerful; it is metaphysically devastating. Netero commands absolute respect from the Hunter Association and fear from enemies across the world. He is wise, playful, and deceptively kind—he genuinely cares about the next generation of hunters and mentors promising applicants. Yet he is also ruthless and willing to sacrifice thousands for greater goods. His life is built on a vow of ascetic discipline, spending every morning in ritual prayer to fuel his legendary technique. Netero dies in the Chimera Ant arc, but his legend defines the world until his final breath.",
+      "traits": [
+        "Nen Master",
+        "Enhancer",
+        "Hatsu: 100-Type Guanyin Bodhisattva",
+        "Licensed Hunter",
+        "Vow: Ascetic's Discipline"
+      ],
+      "replacesNpc": "Isaac Netero"
+    },
+    {
+      "name": "Satotz",
+      "gender": "male",
+      "description": "A stern examiner of the Hunter Association whose face is hidden behind a large beak-like mask, concealing burn scars from an unknown tragedy. Satotz is a Nen Practitioner and an Enhancer with a developing signature technique focused on Enhancement. He is methodical, professional, and utterly devoted to the Association's standards. Satotz proctors the physical trials of the Hunter Exam with precision—he leads applicants through dangerous terrain, tests their resolve, and eliminates those who cannot keep pace. His Hatsu emphasizes amplification and aura control; he is still refining its form and application, pushing its boundaries through constant practice. Unlike the more colorful examiners (Menchi and Buhara), Satotz is quiet and observant, noting character flaws and hidden potential with equal thoroughness. He appears across multiple arcs as a Hunter Association staff member, always professional, always watching.",
+      "traits": [
+        "Nen Practitioner",
+        "Enhancer",
+        "Developing Hatsu (Enhancement)",
+        "Hunter Association Staff"
+      ],
+      "replacesNpc": "Satotz"
+    },
+    {
+      "name": "Menchi",
+      "gender": "female",
+      "description": "A food-expert examiner whose passion for cuisine borders on obsession. Menchi is a licensed hunter and Nen Practitioner with a Transmuter's category. She developed a Hatsu focused on Transmutation—likely related to her expertise in cooking and food preparation, though the specifics are known only to her. She administers the cooking trial of the Hunter Exam, a test that seems deceptively simple until applicants realize they are being judged not on technical skill but on their willingness to adapt, improvise, and feed others. Menchi is cheerful, energetic, and surprisingly kind, though her standards are exacting. She treats food preparation as a spiritual practice—not merely about sustenance but about understanding ingredients, respecting sources, and nourishing those who consume what you create. Her Nen mastery serves these values; she channels her Nen into creating better food, stronger meals, and more meaningful cuisine.",
+      "traits": [
+        "Nen Practitioner",
+        "Transmuter",
+        "Developing Hatsu (Transmutation)",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Menchi"
+    },
+    {
+      "name": "Buhara",
+      "gender": "male",
+      "description": "A massive examiner whose enormous frame belies a thoughtful nature. Buhara is a licensed hunter and Nen Practitioner with an Enhancer's category and a developing signature technique. He is passionate about food in his own way—his massive appetite is legendary, and his trial of the Hunter Exam involves hunting and retrieving rare beasts and fish from dangerous waters. Buhara views hunting as a fundamental test of survival instinct; he believes that any hunter worth the license must be capable of finding, catching, and securing food in the field. His Hatsu focuses on Enhancement—amplifying his already prodigious strength and durability to superhuman levels, allowing him to dive deeper, swim faster, and haul larger catches than any ordinary person could manage. Buhara is kind and fair, though his trials are genuinely dangerous. He takes pride in identifying hunters who understand that the Hunter license is not a prize but a responsibility.",
+      "traits": [
+        "Nen Practitioner",
+        "Enhancer",
+        "Developing Hatsu (Enhancement)",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Buhara"
+    },
+    {
+      "name": "Lippo",
+      "gender": "male",
+      "description": "A Hunter Association staff member and examiner who oversees administrative and logistical aspects of the Hunter Exam. Lippo is a Nen Practitioner with a Manipulator's category and a developing Hatsu focused on Manipulation. He likely channels his Nen into organizing, controlling, and managing the complex mechanisms of the exam itself—controlling the movements of participants, managing the logistics of trials, and using his Nen to influence external systems. Lippo is professional and bureaucratic, embodying the Hunter Association's organizational machine. He is less flamboyant than other examiners but equally capable in his domain. His Hatsu remains a work in progress, refined through years of administrative application and the constant small challenges of managing hundreds of applicants across multiple trials.",
+      "traits": [
+        "Nen Practitioner",
+        "Manipulator",
+        "Developing Hatsu (Manipulation)",
+        "Hunter Association Staff"
+      ],
+      "replacesNpc": "Lippo"
+    },
+    {
+      "name": "Hanzo",
+      "gender": "male",
+      "description": "A shinobi from the hidden nation of Jappon and an applicant at the Hunter Exam. Hanzo is lean, disciplined, and utterly lethal despite his youth. He is trained in ninjutsu—the stealth arts of assassination and reconnaissance—and his Nen category is Conjuration. His developing Hatsu focuses on Conjuration, likely manifesting through ninja-inspired techniques involving summoning weapons, creating barriers, or conjuring tools of stealth and combat. Hanzo fights with precision and honor; he refuses to kill an unresisting opponent during the exam tournament, choosing instead to demonstrate his superiority and force a concession. This choice costs him advancement but reveals his moral code: he values proving his skill over mere victory. Hanzo becomes a beloved figure to players partly because he is genuinely honorable in a world that often rewards ruthlessness. His Nen mastery is solid, his ninja training unmatched, and his character arc is one of growth through principle rather than power.",
+      "traits": [
+        "Nen Practitioner",
+        "Conjurer",
+        "Developing Hatsu (Conjuration)",
+        "Civilian Prodigy"
+      ],
+      "replacesNpc": "Hanzo"
+    },
+    {
+      "name": "Pokkle",
+      "gender": "male",
+      "description": "A young Hunter Exam applicant with genuine talent and genuine heart. Pokkle is a Nen Initiate—newly awakened to Nen's possibilities—with an Emitter's category. His developing Hatsu focuses on Emission, though his technique remains nascent and unrefined. He is earnest, kind, and perhaps too trusting for a world that demands ruthlessness. Pokkle forms bonds with others at the exam, competing not out of ambition but out of desire to test himself and grow stronger. He survives the exam and goes on to become a licensed hunter, but the Chimera Ant arc is cruel to him. As the world descends into chaos during the ant invasion, Pokkle is captured and becomes food for the ants—a grim fate that underscores the series' willingness to punish good intentions. This premade offers a player the chance to experience a good-hearted hunter at the exam's beginning, before the world's darkness claims him.",
+      "traits": [
+        "Nen Initiate",
+        "Emitter",
+        "Developing Hatsu (Emission)",
+        "Rookie Hunter Applicant"
+      ],
+      "replacesNpc": "Pokkle"
+    },
+    {
+      "name": "Ponzu",
+      "gender": "female",
+      "description": "A young woman applicant at the Hunter Exam who is cheerful, resourceful, and deceptively capable. Ponzu is a Nen Initiate with a Manipulator's category and a developing Hatsu focused on Manipulation. She uses her Nen to command insects—particularly a swarm of venomous wasps—turning them into extensions of her will. This technique is creative and pragmatic; she uses her insects for reconnaissance, defense, and offense, demonstrating a playful flexibility in combat. Ponzu is friendly and open, often serving as a social bridge between exam applicants who might otherwise remain isolated. She survives the exam and becomes licensed, but like Pokkle, she faces a tragic end in the Chimera Ant arc. Her death—along with Pokkle's—emphasizes that this world is dangerous, that good people can die meaninglessly, and that the Hunter Association's approval is no guarantee of survival. She represents the optimism of youth in a series that refuses to protect the innocent.",
+      "traits": [
+        "Nen Initiate",
+        "Manipulator",
+        "Developing Hatsu (Manipulation)",
+        "Rookie Hunter Applicant"
+      ],
+      "replacesNpc": "Ponzu"
+    },
+    {
+      "name": "Tonpa",
+      "gender": "male",
+      "description": "The 36-time Hunter Exam veteran and the world's most persistent failure. Tonpa applies to the exam year after year, hoping to pass but never succeeding. He is Nen-Unawakened, a fact that should disqualify him from ever passing a Nen-heavy exam—yet he keeps trying. Tonpa's only apparent skill is sabotage: he poisons other applicants, spreads rumors, and uses psychological manipulation to undermine his competition. He is deceitful, cowardly, and genuinely unlikeable. Yet playing as Tonpa offers something unique: the chance to experience the Hunter Exam as a deliberately weak character with no special powers, minimal training, and only cunning and ruthlessness to lean on. This premade challenges players to succeed through intelligence and adaptation rather than power, to succeed *despite* weakness. It is a deliberately difficult run, a joke character who becomes profound through the lens of desperation. Tonpa wants power; he doesn't have it. So he breaks others to get ahead. Whether that path leads to anything but misery is left to the player.",
+      "traits": [
+        "Nen-Unawakened",
+        "Undivined",
+        "No Hatsu Yet",
+        "Rookie Hunter Applicant"
+      ],
+      "replacesNpc": "Tonpa"
+    },
+    {
+      "name": "Wing",
+      "gender": "male",
+      "description": "A teacher and genuine mentor of the Heavens Arena, Wing is a Nen Adept with an Enhancer's category and a developing Hatsu focused on Enhancement. He is honest, patient, and deeply committed to teaching the next generation of Nen users. Unlike many Heavens Arena regulars, Wing does not use the arena to test himself against challengers or to dominate opponents for pride. Instead, he views it as a classroom where he can train younger hunters in the foundational techniques of Nen. He teaches Water Divination honestly, revealing the truth behind Ten, Ren, and Hatsu without hiding dangerous details or limiting knowledge. Wing's Nen mastery is solid and refined; his Hatsu remains in development because his primary focus is on teaching others rather than on advancing his own technique. He becomes a father figure to Gon and Killua, demonstrating what genuine mentorship looks like in a world often lacking it. His character arc emphasizes that strength is not merely about power but about wisdom, patience, and the willingness to lift others up.",
+      "traits": [
+        "Nen Adept",
+        "Enhancer",
+        "Developing Hatsu (Enhancement)",
+        "Hunter Association Staff"
+      ],
+      "replacesNpc": "Wing"
+    },
+    {
+      "name": "Zushi",
+      "gender": "male",
+      "description": "A young arena fighter and an apprentice of Wing, Zushi is a Nen Initiate with an Enhancer's category. He is earnest, hardworking, and eager to improve his Nen mastery. Zushi has not yet awakened his Hatsu—his focus is on solidifying his foundational techniques and learning the control that separates amateurs from professionals. He trains constantly under Wing's guidance, pushing himself through rigorous practice. Zushi's greatest weakness is his lack of experience; his greatest strength is his teachability and his discipline. He becomes a sparring partner for Gon and Killua at the arena, offering the chance to fight someone at a similar level—peers rather than overwhelming masters or helpless novices. Zushi represents the journey of growth for younger hunters, the grinding work of improvement that happens away from dramatic battle sequences. Playing as Zushi means starting weak but with the genuine potential to improve, supported by a mentor who cares.",
+      "traits": [
+        "Nen Initiate",
+        "Enhancer",
+        "No Hatsu Yet",
+        "Arena Fighter"
+      ],
+      "replacesNpc": "Zushi"
+    },
+    {
+      "name": "Kastro",
+      "gender": "male",
+      "description": "A formidable arena fighter and a Nen Adept with an Enhancer's category. Kastro developed Tiger Bite Double, a Hatsu technique that creates an autonomous aura duplicate of his body, granting him the ability to fight as two simultaneous opponents. His signature move is Tiger Bite Fist—a devastating enhanced strike that combines his physical strength with aura amplification. Kastro is proud, competitive, and genuinely talented. However, his pride becomes his downfall: he attempts his Double technique against Hisoka, unaware that Hisoka's Transmutation and analytical mind can counter aura duplicates. The duel becomes tragic—Kastro's memory coordination between original and duplicate fails under pressure, disorienting him. He is defeated and humiliated by Hisoka, a defeat that defines his character arc. Kastro made a vow to himself—Vow: Announce the Kill—binding his pride to his combat style. Playing as Kastro offers the chance to experience a genuinely skilled fighter whose confidence becomes his curse, whose technique is real but whose limitations are fatal.",
+      "traits": [
+        "Nen Adept",
+        "Enhancer",
+        "Hatsu: Tiger Bite Double",
+        "Arena Fighter",
+        "Vow: Announce the Kill"
+      ],
+      "replacesNpc": "Kastro"
+    }
+  ]
 }
