@@ -1,0 +1,179 @@
+{
+  "skills": {
+    "Ten": {
+      "name": "Ten",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "The foundational aura technique: maintaining the protective envelope of your life force around your body at all times. Mastery of Ten allows a Nen user to sustain their aura as a constant, invisible shield against harm. A skilled practitioner of Ten becomes almost untouchable to those without Nen mastery.",
+      "startingItems": []
+    },
+    "Zetsu": {
+      "name": "Zetsu",
+      "attribute": "agility",
+      "type": "nen",
+      "description": "The art of complete aura suppression and concealment: sealing your life force entirely to become invisible to other Nen users and to hide your presence. While Zetsu is active, you gain stealth and cannot be sensed by aura detection. However, this suppression leaves you defenseless against Nen techniques and any incoming damage bypasses your aura guard entirely.",
+      "startingItems": []
+    },
+    "Ren": {
+      "name": "Ren",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "Aura amplification through conscious expansion: opening your aura envelope fully to maximize your combat output and physical power. Activating Ren grants a significant boost to damage and ability effectiveness but drains your aura reserves steadily while the technique is maintained. Masters of Ren can overwhelm opponents through sheer aura intensity.",
+      "startingItems": []
+    },
+    "Hatsu": {
+      "name": "Hatsu",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "The projection of your aura into a unique personal technique reflecting your spirit and nature. Hatsu is the true art of Nen mastery—the ability to create and manifest your own signature ability drawn from your willpower. Your facility with Hatsu depends on your native Nen category, with off-category techniques suffering efficiency loss and strain.",
+      "startingItems": []
+    },
+    "Enhancement": {
+      "name": "Enhancement",
+      "attribute": "strength",
+      "type": "nen",
+      "description": "The Enhancer's gift: infusing your aura into your body and objects to amplify their natural properties. Enhancement hardens your muscles, sharpens your reflexes, and strengthens whatever you touch. This is the most direct and efficient path of Nen, turning the body itself into a weapon of devastation.",
+      "startingItems": []
+    },
+    "Transmutation": {
+      "name": "Transmutation",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "The art of changing your aura's fundamental qualities to mimic or create new properties. Transmutation allows a Nen user to reshape their aura into something wholly different: fire, electricity, liquid, or abstract forces. A master of Transmutation can replicate the effects of external phenomena entirely through aura manipulation.",
+      "startingItems": []
+    },
+    "Conjuration": {
+      "name": "Conjuration",
+      "attribute": "intellect",
+      "type": "nen",
+      "description": "The power to materialize permanent or semi-permanent objects from pure aura. Conjuration requires immense mental discipline and memorization of the object's structure. A skilled Conjurer can summon weapons, tools, or artifacts that exist as long as their aura sustains them. Breaking a conjured item or dispelling it wastes the aura instantly.",
+      "startingItems": []
+    },
+    "Emission": {
+      "name": "Emission",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "The technique of projecting and controlling your aura away from your body. Emission allows you to hurl aura blasts, create distance attacks, and maintain aura in the world independently. Masters of Emission strike from afar with lethal precision, their aura obeying their will even as it separates from their flesh.",
+      "startingItems": []
+    },
+    "Manipulation": {
+      "name": "Manipulation",
+      "attribute": "intellect",
+      "type": "nen",
+      "description": "The ability to control and command objects or beings with your aura once it has touched them. Manipulation transforms your willpower into invisible strings that obey your consciousness. A skilled Manipulator can animate puppets, restrain enemies, or seize control of the battlefield through sheer force of intellect.",
+      "startingItems": []
+    },
+    "Specialization": {
+      "name": "Specialization",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "The most enigmatic category of Nen: unique powers that defy the other five principles and operate by their own mysterious rules. Specialists transcend the normal hexagon of Nen and are governed by conditions, vows, and personal limitations that unlock abilities beyond normal understanding. A Specialist's power is as unpredictable as it is potent.",
+      "startingItems": []
+    },
+    "Martial Arts": {
+      "name": "Martial Arts",
+      "attribute": "strength",
+      "type": "combat",
+      "description": "Disciplined training in unarmed combat, striking, and physical technique. Martial Arts grants mastery over your body as a weapon, teaching you how to channel your strength through proper form and striking patterns. A skilled martial artist can fell opponents with their bare hands; combined with Nen enhancement, they become unstoppable forces.",
+      "startingItems": []
+    },
+    "Weapon Mastery": {
+      "name": "Weapon Mastery",
+      "attribute": "agility",
+      "type": "combat",
+      "description": "Proficiency with swords, axes, spears, and other martial implements. Weapon Mastery teaches you how to handle any blade or blunt instrument with speed and precision, extending your striking range and damage. A master of weapons turns their tool into an extension of their intent.",
+      "startingItems": []
+    },
+    "Assassination Techniques": {
+      "name": "Assassination Techniques",
+      "attribute": "agility",
+      "type": "combat",
+      "description": "Specialized training in lethal strikes, vital targeting, and disabling wounds. Assassination Techniques grant you knowledge of weak points in anatomy and the precision to strike them with deadly intent. You can incapacitate or eliminate targets quickly and quietly, turning combat into surgical execution.",
+      "startingItems": []
+    },
+    "Stealth": {
+      "name": "Stealth",
+      "attribute": "agility",
+      "type": "none",
+      "description": "The art of moving unseen and unheard through any environment. Stealth teaches you how to control your footfalls, manage shadows and sightlines, and blend seamlessly into surroundings. A skilled practitioner can walk through crowded areas unnoticed or traverse enemy territory unseen.",
+      "startingItems": []
+    },
+    "Acrobatics": {
+      "name": "Acrobatics",
+      "attribute": "agility",
+      "type": "none",
+      "description": "Mastery of movement, tumbling, and physical control through the air and over obstacles. Acrobatics grants you balance, coordination, and the ability to perform impossible feats of movement. You can scale walls, flip over hazards, and dodge incoming attacks with breathtaking grace.",
+      "startingItems": []
+    },
+    "Perception": {
+      "name": "Perception",
+      "attribute": "intellect",
+      "type": "none",
+      "description": "Keen awareness of your surroundings and heightened sensitivity to detail. Perception allows you to notice hidden clues, track movement, and sense danger before it arrives. A skilled observer can read a room in seconds and extract meaning from the smallest tells.",
+      "startingItems": []
+    },
+    "Tracking": {
+      "name": "Tracking",
+      "attribute": "intellect",
+      "type": "knowledge",
+      "description": "The skill of following trails, reading signs, and pursuing targets across any terrain. Tracking teaches you to interpret footprints, scents, disturbances in vegetation, and behavioral patterns. A master tracker can follow prey across deserts, forests, and cities alike.",
+      "startingItems": []
+    },
+    "Survival": {
+      "name": "Survival",
+      "attribute": "endurance",
+      "type": "knowledge",
+      "description": "Knowledge of wilderness navigation, shelter building, foraging, and enduring harsh conditions. Survival grants you the ability to sustain yourself in remote or dangerous environments through resourcefulness and toughness. You can thrive where others would perish.",
+      "startingItems": []
+    },
+    "First Aid": {
+      "name": "First Aid",
+      "attribute": "intellect",
+      "type": "knowledge",
+      "description": "Medical knowledge of wound treatment, poison remediation, and emergency care. First Aid allows you to stabilize dying allies, restore health to the injured, and counter common afflictions. A skilled healer can snatch victory from the jaws of death.",
+      "startingItems": []
+    },
+    "Tactics": {
+      "name": "Tactics",
+      "attribute": "intellect",
+      "type": "knowledge",
+      "description": "Strategic thinking, battle analysis, and combat planning that exploits enemy weaknesses. Tactics grants you the ability to read battles, predict opponent moves, and coordinate group efforts. A skilled tactician can win against superior numbers through clever positioning and timing.",
+      "startingItems": []
+    },
+    "Negotiation": {
+      "name": "Negotiation",
+      "attribute": "presence",
+      "type": "social",
+      "description": "Mastery of persuasion, compromise, and finding mutual benefit in dialogue. Negotiation allows you to broker deals, defuse tensions, and win concessions through words alone. A skilled negotiator can extract value from any conversation.",
+      "startingItems": []
+    },
+    "Intimidation": {
+      "name": "Intimidation",
+      "attribute": "presence",
+      "type": "social",
+      "description": "The art of projecting threat, dominance, and killing intent to compel obedience through fear. Intimidation grants you the ability to cow opponents into submission without violence. A master of intimidation can break wills through presence alone.",
+      "startingItems": []
+    },
+    "Deception": {
+      "name": "Deception",
+      "attribute": "presence",
+      "type": "social",
+      "description": "Mastery of lies, misdirection, and social manipulation. Deception allows you to craft believable falsehoods, read what others want to hear, and exploit trust for advantage. A skilled deceiver can run complex cons and turn enemies against one another.",
+      "startingItems": []
+    },
+    "Gambling": {
+      "name": "Gambling",
+      "attribute": "intellect",
+      "type": "social",
+      "description": "Expertise in games of chance, probability calculation, and reading opponents at cards and dice. Gambling teaches you probability theory, tells, and bluffing technique. A skilled gambler can win fortunes through intellect or lose everything through hubris.",
+      "startingItems": []
+    },
+    "Engineering": {
+      "name": "Engineering",
+      "attribute": "intellect",
+      "type": "knowledge",
+      "description": "Knowledge of mechanics, construction, trap design, and invention. Engineering allows you to build structures, repair broken equipment, and create traps that exploit physics and ingenuity. A skilled engineer can turn simple materials into complex mechanisms of utility or destruction.",
+      "startingItems": []
+    }
+  }
+}

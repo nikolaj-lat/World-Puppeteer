@@ -1,0 +1,19 @@
+{
+  "realms": {
+    "The Known World": {
+      "name": "The Known World",
+      "basicInfo": "The civilized world of six continents surrounding Lake Mobius, home to the Hunter Association, the mafia networks, great nation-states, and the Zoldyck family's estate. Though believed by the public to encompass all known lands, the Known World is in truth a small subcontinent within the vast interior waters of Lake Mobius—a secret guarded at the highest levels of power. Here flourish the Hunter Exam circuit, Heavens Arena's towering trials, the grand auction houses of Yorknew, the royal intrigues of East Gorteau, and the fortress of Kukuroo Mountain. Every cobblestone bears the weight of ambition, conspiracy, and untold power struggles.",
+      "known": true
+    },
+    "Greed Island": {
+      "name": "Greed Island",
+      "basicInfo": "A physical island masquerading as the world's most exclusive and costly video game, accessible only through enchanted game cartridges that bind body and soul to the Nen-construct realm itself. Within its shores, the rules of the game are absolute law—an economy built on spell cards, treasure hunts, and impossible challenges that shape reality as surely as they shape the map. Players find themselves trapped between paradise and prison, where every victory grants new powers and every defeat may cost everything. The settled lands offer towns and merchant rows, while the wilds teem with monsters and treasure beyond measure.",
+      "known": true
+    },
+    "The Dark Continent": {
+      "name": "The Dark Continent",
+      "basicInfo": "The vast and lethal realm beyond Lake Mobius, a world that dwarfs the Known World in both scale and danger. Here sail the great expeditions aboard vessels like the Black Whale, navigating treacherous voyage waters toward forbidden shores where the Five Calamities roam—threats of such magnitude that they dwarf even the mightiest Nen masters. The Dark Continent has swallowed every major expedition in recorded history; those few who return are forever changed by what they witnessed. This realm remains largely unmapped and unknowable, a frontier where human power and knowledge find their limits. Note: Content describing the Dark Continent's interior and the outcomes of the current expedition represents speculative continuation beyond the published manga source material.",
+      "known": false
+    }
+  }
+}

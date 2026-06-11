@@ -5,8 +5,6 @@
 config-backups/
 images/
 stuff/
-tabs/
-config.json
 
 # Internal-only or unpolished reference docs
 .claude/skills/ai-instructions/references/intents-reference.md

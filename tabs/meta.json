@@ -1,0 +1,18 @@
+{
+  "configVersion": "V33",
+  "heroesVersion": 33,
+  "embeddings": {},
+  "tipSettings": {
+    "tips": [],
+    "tipDisplayEnabled": false,
+    "tipTurnInterval": 5,
+    "tipMinimumTurns": 1,
+    "tipMaximumTurns": 50
+  },
+  "nameFilterSettings": {},
+  "randomNames": {
+    "male": [],
+    "female": []
+  },
+  "mods": []
+}

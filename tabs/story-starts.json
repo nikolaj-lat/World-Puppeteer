@@ -1,0 +1,13 @@
+{
+  "storyStarts": {
+    "Start": {
+      "name": "Start",
+      "description": "",
+      "storyStart": "",
+      "locations": [],
+      "locationAreas": [],
+      "isDefault": true,
+      "questGenerationGuidance": ""
+    }
+  }
+}

@@ -44,6 +44,9 @@ ROSTER.md approved as proposed (87 entries incl. non-combat challenge premades),
 ### D-012: Local validator patched (creator-approved, 2026-06-11)
 `.claude/scripts/validate.js` allowed-keys set for skillSettings extended with `newSkillGenerationEnabled`. Local + remote validators now both pass with 0 errors.
 
+### D-013: tabs/ and config.json un-gitignored (2026-06-11)
+The template's .gitignore excluded `tabs/` and `config.json`, so phase commits 0-3a contained docs only — no world content. Removed those two ignore rules (kept config-backups/, images/, stuff/) and backfilled all content in the phase 3a commit, fulfilling the creator's per-phase checkpoint mandate. Reversible if the creator prefers content unversioned.
+
 ## OPEN QUESTIONS (batched for creator)
 
 *Q-001 → D-005. Q-002 → D-006. Q-003 → D-011. Q-004 → D-009.*

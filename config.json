@@ -1,0 +1,2543 @@
+{
+  "abilities": {
+    "Gyo": {
+      "name": "Gyo",
+      "description": "Focus aura into the eyes to perceive hidden auras and In-concealed Nen constructs with crystal clarity. A fundamental perception technique requiring minimal aura expenditure (roughly 2-3% per use), essential for reading an opponent's true strength and detecting assassins or cloaked threats.",
+      "requirements": [
+        {
+          "type": "skill",
+          "variable": "Ten",
+          "amount": 2
+        },
+        {
+          "type": "skill",
+          "variable": "Ren",
+          "amount": 1
+        }
+      ],
+      "bonus": 2,
+      "cooldown": 0
+    },
+    "Shu": {
+      "name": "Shu",
+      "description": "Extend one's aura over a held object to enhance its durability, sensitivity, or striking power. Requires sustained concentration (3-5% aura drain per turn) and allows fine control over enhancement intensity, making it indispensable for weapon users and tactical support specialists.",
+      "requirements": [
+        {
+          "type": "skill",
+          "variable": "Ten",
+          "amount": 3
+        },
+        {
+          "type": "skill",
+          "variable": "Ren",
+          "amount": 2
+        }
+      ],
+      "bonus": 3,
+      "cooldown": 0
+    },
+    "In": {
+      "name": "In",
+      "description": "Conceal one's own Nen constructs and aura emissions, rendering them invisible to Gyo and normal perception. The concealment consumes minimal aura to maintain but demands perfect control; detection risks exposing the user's position or technique.",
+      "requirements": [
+        {
+          "type": "skill",
+          "variable": "Zetsu",
+          "amount": 3
+        },
+        {
+          "type": "skill",
+          "variable": "Ren",
+          "amount": 2
+        }
+      ],
+      "bonus": 3,
+      "cooldown": 1
+    },
+    "Ken": {
+      "name": "Ken",
+      "description": "Coat the entire body in a sustained Ren guard, distributing aura evenly across all limbs and torso for comprehensive defense. Drains 3-5% aura per turn while active but significantly reduces all incoming damage; essential for protracted battles and defensive specialists.",
+      "requirements": [
+        {
+          "type": "skill",
+          "variable": "Ten",
+          "amount": 4
+        },
+        {
+          "type": "skill",
+          "variable": "Ren",
+          "amount": 3
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 1
+    },
+    "Ko": {
+      "name": "Ko",
+      "description": "Concentrate all available aura into a single point for a devastating, unstoppable strike that pierces through defenses. Costs 25-40% of maximum aura in one explosive burst; leaves the user defenseless elsewhere and requires perfect timing to be effective.",
+      "requirements": [
+        {
+          "type": "skill",
+          "variable": "Ren",
+          "amount": 5
+        },
+        {
+          "type": "skill",
+          "variable": "Hatsu",
+          "amount": 4
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 3
+    },
+    "Ryu": {
+      "name": "Ryu",
+      "description": "Achieve real-time flow control between Ko and Ken states, seamlessly shifting aura focus from defensive coverage to concentrated strikes mid-combat. A master technique that demands extreme precision and costs 5-10% aura per shift; grants unmatched tactical flexibility to elite practitioners.",
+      "requirements": [
+        {
+          "type": "skill",
+          "variable": "Ren",
+          "amount": 6
+        },
+        {
+          "type": "skill",
+          "variable": "Hatsu",
+          "amount": 5
+        },
+        {
+          "type": "characterLevel",
+          "amount": 5
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 1
+    },
+    "En": {
+      "name": "En",
+      "description": "Project a spherical aura field outward to sense all living beings and Nen constructs within its radius with perfect clarity. One of Nen's most demanding techniques, draining 10%+ aura per turn and accessible only to Masters who have transcended category limitations; the sheer power draws immediate attention.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Nen Master",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Ren",
+          "amount": 7
+        }
+      ],
+      "bonus": 7,
+      "cooldown": 2
+    },
+    "En (Prodigy)": {
+      "name": "En (Prodigy)",
+      "description": "Project a spherical aura field outward to sense all living beings and Nen constructs within its radius with perfect clarity. An accelerated mastery path for gifted Enhancers, allowing En activation at an earlier stage through raw aura capacity and tactical acumen; maintains the same drain and sensory effect as the Master version.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Nen Adept",
+          "amount": 1
+        },
+        {
+          "type": "trait",
+          "variable": "Enhancer",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Ren",
+          "amount": 6
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 2
+    },
+    "En (Aberrant)": {
+      "name": "En (Aberrant)",
+      "description": "Project a spherical aura field outward to sense all living beings and Nen constructs within its radius with perfect clarity. A rare deviation from canon mastery, available to Specialists whose anomalous nature grants them early access; provides identical sensing capability despite flowing from fundamentally different Nen principles.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Nen Adept",
+          "amount": 1
+        },
+        {
+          "type": "trait",
+          "variable": "Specialist",
+          "amount": 1
+        },
+        {
+          "type": "skill",
+          "variable": "Ren",
+          "amount": 6
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 2
+    },
+    "Nascent Hatsu (Enhancement)": {
+      "name": "Nascent Hatsu (Enhancement)",
+      "description": "This is your personal Nen technique in embryo—a unique power waiting to bloom through blood, sweat, and discovery. The narrator will help you name it, define its form, and grow it through play; Enhancement Hatsu strengthen bodies and objects, turning flesh into steel and steel into lightning.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Developing Hatsu (Enhancement)",
+          "amount": 1
+        }
+      ],
+      "bonus": 1,
+      "cooldown": 1
+    },
+    "Nascent Hatsu (Transmutation)": {
+      "name": "Nascent Hatsu (Transmutation)",
+      "description": "This is your personal Nen technique in embryo—a unique power waiting to bloom through blood, sweat, and discovery. The narrator will help you name it, define its form, and grow it through play; Transmutation Hatsu reshape aura into the properties of other substances—water, electricity, oil, shadow.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Developing Hatsu (Transmutation)",
+          "amount": 1
+        }
+      ],
+      "bonus": 1,
+      "cooldown": 1
+    },
+    "Nascent Hatsu (Conjuration)": {
+      "name": "Nascent Hatsu (Conjuration)",
+      "description": "This is your personal Nen technique in embryo—a unique power waiting to bloom through blood, sweat, and discovery. The narrator will help you name it, define its form, and grow it through play; Conjuration Hatsu materialize objects from nothing—weapons, armor, tools—each bound by rules that define its nature.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Developing Hatsu (Conjuration)",
+          "amount": 1
+        }
+      ],
+      "bonus": 1,
+      "cooldown": 1
+    },
+    "Nascent Hatsu (Emission)": {
+      "name": "Nascent Hatsu (Emission)",
+      "description": "This is your personal Nen technique in embryo—a unique power waiting to bloom through blood, sweat, and discovery. The narrator will help you name it, define its form, and grow it through play; Emission Hatsu release aura independent of the body—projectiles, blasts, conjured familiars sent forth to act.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Developing Hatsu (Emission)",
+          "amount": 1
+        }
+      ],
+      "bonus": 1,
+      "cooldown": 1
+    },
+    "Nascent Hatsu (Manipulation)": {
+      "name": "Nascent Hatsu (Manipulation)",
+      "description": "This is your personal Nen technique in embryo—a unique power waiting to bloom through blood, sweat, and discovery. The narrator will help you name it, define its form, and grow it through play; Manipulation Hatsu control objects and beings through a medium—threads, chains, puppets—extending your will through the world.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Developing Hatsu (Manipulation)",
+          "amount": 1
+        }
+      ],
+      "bonus": 1,
+      "cooldown": 1
+    },
+    "Nascent Hatsu (Specialization)": {
+      "name": "Nascent Hatsu (Specialization)",
+      "description": "This is your personal Nen technique in embryo—a unique power waiting to bloom through blood, sweat, and discovery. The narrator will help you name it, define its form, and grow it through play; Specialization Hatsu bend Nen's rules in unique ways—vows that grant power, conditions that reshape reality, anomalies that defy categorization.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Developing Hatsu (Specialization)",
+          "amount": 1
+        }
+      ],
+      "bonus": 1,
+      "cooldown": 1
+    }
+  },
+  "aiInstructions": {
+    "generateStory": {
+      "Victory and Downtime": "",
+      "Character Behavior": "",
+      "Style Principles": "",
+      "custom": ""
+    },
+    "generateInitialStart": {
+      "Opening Structure": "",
+      "Style Principles": "",
+      "custom": ""
+    },
+    "generateActionInfo": {
+      "custom": ""
+    },
+    "generateCharacterBackground": {
+      "prompt": "",
+      "custom": ""
+    },
+    "generateNPCDetails": {
+      "custom": ""
+    },
+    "generateLocationDetails": {
+      "custom": ""
+    },
+    "generateRegionDetails": {
+      "custom": ""
+    },
+    "generateFactionDetails": {
+      "custom": ""
+    },
+    "generateEncounters": {
+      "custom": ""
+    },
+    "ItemGenerationAndUsage": {
+      "custom": ""
+    }
+  },
+  "narratorStyle": "",
+  "gameModes": {},
+  "death": {
+    "permadeath": false,
+    "instructions": "In this world, no one walks away from death clean. When a character falls, they survive — but survival is always purchased, and the price is steep, visible, and permanent. Choose a cost that fits the scene and the character, in the manner of canon: a crippling or disfiguring injury that changes how they fight and how people look at them; a lost limb, eye, or hand that the story never forgets; years of lifespan or their Nen itself bargained away in a desperate vow made at the threshold; a binding Nen contract or restriction incurred to keep breathing — a condition that will come due; waking weeks later under the care of medical Hunters, alive but buried in a debt they cannot pay; or a power permanently diminished, an ability that once defined them now spent or sealed. The return must be dramatic and scarring — narrate the moment of survival as an event, not a fade-to-black, and make sure NPCs, enemies, and the story itself remember what it cost. Never a clean reset. Never a miracle without a price tag. The scar, the debt, or the vow becomes part of the character from that day forward, and the narrator should reference it when relevant in future scenes."
+  },
+  "resourceSettings": {
+    "health": {
+      "name": "health",
+      "initialValue": 0,
+      "maxValue": 80,
+      "gainPerLevel": 10,
+      "rechargeRate": 1,
+      "restRechargeMultiplier": 2,
+      "color": "#ef4444",
+      "isHealth": true,
+      "usageInstructions": "### Health Changes\n- Small injuries (grazes, bruises, shallow cuts, a clean body blow): -1 to 15% of max health\n- Medium injuries (broken fingers or ribs, deep gashes, a solid Nen-enhanced hit absorbed through Ten or Ken): -5 to 25% of max health\n- Massive injuries (shattered bones, impalement, organ damage, a Ko strike or boss-tier Hatsu taken head-on): -15 to 50% of max health\n- THE ZETSU WALL: a Nen-coated attacker striking a target with NO aura defense (in Zetsu, Nen-Unawakened, or at 0 aura) deals disproportionately massive damage — treat even casual blows as massive injuries (-30 to 70%), and deliberate killing strikes can drop the target to near death in one hit. Conversely, a Nen user maintaining Ten cannot be meaningfully harmed by an unawakened attacker's physical strikes.\n- Field treatment (bandages, First Aid skill, common medicine): +5 to 15% of max health\n- Quality healing items (rare medicines, restorative Hatsu, Greed Island recovery cards): +20 to 40% of max health\n- Medical Hunters or hospitalization (extended care, surgery, healing-type Nen like Doctor Blythe): +50 to 100% of max health, but takes in-story days to weeks and often incurs staggering bills\n- Untreated serious wounds should not silently vanish; recovery happens through rest, treatment, and time"
+    },
+    "aura": {
+      "name": "aura",
+      "initialValue": 0,
+      "maxValue": 0,
+      "gainPerLevel": 5,
+      "rechargeRate": 2,
+      "restRechargeMultiplier": 5,
+      "color": "#b39ddb",
+      "usageInstructions": "### Aura (Nen) Costs\nAura is life energy shaped by training. Trained users hold Ten by default; the untrained leak constantly.\n- TEN (maintaining aura around the body): FREE for trained users — never charge aura for simply keeping Ten up. Ten provides baseline defense against Nen attacks.\n- ZETSU (sealing aura): costs nothing, but while active aura does NOT recharge, and the character has ZERO aura defense — any Nen-coated attack against them counts as hitting a defenseless target (see health instructions). Grants stealth and masks presence.\n- REN (amplifying output): drains roughly 2-5% of max aura per combat turn while sustained.\n- HATSU abilities: cost the band stated in the ability's own description; if no cost is stated, default to 10-20% of max aura per activation. Stricter vows and conditions reduce cost or raise power as the ability text dictates.\n- KO (everything into one point): 25-40% of max aura for one decisive strike or block.\n- EN (extended aura field): 10% or more of max aura per turn while sustained — severe, masters only.\n- AT 0 AURA: the character collapses into exhausted Zetsu — no Nen abilities of any kind, completely defenseless against Nen attacks, and the narrator imposes heavy physical fatigue (trembling limbs, blurred vision, inability to run or fight effectively) until aura recovers.\n- Aura recovers slowly in the field; meditation, sleep, and genuine rest restore it far faster.\n- NEN-UNAWAKENED characters have essentially no usable aura: their bar stays at or near zero and cannot be spent. It remains so until their aura nodes are opened in play (forcibly by an attack, or gently through Ten initiation) — only then does training grant them a real pool."
+    }
+  },
+  "storySettings": {
+    "questGenerationGuidance": "",
+    "worldBackground": "This is a world of six continents arrayed around a great inland sea, where ambition and raw capability are the only currencies that matter. The Hunter Association grants licenses to those rare enough to earn one—a credential that confers legal immunity and access to forbidden knowledge, yet demands a staggering price in the yearly examination where most candidates never return alive. Nen, a discipline of channeling one's life force into superhuman feats, is the open secret of the trained few; the masses remain blissfully unaware that such power exists, guarded by an elite who prefer mystery to panic. A hidden mafia ecosystem of Ten Dons rules the underworld's black markets in artifacts and influence, while the Zoldyck family of Kukuroo Mountain remains the world's most storied assassin dynasty—a tourist attraction no visitor has ever successfully infiltrated. The scavenger haven of Meteor City shelters the stateless in a web of shadows and survival. Towers like Heavens Arena offer blood sport to the desperate and famous; auction seasons in great cities like Yorknew draw the powerful to bid on wonders and horrors alike. Yet beneath the veneer of civilization lurks a world that has never fully been charted: magical beasts of fearsome strength roam the unexplored frontiers; rumors whisper among the powerful of continents and dangers beyond the known maps. This is a realm where strength writes the law, wonder and brutality walk hand in hand, and every frontier holds the promise of fortune or death—or both."
+  },
+  "authorSeeds": {},
+  "characterArchetypes": {},
+  "locationArchetypes": {},
+  "regionArchetypes": {},
+  "encounterElements": {},
+  "factions": {},
+  "items": {},
+  "locations": {},
+  "configVersion": "V33",
+  "heroesVersion": 33,
+  "embeddings": {},
+  "tipSettings": {
+    "tips": [],
+    "tipDisplayEnabled": false,
+    "tipTurnInterval": 5,
+    "tipMinimumTurns": 1,
+    "tipMaximumTurns": 50
+  },
+  "nameFilterSettings": {},
+  "randomNames": {
+    "male": [],
+    "female": []
+  },
+  "mods": [],
+  "npcTypes": {},
+  "npcs": {},
+  "premadeCharacters": [],
+  "quests": {},
+  "realms": {
+    "The Known World": {
+      "name": "The Known World",
+      "basicInfo": "The civilized world of six continents surrounding Lake Mobius, home to the Hunter Association, the mafia networks, great nation-states, and the Zoldyck family's estate. Though believed by the public to encompass all known lands, the Known World is in truth a small subcontinent within the vast interior waters of Lake Mobius—a secret guarded at the highest levels of power. Here flourish the Hunter Exam circuit, Heavens Arena's towering trials, the grand auction houses of Yorknew, the royal intrigues of East Gorteau, and the fortress of Kukuroo Mountain. Every cobblestone bears the weight of ambition, conspiracy, and untold power struggles.",
+      "known": true
+    },
+    "Greed Island": {
+      "name": "Greed Island",
+      "basicInfo": "A physical island masquerading as the world's most exclusive and costly video game, accessible only through enchanted game cartridges that bind body and soul to the Nen-construct realm itself. Within its shores, the rules of the game are absolute law—an economy built on spell cards, treasure hunts, and impossible challenges that shape reality as surely as they shape the map. Players find themselves trapped between paradise and prison, where every victory grants new powers and every defeat may cost everything. The settled lands offer towns and merchant rows, while the wilds teem with monsters and treasure beyond measure.",
+      "known": true
+    },
+    "The Dark Continent": {
+      "name": "The Dark Continent",
+      "basicInfo": "The vast and lethal realm beyond Lake Mobius, a world that dwarfs the Known World in both scale and danger. Here sail the great expeditions aboard vessels like the Black Whale, navigating treacherous voyage waters toward forbidden shores where the Five Calamities roam—threats of such magnitude that they dwarf even the mightiest Nen masters. The Dark Continent has swallowed every major expedition in recorded history; those few who return are forever changed by what they witnessed. This realm remains largely unmapped and unknowable, a frontier where human power and knowledge find their limits. Note: Content describing the Dark Continent's interior and the outcomes of the current expedition represents speculative continuation beyond the published manga source material.",
+      "known": false
+    }
+  },
+  "regions": {
+    "Whale Island & Southern Seas": {
+      "name": "Whale Island & Southern Seas",
+      "basicInfo": "A temperate archipelago of modest islands scattered across warm, fishing-rich waters in the southern reaches of the Known World. Rocky coves give way to forested interiors, with Whale Island itself serving as the region's geographical anchor—a rocky homeland dotted with modest villages, dense forests yielding to open cliffs that overlook the harbor. The sea breeze carries salt and the cries of gulls; small wooden boats and fishing nets dominate the harbors. Simple folk—fishermen, farmers, and hunters of modest skill—make their livelihoods here, their lives far removed from the ambitions of the distant Hunter Association.",
+      "realm": "The Known World",
+      "x": 0,
+      "y": 0,
+      "known": true,
+      "imageUrl": ""
+    },
+    "The Exam Circuit": {
+      "name": "The Exam Circuit",
+      "basicInfo": "A sprawling region encompassing the scattered stages of the Hunter Exam's annual crucible—a landscape of deadly trials disguised as natural or constructed obstacles. Rolling wetlands choked with fog and amphibious horrors give way to preserved forests housing wild beasts, towering trick towers of ancient stone, volcanic islands teeming with fauna, and concealed examination halls. The region is less a unified geography than a collection of death traps strategically positioned to test candidates; each location brutalizes aspirants differently. The atmosphere is one of bureaucratic cruelty cloaked in mystery—thousands perish annually to feed the Association's hunger for proven talent.",
+      "realm": "The Known World",
+      "x": 1,
+      "y": 0,
+      "known": true,
+      "imageUrl": ""
+    },
+    "Republic of Padokea": {
+      "name": "Republic of Padokea",
+      "basicInfo": "A mountainous nation in the central reaches of the Known World, dominated by the imposing silhouette of Kukuroo Mountain—a peak both tourist attraction and impenetrable fortress. Lush lowlands and managed estates give way to dense forest and treacherous slopes; the architecture is a mix of humble farming villages and ornate—but carefully guarded—family compounds. The air carries the scent of earth and old money; locals move with careful courtesy, aware that the greatest danger often wears a smile. The Zoldyck family's presence casts a long shadow over regional politics, though officially the nation maintains plausible deniability of their control.",
+      "realm": "The Known World",
+      "x": 2,
+      "y": 0,
+      "known": true,
+      "imageUrl": ""
+    },
+    "Arena City": {
+      "name": "Arena City",
+      "basicInfo": "A sprawling metropolis built around a singular obsession: the 251-floor Heavens Arena, a towering monument to martial prowess and Nen-fueled combat. Skyscrapers crowd the skyline in service to this central structure; the streets throb with the energy of fighters from every corner of the world, each seeking fortune, renown, or simple survival. The air reeks of sweat, ambition, and blood; districts shift from glittering upper-floor lodgings to grimy fighter housing to neon-soaked red-light quarters where anything can be wagered. The Arena's pull is magnetic and terrible—those who enter often consume themselves in pursuit of victory.",
+      "realm": "The Known World",
+      "x": 3,
+      "y": 0,
+      "known": true,
+      "imageUrl": ""
+    },
+    "Yorknew & Environs": {
+      "name": "Yorknew & Environs",
+      "basicInfo": "An upscale metropolitan region dominated by Yorknew City, the financial and cultural heart of the mafia underworld's legitimate face. Sprawling architecture blends old wealth with new ostentation; the city hosts the legendary underground auction during peak season, drawing collectors and crime lords from every continent. Beyond the city's glittering facade lie suburban estates, a sprawling necropolis housing the relics of the ancient past, and the tightly controlled Lingon Airport—gateway for those with the right credentials. The atmosphere oscillates between jeweled decadence and the subtle menace of families who smile while calculating your worth in body parts.",
+      "realm": "The Known World",
+      "x": 0,
+      "y": 1,
+      "known": true,
+      "imageUrl": ""
+    },
+    "Mitene Union": {
+      "name": "Mitene Union",
+      "basicInfo": "A paradoxical realm of green pastoral lands and hidden industrial horror. The public face is one of isolationist tranquility—the NGL's verdant valleys and traditional villages, deliberately sealed from outside corruption by law and fierce cultural pride. But beneath this bucolic mask lies a darker history: the colony nests of Chimera Ants, the ruins of industrialist schemes, the fortress-nation of East Gorteau with its royal palace and intricate court politics. The border checkpoints are stern and unforgiving; those permitted entry find themselves in a land where the written law contradicts the lived truth at every turn.",
+      "realm": "The Known World",
+      "x": 1,
+      "y": 1,
+      "known": true,
+      "imageUrl": ""
+    },
+    "Swardani City": {
+      "name": "Swardani City",
+      "basicInfo": "An ancient, prestigious metropolis that serves as the seat of the Hunter Association's global authority. Grand governmental buildings intermix with libraries, hospitals, and research institutions—architecture that whispers of institutional power held aloft by tradition and bureaucracy. At the city's heart stands the colossal World Tree, a living monument of unknown origin whose upper reaches remain perpetually mysterious. The atmosphere is one of careful order undergirded by terrible knowledge; the Association's reach extends into every corner, and those who work here understand they serve an organization far older and stranger than any nation-state.",
+      "realm": "The Known World",
+      "x": 2,
+      "y": 1,
+      "known": true,
+      "imageUrl": ""
+    },
+    "Kakin Empire": {
+      "name": "Kakin Empire",
+      "basicInfo": "A rising imperial power expanding its influence across the Known World through wealth, strategic positioning, and ruthless ambition. The royal capital sprawls with ornate palace architecture and merchant quarters, its harbor teeming with merchant vessels and military transports. The empire projects strength and centralized authority; marble monuments celebrate its ascendance, while the underside—slave labor, political executions, court intrigue—remains hidden behind marble facades. Kakin's wealth is immense but its stability rests upon a knife's edge of succession politics and the whims of an aging emperor.",
+      "realm": "The Known World",
+      "x": 3,
+      "y": 1,
+      "known": true,
+      "imageUrl": ""
+    },
+    "Greed Island — Settled Lands": {
+      "name": "Greed Island — Settled Lands",
+      "basicInfo": "The inhabited portion of Greed Island, where towns cluster and commerce flows according to the rules of the Nen-construct game. Towns and merchant row buildings dot a landscape of rolling terrain and managed settlements, their aesthetics hovering between video-game artificiality and dreamlike solidity—buildings shimmer with spell-card enchantments, NPCs move with unsettling mechanical friendliness, and the sky has the quality of painted canvas. Spell shops line the streets; price halls display impossible treasures; harbors host player fleets. The atmosphere is one of gamified paradise: endless opportunity, rigorous rule-enforcement, and the constant hum of players scheming for advantage.",
+      "realm": "Greed Island",
+      "x": 0,
+      "y": 0,
+      "known": true,
+      "imageUrl": ""
+    },
+    "Greed Island — Wilds": {
+      "name": "Greed Island — Wilds",
+      "basicInfo": "The untamed portion of Greed Island, where the game's monster encounters run wild and treasure lies beyond the reach of casual players. Barren wastes stretch across scorched earth studded with bandit camps and creature lairs; volcanic peaks loom over twisted terrain; the boundary between 'navigable wilderness' and 'instant death' is horrifyingly blurred. The sky here feels closer, the air thicker with danger; footprints appear and vanish with unnatural speed. Few players venture here willingly; those who do understand they are gambling with not merely their in-game avatar but their material survival, as death in the wilds can manifest as very real trauma or catatonia.",
+      "realm": "Greed Island",
+      "x": 1,
+      "y": 0,
+      "known": true,
+      "imageUrl": ""
+    },
+    "Lake Mobius — The Voyage": {
+      "name": "Lake Mobius — The Voyage",
+      "basicInfo": "The vast interior waters of Lake Mobius, officially unknown to the public but traversed by the Black Whale and her sister vessels in the grand expeditions. A seemingly endless expanse of dark water, whirlpools of mysterious origin, and strange atmospheric phenomena that defy mapping. The waters themselves are said to be home to creatures of impossible scale; the sky above shifts between day and night in unpredictable rhythms. The Black Whale cuts across these waters like a floating city—a 200,000-passenger vessel carrying royalty, Nen masters, ancient secrets, and internecing politics that make the vessel as treacherous as any exterior threat. To sail Lake Mobius is to accept that one may never return.",
+      "realm": "The Dark Continent",
+      "x": 0,
+      "y": 0,
+      "known": false,
+      "imageUrl": ""
+    },
+    "The New Shore": {
+      "name": "The New Shore",
+      "basicInfo": "The speculative territory beyond Lake Mobius and the Black Whale's voyage—a forbidden landing place representing the edge of human exploration and the threshold of the unknown. Ancient ruins dot the beachhead; the soil seems to pulse with a presence that predates human civilization; the air carries strange spores and electromagnetic disturbances that confound instruments. What lies in the interior remains unmapped, but early landing parties report landscapes that contradict all known biology. This region represents the absolute frontier of the Dark Continent—where the Five Calamities roam and every step forward risks permanent alteration of flesh and mind. NOTE: Content describing The New Shore and its interior represents speculative continuation beyond the published source material; outcomes of exploration and detailed calamity encounters remain unknown.",
+      "realm": "The Dark Continent",
+      "x": 1,
+      "y": 0,
+      "known": false,
+      "imageUrl": ""
+    }
+  },
+  "attributeSettings": {
+    "attributeNames": [
+      "strength",
+      "agility",
+      "endurance",
+      "intellect",
+      "willpower",
+      "presence"
+    ],
+    "startingAttributeValue": 8,
+    "startingAttributePoints": 12,
+    "maxStartingAttribute": 15,
+    "attributeBonusModifier": 2.5,
+    "lowAttributeThreshold": 8,
+    "attributeStatModifiers": {
+      "endurance": {
+        "variable": "health",
+        "amount": 4
+      }
+    },
+    "attributeDamageModifiers": {
+      "strength": 1
+    },
+    "attributeEvasionModifiers": {
+      "agility": 1
+    },
+    "lowAttributeTraits": {
+      "strength": "You have weak raw power. Physical abilities and Enhancement-category techniques suffer from your frail musculature. You strain visibly when exerting force; heavy weapons and shields tire you quickly.",
+      "agility": "You have sluggish reflexes. Combat and evasion skills depend on your torpid movements. You dodge slowly and strike with lumbering intent; fast opponents routinely outmaneuver you.",
+      "endurance": "You have brittle constitution. Your body tires easily, and injuries linger. You fatigue quickly in sustained exertion; wounds bleed freely and healing takes longer than it should.",
+      "intellect": "You have a scattered mind. Tactics, analysis, and strategic skills crumble under complexity. You struggle to see patterns, miss obvious solutions, and freeze when plans must shift.",
+      "willpower": "You have a leaky aura. Nen concentration eludes you; your aura flickers like a failing flame. Ten requires constant effort, Zetsu is unreliable, and Nen abilities drain you faster than they should.",
+      "presence": "You have a hollow authority. Social skills falter beneath your timid gaze. Others ignore you instinctively; intimidation rings hollow, persuasion lands gently, and deception crumbles under scrutiny."
+    }
+  },
+  "skillSettings": {
+    "trainingCooldown": 10,
+    "skillXPRewards": {
+      "small": 50,
+      "medium": 100,
+      "large": 150,
+      "huge": 200
+    },
+    "skillBonusModifier": 1,
+    "xpFromNewSkill": 200,
+    "maxSkillLevel": 999,
+    "maxSkillSuccessLevel": 999,
+    "charXPPerSkillLevel": 100,
+    "baseXPFromSkillUpgrade": 100,
+    "additionalXPRequiredPerSkillLevel": 50,
+    "startingXPToLevelUpSkill": 50,
+    "baseChanceToLearnNewSkill": 1,
+    "skillLearningBonusModifier": 1,
+    "newSkillGenerationEnabled": true,
+    "skillTypeDifficultyBonus": {
+      "none": 0,
+      "nen": 0,
+      "combat": 0,
+      "social": 0,
+      "knowledge": 0
+    }
+  },
+  "locationSettings": {
+    "regionSize": 100,
+    "simpleRadius": 5,
+    "complexRadius": 10,
+    "regionLocationCount": 0,
+    "regionFactionCount": 0,
+    "avgTravelDistance": 40,
+    "minTravelDistance": 20,
+    "newRegionGenerationEnabled": false,
+    "encountersEnabled": true
+  },
+  "itemSettings": {
+    "currencyName": "Jenny",
+    "itemCategories": [
+      "Armor",
+      "Consumable",
+      "Weapon",
+      "Tool",
+      "Nen Artifact",
+      "Card",
+      "Valuable"
+    ],
+    "itemSlots": [
+      {
+        "slot": "head",
+        "category": "Armor",
+        "quantity": 1
+      },
+      {
+        "slot": "chest",
+        "category": "Armor",
+        "quantity": 1
+      },
+      {
+        "slot": "shoulders",
+        "category": "Armor",
+        "quantity": 1
+      },
+      {
+        "slot": "hands",
+        "category": "Armor",
+        "quantity": 1
+      },
+      {
+        "slot": "waist",
+        "category": "Armor",
+        "quantity": 1
+      },
+      {
+        "slot": "legs",
+        "category": "Armor",
+        "quantity": 1
+      },
+      {
+        "slot": "feet",
+        "category": "Armor",
+        "quantity": 1
+      },
+      {
+        "slot": "weapon",
+        "category": "Weapon",
+        "quantity": 2
+      },
+      {
+        "slot": "tool",
+        "category": "Tool",
+        "quantity": 3
+      }
+    ],
+    "startingItems": []
+  },
+  "combatSettings": {
+    "minCombatXP": 50,
+    "baseCombatXP": 200,
+    "abilityCooldown": 1,
+    "abilityBonus": 10,
+    "npcDailyHealingAmount": 20,
+    "damageTypes": [
+      "physical",
+      "nen",
+      "fire",
+      "lightning",
+      "ice",
+      "poison",
+      "psychic"
+    ]
+  },
+  "otherSettings": {
+    "startingCharacterLevelUpRequirement": 500,
+    "extraRequiredXPPerCharacterLevel": 100,
+    "maxCharacterLevel": 999,
+    "npcHealthPerLevel": 12,
+    "npcMinHealth": 10
+  },
+  "characterCreationMusic": "nonfantasy",
+  "skills": {
+    "Ten": {
+      "name": "Ten",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "The foundational aura technique: maintaining the protective envelope of your life force around your body at all times. Mastery of Ten allows a Nen user to sustain their aura as a constant, invisible shield against harm. A skilled practitioner of Ten becomes almost untouchable to those without Nen mastery.",
+      "startingItems": []
+    },
+    "Zetsu": {
+      "name": "Zetsu",
+      "attribute": "agility",
+      "type": "nen",
+      "description": "The art of complete aura suppression and concealment: sealing your life force entirely to become invisible to other Nen users and to hide your presence. While Zetsu is active, you gain stealth and cannot be sensed by aura detection. However, this suppression leaves you defenseless against Nen techniques and any incoming damage bypasses your aura guard entirely.",
+      "startingItems": []
+    },
+    "Ren": {
+      "name": "Ren",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "Aura amplification through conscious expansion: opening your aura envelope fully to maximize your combat output and physical power. Activating Ren grants a significant boost to damage and ability effectiveness but drains your aura reserves steadily while the technique is maintained. Masters of Ren can overwhelm opponents through sheer aura intensity.",
+      "startingItems": []
+    },
+    "Hatsu": {
+      "name": "Hatsu",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "The projection of your aura into a unique personal technique reflecting your spirit and nature. Hatsu is the true art of Nen mastery—the ability to create and manifest your own signature ability drawn from your willpower. Your facility with Hatsu depends on your native Nen category, with off-category techniques suffering efficiency loss and strain.",
+      "startingItems": []
+    },
+    "Enhancement": {
+      "name": "Enhancement",
+      "attribute": "strength",
+      "type": "nen",
+      "description": "The Enhancer's gift: infusing your aura into your body and objects to amplify their natural properties. Enhancement hardens your muscles, sharpens your reflexes, and strengthens whatever you touch. This is the most direct and efficient path of Nen, turning the body itself into a weapon of devastation.",
+      "startingItems": []
+    },
+    "Transmutation": {
+      "name": "Transmutation",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "The art of changing your aura's fundamental qualities to mimic or create new properties. Transmutation allows a Nen user to reshape their aura into something wholly different: fire, electricity, liquid, or abstract forces. A master of Transmutation can replicate the effects of external phenomena entirely through aura manipulation.",
+      "startingItems": []
+    },
+    "Conjuration": {
+      "name": "Conjuration",
+      "attribute": "intellect",
+      "type": "nen",
+      "description": "The power to materialize permanent or semi-permanent objects from pure aura. Conjuration requires immense mental discipline and memorization of the object's structure. A skilled Conjurer can summon weapons, tools, or artifacts that exist as long as their aura sustains them. Breaking a conjured item or dispelling it wastes the aura instantly.",
+      "startingItems": []
+    },
+    "Emission": {
+      "name": "Emission",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "The technique of projecting and controlling your aura away from your body. Emission allows you to hurl aura blasts, create distance attacks, and maintain aura in the world independently. Masters of Emission strike from afar with lethal precision, their aura obeying their will even as it separates from their flesh.",
+      "startingItems": []
+    },
+    "Manipulation": {
+      "name": "Manipulation",
+      "attribute": "intellect",
+      "type": "nen",
+      "description": "The ability to control and command objects or beings with your aura once it has touched them. Manipulation transforms your willpower into invisible strings that obey your consciousness. A skilled Manipulator can animate puppets, restrain enemies, or seize control of the battlefield through sheer force of intellect.",
+      "startingItems": []
+    },
+    "Specialization": {
+      "name": "Specialization",
+      "attribute": "willpower",
+      "type": "nen",
+      "description": "The most enigmatic category of Nen: unique powers that defy the other five principles and operate by their own mysterious rules. Specialists transcend the normal hexagon of Nen and are governed by conditions, vows, and personal limitations that unlock abilities beyond normal understanding. A Specialist's power is as unpredictable as it is potent.",
+      "startingItems": []
+    },
+    "Martial Arts": {
+      "name": "Martial Arts",
+      "attribute": "strength",
+      "type": "combat",
+      "description": "Disciplined training in unarmed combat, striking, and physical technique. Martial Arts grants mastery over your body as a weapon, teaching you how to channel your strength through proper form and striking patterns. A skilled martial artist can fell opponents with their bare hands; combined with Nen enhancement, they become unstoppable forces.",
+      "startingItems": []
+    },
+    "Weapon Mastery": {
+      "name": "Weapon Mastery",
+      "attribute": "agility",
+      "type": "combat",
+      "description": "Proficiency with swords, axes, spears, and other martial implements. Weapon Mastery teaches you how to handle any blade or blunt instrument with speed and precision, extending your striking range and damage. A master of weapons turns their tool into an extension of their intent.",
+      "startingItems": []
+    },
+    "Assassination Techniques": {
+      "name": "Assassination Techniques",
+      "attribute": "agility",
+      "type": "combat",
+      "description": "Specialized training in lethal strikes, vital targeting, and disabling wounds. Assassination Techniques grant you knowledge of weak points in anatomy and the precision to strike them with deadly intent. You can incapacitate or eliminate targets quickly and quietly, turning combat into surgical execution.",
+      "startingItems": []
+    },
+    "Stealth": {
+      "name": "Stealth",
+      "attribute": "agility",
+      "type": "none",
+      "description": "The art of moving unseen and unheard through any environment. Stealth teaches you how to control your footfalls, manage shadows and sightlines, and blend seamlessly into surroundings. A skilled practitioner can walk through crowded areas unnoticed or traverse enemy territory unseen.",
+      "startingItems": []
+    },
+    "Acrobatics": {
+      "name": "Acrobatics",
+      "attribute": "agility",
+      "type": "none",
+      "description": "Mastery of movement, tumbling, and physical control through the air and over obstacles. Acrobatics grants you balance, coordination, and the ability to perform impossible feats of movement. You can scale walls, flip over hazards, and dodge incoming attacks with breathtaking grace.",
+      "startingItems": []
+    },
+    "Perception": {
+      "name": "Perception",
+      "attribute": "intellect",
+      "type": "none",
+      "description": "Keen awareness of your surroundings and heightened sensitivity to detail. Perception allows you to notice hidden clues, track movement, and sense danger before it arrives. A skilled observer can read a room in seconds and extract meaning from the smallest tells.",
+      "startingItems": []
+    },
+    "Tracking": {
+      "name": "Tracking",
+      "attribute": "intellect",
+      "type": "knowledge",
+      "description": "The skill of following trails, reading signs, and pursuing targets across any terrain. Tracking teaches you to interpret footprints, scents, disturbances in vegetation, and behavioral patterns. A master tracker can follow prey across deserts, forests, and cities alike.",
+      "startingItems": []
+    },
+    "Survival": {
+      "name": "Survival",
+      "attribute": "endurance",
+      "type": "knowledge",
+      "description": "Knowledge of wilderness navigation, shelter building, foraging, and enduring harsh conditions. Survival grants you the ability to sustain yourself in remote or dangerous environments through resourcefulness and toughness. You can thrive where others would perish.",
+      "startingItems": []
+    },
+    "First Aid": {
+      "name": "First Aid",
+      "attribute": "intellect",
+      "type": "knowledge",
+      "description": "Medical knowledge of wound treatment, poison remediation, and emergency care. First Aid allows you to stabilize dying allies, restore health to the injured, and counter common afflictions. A skilled healer can snatch victory from the jaws of death.",
+      "startingItems": []
+    },
+    "Tactics": {
+      "name": "Tactics",
+      "attribute": "intellect",
+      "type": "knowledge",
+      "description": "Strategic thinking, battle analysis, and combat planning that exploits enemy weaknesses. Tactics grants you the ability to read battles, predict opponent moves, and coordinate group efforts. A skilled tactician can win against superior numbers through clever positioning and timing.",
+      "startingItems": []
+    },
+    "Negotiation": {
+      "name": "Negotiation",
+      "attribute": "presence",
+      "type": "social",
+      "description": "Mastery of persuasion, compromise, and finding mutual benefit in dialogue. Negotiation allows you to broker deals, defuse tensions, and win concessions through words alone. A skilled negotiator can extract value from any conversation.",
+      "startingItems": []
+    },
+    "Intimidation": {
+      "name": "Intimidation",
+      "attribute": "presence",
+      "type": "social",
+      "description": "The art of projecting threat, dominance, and killing intent to compel obedience through fear. Intimidation grants you the ability to cow opponents into submission without violence. A master of intimidation can break wills through presence alone.",
+      "startingItems": []
+    },
+    "Deception": {
+      "name": "Deception",
+      "attribute": "presence",
+      "type": "social",
+      "description": "Mastery of lies, misdirection, and social manipulation. Deception allows you to craft believable falsehoods, read what others want to hear, and exploit trust for advantage. A skilled deceiver can run complex cons and turn enemies against one another.",
+      "startingItems": []
+    },
+    "Gambling": {
+      "name": "Gambling",
+      "attribute": "intellect",
+      "type": "social",
+      "description": "Expertise in games of chance, probability calculation, and reading opponents at cards and dice. Gambling teaches you probability theory, tells, and bluffing technique. A skilled gambler can win fortunes through intellect or lose everything through hubris.",
+      "startingItems": []
+    },
+    "Engineering": {
+      "name": "Engineering",
+      "attribute": "intellect",
+      "type": "knowledge",
+      "description": "Knowledge of mechanics, construction, trap design, and invention. Engineering allows you to build structures, repair broken equipment, and create traps that exploit physics and ingenuity. A skilled engineer can turn simple materials into complex mechanisms of utility or destruction.",
+      "startingItems": []
+    }
+  },
+  "storyStarts": {
+    "Start": {
+      "name": "Start",
+      "description": "",
+      "storyStart": "",
+      "locations": [],
+      "locationAreas": [],
+      "isDefault": true,
+      "questGenerationGuidance": ""
+    }
+  },
+  "traitCategories": {
+    "Nen Training": {
+      "name": "Nen Training",
+      "maxSelections": 1,
+      "traits": [
+        "Nen-Unawakened",
+        "Nen Initiate",
+        "Nen Practitioner",
+        "Nen Adept",
+        "Nen Master"
+      ]
+    },
+    "Nen Category (Water Divination)": {
+      "name": "Nen Category (Water Divination)",
+      "maxSelections": 1,
+      "traits": [
+        "Enhancer",
+        "Transmuter",
+        "Conjurer",
+        "Manipulator",
+        "Emitter",
+        "Specialist",
+        "Undivined"
+      ]
+    },
+    "Hatsu": {
+      "name": "Hatsu",
+      "maxSelections": 1,
+      "traits": [
+        "Developing Hatsu (Enhancement)",
+        "Developing Hatsu (Transmutation)",
+        "Developing Hatsu (Conjuration)",
+        "Developing Hatsu (Emission)",
+        "Developing Hatsu (Manipulation)",
+        "Developing Hatsu (Specialization)",
+        "No Hatsu Yet"
+      ]
+    },
+    "Background": {
+      "name": "Background",
+      "maxSelections": 1,
+      "traits": [
+        "Rookie Hunter Applicant",
+        "Licensed Hunter",
+        "Arena Fighter",
+        "Zoldyck-Trained Assassin",
+        "Mafia Community Member",
+        "Meteor City Survivor",
+        "Hunter Association Staff",
+        "Greed Island Player",
+        "Kakin Court Retainer",
+        "Chimera Ant",
+        "Civilian Prodigy",
+        "Kurta Survivor"
+      ]
+    },
+    "Vows & Limitations": {
+      "name": "Vows & Limitations",
+      "maxSelections": 2,
+      "traits": [
+        "Vow: Sworn Nemesis",
+        "Vow: Announce the Kill",
+        "Vow: Pacifist's Edge",
+        "Vow: Stake of Lifeblood",
+        "Vow: Conditional Arsenal",
+        "Vow: Time-Boxed Power",
+        "Vow: Ascetic's Discipline",
+        "Vow: Death Before Retreat"
+      ]
+    }
+  },
+  "traits": {
+    "Nen-Unawakened": {
+      "name": "Nen-Unawakened",
+      "description": "Your aura nodes remain sealed. You cannot access Nen in any form, and your aura pool stays dormant near zero. This state marks those unaware of Nen's existence, common before Hunter training or awakening. Your potential lies dormant, waiting for the catalyst that will open your inner gates.",
+      "quirk": "Aura nodes are closed and sealed. The character cannot use any Nen ability, skill, or technique—Ten, Zetsu, Ren, Hatsu, all are beyond reach. Aura bar remains near zero. A narrative trigger (forced aura awakening, guided Ten initiation, or violent Nen exposure) can swap this trait for Nen Initiate in play.",
+      "attributes": [],
+      "skills": [],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Nen Initiate": {
+      "name": "Nen Initiate",
+      "description": "Your aura nodes have been opened; you have learned the foundational technique of Ten. You can now maintain a steady aura state and hold basic Nen energy, though advanced applications remain beyond your reach. This is the threshold where the invisible world reveals itself.",
+      "quirk": "Aura +30, Ten skill +2. You can hold Ten (the default meditative aura state). You are newly baptized in Nen and vulnerable to advanced practitioners, but the door has opened.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Ten",
+          "modifier": 2
+        }
+      ],
+      "resources": [
+        {
+          "resource": "aura",
+          "modifier": 30
+        }
+      ],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Nen Practitioner": {
+      "name": "Nen Practitioner",
+      "description": "You have mastered the foundational Nen techniques and are combat-capable. You can hold Ten reliably, apply Ren for amplified output, and channel basic Hatsu. You are a trained Nen user—not yet elite, but formidable in the eyes of the untrained.",
+      "quirk": "Aura +60, Ten +4, Ren +3, Hatsu +2. You can execute basic Nen combat and maintain sustained aura applications. Ren drains aura per turn in prolonged use; Hatsu abilities draw 10–20% per activation.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Ten",
+          "modifier": 4
+        },
+        {
+          "skill": "Ren",
+          "modifier": 3
+        },
+        {
+          "skill": "Hatsu",
+          "modifier": 2
+        }
+      ],
+      "resources": [
+        {
+          "resource": "aura",
+          "modifier": 60
+        }
+      ],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Nen Adept": {
+      "name": "Nen Adept",
+      "description": "You have refined your Nen to professional mastery. Your aura is vast, your control exquisite, and advanced applications like Gyo and Shu respond to your will. You are among the world's elite—a hunter of legendary standing capable of feats the average person cannot fathom.",
+      "quirk": "Aura +100, Ten +6, Ren +5, Hatsu +4, Zetsu +3. You can execute sophisticated aura techniques: Gyo (aura sight), Shu (object coating), In (concealment), and Ken (full defensive guard). One advanced-application ability is unlocked at character creation (chosen from Tier A: Gyo, Shu, In, Ken, Ko, or Ryu).",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Ten",
+          "modifier": 6
+        },
+        {
+          "skill": "Ren",
+          "modifier": 5
+        },
+        {
+          "skill": "Hatsu",
+          "modifier": 4
+        },
+        {
+          "skill": "Zetsu",
+          "modifier": 3
+        }
+      ],
+      "resources": [
+        {
+          "resource": "aura",
+          "modifier": 100
+        }
+      ],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Nen Master": {
+      "name": "Nen Master",
+      "description": "You stand among the world's apex—a living legend whose aura is nearly bottomless and whose command of Nen transcends mortal limitation. You wield advanced applications as easily as breathing and can shape reality itself through your Hatsu. Few walk this earth; fewer still reach this pinnacle.",
+      "quirk": "Aura +150, Ten +8, Ren +7, Hatsu +6, Zetsu +5. You command all Tier A applications flawlessly: Gyo, Shu, In, Ken, Ko, Ryu, and En (aura field). Two advanced-application abilities are unlocked at character creation. Your Hatsu is legendary; your limitations are self-imposed.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Ten",
+          "modifier": 8
+        },
+        {
+          "skill": "Ren",
+          "modifier": 7
+        },
+        {
+          "skill": "Hatsu",
+          "modifier": 6
+        },
+        {
+          "skill": "Zetsu",
+          "modifier": 5
+        }
+      ],
+      "resources": [
+        {
+          "resource": "aura",
+          "modifier": 150
+        }
+      ],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Enhancer": {
+      "name": "Enhancer",
+      "description": "Your Water Divination showed the water overflowing—the sign of an Enhancer. You possess raw physical prowess and the ability to amplify yourself and objects beyond their normal limits. Your Nen flows easily into your body and surroundings, making you the strongest combatant on any field. The hexagon rule governs your reach: your enhancement is full-strength in itself and adjacent categories (Transmutation, Emission), strong in distant categories (Conjuration, Manipulation), and nearly impossible in Specialization.",
+      "quirk": "Enhancement +4 (native), Transmutation +3, Emission +3, Conjuration +2, Manipulation +2, Specialization +0. Your Nen specializes in amplification of self and objects. Transmutation and Emission are within reach; Conjuration and Manipulation are harder; Specialization techniques are nearly impossible to perform and require enormous effort. The hexagon dictates your efficiency: opposite-category Hatsu (e.g., a Conjurer's trap) suffers visible strain if you attempt it.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Enhancement",
+          "modifier": 4
+        },
+        {
+          "skill": "Transmutation",
+          "modifier": 3
+        },
+        {
+          "skill": "Emission",
+          "modifier": 3
+        },
+        {
+          "skill": "Conjuration",
+          "modifier": 2
+        },
+        {
+          "skill": "Manipulation",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Transmuter": {
+      "name": "Transmuter",
+      "description": "Your Water Divination showed the taste changing—a Transmuter's sign. You can alter the properties of your aura and objects, reshaping Nen into new forms and functions. Your techniques flow with creativity and deception; you bend the rules of reality itself. Adjacent categories (Enhancement, Conjuration) yield readily to your will; distant ones (Emission, Specialization) require great effort; opposite-category Nen (Manipulation) resists your touch severely.",
+      "quirk": "Transmutation +4 (native), Enhancement +3, Conjuration +3, Emission +2, Specialization +1, Manipulation +1. Your Nen transforms and reshapes. Enhancement and Conjuration come naturally; Emission and Specialization are taxing; Manipulation is hostile to your nature and nearly impossible without exhaustion. The hexagon enforces this: you are a creative liar, and your Nen reflects that flexibility—except where it refuses.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Transmutation",
+          "modifier": 4
+        },
+        {
+          "skill": "Enhancement",
+          "modifier": 3
+        },
+        {
+          "skill": "Conjuration",
+          "modifier": 3
+        },
+        {
+          "skill": "Emission",
+          "modifier": 2
+        },
+        {
+          "skill": "Specialization",
+          "modifier": 1
+        },
+        {
+          "skill": "Manipulation",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Conjurer": {
+      "name": "Conjurer",
+      "description": "Your Water Divination revealed impurities—the mark of a Conjurer. You summon matter from nothing, creating objects and weapons that manifest your will. Your Nen is precise and analytical; you are meticulous and high-strung, crafting tools with obsessive care. Transmutation and Specialization respond to your summons; Enhancement and Manipulation are within range; Emission lies distant; you alone among categories touch Specialization easily.",
+      "quirk": "Conjuration +4 (native), Transmutation +3, Specialization +2, Enhancement +2, Manipulation +2, Emission +1. Your Nen creates real objects from aura. Transmutation flows from your conjurations naturally; Specialization is uniquely accessible to you (forbidden to pure Enhancers/Emitters); Enhancement and Manipulation are taxing; Emission is nearly impossible. You are analytical and precise—your Nen reflects that obsessive control.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Conjuration",
+          "modifier": 4
+        },
+        {
+          "skill": "Transmutation",
+          "modifier": 3
+        },
+        {
+          "skill": "Specialization",
+          "modifier": 2
+        },
+        {
+          "skill": "Enhancement",
+          "modifier": 2
+        },
+        {
+          "skill": "Manipulation",
+          "modifier": 2
+        },
+        {
+          "skill": "Emission",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Manipulator": {
+      "name": "Manipulator",
+      "description": "Your Water Divination showed the leaf moving—a Manipulator's sign. You command and control external objects and forces through pure will, bending them to your logic. Your Nen is invisible and precise; you are argumentative and cerebral, turning your opponent's own strength against them. Emission and Specialization yield to your control; Conjuration and Enhancement are manageable; Transmutation resists; you alone among categories touch Specialization easily.",
+      "quirk": "Manipulation +4 (native), Emission +3, Specialization +2, Conjuration +2, Enhancement +2, Transmutation +1. Your Nen controls external forces and objects. Emission flows from your commands; Specialization is uniquely accessible to you (forbidden to pure Enhancers/Emitters); Conjuration and Enhancement are difficult; Transmutation is nearly impossible. You are logical and stubborn—your Nen works through pure reason and will, but cannot shapeshift.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Manipulation",
+          "modifier": 4
+        },
+        {
+          "skill": "Emission",
+          "modifier": 3
+        },
+        {
+          "skill": "Specialization",
+          "modifier": 2
+        },
+        {
+          "skill": "Conjuration",
+          "modifier": 2
+        },
+        {
+          "skill": "Enhancement",
+          "modifier": 2
+        },
+        {
+          "skill": "Transmutation",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Emitter": {
+      "name": "Emitter",
+      "description": "Your Water Divination showed the color changing—an Emitter's mark. You project your aura outward as waves, beams, and blasts, striking your enemies from a distance with raw power. Your Nen is aggressive and impatient; you are hot-blooded and bold, charging forward where others calculate. Enhancement and Manipulation respond readily; Transmutation and Specialization are within reach; Conjuration lies distant; you cannot easily conjure.",
+      "quirk": "Emission +4 (native), Enhancement +3, Manipulation +3, Transmutation +2, Conjuration +1, Specialization +1. Your Nen projects outward as force and energy. Enhancement and Manipulation flow naturally from your projection; Transmutation and Specialization are possible but effortful; Conjuration is nearly impossible (you cannot create lasting objects easily). You are impatient and aggressive—your Nen reflects your hot-blooded nature.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Emission",
+          "modifier": 4
+        },
+        {
+          "skill": "Enhancement",
+          "modifier": 3
+        },
+        {
+          "skill": "Manipulation",
+          "modifier": 3
+        },
+        {
+          "skill": "Transmutation",
+          "modifier": 2
+        },
+        {
+          "skill": "Conjuration",
+          "modifier": 1
+        },
+        {
+          "skill": "Specialization",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Specialist": {
+      "name": "Specialist",
+      "description": "Your Water Divination showed something else entirely happening—the rarest and most mysterious sign. You do not fit the hexagon. Your Nen follows no predictable pattern; you are an individualist whose power is singular and often inexplicable. All other categories are equally distant to you; you are truly alone on the wheel. Your Hatsu is unique by definition, and you alone can touch techniques forbidden to other categories.",
+      "quirk": "Specialization +4 (native), Conjuration +3, Manipulation +3, Transmutation +2, Emission +2, Enhancement +1. Your Nen breaks the hexagon rules. You alone can combine Conjuration and Manipulation freely (other categories cannot); you are equally awkward in all other categories. You are an individualist—your Nen is yours alone, following laws no one else understands. Other Nen users cannot easily predict or counter your techniques.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Specialization",
+          "modifier": 4
+        },
+        {
+          "skill": "Conjuration",
+          "modifier": 3
+        },
+        {
+          "skill": "Manipulation",
+          "modifier": 3
+        },
+        {
+          "skill": "Transmutation",
+          "modifier": 2
+        },
+        {
+          "skill": "Emission",
+          "modifier": 2
+        },
+        {
+          "skill": "Enhancement",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Undivined": {
+      "name": "Undivined",
+      "description": "You have not yet undergone Water Divination. Your Nen category remains unknown—even to you. Your potential is uncharted, your strength untested against the glass and water that reveals all Nen users' truths. In play, the moment you perform or witness Divination, the universe will answer.",
+      "quirk": "This character's Nen category has not been revealed. They carry no category skill modifiers. When they perform Water Divination in play (a narrative moment or a semantic trigger), a trigger swaps this trait for the appropriate category trait and narrates the divination result. Until then, they are a mystery—even to themselves.",
+      "attributes": [],
+      "skills": [],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Developing Hatsu (Enhancement)": {
+      "name": "Developing Hatsu (Enhancement)",
+      "description": "A personal Hatsu technique taking shape around enhancement and amplification. You are learning to channel your Nen into strengthening yourself, objects, or targeted forces. The form and name of your technique are yours to define; it grows and evolves with you as you push its boundaries.",
+      "quirk": "Hatsu +1. You are developing a signature technique focused on Enhancement—amplifying strength, durability, or external objects. The player names and defines the technique in play, and it grows in power and complexity alongside their character.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Hatsu",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [
+        "Nascent Hatsu (Enhancement)"
+      ],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Developing Hatsu (Transmutation)": {
+      "name": "Developing Hatsu (Transmutation)",
+      "description": "A personal Hatsu technique taking shape around transmutation and property-alteration. You are learning to reshape your aura into new forms and functions—changing its nature, density, or behavior. The form and name of your technique are yours to define; it grows and evolves with you as you push its boundaries.",
+      "quirk": "Hatsu +1. You are developing a signature technique focused on Transmutation—altering aura properties, changing material states, or transforming Nen into new shapes and functions. The player names and defines the technique in play, and it grows in power and complexity alongside their character.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Hatsu",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [
+        "Nascent Hatsu (Transmutation)"
+      ],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Developing Hatsu (Conjuration)": {
+      "name": "Developing Hatsu (Conjuration)",
+      "description": "A personal Hatsu technique taking shape around conjuration and summoning. You are learning to manifest objects from pure aura—weapons, tools, or barriers that obey your will. The form and name of your technique are yours to define; it grows and evolves with you as you push its boundaries.",
+      "quirk": "Hatsu +1. You are developing a signature technique focused on Conjuration—summoning objects, creating weapons, or manifesting barriers from aura. The player names and defines the technique in play, and it grows in power and complexity alongside their character.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Hatsu",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [
+        "Nascent Hatsu (Conjuration)"
+      ],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Developing Hatsu (Emission)": {
+      "name": "Developing Hatsu (Emission)",
+      "description": "A personal Hatsu technique taking shape around emission and projection. You are learning to channel your aura outward as waves, beams, or projectiles—striking from distance or defending at range. The form and name of your technique are yours to define; it grows and evolves with you as you push its boundaries.",
+      "quirk": "Hatsu +1. You are developing a signature technique focused on Emission—projecting aura as force and energy, attacking or defending at range. The player names and defines the technique in play, and it grows in power and complexity alongside their character.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Hatsu",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [
+        "Nascent Hatsu (Emission)"
+      ],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Developing Hatsu (Manipulation)": {
+      "name": "Developing Hatsu (Manipulation)",
+      "description": "A personal Hatsu technique taking shape around manipulation and control. You are learning to command external forces and objects through your will—bending them to your logic and turning them against your enemies. The form and name of your technique are yours to define; it grows and evolves with you as you push its boundaries.",
+      "quirk": "Hatsu +1. You are developing a signature technique focused on Manipulation—controlling external objects and forces, commanding puppets or remote effects, turning enemy strength against them. The player names and defines the technique in play, and it grows in power and complexity alongside their character.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Hatsu",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [
+        "Nascent Hatsu (Manipulation)"
+      ],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Developing Hatsu (Specialization)": {
+      "name": "Developing Hatsu (Specialization)",
+      "description": "A personal Hatsu technique taking shape around specialization and the inexplicable. Your technique follows no predictable pattern—it is singular, mysterious, and uniquely yours. It may blend categories or break the hexagon's rules entirely. The form and name of your technique are yours to define; it grows and evolves with you as you push its boundaries.",
+      "quirk": "Hatsu +1. You are developing a signature technique focused on Specialization—a Nen ability that follows no standard rules, combines categories unpredictably, or works through pure individual talent. The player names and defines the technique in play, and it grows in power and complexity alongside their character.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Hatsu",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [
+        "Nascent Hatsu (Specialization)"
+      ],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "No Hatsu Yet": {
+      "name": "No Hatsu Yet",
+      "description": "You have not yet developed a signature Hatsu technique. Your Nen remains general and unspecialized; you rely on foundational applications and raw skill rather than a personal power. In time, with focus and growth, a unique technique may crystallize.",
+      "quirk": "No Hatsu modifier granted. You have not yet awakened or developed a personal Hatsu technique. You rely on Ten, Ren, Zetsu, and other foundational applications. A Hatsu may emerge in play as your character grows.",
+      "attributes": [],
+      "skills": [],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Rookie Hunter Applicant": {
+      "name": "Rookie Hunter Applicant",
+      "description": "You are an aspirant seeking the Hunter License—untested, driven, and willing to face the Exam's trials. You carry basic survival skills and battlefield awareness, though you lack the seasoning of true experience. Your endurance and willpower have been forged through training; your perception is sharp. The path ahead will test everything you believe about yourself.",
+      "quirk": "Endurance +1, Willpower +1. Skills: Survival +2, Perception +2. You are fresh, hungry, and dangerous—not yet shaped by real danger, but ready to be.",
+      "attributes": [
+        {
+          "attribute": "endurance",
+          "modifier": 1
+        },
+        {
+          "attribute": "willpower",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Survival",
+          "modifier": 2
+        },
+        {
+          "skill": "Perception",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Licensed Hunter": {
+      "name": "Licensed Hunter",
+      "description": "You hold the Hunter's License—a badge earned through grit, cunning, and survival. You have passed the Exam and walked into the wider world. Your willpower is steel; your intellect sharp and practiced. You read people and territories with an expert's eye. The Association recognizes you; the world watches you with respect or fear.",
+      "quirk": "Willpower +2, Intellect +1. Skills: Perception +2, Tracking +2, Negotiation +1. You are fully fledged—licensed, recognized, dangerous.",
+      "attributes": [
+        {
+          "attribute": "willpower",
+          "modifier": 2
+        },
+        {
+          "attribute": "intellect",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Perception",
+          "modifier": 2
+        },
+        {
+          "skill": "Tracking",
+          "modifier": 2
+        },
+        {
+          "skill": "Negotiation",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Arena Fighter": {
+      "name": "Arena Fighter",
+      "description": "You have honed your body and instincts in the brutal honesty of combat arenas. Your strength is legendary; your endurance tested by a thousand battles. You move with acrobatic grace and strike with precision. You know the rhythm of violence—the ebb, flow, and fatal moment. Victory is your habit.",
+      "quirk": "Strength +2, Endurance +1. Skills: Martial Arts +3, Acrobatics +2. You are a weapons-grade combatant trained by the arena itself.",
+      "attributes": [
+        {
+          "attribute": "strength",
+          "modifier": 2
+        },
+        {
+          "attribute": "endurance",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Martial Arts",
+          "modifier": 3
+        },
+        {
+          "skill": "Acrobatics",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Zoldyck-Trained Assassin": {
+      "name": "Zoldyck-Trained Assassin",
+      "description": "You have been shaped by the Zoldyck family—or trained by those who survived their methods. You are a living weapon, conditioned for stealth, precision, and lethality. Poison flows through your veins and knowledge; toxins are second nature. Your agility is supernatural; your willpower unbreakable. Death is your trade, and you are excellent at it.",
+      "quirk": "Agility +2, Willpower +1. Skills: Assassination Techniques +3, Stealth +3, Poison resistance built into your physiology. You are a predator—efficient, cold, and nearly unstoppable in the shadows.",
+      "attributes": [
+        {
+          "attribute": "agility",
+          "modifier": 2
+        },
+        {
+          "attribute": "willpower",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Assassination Techniques",
+          "modifier": 3
+        },
+        {
+          "skill": "Stealth",
+          "modifier": 3
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Mafia Community Member": {
+      "name": "Mafia Community Member",
+      "description": "You come from the underworld—born into a mafia family or organization. You understand the language of power, money, and calculated cruelty. Your presence commands attention; your intellect navigates the byzantine politics of organized crime. You intimidate without words; you lie with the ease of breathing. The underworld is your domain.",
+      "quirk": "Presence +2, Intellect +1. Skills: Intimidation +2, Deception +2, Gambling +2. You are politically savvy, dangerous, and connected to power that operates in shadow.",
+      "attributes": [
+        {
+          "attribute": "presence",
+          "modifier": 2
+        },
+        {
+          "attribute": "intellect",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Intimidation",
+          "modifier": 2
+        },
+        {
+          "skill": "Deception",
+          "modifier": 2
+        },
+        {
+          "skill": "Gambling",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Meteor City Survivor": {
+      "name": "Meteor City Survivor",
+      "description": "You hail from Meteor City—the place that doesn't exist, where the unwanted make their homes in urban ruin. You have survived by stealth, cunning, and brutal adaptability. Your endurance is forged in hardship; your agility honed by danger. You know how to vanish and how to survive where others would perish. Officially, you were never born.",
+      "quirk": "Endurance +1, Agility +1. Skills: Survival +3, Stealth +2. Officially, this character does not exist in any record. No birth certificate, no identity, no trail—perfect for those who need to disappear.",
+      "attributes": [
+        {
+          "attribute": "endurance",
+          "modifier": 1
+        },
+        {
+          "attribute": "agility",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Survival",
+          "modifier": 3
+        },
+        {
+          "skill": "Stealth",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Hunter Association Staff": {
+      "name": "Hunter Association Staff",
+      "description": "You work for the Hunter Association in an official capacity—an administrator, logistics officer, or specialist handler. You understand the Association's machinery from the inside; you navigate its bureaucracy with ease. Your intellect is sharp; your presence commanding. You treat Hunters as assets and allies. Power flows through information and organizational control.",
+      "quirk": "Intellect +2, Presence +1. Skills: Tactics +2, First Aid +1, Negotiation +2. You are politically connected and understood the Association's true nature and scope.",
+      "attributes": [
+        {
+          "attribute": "intellect",
+          "modifier": 2
+        },
+        {
+          "attribute": "presence",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Tactics",
+          "modifier": 2
+        },
+        {
+          "skill": "First Aid",
+          "modifier": 1
+        },
+        {
+          "skill": "Negotiation",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Greed Island Player": {
+      "name": "Greed Island Player",
+      "description": "You have survived on Greed Island—the legendary game where card-spells rewrite reality. You understand the economy of cards, the grammar of wishes, and the mechanics of the game's impossible physics. Your intellect is razor-sharp; your willpower unshakeable. Few who enter Greed Island escape; you did, and you carry its secrets.",
+      "quirk": "Intellect +2, Willpower +1. Skills: Gambling +2, Tactics +2. You are fluent in the card-spell economy of Greed Island and its reality-warping mechanics. You think in terms of costs, conditions, and chains of wishes.",
+      "attributes": [
+        {
+          "attribute": "intellect",
+          "modifier": 2
+        },
+        {
+          "attribute": "willpower",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Gambling",
+          "modifier": 2
+        },
+        {
+          "skill": "Tactics",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Kakin Court Retainer": {
+      "name": "Kakin Court Retainer",
+      "description": "You serve the royal court of Kakin—or did once. You are versed in courtly intrigue, diplomatic subtlety, and the manipulation of power through words and alliance. Your presence is refined; your intellect navigates the labyrinth of court politics. You understand succession, succession war, and the price of ambition. You are a player in games where nations are the stakes.",
+      "quirk": "Presence +2, Intellect +2. Skills: Negotiation +2, Deception +2, Tactics +1. You are politically savvy, courtly, and dangerous in ways that don't leave visible marks.",
+      "attributes": [
+        {
+          "attribute": "presence",
+          "modifier": 2
+        },
+        {
+          "attribute": "intellect",
+          "modifier": 2
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Negotiation",
+          "modifier": 2
+        },
+        {
+          "skill": "Deception",
+          "modifier": 2
+        },
+        {
+          "skill": "Tactics",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Chimera Ant": {
+      "name": "Chimera Ant",
+      "description": "You are a humanoid Chimera Ant—a fusion of human and insect born from the Queen's appetite. You retain fragments of a devoured human's memories and personality, granting you intelligence and complexity that pure Ants lack. Your strength and agility are superhuman; your body a masterwork of predatory evolution. You carry an intrinsic aura—untrained, but potent. You are an aberration, and you know it.",
+      "quirk": "Strength +2, Agility +2, Endurance +1. Skills: Martial Arts +2. You possess innate aura generation without formal Nen Training (your Nen tier is set narratively). You are inhuman—designed by nature and the Queen's choice to be superior to humans in every visceral way. Playable only in late-story arcs (Chimera Ant and beyond).",
+      "attributes": [
+        {
+          "attribute": "strength",
+          "modifier": 2
+        },
+        {
+          "attribute": "agility",
+          "modifier": 2
+        },
+        {
+          "attribute": "endurance",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Martial Arts",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Civilian Prodigy": {
+      "name": "Civilian Prodigy",
+      "description": "You are a untrained genius—a prodigy whose raw intellect or talent far exceeds the norm. The Hunter Association has not yet found you, or you have not yet sought them out. Your intellect is extraordinary; your presence magnetic. You carry one knowledge skill at expert level—mastery in some domain that sets you apart. The world does not know what you are capable of yet.",
+      "quirk": "Intellect +2, Presence +1. One knowledge skill (Tactics, First Aid, Engineering, Gambling, Tracking, or Perception) gains +3. You are untrained but brilliant—dangerous precisely because you operate outside the Association's frameworks and expectations.",
+      "attributes": [
+        {
+          "attribute": "intellect",
+          "modifier": 2
+        },
+        {
+          "attribute": "presence",
+          "modifier": 1
+        }
+      ],
+      "skills": [],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Kurta Survivor": {
+      "name": "Kurta Survivor",
+      "description": "You are one of the Kurta—or the last of them. Your eyes burn scarlet when emotion overwhelms you, marking you as prey to every Nen user who hunts your kind. You carry the weight of genocide; your willpower is tempered steel. When your eyes ignite, your concentration deepens, your perception sharpens, and you become something terrible—but you are also a walking bounty, a target for collectors and assassins.",
+      "quirk": "Willpower +2, Intellect +1. Skills: Perception +3. When your eyes turn scarlet (a state triggered by extreme emotion or voluntary focus), you gain a concentration bonus—your perception and aura control sharpen. But your scarlet eyes mark you as a Kurta, making you a target. Few know your tribe still has survivors.",
+      "attributes": [
+        {
+          "attribute": "willpower",
+          "modifier": 2
+        },
+        {
+          "attribute": "intellect",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Perception",
+          "modifier": 3
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Vow: Sworn Nemesis": {
+      "name": "Vow: Sworn Nemesis",
+      "description": "You have sworn a vow of enmity against a single foe—a nemesis whose name is written into your very Nen. Your hatred amplifies your strength immeasurably against them; your techniques are devastatingly effective. But this focus is a cage: against anyone else, your enhanced abilities are nearly useless.",
+      "quirk": "Ren +3, Hatsu +2 (stacking with other modifiers). This bonus applies ONLY against the sworn nemesis named at character creation. Against any other opponent, these bonuses are nullified—your hatred is so specific that it cannot be redirected. Breaking this vow (failing to challenge the nemesis, letting them live when you could kill them, or forgiving them) strips the trait and cripples your aura for one story chapter.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Ren",
+          "modifier": 3
+        },
+        {
+          "skill": "Hatsu",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Vow: Announce the Kill": {
+      "name": "Vow: Announce the Kill",
+      "description": "You have sworn that before unleashing a killing technique, you will announce your intent aloud. This vow binds your Nen, forcing transparency and honor. Your techniques are empowered by this binding; your Hatsu gains strength from the announcement. But the cost is tactical: you cannot ambush, cannot hide your preparations, cannot catch foes unaware.",
+      "quirk": "Hatsu +2 (stacking with other modifiers). You may ONLY use your most devastating Hatsu techniques after declaring your intention aloud—the enemy hears you coming. This prevents surprise kills and assassination; it makes you predictable. Breaking this vow (attempting a killing technique without announcement) strips the trait and suppresses your aura for one story chapter.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Hatsu",
+          "modifier": 2
+        },
+        {
+          "skill": "Ren",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Vow: Pacifist's Edge": {
+      "name": "Vow: Pacifist's Edge",
+      "description": "You have sworn never to strike first—a binding vow that channeling your Nen into defense rather than offense. Your Ten is unyielding; your Ren a protective shield. But you surrender the first move; you can only counterattack, only defend, only respond. Patience becomes your greatest weapon.",
+      "quirk": "Ten +3, Ren +2 (stacking with other modifiers). You may NEVER strike first in any conflict—you can only defend, parry, or counterattack. If you break this vow (throwing the first blow), the trait is stripped and your aura leaks away for one story chapter, leaving you defenseless.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Ten",
+          "modifier": 3
+        },
+        {
+          "skill": "Ren",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Vow: Stake of Lifeblood": {
+      "name": "Vow: Stake of Lifeblood",
+      "description": "You have sworn to spend your own life force to power your Nen—a vow written in blood. Your Hatsu is monumentally amplified, burning with the vitality you feed it. But each technique visibly wounds you; your health suffers as the price of power. You are spending yourself to win.",
+      "quirk": "Hatsu +3, but health -10 (max health is permanently reduced). When you activate Hatsu abilities, the narrator describes visible wounds—bleeding, aging, exhaustion—as the cost. Your techniques are extraordinarily powerful, but every use draws red. Breaking this vow (refusing to pay the health cost) strips the trait and temporarily cripples your aura.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Hatsu",
+          "modifier": 3
+        }
+      ],
+      "resources": [
+        {
+          "resource": "health",
+          "modifier": -10
+        }
+      ],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Vow: Conditional Arsenal": {
+      "name": "Vow: Conditional Arsenal",
+      "description": "You have sworn that your signature technique functions only under a specific condition—a time of day, a location, an emotional state, a phase of the moon. This binding constraint channels enormous power into that moment. Your aura capacity swells with the promise; your technique is unkillable when conditions are met. Outside them, it is inert.",
+      "quirk": "Aura +40 (stacking with other modifiers). Your signature Hatsu works ONLY under a creation-named condition (e.g., 'only at night,' 'only in water,' 'only when I am afraid,' 'only against my nemesis'). Outside that condition, your technique is completely non-functional. Breaking this vow (using the technique outside the condition) strips the trait and drains 50% of your aura immediately.",
+      "attributes": [],
+      "skills": [],
+      "resources": [
+        {
+          "resource": "aura",
+          "modifier": 40
+        }
+      ],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Vow: Time-Boxed Power": {
+      "name": "Vow: Time-Boxed Power",
+      "description": "You have sworn that your Nen functions only within a declared window—a time limit, a situation, a specific number of hours per day. This binding amplifies your power tremendously within that window; you are a god in that moment. But outside it, you are diminished, almost ordinary.",
+      "quirk": "Ren +3, Hatsu +3 (stacking with other modifiers), but ONLY within a creation-named window of time or situation (e.g., 'one hour at dusk,' 'during monsoon,' 'when the full moon rises'). Outside that window, these bonuses are nullified—you are an ordinary Nen user. Breaking this vow (using the powered-up form outside the window) strips the trait and temporarily suppresses your aura.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Ren",
+          "modifier": 3
+        },
+        {
+          "skill": "Hatsu",
+          "modifier": 3
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Vow: Ascetic's Discipline": {
+      "name": "Vow: Ascetic's Discipline",
+      "description": "You have sworn to live as an ascetic—refusing luxury, intoxication, and indulgence. This self-denial sharpens your willpower to a knife's edge; your mind and Nen crystallize into perfect clarity. But the price is a life of hardship: you cannot accept comfort, cannot rest in ease, cannot surrender to weakness.",
+      "quirk": "Willpower +1, Ten +2 (stacking with other modifiers). You must refuse luxury, intoxication (alcohol, drugs, poisons that alter perception), and indulgence (fine food, soft beds, pleasures). You live simply and harshly. Breaking this vow (accepting luxury or indulgence) strips the trait and temporarily weakens your aura.",
+      "attributes": [
+        {
+          "attribute": "willpower",
+          "modifier": 1
+        }
+      ],
+      "skills": [
+        {
+          "skill": "Ten",
+          "modifier": 2
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    },
+    "Vow: Death Before Retreat": {
+      "name": "Vow: Death Before Retreat",
+      "description": "You have sworn to never flee a battle once joined—a vow of total commitment. Your resolve is absolute; your Nen burns with the promise of victory or death. But you surrender all choice of retreat; you are bound to fight until the enemy falls or you do.",
+      "quirk": "Ren +2, Hatsu +2, Ten +1 (stacking with other modifiers). Once you have entered combat with an opponent, you may NEVER flee, retreat, or abandon the fight—only surrender, die, or achieve victory. Breaking this vow (fleeing a battle you've joined) strips the trait and cripples your aura for one story chapter.",
+      "attributes": [],
+      "skills": [
+        {
+          "skill": "Ren",
+          "modifier": 2
+        },
+        {
+          "skill": "Hatsu",
+          "modifier": 2
+        },
+        {
+          "skill": "Ten",
+          "modifier": 1
+        }
+      ],
+      "resources": [],
+      "startingItems": [],
+      "abilities": [],
+      "unlockedBy": [],
+      "excludedBy": []
+    }
+  },
+  "triggers": {
+    "Nen Awakening": {
+      "name": "Nen Awakening",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Nen-Unawakened"
+        },
+        {
+          "type": "story",
+          "query": "the player's aura nodes are forcibly opened by a hostile burst of aura forced into them, or they complete a gentle Ten initiation under a teacher, or they survive an awakening ordeal that opens their gates"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Nen-Unawakened"
+        },
+        {
+          "type": "player-traits",
+          "operator": "add",
+          "value": "Nen Initiate"
+        },
+        {
+          "type": "story",
+          "instruction": "The world ignites. The player's own life force erupts into sudden, terrible consciousness—a roar of aura that floods through newly-opened pathways. Heat and weight saturate their body; they gasp for air as Ten settles like a second heartbeat, steady and endless. The first time they hold their own aura, exhaustion crashes down—but with it comes clarity. The invisible world reveals itself. From this moment forward, they perceive aura in the air, in living things, in the space between heartbeats. They are no longer blind. They can learn Nen. They can become something more."
+        }
+      ],
+      "recurring": false
+    },
+    "Water Divination: The Water Overflows": {
+      "name": "Water Divination: The Water Overflows",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Undivined"
+        },
+        {
+          "type": "story",
+          "query": "the player performs or undergoes Water Divination and the result is that the water overflows—the glass cannot contain it, the glass shatters, the water spills everywhere uncontrolled"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Undivined"
+        },
+        {
+          "type": "player-traits",
+          "operator": "add",
+          "value": "Enhancer"
+        },
+        {
+          "type": "story",
+          "instruction": "The glass shatters. Water overflows in a torrent, unstoppable and raw—not constrained but liberated. An Enhancer. Your Nen flows outward in amplification; your power rests not in subtlety but in sheer, overwhelming force. You will strengthen yourself, amplify objects, make things raw and more than they were. The hexagon opens before you: Enhancement is your native tongue; Transmutation and Emission are sisters; Conjuration and Manipulation are distant; Specialization is a language you will never speak. Your Nen is the voice of amplification—primal, direct, unstoppable."
+        }
+      ],
+      "recurring": false
+    },
+    "Water Divination: The Taste Changes": {
+      "name": "Water Divination: The Taste Changes",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Undivined"
+        },
+        {
+          "type": "story",
+          "query": "the player performs or undergoes Water Divination and the result is that the taste changes—the water becomes sweet, bitter, salty, sour, or transforms into something else entirely"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Undivined"
+        },
+        {
+          "type": "player-traits",
+          "operator": "add",
+          "value": "Transmuter"
+        },
+        {
+          "type": "story",
+          "instruction": "The taste changes on your tongue. What was water becomes something else—sweet wine, bitter herbs, salt of the sea—transformed. A Transmuter. Your Nen bends and reshapes; you are a creative liar whose Nen follows your deception. You will alter properties, reshape Nen into new forms, dance between categories with fluid grace. The hexagon opens: Transmutation is your native tongue; Enhancement and Conjuration are sisters; Emission and Specialization are taxing; Manipulation resists you fiercely. You are a shapeshifter—flexible, creative, unexpected. Reality bends when you touch it."
+        }
+      ],
+      "recurring": false
+    },
+    "Water Divination: Impurities Appear": {
+      "name": "Water Divination: Impurities Appear",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Undivined"
+        },
+        {
+          "type": "story",
+          "query": "the player performs or undergoes Water Divination and the result is that impurities appear—dust, sediment, material manifests in the water where there was none before"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Undivined"
+        },
+        {
+          "type": "player-traits",
+          "operator": "add",
+          "value": "Conjurer"
+        },
+        {
+          "type": "story",
+          "instruction": "Impurities bloom in the water. Material appears—dust, particles, substance manifesting from nothingness. A Conjurer. Your Nen summons matter from the void; you create real objects that obey your will. You are analytical, precise, high-strung—obsessive in your crafting. The hexagon opens: Conjuration is your native tongue; Transmutation and Specialization are close; Enhancement and Manipulation are manageable; Emission is nearly impossible. You alone can touch Specialization as easily as other Conjurers touch Enhancement. You are an architect of reality—creating weapons, tools, and traps with meticulous care."
+        }
+      ],
+      "recurring": false
+    },
+    "Water Divination: The Leaf Moves": {
+      "name": "Water Divination: The Leaf Moves",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Undivined"
+        },
+        {
+          "type": "story",
+          "query": "the player performs or undergoes Water Divination and the result is that the leaf (or object in the water) moves—shifts, rotates, follows an invisible current or command"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Undivined"
+        },
+        {
+          "type": "player-traits",
+          "operator": "add",
+          "value": "Manipulator"
+        },
+        {
+          "type": "story",
+          "instruction": "The leaf moves. No current pushes it; no wind stirs it—yet it drifts, obedient to invisible will. A Manipulator. Your Nen controls and commands external forces; you bend objects and enemies to your logic through pure will. You are argumentative, cerebral, logical—turning opponents' own strength against them. The hexagon opens: Manipulation is your native tongue; Emission and Specialization are close; Conjuration and Enhancement are manageable; Transmutation is nearly impossible. You alone can touch Specialization as easily as other Manipulators touch Emission. You are a strategist—invisible, precise, inexorable."
+        }
+      ],
+      "recurring": false
+    },
+    "Water Divination: The Color Changes": {
+      "name": "Water Divination: The Color Changes",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Undivined"
+        },
+        {
+          "type": "story",
+          "query": "the player performs or undergoes Water Divination and the result is that the color changes—the water becomes red, blue, gold, black, or any hue where clear water was"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Undivined"
+        },
+        {
+          "type": "player-traits",
+          "operator": "add",
+          "value": "Emitter"
+        },
+        {
+          "type": "story",
+          "instruction": "The color changes. Clear water becomes dyed—gold, crimson, violet—stained by your presence. An Emitter. Your Nen projects outward as waves, beams, and blasts; you strike enemies from distance with raw, aggressive force. You are hot-blooded and bold, impatient and direct. The hexagon opens: Emission is your native tongue; Enhancement and Manipulation are sisters; Transmutation and Specialization are taxing; Conjuration is nearly impossible. You cannot easily create lasting objects; your power is projection and outward force. You are a warrior—impatient, aggressive, burning with power."
+        }
+      ],
+      "recurring": false
+    },
+    "Water Divination: Something Impossible": {
+      "name": "Water Divination: Something Impossible",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Undivined"
+        },
+        {
+          "type": "story",
+          "query": "the player performs or undergoes Water Divination and the result is something impossible—the water defies the divination entirely, behaves in an impossible way, or produces an outcome that matches no standard category"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Undivined"
+        },
+        {
+          "type": "player-traits",
+          "operator": "add",
+          "value": "Specialist"
+        },
+        {
+          "type": "story",
+          "instruction": "Something impossible happens. The divination fails, or succeeds in an utterly unexpected way. A Specialist. You do not fit the hexagon. Your Nen follows no predictable pattern; you are an individualist whose power is singular and inexplicable. The six categories yield to you equally poorly and equally well—you are truly alone on the wheel. The hexagon opens: Specialization is your native tongue; Conjuration and Manipulation are close; Transmutation, Emission, and Enhancement are equally distant. You alone can combine Conjuration and Manipulation freely; you alone can touch techniques forbidden to other categories. You are an anomaly—your Nen is yours alone, following laws no one else understands."
+        }
+      ],
+      "recurring": false
+    },
+    "Aura Exhaustion": {
+      "name": "Aura Exhaustion",
+      "conditions": [
+        {
+          "type": "player-resource",
+          "resource": "aura",
+          "operator": "lessThanOrEqual",
+          "value": 0
+        },
+        {
+          "type": "player-traits",
+          "operator": "notContains",
+          "value": "Nen-Unawakened"
+        }
+      ],
+      "effects": [
+        {
+          "type": "story",
+          "instruction": "The character's aura is empty. They have entered involuntary Zetsu—a state of profound defenselessness. Their Nen capabilities vanish; they cannot activate any Nen ability. Against enemies who perceive aura, they are as fragile as an untrained human. Cold spreads through their limbs. Exhaustion crashes down like a tide. Every Nen user in the area can sense their weakness; predators circle. The character is defenseless until aura recovers. The narrator should impose heavy fatigue, vulnerability, and mortal danger during this state. Describe their trembling hands, their labored breathing, the feeling of their own absence. They are hollow until the well refills."
+        }
+      ],
+      "recurring": true
+    },
+    "Vow Broken: Sworn Nemesis": {
+      "name": "Vow Broken: Sworn Nemesis",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Vow: Sworn Nemesis"
+        },
+        {
+          "type": "story",
+          "query": "the player attacks someone other than their sworn nemesis with a technique granted by the Sworn Nemesis vow, or uses the vow's power against anyone except the named nemesis"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Vow: Sworn Nemesis"
+        },
+        {
+          "type": "player-resource",
+          "resource": "aura",
+          "operator": "multiply",
+          "value": 0.3
+        },
+        {
+          "type": "story",
+          "instruction": "The vow shatters. The player's hatred—carefully honed into a needle of absolute focus on their nemesis—tears itself out of their aura in a visible backlash. The Nen world's absolute law manifests: a broken oath collects its debt instantly and without mercy. Aura explodes outward in a wave of agony; the player feels their power hemorrhaging away, their reserves draining to a trickle. What was sworn devotion becomes savage pain. The nemesis-granted strength was a cage; breaking it leaves the character wounded, diminished, and vulnerable. The narrator describes the backlash viscerally: the character screaming as their own aura tears free, the world turning black at the edges, the sudden, crushing weight of their power turning against them."
+        }
+      ],
+      "recurring": false
+    },
+    "Vow Broken: Announce the Kill": {
+      "name": "Vow Broken: Announce the Kill",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Vow: Announce the Kill"
+        },
+        {
+          "type": "story",
+          "query": "the player attempts or executes a killing technique without announcing their intention aloud first, or hides their preparations for a lethal Hatsu"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Vow: Announce the Kill"
+        },
+        {
+          "type": "player-resource",
+          "resource": "aura",
+          "operator": "multiply",
+          "value": 0.3
+        },
+        {
+          "type": "story",
+          "instruction": "The vow shatters. The binding oath that empowered your killing techniques tears loose from your aura in a catastrophic backlash. Nen's absolute law is unforgiving: a broken vow exacts its price instantly and visibly. Your aura drains away in agony; what was enhanced power becomes hemorrhaging weakness. The character feels the binding chain—the promise of declaration that made their techniques mighty—snap and recoil, tearing through their spirit like shrapnel. Describe the backlash viscerally: blood streaming from the character's eyes, their body convulsing, the world spinning, their aura leaking away like spilled water. They are diminished, wounded, and vulnerable."
+        }
+      ],
+      "recurring": false
+    },
+    "Vow Broken: Pacifist's Edge": {
+      "name": "Vow Broken: Pacifist's Edge",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Vow: Pacifist's Edge"
+        },
+        {
+          "type": "story",
+          "query": "the player strikes first in a conflict, throws the first blow, or initiates violence before being attacked—breaking the vow to never strike first"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Vow: Pacifist's Edge"
+        },
+        {
+          "type": "player-resource",
+          "resource": "aura",
+          "operator": "multiply",
+          "value": 0.3
+        },
+        {
+          "type": "story",
+          "instruction": "The vow shatters. The binding oath that channeled your Nen into defense—making Ten a fortress and Ren a shield—tears loose in a visible, catastrophic backlash. Nen's absolute law exacts its price: a broken vow collects its debt instantly. Your aura drains away in pure agony. The character's defensive power, their only refuge, turns against them; Ten collapses, Ren scatters, and they stand defenseless. Describe the backlash in visceral detail: the character's shield cracking apart, their body flooded with cold, their aura leaking away like water through shattered glass. They are vulnerable, wounded, and exposed."
+        }
+      ],
+      "recurring": false
+    },
+    "Vow Broken: Stake of Lifeblood": {
+      "name": "Vow Broken: Stake of Lifeblood",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Vow: Stake of Lifeblood"
+        },
+        {
+          "type": "story",
+          "query": "the player refuses to pay the health cost when activating Hatsu abilities, or evades the visible wounds and aging required by the vow"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Vow: Stake of Lifeblood"
+        },
+        {
+          "type": "player-resource",
+          "resource": "aura",
+          "operator": "multiply",
+          "value": 0.3
+        },
+        {
+          "type": "story",
+          "instruction": "The vow shatters. The binding oath written in blood—the contract that exchanged your lifeblood for power—tears loose from your aura in a violent, immediate backlash. Nen's absolute law does not tolerate broken debts: the aura you fed with your life force turns against you in wrath. Your power drains away as aura hemorrhages. The character feels their own life force rebelling; every cell screams as the connection severs. Describe the backlash viscerally: blood pouring from the character's mouth and eyes, their body shriveling as the life-debt comes due, their aura scattering like ashes. They are weakened, wounded, and vulnerable—the price extracted, after all, but not the price they chose."
+        }
+      ],
+      "recurring": false
+    },
+    "Vow Broken: Conditional Arsenal": {
+      "name": "Vow Broken: Conditional Arsenal",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Vow: Conditional Arsenal"
+        },
+        {
+          "type": "story",
+          "query": "the player uses their signature Hatsu technique outside the stated condition (e.g., uses the night-only technique in daylight, or uses the water-bound technique on dry land)"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Vow: Conditional Arsenal"
+        },
+        {
+          "type": "player-resource",
+          "resource": "aura",
+          "operator": "multiply",
+          "value": 0.3
+        },
+        {
+          "type": "story",
+          "instruction": "The vow shatters. The binding condition that channeled your Nen into monstrous power—but only when specific circumstances aligned—tears loose in a backlash of pure rage. Nen's absolute law exacts its price: a broken oath collects its debt instantly and without mercy. Your aura drains away in agony. The character feels the conditional binding snap and recoil; the framework that made their technique unkillable dissolves into pain. Describe the backlash in visceral detail: the character's aura exploding outward uncontrolled, their technique misfiring and tearing into them, their power draining away in an uncontrolled flood. They are vulnerable, wounded, and diminished."
+        }
+      ],
+      "recurring": false
+    },
+    "Vow Broken: Time-Boxed Power": {
+      "name": "Vow Broken: Time-Boxed Power",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Vow: Time-Boxed Power"
+        },
+        {
+          "type": "story",
+          "query": "the player uses their time-boxed powered form (Ren and Hatsu bonuses) outside the declared window (e.g., uses the dusk-only power at noon, or uses the one-hour technique after an hour has passed)"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Vow: Time-Boxed Power"
+        },
+        {
+          "type": "player-resource",
+          "resource": "aura",
+          "operator": "multiply",
+          "value": 0.3
+        },
+        {
+          "type": "story",
+          "instruction": "The vow shatters. The binding oath that compressed godlike power into a narrow window—making them a force of nature within that moment—tears loose in a catastrophic backlash. Nen's absolute law is merciless: a broken vow collects its debt instantly and violently. Your aura drains away in pure agony. The character feels the time-locked binding snap; the framework that held their power collapses. Describe the backlash in visceral detail: the character's aura scattering like sparks, their power hemorrhaging away uncontrolled, their body convulsing as the temporal binding tears free. They are wounded, diminished, and vulnerable—the god-moment shattered, the power gone."
+        }
+      ],
+      "recurring": false
+    },
+    "Vow Broken: Ascetic's Discipline": {
+      "name": "Vow Broken: Ascetic's Discipline",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Vow: Ascetic's Discipline"
+        },
+        {
+          "type": "story",
+          "query": "the player accepts luxury, indulges in comfort, drinks alcohol or consumes intoxicants, sleeps in soft beds, or accepts any pleasure they have sworn to refuse"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Vow: Ascetic's Discipline"
+        },
+        {
+          "type": "player-resource",
+          "resource": "aura",
+          "operator": "multiply",
+          "value": 0.3
+        },
+        {
+          "type": "story",
+          "instruction": "The vow shatters. The binding oath of asceticism—that sharpened your willpower and crystallized your Nen through self-denial—tears loose in a backlash of cosmic judgment. Nen's absolute law does not tolerate the weak: a broken vow exacts its price instantly and without mercy. Your aura drains away in pure agony. The character feels their carefully-honed discipline collapse; the clarity they won through hardship scatters like smoke. Describe the backlash in visceral detail: the character's body wracked with pain as indulgence wars with aura, their power fragmenting, their clarity dissolving into fog. They are weakened, vulnerable, and diminished—comfort became poison."
+        }
+      ],
+      "recurring": false
+    },
+    "Vow Broken: Death Before Retreat": {
+      "name": "Vow Broken: Death Before Retreat",
+      "conditions": [
+        {
+          "type": "player-traits",
+          "operator": "contains",
+          "value": "Vow: Death Before Retreat"
+        },
+        {
+          "type": "story",
+          "query": "the player flees a battle they have joined, retreats from an opponent they are engaged with, or abandons a fight before it ends in death, surrender, or victory"
+        }
+      ],
+      "effects": [
+        {
+          "type": "player-traits",
+          "operator": "remove",
+          "value": "Vow: Death Before Retreat"
+        },
+        {
+          "type": "player-resource",
+          "resource": "aura",
+          "operator": "multiply",
+          "value": 0.3
+        },
+        {
+          "type": "story",
+          "instruction": "The vow shatters. The binding oath of absolute commitment—the promise to fight unto death or victory, never fleeing—tears loose in a backlash of cosmic rage. Nen's absolute law is pitiless: a broken vow collects its debt instantly and catastrophically. Your aura drains away in agony. The character feels their resolve shattered; the absolute commitment that empowered them crumbles into fragments. Describe the backlash in visceral detail: the character gasping as their aura floods away, their courage turning to ash, their power dissolving into weakness. They stumble, their legs giving way, their Nen scattering. They are broken, crippled, and defenseless—they ran, and the Nen world answered."
+        }
+      ],
+      "recurring": false
+    }
+  },
+  "worldLore": {
+    "The Six Continents": {
+      "text": "The world is known to contain six continents surrounding the Lake Mobius interior: the Republic of Padokea (a constitutional democracy in East Gorteau region), Yorknew (an island nation analogous to the United States), NGL (a Luddite narco-state on the western coast), East Gorteau (a former puppet dictatorship), the Kakin Empire (an absolute hereditary monarchy recently admitted to international recognition), and Meteor City (a scavenger settlement of the stateless). The geography of the world is vast and perilous, with mountain ranges, jungles, and vast deserts separating regions. Most international travel occurs by sea, rail, or contracted airship. The interior of the Lake Mobius is officially unmapped and off-limits—the V5 nations maintain a territorial consensus that nothing lies beyond the outer coastlines worth investigating."
+    },
+    "The Republic of Padokea": {
+      "text": "Padokea is a constitutional republic in the eastern part of the known world, best known as the homeland of the Zoldyck family. The nation is mountainous and rural in its interior, with the city of Kukuroo as a major pilgrimage and tourism draw—the Zoldyck Testing Gate is publicly accessible, though no visitor has ever passed its gates. Padokea's government is stable but lightly centralized, with local lords holding considerable autonomy. The Zoldyck family is the nation's most famous export: world-class assassins whose legend reaches every corner of the globe. The nation's economy relies heavily on mercenary contracts, mining, and tourism related to the Zoldyck mystique."
+    },
+    "Yorknew City and the Island Nations": {
+      "text": "Yorknew is the largest and most cosmopolitan city in the known world, located on an island nation that serves as the global center of commerce, finance, and underground trade. The city is known for its underground auction houses where anything can be bought: artwork, nen-infused artifacts, rare animals, and relics of historical value. Yorknew is the headquarters of the Ten Dons—the mafia overlords who control organized crime globally. The city is heavily policed on the surface but lawless below ground; the Mafia families operate with impunity, and the Ten Dons command absolute loyalty from their subordinate families. The nation has a constitutional monarchy, but the Ten Dons hold true power."
+    },
+    "NGL and the Western Coast": {
+      "text": "NGL is a small, isolationist nation on the western coast known for its Luddite philosophy—rejecting technology, electricity, and external cultural influence. The nation is ruled by a warlord named Gyro and is a major producer of illegal narcotics exported to neighboring regions. NGL's borders are heavily fortified, and the nation actively kills outsiders who cross into its territory. The interior is densely jungled and home to numerous magical beasts of unusual size and ferocity. Hunters rarely venture into NGL, and fewer return; the nation's interior is virtually unmapped."
+    },
+    "East Gorteau": {
+      "text": "East Gorteau is a politically volatile region in the eastern part of the known world. For centuries it was governed as a loose confederation of city-states until recently falling under the control of a puppet dictator installed by foreign powers. The region is known for its extreme wealth disparity, baroque culture, and history of civil strife. The current government is nominally democratic but widely understood to be a puppet regime. East Gorteau is strategically vital for international trade routes and access to the interior regions. The military is strong but poorly motivated; many soldiers are conscripted rather than volunteer."
+    },
+    "Kakin Empire": {
+      "text": "The Kakin Empire is a vast, hereditary autocracy ruled by the immortal dictator Nasubi Hui Guo Rou. It is the largest nation by land mass and population, stretching across multiple climate zones and dominated by a rigid caste system. The empire was long considered too remote and inhospitable for international engagement, but recent diplomatic overtures have led to its admission to the V5 council of nations. Kakin's military is massive and well-disciplined; its navy is second only to Yorknew's merchant fleet. The nation is home to numerous martial traditions and nen-using warrior castes who serve the imperial family. The succession question—how power passes when Nasubi dies—is a closely guarded state secret, though rumors of internal strife among his children suggest the matter is far from settled."
+    },
+    "Meteor City": {
+      "text": "Meteor City is a scavenger settlement built in the ruins of an ancient meteor impact, home to the stateless poor and outcasts of the known world. The city has no formal government; survival is based on scrounging, theft, and barter. Most citizens were born in Meteor City or were abandoned there as children. Officially, the city barely exists in the eyes of the major nations—it is off the maps, unrecognized, a place of urban legend and danger. In truth, Meteor City has a hidden power structure and organizational hierarchy that rivals organized crime syndicates. The city has produced some of the world's most dangerous individuals."
+    },
+    "The Hunter Association": {
+      "text": "The Hunter Association is an independent, quasi-governmental organization that licenses Hunters—individuals granted near-total legal immunity in exchange for maintaining professional standards and completing commissioned work. The Association has approximately 600 licensed Hunters worldwide, with ranks from rookie to double-star. The headquarters is a fortress of bureaucracy and training facilities located in an undisclosed location accessible only to licensed members. The Association's chairman is its absolute authority; the current chairman is Isaac Netero, a living legend who is said to be the strongest Nen user alive. The annual Hunter Exam is held under the Association's auspices; it is brutally selective, with thousands of applicants and only a handful passing. Examinees are often forced to kill, betray, or destroy one another to pass. The Hunter license grants its bearer legal immunity for actions taken in pursuit of licensed contracts, making Hunters de facto above the law."
+    },
+    "The Hunter Exam": {
+      "text": "The Hunter Exam is conducted annually by the Hunter Association to identify and select individuals of exceptional ability and character. The exam is held in secret locations and rotates between different regions each year. Examinees are drawn from all walks of life; age is no barrier, and children as young as ten compete alongside adults. The exam consists of multiple phases testing physical endurance, problem-solving, and often combat. The pass rate is intentionally brutal—fewer than one percent of applicants ever become licensed Hunters. Examiners are themselves famous Hunters, each bringing their own philosophy and moral flexibility to the examination. The exam is known to kill candidates; deaths are rule-breaking on the examiners' part but not unheard of. Those who pass become members of the Hunter Association and receive a hunter license granting them near-total legal immunity."
+    },
+    "Hunter License Tiers and the Star System": {
+      "text": "Hunter licenses are ranked by the number of stars a Hunter earns over their career. A rookie Hunter has no stars and limited authority; a one-star Hunter has proven significant accomplishment and can undertake more dangerous commissions; a double-star (two-star) Hunter is a veteran with major achievements and high status; a triple-star Hunter is exceedingly rare and commands respect globally. Star rank is awarded by the Hunter Association based on completed contracts, discovered knowledge, and demonstrated skill. The star system creates a power hierarchy within the Association; higher-star Hunters receive better contracts, higher pay, and first claim on research opportunities. The current strongest living Hunter, Isaac Netero, is a legendary figure of indeterminate star rank—older than the current star system itself."
+    },
+    "The Phantom Troupe": {
+      "text": "The Phantom Troupe is a band of elite thieves and assassins, thirteen strong, known for coordinated heists of extraordinary scale and brutality. The Troupe is infamous for stealing priceless artifacts, murdering entire families, and leaving no witnesses. They are identifiable by distinctive spider tattoos bearing numbers from 0 to 12 on their bodies. The Troupe's internal structure is mysterious; their leader is known only as Chrollo Lucilfer (#0), and the identity and abilities of most members are unknown to law enforcement. The Troupe emerged roughly five years before the present era and has committed some of the most heinous crimes in recorded history, yet law enforcement remains unable to apprehend them. They are considered the most dangerous criminal organization in the world, more feared than the mafia syndicates themselves."
+    },
+    "The Scarlet Eyes Massacre": {
+      "text": "Roughly five years before the current era, the Kurta clan—a reclusive, peaceful tribe known for their unique scarlet-colored eyes—was systematically slaughtered. The massacre was perpetrated by the Phantom Troupe, who harvested the victims' scarlet eyes for sale on the black market. Scarlet Eyes are highly prized by collectors and are rumored to enhance certain Nen abilities, commanding astronomical prices at underground auctions. The massacre became public knowledge: the Kurta clan was destroyed, the Scarlet Eyes circulate widely among wealthy collectors and criminals, and the perpetrators remain unidentified and at large. The massacre is remembered as one of the cruelest acts in recent history."
+    },
+    "The Mafia Community and the Ten Dons": {
+      "text": "Organized crime is structured globally around the Ten Dons—ten crime lords who rule their respective territories absolutely. Below the Ten Dons are hundreds of mafia families, each operating with strict hierarchy and codes of loyalty. The Ten Dons coordinate on major decisions affecting global crime; they meet rarely and in absolute secrecy. The Mafia controls most underground commerce: smuggling, illegal trades, assassination contracts, and the black market for stolen goods. The Mafia has its own code of honor; betrayal is punished by death, and internal disputes are settled through direct violence. Mafia families often hire Hunters as mercenaries or bodyguards, creating an overlap between legitimate and criminal power. The Ten Dons themselves are rarely seen in public; their identities and faces are closely guarded secrets known only to upper-level family members."
+    },
+    "Heavens Arena": {
+      "text": "Heavens Arena is a massive, 251-floor combat tower located in a major city, where fighters from across the world compete in one-on-one matches for prize money and prestige. Fighters are ranked by the floor they can reach; higher floors hold stronger competitors. The prize pool is enormous; a single championship can net a fighter millions. Heavens Arena is also a cultural institution where the wealthiest patrons gather to gamble, socialize, and witness exceptional combat talent. The lower floors are chaos—novices, cheaters, and sandbagging veterans preying on newcomers. Higher floors are home to legitimate elite fighters with international reputations. Floor 200 marks a significant threshold: above it, combat becomes truly lethal, and the strongest independent fighters hold court. The Arena employs rules and referees but is ultimately a brutal meritocracy where the strong dominate the weak."
+    },
+    "The Zoldyck Family": {
+      "text": "The Zoldyck family is the world's most renowned assassination family, living in fortress seclusion on Kukuroo Mountain in the Republic of Padokea. The family is led by patriarch Silva and his wife Kikyo, with children including the eldest son Illumi, the second son Milluki, and the youngest Killua. The Zoldycks are famous for their absolute skill in killing—no Zoldyck contract is ever left unfulfilled, and their success rate is perfect. The Testing Gate at the base of Kukuroo Mountain is legendary: the gate's weight increases dramatically with each of its five doors, and no outsider has ever passed through. The Zoldyck family is also famous for their brutal internal training regime; children are raised as assassins from infancy. The family is wealthy beyond measure and maintains connections to every criminal organization globally. They are employed by the world's most powerful people and most dangerous criminals alike. The family is patriarchal and absolute in its hierarchy."
+    },
+    "Magical Beasts": {
+      "text": "The world is home to numerous species of magical beasts—creatures whose bodies and abilities defy ordinary nature. Magical beasts range from small, human-sized predators to enormous monsters capable of destroying cities. Some species are rare and confined to specific regions; others are common enough to be hunted for their bodies, which can be sold for valuable materials. Beast biology is poorly understood by mainstream science; most research is conducted by Hunters specializing in zoology. Some beasts possess natural Nen-like abilities—the capacity to manipulate their own bodies or the environment around them in ways that seem magical. Beasts can be domesticated, though this is rare and dangerous; the Zoldyck family employs a massive guard hound named Mike. Many beasts are carnivorous and actively hunt humans; regions known to contain particularly dangerous beasts are avoided by common travelers."
+    },
+    "The V5 Nations": {
+      "text": "The V5 is an international council of the five most powerful nations in the known world: the Republic of Padokea, Yorknew, NGL, East Gorteau, and the Kakin Empire. The V5 meets in secret to coordinate policy on matters of global importance, including international trade, military affairs, and the control of sensitive information. The V5 is known only to the highest echelons of government and to the Hunter Association's leadership; the general public is unaware it exists. The V5 maintains a strict consensus on territorial boundaries and strategic interests, making open war between member nations unthinkable. The V5 also coordinates on the most sensitive topics: the location and nature of restricted zones, the control of information about the world's true geography, and the suppression of research into certain historical mysteries. Recent intelligence suggests the Kakin Empire has recently been admitted to the V5, restructuring it as the V6, though this has not been publicly acknowledged."
+    },
+    "Nen as Hidden Discipline": {
+      "text": "Nen is a hidden discipline taught to a select few who demonstrate exceptional ability and mental fortitude. To the general public, Nen is rumor and legend—stories of 'trained auras' and mysterious powers possessed by certain Hunters and martial artists, nothing more. The Hunter Association controls Nen knowledge carefully; Nen users undergo a formal 'baptism' where their aura nodes are forcibly or gently opened, allowing them to perceive and manipulate aura. Once awakened, a Nen user sees the world differently—aura becomes visible to their eyes, and they can sense the presence and intentions of other Nen users. Nen is taught in stages, with foundational techniques like Ten (aura control), Zetsu (aura suppression), Ren (aura amplification), and Hatsu (personal ability) forming the core curriculum. The discipline requires decades of dedicated practice to master. Nen knowledge is heavily restricted; teaching Nen to an untrained person is considered reckless, as Nen awakening without proper mental preparation can cause psychological breakdown or death."
+    },
+    "Ten, Zetsu, Ren, and Hatsu": {
+      "text": "Nen's foundational techniques are Ten, Zetsu, Ren, and Hatsu. Ten is the baseline state for a trained Nen user—the constant circulation and control of aura through the body, preventing aura leakage and maintaining defensive capability. A master of Ten can maintain it indefinitely without fatigue. Zetsu is the inverse: the deliberate suppression of all aura, rendering the user invisible to Nen perception and abandoning all Nen defense. Zetsu is used for stealth and escape, but leaves the user defenseless against Nen-based attacks. Ren is the amplification and projection of aura outward, increasing physical power, speed, and durability while broadcasting one's presence to all nearby Nen users. Ren is the aggressive state, used in combat and intimidation. Hatsu is the development of a personal Nen ability unique to each individual, often reflecting their personality, values, or fighting style. Hatsu can range from simple techniques to extraordinarily complex powers, and mastery of Hatsu is the mark of a true Nen adept."
+    },
+    "The Six Categories and Water Divination": {
+      "text": "Nen users are classified into one of six natural categories, determined by how their aura manifests and behaves. The six categories are Enhancement (aura that amplifies the user's physical body), Transmutation (aura that changes properties and characteristics), Conjuration (aura that creates solid objects from nothing), Emission (aura that is projected away from the body), Manipulation (aura that controls external objects or other beings), and Specialization (aura that violates normal Nen rules in unique ways). A Nen user's category is discovered through Water Divination: the user holds a glass of pure water, concentrates their aura, and observes what happens. If the water overflows, the user is an Enhancer; if it changes taste, they are a Transmuter; if impurities appear, a Conjurer; if a leaf moves, a Manipulator; if the color changes, an Emitter; if something else entirely occurs, a Specialist. Most Nen users are strongest in their native category and weaker in adjacent or opposite categories. The hexagon of affinities shows that each category is adjacent to two others and opposite to one other. Specialization occupies a unique position, adjacent to Conjuration and Manipulation."
+    },
+    "Hexagon Affinity and Category Efficiency": {
+      "text": "The six Nen categories form a hexagon of relative affinity: Enhancers are adjacent to Transmuters and Emitters, two steps away from Conjurers and Manipulators, and opposite to Specialists. Each user is most efficient (100% output) in their native category, efficient (80%) in adjacent categories, moderately efficient (60%) two steps away, and least efficient (40% or less) in opposite and non-adjacent categories. A user can learn techniques outside their category, but doing so requires more aura, more training, and yields weaker results. For example, an Enhancer attempting Conjuration (two steps away) will succeed at 60% efficiency, meaning their conjured objects are weaker or less stable than a Conjurer's would be. Specialists occupy the center of the hexagon and have unique affinities; they are strongest in Specialization itself and adjacent to Conjuration and Manipulation. The hexagon system reflects a deep truth about Nen: your natural talent aligns with your fundamental nature, and working against that nature carries a steep cost."
+    },
+    "Vows and Limitations": {
+      "text": "A Nen user can bind themselves with a Nen vow—a formal, binding commitment to a specific condition or limitation. In exchange for this binding, the user's Nen power increases dramatically. For example, a Nen user might vow to fight only a single opponent for the rest of their life, gaining massive power increases against that opponent in exchange for weakness against all others. Vows are absolute; breaking a vow results in the user losing all the power granted by that vow and suffering severe aura backlash or, in extreme cases, death. Vows are not magical contracts—they are psychological bonds that reshape the user's aura structure itself, reflecting their commitment. The stronger the vow and the more absolute the limitation, the greater the power gain. Vows can be temporary (binding for a specified time) or permanent (binding until death). A user can harbor multiple vows simultaneously, but each additional vow adds complexity and risk. Vows are personal and unique; no two users' vows are identical."
+    },
+    "The Aura Baptism and Forced Awakening": {
+      "text": "The process by which a Nen user first awakens their aura is called the baptism. A Nen instructor forcibly or gently opens the candidate's aura nodes, flooding their body with Nen for the first time. The experience is excruciating; the sensation is described as burning from within, as if the body is being remade. Most candidates who undergo baptism without proper psychological preparation suffer severe trauma or death. Those who survive emerge transformed: they can now sense aura, maintain Ten indefinitely, and begin the long process of learning Nen techniques. The baptism is irreversible; once a user is awakened, they remain Nen-capable for life. The trauma of baptism shapes how a Nen user views the discipline; many awakened users speak of it as the moment they truly became aware of the depth of human potential. Instructors like Wing of Heavens Arena serve as guides through this threshold."
+    },
+    "Nen After Death and Grudge": {
+      "text": "When a Nen user dies, their aura does not simply dissipate—it can linger in the world as Grudge Nen, especially if the user died under conditions of intense emotion, injustice, or unfinished purpose. Grudge Nen is hostile and chaotic; it seeks to inflict suffering on the living. The strongest Grudge Nen manifests as literal ghosts that can interact with the physical world, growing more dangerous and unpredictable as time passes. Haunted locations can be identified by the presence of Grudge Nen; exorcising a haunted place requires a powerful Nen user to either convince the Grudge to pass on or forcibly disperse it. Some Nen users attempt to bind their consciousness into their Grudge Nen before death, preserving a shadow of themselves beyond death. These attempts are rarely successful, but when they are, the result is a near-immortal entity of pure malice. The existence of Grudge Nen is known to Nen users but is kept secret from the general public, as it would cause widespread panic if people knew that the dead could linger as hostile entities."
+    },
+    "ARC 1: The Hunter Exam Era": {
+      "text": "[ARC: Hunter Exam — Year 0] The 287th Hunter Exam is underway, with thousands of applicants competing for the honor of becoming licensed Hunters. The exam is notorious for its brutality; examinees are often forced to kill one another to progress. The current examiners are Satotz (Phase One), Menchi (Phase Two), Buhara (Phase Two), and Lippo (Phase Three, the tournament bracket). Among the examinees are several who will become notable figures: Gon, a young boy from a remote island seeking his father; Kurapika, the sole survivor of a recent tragedy; Leorio, a young man seeking wealth and medical knowledge; Killua, an escaped assassin; and Hisoka, a dangerous psychopath who failed the exam the previous year. The world does not know of Nen's existence; rumors of 'trained auras' circulate among Hunters, but the general public is ignorant. The Phantom Troupe's identities remain unknown, and the Kurta massacre is remembered as a historical tragedy with perpetrators unidentified. Isaac Netero is alive and serves as the Hunter Association's chairman, though his true power remains his personal secret. Greed Island has not yet been discovered. SECRET: Nen exists and is being taught to those who pass the exam. The Zoldyck family's youngest member, Killua, is competing under a false identity. Gittarackur is actually Illumi, Killua's oldest brother, sent to ensure Killua fails the exam. Hisoka's category and personal ability remain unknown."
+    },
+    "ARC 2: The Zoldyck Estate": {
+      "text": "[ARC: Zoldyck Family — Year 0, weeks after exam] Killua has been retrieved from the Hunter Exam by his family and returned to Kukuroo Mountain. His companions—Gon, Kurapika, and Leorio—have journeyed to the Testing Gate to retrieve him, facing the gate's escalating weight challenges and the family's defensive retainers. The Zoldyck family is revealed as a dynasty of assassins led by Silva and Kikyo, with children trained from infancy for killing. The family's internal dynamics are cold and utilitarian; love exists, but it is expressed through trials and tests. Illumi, the eldest, acts as the family's agent in the outside world. Killua has begun to question his family's values after meeting Gon, sparking internal conflict. The family's Nen techniques remain largely hidden from outsiders. SECRET: Alluka exists but is sealed away on the estate, a secret even from most Zoldyck staff. Illumi has placed a needle in Killua's brain during childhood, allowing him to control Killua's actions; this needle remains undiscovered. Silva harbors a distant history with Chrollo Lucilfer, leader of the Phantom Troupe, though the nature of their relationship is unknown."
+    },
+    "ARC 3: The Heavens Arena Training": {
+      "text": "[ARC: Heavens Arena — Year 0-1] Gon, Kurapika, and Killua have entered the 251-floor Heavens Arena to train and compete for prize money. Wing, a legitimate Nen instructor and guardian of the arena's upper floors, agrees to teach the three the fundamentals of Nen. This marks their first true training in Nen; they learn Ten (aura control), Zetsu (aura suppression), Ren (aura projection), and begin Water Divination to determine their Nen category. The arena's lower floors are chaotic and filled with dangerous fighters who prey on newcomers. Floor 200 marks the threshold where Nen training becomes mandatory; above it, combat becomes genuinely lethal. Hisoka appears in the arena as a floor master, observing talent and occasionally fighting. His Nen ability, Bungee Gum, is revealed as a Transmutation technique with properties of both rubber and gum. SECRET: The Phantom Troupe's membership is still hidden; Hisoka's spider tattoo is discovered to be fake, and he is not truly a member of the Troupe. Kastro, a mirror-double specialist, faces Hisoka and is defeated. Ging is only a name whispered on a tape recording Gon discovered."
+    },
+    "ARC 4: The Yorknew Auction and Phantom Troupe": {
+      "text": "[ARC: Phantom Troupe & Yorknew — Year 1, September] The world's most prestigious underground auction is underway in Yorknew City, with artifacts, stolen goods, and treasures from across the globe on display. The Nostrade family, led by patriarch Light Nostrade, is in attendance with his daughter Neon, whose Nen ability, Lovely Ghostwriter, allows her to make accurate prophecies—though the family keeps this secret. Kurapika has been hired as a bodyguard and has awakened his Nen as a Specialist, forming a Scarlet Eyes vow that grants him superhuman power against spider members. The Phantom Troupe has chosen this auction as their hunting ground, planning a massacre to steal the merchandise. The troupe's roster includes Chrollo (#0), Nobunaga (#1), Feitan (#2), Machi (#3), Phinks (#5), Shalnark (#6), Franklin (#7), Shizuku (#8), Pakunoda (#9), Bonolenov (#10), Uvogin (#11), and Kortopi (#12); Hisoka (#4) is an imposter, and Kalluto later joins. The Ten Dons of the mafia are present, making the event both glamorous and treacherous. Uvogin confronts Kurapika and dies, marking the first major casualty. The Phantom Troupe fakes their deaths via Kortopi's Nen ability. Chrollo's Nen is sealed by Kurapika's Judgment Chain, preventing him from using Nen or contacting his members. Hisoka abandons the Troupe. Gon discovers a tape recording from Ging about the existence of Greed Island. SECRET: Greed Island is not a video game but a Nen-constructed island created by Ging and ten masters. Meteor City is the Phantom Troupe's true homeland, a connection known only within the Troupe. Kurapika's vow is absolute: he can kill any spider member without hesitation or moral consequence, but his eyes turn completely black and his lifespan shortens with each use."
+    },
+    "ARC 5: Greed Island": {
+      "text": "[ARC: Greed Island — Year 1-2] Greed Island is discovered to be a real island created entirely through Nen, not a video game. The island exists in the physical world and can be entered by those who obtain a copy of the game or are brought by another player. Ging, Gon's father and the island's creator, is revealed as a legendary double-star Ruins Hunter who created Greed Island with the help of game masters including Razor (an extremely powerful Nen user), Eta, Elena, and others. The game operates on a card-based spell economy; players collect cards from monsters and other players to complete the game's objectives. Biscuit Krueger, who has been posing as a young boy named Bisky, is revealed to be a 57-year-old double-star Hunter with a hidden muscular true form. She becomes the group's trainer, pushing Gon and Killua through brutal Ren training that expands their aura capacity and forces them to master advanced Nen techniques. The Bomber trio (Genthru, Sub, and Bara) terrorizes players, forcing them to surrender hard-earned cards via a Countdown Nen ability that kills if the timer expires. The climax involves a dodgeball game against Razor and his companions, where Hisoka's Bungee Gum is used in combat. At the game's end, 'Accompany' card transports Gon to meet Kite. SECRET: Kite is a legendary Hunter and Ging's apprentice, a single-star who is more powerful than he appears. The Chimera Ant threat does not yet exist; the game's final card is not understood to be a prophecy of coming darkness."
+    },
+    "ARC 6: The Chimera Ant Catastrophe": {
+      "text": "[ARC: Chimera Ant — Year 2-3] A Chimera Queen, a parasitic monster capable of consuming other creatures and birthing hybrid offspring, washes ashore in NGL—a narco-state ruled by the warlord Gyro. The Queen begins reproducing, creating hundreds of humanoid soldier ants with human intelligence and Nen abilities. The ants spread across the nation, consuming the population and establishing a new society. Kite, leading an expedition to study the ants, is killed by one of the Queen's strongest offspring, the Royal Guard Neferpitou. Gon and Killua arrive too late to save him, triggering a spiral of despair. The Queen continues her breeding cycle and eventually gives birth to Meruem, the Chimera Ant King—a being of superhuman intellect and power who immediately kills his mother and assumes control of the ant civilization. Three Royal Guards are born: Neferpitou (the Doctor, whose Terpsichora allows time manipulation), Shaiapouf (the Manipulator, whose Beelzebub allows pheromone control), and Menthuthuyoupi (the Emitter, whose powers involve rage and weaponized aura). Meruem relocates to East Gorteau, a puppet dictatorship he plans to rule directly. The Hunter Association mounts an invasion force including Isaac Netero himself, Zeno (Zoldyck elder), and Morel. Netero confronts Meruem and detonates a Nen-bomb containing Poor Man's Rose, poisoning the King and dying in the explosion. Meruem, though poisoned, defeats the invasion and eventually dies with Komugi, a human girl who befriended him, at his side. Gon, broken by Kite's death, makes a desperate vow and is transformed into an adult version of himself in exchange for all his Nen, allowing him one catastrophic strike against Neferpitou before collapsing into a coma. SECRET: Kite is not dead but reborn as a Chimera Ant—a red-haired humanoid ant child, though her memory of her past life is absent. Gon is Nen-less after his transformation; his recovery is not guaranteed. Rose (Poor Man's Rose) was a Nen bomb created in secret by Netero decades before, and its existence was a closely guarded state secret. The Zodiacs (the 12-member elite council of the Hunter Association) exist but operate in shadow; most of their existence and identities remain unknown."
+    },
+    "ARC 7: The 13th Chairman Election": {
+      "text": "[ARC: 13th Chairman Election — Year 3] Isaac Netero is dead, killed in the Chimera Ant invasion. The Hunter Association must elect a new chairman through a complex voting procedure. Pariston Hill (a mysterious Zodiac member ranked as Rat) serves as the Association's vice-chairman and orchestrates a series of games designed to test the candidates. The Zodiacs—twelve elite Hunters holding zodiac code names—are revealed to the public for the first time. Pariston (Rat), Mizaistom (Ox), Kanzai (Tiger), Pyon (Rabbit), Botobai (Dragon), Gel (Snake), Saccho (Horse), Ginta (Sheep), Saiyu (Monkey), Cluck (Chicken), Cheadle (Dog), and Ging (Boar) represent the Association's inner sanctum. Ging is revealed to be Gon's father, a legendary Ruins Hunter and Zodiac member of indeterminate star rank. Gon remains comatose in the Association's medical care. Killua, now a full Nen user, learns of his sister Alluka's existence and her Nen ability: wish-granting at escalating prices. Alluka heals Gon, restoring his physical health but leaving him Nen-less as a permanent consequence of his vow. Illumi, working with Hisoka (who has been hunting Troupe members), attempts to recapture Killua and Alluka, but Killua's needle is removed, unlocking his latent ability Godspeed. Pariston wins the election but immediately resigns, allowing Cheadle Ddf (Dog) to become the 14th chairman. Gon meets Ging at the World Tree, though their relationship remains unresolved. SECRET: Alluka is not human but a Gas-Life form from the Dark Continent, discovered and brought to the Zoldyck family by Silva. Nanika, the wish-granting entity within Alluka's body, is Alluka's true nature; the two entities are distinct but inseparable. Saiyu, a Zodiac member, is secretly working as a mole for the Kakin Empire. The Dark Continent's existence and the V5's suppression of knowledge about it is revealed only at the arc's end, via Beyond Netero's announcement of an expedition."
+    },
+    "ARC 8: The Dark Continent Expedition and Succession War": {
+      "text": "[ARC: Dark Continent Expedition & Succession War — Year 3-4, ongoing] Beyond Netero (Isaac Netero's son, long presumed dead) announces his intention to mount a full expedition to the Dark Continent—a forbidden region beyond the known world that the V5 has kept secret for generations. The V5 is expanded to V6 by admitting the Kakin Empire, a massive autocracy under the immortal Nasubi Hui Guo Rou. The Kakin Empire dispatches a royal vessel, the Black Whale, carrying 200,000 passengers, including 14 princes competing in a succession war for the imperial throne. Each prince is bonded to a Nen beast—a parasitic guardian entity born from the prince's own vow and desires—that protects them but also kills rivals in the succession. Kurapika, now operating as a Zodiac member (Rat, after Pariston's departure), serves as bodyguard to Woble (prince 14) and her mother, Queen Oito. Tserriednich (prince 4) is revealed as an extraordinarily dangerous Nen prodigy and serial murderer with a Specialist ability granting future-sight; he collects Scarlet Eyes as trophies. The Phantom Troupe has boarded the Whale, hunting Hisoka in retaliation for his murders of Kortopi and Shalnark. Hisoka, having died and self-revived through his Nen ability, is aboard seeking vengeance and bodies to fight. The Five Calamities of the Dark Continent are referenced but not fully revealed: Brion, Zobae, Hellbell, Ai, and Pap—mysterious entities of extreme danger that have prevented exploration. Ai is a Gas-Life form theoretically connected to Nanika, hinting at the Dark Continent's biological strangeness. The Zodiacs are aboard the Whale, with Mizaistom guarding Beyond and the mole Saiyu orchestrating betrayals. The voyage is ongoing, and the continent's interior remains unmapped and unknown. EXTRAPOLATED — BEYOND PUBLISHED MANGA: The ultimate outcomes of the Succession War, encounters with the Five Calamities, and Beyond's true intentions for the continent remain unresolved in the published manga (through chapter 410). All events beyond this point are speculative. The story continues, but its conclusion is yet unwritten."
+    },
+    "Five Calamities of the Dark Continent": {
+      "text": "The Dark Continent is home to five entities classified as Calamities—threats of existential magnitude that have prevented human colonization and exploration. These are Brion, Zobae, Hellbell, Ai, and Pap. Brion is theorized to be a massive parasitic organism capable of consuming entire ecosystems. Zobae is described as a disease vector of extreme lethality. Hellbell is believed to be a chimeric predator of incalculable power. Ai is a Gas-Life form—a sentient, amoeba-like entity of unknown intelligence and hunger. Pap is classified as an unknown threat whose nature is not yet understood. The Five Calamities have been contained or deterred by the Kakin Empire's historical blockade of the continent, a military effort that has cost thousands of lives. The threat they pose is so severe that the V5 (now V6) maintains absolute secrecy regarding the continent's existence to prevent panic. Beyond Netero's expedition is explicitly forbidden by international law, and his mere announcement triggers geopolitical crises."
+    },
+    "Lake Mobius and the Interior": {
+      "text": "Lake Mobius is the massive, interior body of water surrounding which the six known continents have developed. The interior of the lake is officially unexplored and unmapped. The V5 maintains a consensus that the lake contains the Dark Continent—a forbidden zone that is off-limits to all exploration and colonization. This consensus is maintained through economic pressure, military threat, and information suppression; no official world map acknowledges the Dark Continent's existence. The lake is ringed by dangerous whirlpools, deep-water predators, and mysterious phenomena that make conventional navigation nearly impossible. Ancient charts from pre-V5 eras hint at lands beyond the lake's interior, but these are dismissed as myth or legend by mainstream scholarship. In truth, the Dark Continent exists; the V5 has chosen to keep it secret from the world's population to prevent resource conflicts, territorial wars, and inevitable human casualties from attempting to settle the continent. The interior of the lake is the world's greatest secret."
+    },
+    "Beyond Netero and the Expedition": {
+      "text": "Beyond Netero was the son of Isaac Netero, the legendary Hunter Association chairman, and was presumed dead decades ago. Beyond has recently resurfaced with an explicit goal: mounting a full-scale expedition to the Dark Continent in defiance of international law and the V5's consensus. Beyond is a triple-star Ruins Hunter and a legitimate scholar of ancient history, giving his claims credibility despite their legal and political impossibility. His expedition has attracted media attention, curiosity-seeking Hunters, and the attention of major nations. The expedition's true goal remains unclear—scientific discovery, resource extraction, or something darker. Beyond's legitimacy as a Hunter and scholar makes his expedition a genuine threat to the V5's information control. His announcement has triggered a cascade of events, including the expansion of the V5 to include the Kakin Empire and the mobilization of the Hunter Association's highest-level members. Beyond's fate and the true nature of his intentions remain unresolved."
+    },
+    "The Kakin Empire's Rise": {
+      "text": "The Kakin Empire, long isolated from international affairs, has recently emerged as a major global power through careful diplomacy. The empire is ruled by Nasubi Hui Guo Rou, an immortal dictator whose methods of achieving immortality are unknown. Nasubi has multiple children (at least 14 princes and likely more), and the question of succession has long been his personal obsession. The empire's military is vast and disciplined, rivaling or exceeding the military forces of the other V5 nations. Kakin's admission to the V5 (now V6) represents a geopolitical shift; the empire has leverage over the other nations and is suspected of harboring territorial ambitions. Kakin's interior practices extreme martial discipline and Nen training, with warrior castes serving the imperial family. The empire is known for its complex court intrigue, where princes scheme against one another and alliances shift constantly. Kakin's culture is foreign and often disturbing to outsiders; practices that would be illegal elsewhere are normalized within the empire. The succession question is the empire's greatest source of instability and power; whichever prince claims the throne will reshape the empire and the global balance of power."
+    },
+    "The Hunter Association's Zodiac Council": {
+      "text": "The Zodiacs are twelve elite Hunters holding the highest rank and authority within the Hunter Association. Each Zodiac is given a zodiac code name (Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Sheep, Monkey, Chicken, Dog, Boar) and serves as an advisor to the Chairman or the Association's leadership. The Zodiacs are among the most powerful Nen users in the world; their exact abilities and identities are closely guarded. The Zodiacs' influence extends beyond the Association into global politics; many nations consult with Zodiacs on matters of state security. The Zodiacs maintain contact with one another through secure networks and meet in secret to coordinate major decisions. The existence and identities of most Zodiacs remain unknown to the general public; even among Hunters, Zodiac membership is a closely held secret. The Zodiac council is headed by the Chairman, who serves as the ultimate authority over the Association's policies and operations. The Zodiacs wield power proportional to their rank, star rating, and political connections; some are more influential than others."
+    },
+    "Greed Island and the Game Masters": {
+      "text": "Greed Island is a Nen-constructed island created by Ging Freecss and ten game masters—elite Nen users who collaborated on the island's design and function. The game operates on a spell-card economy; players collect cards by defeating monsters, trading with other players, or completing specific challenges. The game has multiple objectives, the ultimate goal being to reach the final card, 'Accompany,' which transports the player to meet the game's creator. Ging created Greed Island as a time capsule and a test—a way to leave a message for Gon while also filtering for individuals of exceptional talent and determination. The game masters include Razor, a legendary Nen user of the Emission category, and others whose identities remain unknown to the game's players. Greed Island exists in the physical world and is protected by barriers that prevent uncontrolled entry or exit. The island's internal rules are enforced by Nen itself; objects and rules created within the game cannot be violated by physical force alone. Greed Island is a monument to Ging's genius and his attempt to control the circumstances of his reunion with Gon."
+    },
+    "The Scarlet Eyes Black Market": {
+      "text": "Since the Kurta massacre five years ago, Scarlet Eyes have circulated on the black market as luxury items for collectors and combatants. The eyes are highly prized for their aesthetic beauty and rumored enhancement properties; some Nen users claim that possessing a pair grants perceptual or combat advantages, though these claims are unverified. The price for a single pair has reached astronomical figures—millions of units of currency. The eyes are most sought after by wealthy collectors, criminal organizations, and Nen specialists who believe they carry latent power. The underground auction houses of Yorknew feature Scarlet Eyes as premium auction lots, attracting bidders from across the globe. The black market trade in Scarlet Eyes has spawned a subculture of eye traders, thieves, and assassins who specialize in acquisition and sales. The eyes are identifiable by their distinctive crimson color and the small, pupil-like marking in the iris. Very few complete pairs remain intact, making individual eyes even more valuable."
+    },
+    "Water Divination: The Methodology": {
+      "text": "Water Divination is the canonical method for determining a Nen user's natural category. The process is performed by a trained Nen instructor and requires the student to have recently undergone baptism (aura node opening). The student is given a glass of pure water and instructed to concentrate their aura while the instructor observes. The water responds to the student's aura in one of six ways, revealing their category: Enhancers cause the water to overflow; Transmuters change its taste; Conjurers introduce impurities; Manipulators move a floating leaf; Emitters change its color; Specialists cause something entirely different to occur. The methodology is not fully understood by most Nen users; it appears to reflect something fundamental about how each category's aura interacts with inert matter. Wing, the Heavens Arena instructor, teaches Water Divination as part of basic Nen education. The test is reliable and repeatable; a student tested multiple times will receive the same result. Water Divination is considered the most accurate method for identifying a student's natural Nen category."
+    }
+  }
+}

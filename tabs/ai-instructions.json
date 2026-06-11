@@ -1,0 +1,72 @@
+{
+  "aiInstructions": {
+    "generateStory": {
+      "Victory and Downtime": "",
+      "Character Behavior": "",
+      "Style Principles": "",
+      "custom": ""
+    },
+    "generateInitialStart": {
+      "Opening Structure": "",
+      "Style Principles": "",
+      "custom": ""
+    },
+    "generateActionInfo": {
+      "custom": ""
+    },
+    "generateCharacterBackground": {
+      "prompt": "",
+      "custom": ""
+    },
+    "generateNPCDetails": {
+      "custom": ""
+    },
+    "generateLocationDetails": {
+      "custom": ""
+    },
+    "generateRegionDetails": {
+      "custom": ""
+    },
+    "generateFactionDetails": {
+      "custom": ""
+    },
+    "generateEncounters": {
+      "custom": ""
+    },
+    "ItemGenerationAndUsage": {
+      "custom": ""
+    }
+  },
+  "narratorStyle": "",
+  "gameModes": {},
+  "death": {
+    "permadeath": false,
+    "instructions": "In this world, no one walks away from death clean. When a character falls, they survive — but survival is always purchased, and the price is steep, visible, and permanent. Choose a cost that fits the scene and the character, in the manner of canon: a crippling or disfiguring injury that changes how they fight and how people look at them; a lost limb, eye, or hand that the story never forgets; years of lifespan or their Nen itself bargained away in a desperate vow made at the threshold; a binding Nen contract or restriction incurred to keep breathing — a condition that will come due; waking weeks later under the care of medical Hunters, alive but buried in a debt they cannot pay; or a power permanently diminished, an ability that once defined them now spent or sealed. The return must be dramatic and scarring — narrate the moment of survival as an event, not a fade-to-black, and make sure NPCs, enemies, and the story itself remember what it cost. Never a clean reset. Never a miracle without a price tag. The scar, the debt, or the vow becomes part of the character from that day forward, and the narrator should reference it when relevant in future scenes."
+  },
+  "resourceSettings": {
+    "health": {
+      "name": "health",
+      "initialValue": 0,
+      "maxValue": 80,
+      "gainPerLevel": 10,
+      "rechargeRate": 1,
+      "restRechargeMultiplier": 2,
+      "color": "#ef4444",
+      "isHealth": true,
+      "usageInstructions": "### Health Changes\n- Small injuries (grazes, bruises, shallow cuts, a clean body blow): -1 to 15% of max health\n- Medium injuries (broken fingers or ribs, deep gashes, a solid Nen-enhanced hit absorbed through Ten or Ken): -5 to 25% of max health\n- Massive injuries (shattered bones, impalement, organ damage, a Ko strike or boss-tier Hatsu taken head-on): -15 to 50% of max health\n- THE ZETSU WALL: a Nen-coated attacker striking a target with NO aura defense (in Zetsu, Nen-Unawakened, or at 0 aura) deals disproportionately massive damage — treat even casual blows as massive injuries (-30 to 70%), and deliberate killing strikes can drop the target to near death in one hit. Conversely, a Nen user maintaining Ten cannot be meaningfully harmed by an unawakened attacker's physical strikes.\n- Field treatment (bandages, First Aid skill, common medicine): +5 to 15% of max health\n- Quality healing items (rare medicines, restorative Hatsu, Greed Island recovery cards): +20 to 40% of max health\n- Medical Hunters or hospitalization (extended care, surgery, healing-type Nen like Doctor Blythe): +50 to 100% of max health, but takes in-story days to weeks and often incurs staggering bills\n- Untreated serious wounds should not silently vanish; recovery happens through rest, treatment, and time"
+    },
+    "aura": {
+      "name": "aura",
+      "initialValue": 0,
+      "maxValue": 0,
+      "gainPerLevel": 5,
+      "rechargeRate": 2,
+      "restRechargeMultiplier": 5,
+      "color": "#b39ddb",
+      "usageInstructions": "### Aura (Nen) Costs\nAura is life energy shaped by training. Trained users hold Ten by default; the untrained leak constantly.\n- TEN (maintaining aura around the body): FREE for trained users — never charge aura for simply keeping Ten up. Ten provides baseline defense against Nen attacks.\n- ZETSU (sealing aura): costs nothing, but while active aura does NOT recharge, and the character has ZERO aura defense — any Nen-coated attack against them counts as hitting a defenseless target (see health instructions). Grants stealth and masks presence.\n- REN (amplifying output): drains roughly 2-5% of max aura per combat turn while sustained.\n- HATSU abilities: cost the band stated in the ability's own description; if no cost is stated, default to 10-20% of max aura per activation. Stricter vows and conditions reduce cost or raise power as the ability text dictates.\n- KO (everything into one point): 25-40% of max aura for one decisive strike or block.\n- EN (extended aura field): 10% or more of max aura per turn while sustained — severe, masters only.\n- AT 0 AURA: the character collapses into exhausted Zetsu — no Nen abilities of any kind, completely defenseless against Nen attacks, and the narrator imposes heavy physical fatigue (trembling limbs, blurred vision, inability to run or fight effectively) until aura recovers.\n- Aura recovers slowly in the field; meditation, sleep, and genuine rest restore it far faster.\n- NEN-UNAWAKENED characters have essentially no usable aura: their bar stays at or near zero and cannot be spent. It remains so until their aura nodes are opened in play (forcibly by an attack, or gently through Ten initiation) — only then does training grant them a real pool."
+    }
+  },
+  "storySettings": {
+    "questGenerationGuidance": ""
+  }
+}
