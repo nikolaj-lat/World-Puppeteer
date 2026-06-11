@@ -3844,6 +3844,306 @@
       "hpMax": 112,
       "known": true,
       "voiceTag": "male friendly young"
+    },
+    "Sub": {
+      "name": "Sub",
+      "type": "Nen Professional",
+      "currentLocation": "Dorias Wastes",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "",
+      "basicInfo": "A lank and quiet accomplice of Genthru's Bomber trio, Sub functions as the methodical executor of farming schemes with minimal independent initiative. He possesses a gaunt frame with hollow cheeks, pale skin, and dull eyes that rarely betray emotion. He wears simple dark clothing that blends into shadows—practical wear for someone who prefers to remain unnoticed.",
+      "personality": [
+        "Loyal: follows Genthru's directives without hesitation or independent questioning",
+        "Reserved: communicates sparsely; most thoughts remain internal rather than voiced",
+        "Complicit: participates willingly in atrocities without visible moral conflict",
+        "Flat affect: speaks in monotone without inflection; emotional content nearly absent from his voice"
+      ],
+      "hiddenInfo": "Sub is Genthru's subordinate in the Countdown farming operation and possesses a Nen category of Conjuration, enabling him to activate and manage Little Flower constructs on victims alongside Genthru. His role is to identify targets, execute diversions, and assist in card extraction from corpses. Unlike Genthru, Sub shows no enjoyment in the murders; they are tasks to be completed. His history prior to Greed Island is unknown—he appears to be a career criminal with no moral anchors. He participates fully in the trio's later farming operations and remains subordinate to Genthru throughout. ARC VALIDITY: A5 featured (Greed Island farming, subsidiary role in Bomber trio); A6-A8 absent or dead.",
+      "abilities": [
+        "Countdown Conjuration: Sub can conjure and activate Little Flower constructs similar to Genthru's, embedding countdown timers in victims' chests. Functioning as a secondary bomb-maker for the operation.",
+        "Conjuration Stability: Sub's conjured constructs maintain integrity over extended periods, requiring minimal concentration and allowing him to manage multiple active bombs simultaneously.",
+        "Efficient Execution: Sub executes assigned tasks with mechanical precision, locating victims and restraining them during Little Flower implantation.",
+        "Card Retrieval Expertise: Sub possesses knowledge of valuable Greed Island cards and can quickly assess victim collections for profitable extraction.",
+        "Silent Movement: Sub moves quietly and efficiently, blending into background environments to avoid detection or confrontation.",
+        "Operational Coordination: Sub maintains communication with Genthru and Bara, executing complex farming raids that require synchronized timing.",
+        "\nfighting style: Sub engages in combat reluctantly, preferring to distance himself through Nen-based restraint rather than direct confrontation. When forced to fight, he employs conjured constructs defensively, creating barriers or containment zones. He focuses on disabling opponents through psychological pressure (the countdown timer) rather than sustained physical violence. Against aggressive opponents, Sub becomes evasive, relying on movement and terrain advantage rather than power. His greatest weakness is his lack of combat initiative and independent decision-making—without Genthru's direction, he struggles to adapt to unexpected situations."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 104,
+      "known": true,
+      "voiceTag": "male calm flat"
+    },
+    "Bara": {
+      "name": "Bara",
+      "type": "Nen Professional",
+      "currentLocation": "Dorias Wastes",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "",
+      "basicInfo": "The broad-shouldered and watchful third member of Genthru's Bomber trio, Bara serves as lookout and tactical coordinator for the group's predatory operations. He possesses a muscular, compact frame with dark skin, alert eyes that constantly scan his surroundings, and short dark hair kept practical for action. He wears functional clothing suited for mobility—loose shirts and reinforced pants allowing rapid movement.",
+      "personality": [
+        "Vigilant: maintains constant awareness of surroundings and potential threats; rarely caught unaware",
+        "Cautious: prefers to assess situations before committing to action, avoiding unnecessary risk",
+        "Obedient: defers to Genthru's leadership and accepts his role within the trio's hierarchy without resentment",
+        "Direct speech: communicates clearly and efficiently; prefers practical information over unnecessary elaboration"
+      ],
+      "hiddenInfo": "Bara functions as the lookout and tactical coordinator for Genthru's Countdown farming operation, managing surveillance, identifying victim targets, and monitoring for external threats to the trio's activities. Like Sub, he is a Conjurer capable of activating Little Flower constructs. Bara's distinguishing trait is his heightened tactical awareness—he coordinates ambush positions, manages escape routes, and handles contingency planning when operations encounter interference. His pre-Greed Island background is unknown, suggesting a mercenary or criminal background. He demonstrates no moral conflict with the murders and executions conducted by the trio, accepting them as operational necessity. He remains loyal to Genthru throughout the arc and dies alongside Sub during the confrontation with the protagonist party. ARC VALIDITY: A5 featured (Greed Island farming, tactical coordination role); dies end of A5; A6-A8 absent.",
+      "abilities": [
+        "Countdown Conjuration: Bara can conjure and activate Little Flower constructs, serving as a third bomb-maker for the operation and multiplying the trio's capacity to manage simultaneous victims.",
+        "Conjuration Precision: Bara's conjured constructs are particularly stable and reliable, rarely malfunctioning and maintaining full function across extended operational timeframes.",
+        "Tactical Assessment: Bara evaluates locations, victim positioning, and escape routes with strategic precision, identifying optimal engagement positions for ambush operations.",
+        "Environmental Awareness: Bara maintains heightened sensory perception of his surroundings, detecting approaching threats and monitoring multiple areas simultaneously.",
+        "Defensive Positioning: Bara excels at selecting advantageous terrain and creating defensive perimeters around the trio's operations.",
+        "Coordinated Suppression: Bara synchronizes attacks with Genthru and Sub, ensuring multiple opponents cannot coordinate effective counteroffensives.",
+        "\nfighting style: Bara approaches combat defensively, preferring to establish secure positions and deny enemy movement through environmental control. He uses Nen constructs to create barriers, channels, and kill zones that funnel opponents into disadvantageous positions. When engaging directly, he favors overwhelming physical strength combined with tactical positioning—forcing opponents into confined spaces where his broader frame provides advantage. Against multiple opponents, he separates them through positioning, preventing coordinated attacks. His greatest strength is tactical awareness and positioning; his weakness is his reliance on Genthru's strategic direction for complex situations beyond established tactics."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 104,
+      "known": true,
+      "voiceTag": "male alert firm"
+    },
+    "Tsezguerra": {
+      "name": "Tsezguerra",
+      "type": "Nen Professional",
+      "currentLocation": "Antokiba",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Battera's Clear Campaign",
+      "basicInfo": "A dour and battle-scarred veteran hired as Battera's chief contracted professional to orchestrate the clear campaign, Tsezguerra carries the weight of countless conflicts and hard choices across his weathered frame. He possesses a muscular, imposing build marked by visible scars, dark skin weathered by exposure, stern angular features, and iron-gray hair kept in military-style order. He favors practical combat attire—reinforced jackets, tactical gear, and weapons suggesting a life spent in conflict.",
+      "personality": [
+        "Pragmatic: makes decisions based on practical outcomes rather than idealism; willing to sacrifice individuals for group objectives",
+        "Professional: treats his contracted work with serious discipline and expects equivalent commitment from team members",
+        "Hardened: years of combat have dulled emotional responses; he addresses suffering and death as operational realities",
+        "Commanding: speaks with authority born from years of leadership; expects his orders to be executed without question"
+      ],
+      "hiddenInfo": "Tsezguerra is a veteran professional Nen user contracted by the billionaire Battera as chief strategist and commander of the Clear Campaign—an elite team assembled to complete the Greed Island game within a specific timeframe. He is experienced in managing teams of mixed Nen-user types and excels at tactical coordination in high-stakes environments. His Nen category is Emission, allowing him to deploy aura-based attacks at range. He maintains discipline within his team and prioritizes the mission objective over individual survival, making difficult decisions about resource allocation and member assignment. He views Tsezguerra operates with complete professionalism and shows genuine respect for capable team members, particularly Goreinu. His ultimate goal is completing Battera's contract and earning substantial compensation. Unlike Genthru, Tsezguerra has no interest in personal power accumulation; the contract is the entirety of his concern. ARC VALIDITY: A5 featured (Greed Island Clear Campaign commander, tactical coordination); A6-A8 unknown status (likely surviving post-game).",
+      "abilities": [
+        "Emission Aura Projection: Tsezguerra projects aura-based attacks at range, creating energy blasts and sustained pressure that can be deployed across distances beyond hand-to-hand range.",
+        "Strategic Command: Tsezguerra possesses deep experience coordinating multiple team members with different Nen categories, creating synergistic attack combinations and defensive formations.",
+        "Tactical Assessment: Tsezguerra evaluates enemies and environments with military precision, identifying weaknesses and optimal engagement strategies within moments.",
+        "Resilience and Endurance: Years of conflict have conditioned Tsezguerra to function effectively despite injury, fatigue, and emotional pressure that would incapacitate less experienced combatants.",
+        "Authority and Discipline: Tsezguerra's commands carry natural weight; team members follow his directives instinctively, enabling rapid tactical coordination.",
+        "Veteran Combat Experience: Tsezguerra has fought across multiple continents and against diverse opponent types, giving him adaptive tactics for nearly any combat scenario.",
+        "\nfighting style: Tsezguerra fights with calculated efficiency, employing ranged Emission attacks to maintain distance while assessing opponent capabilities. He prefers structured engagement—testing opponent defenses, identifying vulnerabilities, then committing to a decisive assault. When commanding a team, he positions himself as a central coordinator, assigning roles and adjusting strategy in real-time as circumstances evolve. Against superior individual fighters, he gravitates toward team synergy rather than attempting direct victory. His greatest strength is his experience and ability to remain effective under pressure; his weakness is his reliance on team structure—isolated from support, he becomes reactive rather than proactive."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 112,
+      "known": true,
+      "voiceTag": "male stern commanding"
+    },
+    "Goreinu": {
+      "name": "Goreinu",
+      "type": "Nen Professional",
+      "currentLocation": "Antokiba",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Battera's Clear Campaign",
+      "basicInfo": "A quiet and methodical strategist in Tsezguerra's Clear Campaign, Goreinu possesses an unassuming presence that masks a brilliant tactical mind and one of Nen's most unusual conjurations. He is lean and inconspicuous in build with unremarkable features, neutral expression, and practical clothing that allows him to fade into group settings. Most notable are the two distinct conjured gorillas constantly manifested beside him—one white and one black.",
+      "personality": [
+        "Analytical: processes complex information and identifies patterns others miss; strategic thinking flows naturally",
+        "Quiet: speaks rarely; most of his thoughts remain unvoiced unless directly solicited by teammates",
+        "Adaptable: adjusts tactical approach based on opponent capabilities; prefers flexible systems to rigid strategies",
+        "Cooperative: genuinely values collaborative effort and respects other team members' contributions and expertise"
+      ],
+      "hiddenInfo": "Goreinu is a Nen Professional of the Emitter category whose signature Hatsu is an extraordinary conjuration: two sentient gorillas (one white, one black) permanently manifested beside him. These gorillas possess independent agency and combative capability; they also possess a unique cooperative ability—the White gorilla can swap positions with Goreinu, while the Black gorilla can swap positions with a target opponent, creating chaotic repositioning opportunities during combat. This ability makes him invaluable for team tactics as he can relocate himself, allies, or enemies as tactical situations demand. Goreinu serves as a strategic coordinator under Tsezguerra and is respected for both his combat capability and his calm demeanor under pressure. Unlike many professional Nen users, Goreinu demonstrates genuine kindness toward teammates and shows no interest in betrayal or exploitation. His partnership with his conjured gorillas appears deeply genuine—he treats them as partners rather than tools. He displays particular respect for Tsezguerra's leadership. ARC VALIDITY: A5 featured (Greed Island Clear Campaign, strategic coordination); A6-A8 unknown status (likely surviving post-game).",
+      "abilities": [
+        "Conjured Gorilla Manifestation: Goreinu permanently manifests two conjured gorillas (white and black) possessing independent movement, durability, and offensive capability. These constructs persist for extended periods and can engage opponents simultaneously.",
+        "Position Swap—White Gorilla: The white gorilla can exchange positions with Goreinu, allowing him to instantly relocate himself during combat for escape, repositioning, or unexpected tactical advantage.",
+        "Position Swap—Black Gorilla: The black gorilla can exchange positions with a targeted opponent, disrupting enemy formation and creating openings for team coordination.",
+        "Gorilla Endurance: The conjured gorillas demonstrate exceptional durability and can absorb damage that would incapacitate ordinary Nen constructs, maintaining function across extended engagements.",
+        "Tactical Coordination: Goreinu possesses deep strategic knowledge of team synergy and excels at identifying how different Nen categories can be combined for maximum effectiveness.",
+        "Calm Under Pressure: Goreinu maintains analytical clarity even during high-stress combat, enabling him to identify tactical opportunities when other team members become emotional.",
+        "\nfighting style: Goreinu fights as a coordinator rather than a primary combatant, positioning his gorillas to control space while maintaining strategic oversight. His own role is to identify tactical opportunities and direct team positioning through gorilla swaps. His gorillas engage opponents directly while he provides ranged support or coordinates team attacks. Against opponents who isolate him from his gorillas, he becomes vulnerable—his conjurations are his true combat strength, not his personal physical capability. His greatest strength is his flexibility and ability to adapt tactics mid-combat; his weakness is his reliance on his gorillas for direct combat effectiveness."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 104,
+      "known": true,
+      "voiceTag": "male calm analytical"
+    },
+    "Abengane": {
+      "name": "Abengane",
+      "type": "Nen Professional",
+      "currentLocation": "Masadora",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "",
+      "basicInfo": "A specialist Nen exorcist of quiet demeanor and mysterious background, Abengane commands knowledge of parasite-removal rituals known to few Nen practitioners. He is of indeterminate age with weathered features, dark skin, and a calm expression suggesting deep spiritual practice. He favors simple robes and carries ritual implements—suggesting a practitioner of esoteric arts rather than a combat specialist.",
+      "personality": [
+        "Contemplative: observes situations deeply before responding; decision-making follows internal reflection",
+        "Knowledgeable: possesses expertise in obscure Nen techniques inaccessible to most practitioners",
+        "Cautious: exercises restraint when engaging with unknown Nen phenomena; prioritizes safety over speed",
+        "Matter-of-fact: delivers information without embellishment; speaks in practical, direct language"
+      ],
+      "hiddenInfo": "Abengane is a specialist Nen exorcist who practices an unusual discipline: the removal of parasitic Nen constructs embedded within hosts. His signature technique involves the conjuration of a parasitic-eating Nen beast summoned through elaborate ritual ceremonies that can effectively neutralize and extract deeply-embedded Nen parasites from victims' bodies. His Nen category is Conjuration, focused on esoteric ritual magic rather than direct combat. Abengane's primary income derives from contract work removing Nen parasites from desperate clients; he maintains a relatively low profile in the professional Nen community. In the Greed Island arc, his involvement is minimal, though he participates in the game environment. However, his true significance emerges post-Arc 5: Hisoka contracts Abengane's services to remove Chrollo's Judgment Chain—a vow-based sealing that locks Chrollo's Nen entirely. Abengane successfully performs the exorcism ritual, restoring Chrollo's Nen access and triggering a cascade of events leading to Hisoka's eventual confrontation with the Phantom Troupe. His knowledge makes him valuable to anyone seeking Nen manipulation or curse removal. ARC VALIDITY: A5 participant (minimal involvement); A7 featured (post-arc—exorcises Chrollo's curse); important to A8 (Troupe/Hisoka conflict aboard the Black Whale).",
+      "abilities": [
+        "Nen Exorcism Ritual: Abengane can conduct elaborate ceremonies to detect, diagnose, and remove parasitic Nen constructs embedded within victims' bodies. This process requires time and preparation but proves effective against even powerful vow-based sealing.",
+        "Parasite-Eating Beast Conjuration: Abengane conjures a specialized Nen beast designed to consume and neutralize parasitic Nen constructs, systematically removing curse effects from hosts.",
+        "Nen Diagnosis: Abengane can detect and analyze the structure of embedded Nen parasites, determining their origin, function, and removal difficulty with expert precision.",
+        "Ritual Magic Knowledge: Abengane possesses deep knowledge of esoteric Nen rituals, enabling him to conduct ceremonies most Nen practitioners consider impossible or impractical.",
+        "Spiritual Fortitude: Abengane maintains mental and spiritual clarity during lengthy rituals, resisting psychic pressure or hostile Nen from embedded parasites attempting to defend themselves.",
+        "Defensive Conjuration: Abengane can create protective barriers and containing fields using Nen to prevent escaped parasites from harming assistants or spreading infection.",
+        "\nfighting style: Abengane rarely engages in direct combat, instead using Nen defensively to maintain protective barriers during exorcism work. When forced to fight, he employs his conjured parasitic-eating beast as a direct combatant while maintaining distance and ritual focus. His strength lies in specialized knowledge and preparatory rituals rather than reflexive combat response. Against opponents who interrupt his rituals or contaminate his workspace, he becomes less effective—his power derives from preparation and sustained concentration rather than improvisation. His greatest strength is his unique expertise; his weakness is his reliance on time and preparation for effectiveness."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 96,
+      "known": true,
+      "voiceTag": "male calm contemplative"
+    },
+    "List": {
+      "name": "List",
+      "type": "Nen Professional",
+      "currentLocation": "Limeiro",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Greed Island Game Masters",
+      "basicInfo": "A calm and methodical administrator overseeing Greed Island's game management, List demonstrates the precision and organizational focus required to coordinate one of the world's most complex Nen constructs. He is of lean build with sharp features, neutral expression, and precise movements suggesting professional training. He favors formal administrative attire—clean shirts, slacks, and practical footwear suitable for extended facility patrol.",
+      "personality": [
+        "Disciplined: maintains absolute adherence to protocols and established rules; deviations are treated as serious breaches",
+        "Analytical: approaches problems systematically; decisions derive from data analysis rather than intuition",
+        "Impartial: enforces rules uniformly regardless of player status or political position; fairness is his core principle",
+        "Formal: communicates in structured, professional language; maintains emotional distance from players and colleagues"
+      ],
+      "hiddenInfo": "List is one of Ging Freecss's chosen game masters for Greed Island and serves primarily as a rule administrator and facility coordinator. His role involves managing game-play protocols, arbitrating disputes regarding card validity and trading, monitoring player progress toward game completion, and enforcing consequences for rule violations. Unlike the more visible game masters (Razor), List maintains a lower profile, preferring administrative work to direct confrontation. His Nen category is Manipulation, allowing him to oversee complex magical systems and enforce game-level Nen restrictions on all players. He possesses no particular combat specialty and deliberately avoids direct conflict, leaving such matters to more combat-focused administrators. List is professional, unfailingly fair, and carries no personal agenda regarding player success or failure. He views Greed Island as an experimental construct worthy of protection and proper management. ARC VALIDITY: A5 featured (game master administrator, rules enforcement, facility oversight); A6-A8 status unknown (likely continuing post-game management).",
+      "abilities": [
+        "Game Administration Expertise: List possesses comprehensive knowledge of Greed Island's rules, card systems, and completion pathways, enabling him to arbitrate disputes and verify compliance.",
+        "Nen Restriction Enforcement: List can monitor and enforce Nen-level restrictions placed on all players within Greed Island, preventing over-powered techniques and maintaining game balance.",
+        "Facility Oversight: List manages Greed Island's physical infrastructure, monitoring locations, identifying environmental hazards, and coordinating facility maintenance.",
+        "Protocol Enforcement: List maintains detailed records of rule violations, trading disputes, and player conduct, enabling him to apply consistent consequences across the player population.",
+        "Dispute Arbitration: List adjudicates complex trading disagreements and card-validity questions with absolute impartiality, earning respect from both sides of disputed transactions.",
+        "Documentation Mastery: List maintains meticulous records of all players, completed cards, and game progress, enabling comprehensive oversight of the entire game environment.",
+        "\nfighting style: List avoids direct combat whenever possible, relying on facility control and Nen restrictions to neutralize threats. If forced into conflict, he uses Manipulation-based Nen to constrain opponents' movement or divert hostile intent. His strength lies in systematic knowledge and administrative authority rather than combat capability. Against opponents willing to disregard rules and facility protocols, he becomes significantly less effective. His greatest strength is his organizational mastery and impartiality; his weakness is his lack of combat experience and reliance on environmental advantage."
+      ],
+      "tier": "mythic",
+      "level": 9,
+      "hpMax": 88,
+      "known": true,
+      "voiceTag": "male formal calm"
+    },
+    "Dwun": {
+      "name": "Dwun",
+      "type": "Nen Professional",
+      "currentLocation": "Limeiro",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Greed Island Game Masters",
+      "basicInfo": "An eccentric inventor and game-master engineer who designed much of Greed Island's card-based mechanisms, Dwun combines brilliant technical creativity with unpredictable personality quirks. He possesses an average build with tousled hair suggesting constant distraction, bright inquisitive eyes, and clothing adorned with various technical tools and partial contraptions. He moves with jerky, efficient motions and frequently fidgets with mysterious devices.",
+      "personality": [
+        "Creative: generates innovative solutions and unexpected technological approaches to engineering challenges",
+        "Eccentric: demonstrates unusual behavioral patterns and unconventional approaches to social interaction",
+        "Obsessive: focuses intensely on projects of interest to the exclusion of other concerns or social obligations",
+        "Volatile: emotional responses can shift rapidly based on perceived slights to his technical work or interrupted focus"
+      ],
+      "hiddenInfo": "Dwun is a brilliant Nen-based engineer and designer contracted by Ging Freecss to create Greed Island's card mechanics and spell-system infrastructure. His Nen category is Specialization, enabling him to manipulate complex magical systems and create the elaborate mechanisms by which cards function within the game world. Dwun designed the card-binding system, spell-execution protocols, and much of the game's internal technical architecture. He is creative, brilliant, and thoroughly unpredictable—his emotional attachments to his creations can lead to strong reactions if players exploit or damage his designs. Unlike other game masters who engage directly with players, Dwun prefers to work behind scenes, troubleshooting technical problems and implementing new systems. He is capable of combat Nen use but treats fighting as an interruption to his true work. He maintains cordial relationships with other game masters but can become irritable if his technical decisions are questioned. ARC VALIDITY: A5 featured (game master engineer, technical oversight, facility design); A6-A8 status unknown (likely continuing post-game management).",
+      "abilities": [
+        "Card System Design: Dwun created Greed Island's entire card-binding and spell-execution system; he maintains intimate knowledge of its mechanisms and can diagnose any technical malfunction.",
+        "Spell Architecture Mastery: Dwun designed the spells available within Greed Island and can modify, disable, or enhance them as needed through his Specialization Nen.",
+        "Technical Innovation: Dwun rapidly generates creative solutions to mechanical problems, designing new systems and repair protocols under time pressure.",
+        "Nen-Based Construction: Dwun can manifest temporary structures, diagnostic tools, and mechanical devices using Nen, enabling him to work without external materials.",
+        "System Troubleshooting: Dwun can rapidly identify and resolve technical malfunctions within Greed Island's magical infrastructure, maintaining game stability.",
+        "Temporal Nen Manipulation: Dwun's Specialization enables him to interact with the boundary between normal Nen and the constructed reality of Greed Island, allowing unique interventions.",
+        "\nfighting style: Dwun engages in combat reluctantly and typically only when his work is threatened. He employs Nen-based constructs defensively—building walls, barriers, or temporary obstacles to create distance. If forced into sustained combat, he becomes increasingly frustrated and erratic, making tactical errors as his focus fragments between fighting and protecting his technical work. Against opponent who target his creations, he fights with uncharacteristic aggression. His greatest strength is his unique technical knowledge and ability to manipulate the game environment; his weakness is his lack of combat training and emotional volatility when distracted."
+      ],
+      "tier": "mythic",
+      "level": 9,
+      "hpMax": 88,
+      "known": true,
+      "voiceTag": "male eccentric energetic"
+    },
+    "Eta": {
+      "name": "Eta",
+      "type": "Nen Professional",
+      "currentLocation": "Limeiro",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Greed Island Game Masters",
+      "basicInfo": "The game's charismatic mistress of ceremonies, Eta serves as the public face and presenter of Greed Island's most prestigious rewards and tournament moments. She possesses an athletic build with rich dark skin, striking features, dark hair typically styled elegantly, and expressive eyes that command attention. She favors elaborate formal wear suited to ceremonial occasions—tailored dresses and ornate jewelry suggesting her high-status role.",
+      "personality": [
+        "Charismatic: commands attention and respect through natural magnetism and compelling speech",
+        "Theatrical: approaches all interactions with dramatic flair; entertainment value is paramount",
+        "Equitable: treats all players with equal respect regardless of status; fairness is genuine principle",
+        "Professional: maintains emotional distance while creating appearance of personal connection with audience"
+      ],
+      "hiddenInfo": "Eta is a game master contracted by Ging Freecss to serve as Greed Island's primary ceremonial coordinator and public-facing representative. Her role involves announcing tournament brackets, presenting rewards, facilitating major game events, and serving as the primary point of contact for player inquiries regarding high-level game mechanics. Her Nen category is Enhancement, enabling her to project her voice across massive spaces and maintain physical presence befitting formal occasions. Unlike the other game masters who focus on technical or administrative roles, Eta specializes in presentation and player experience. She is genuinely capable in combat Nen use but deliberately limits her involvement to ceremonial enforcement rather than direct conflict. She maintains friendly relationships with all game masters and players, though her warmth is professional rather than personal. Players typically view her as the most approachable game master. ARC VALIDITY: A5 featured (game master ceremonies, tournament coordination, player relations); A6-A8 status unknown (likely continuing post-game management).",
+      "abilities": [
+        "Voice Projection Mastery: Eta can project her voice across massive distances with perfect clarity, enabling her to address thousands of players simultaneously in outdoor settings.",
+        "Ceremonial Presence: Eta commands attention through natural charisma; her presence transforms standard events into memorable occasions that engage players emotionally.",
+        "Tournament Coordination: Eta manages complex tournament brackets, ensures fair competition protocols, and maintains competitive integrity across multiple simultaneous matches.",
+        "Player Relations Expertise: Eta excels at managing player expectations, addressing grievances, and maintaining morale among large populations.",
+        "Enhanced Physical Capability: Eta's Enhancement Nen grants her exceptional physical capability enabling her to demonstrate game mechanics or combat techniques when necessary.",
+        "Diplomatic Communication: Eta can negotiate complex agreements and mediate disputes between competing player factions with skill and neutrality.",
+        "\nfighting style: Eta avoids direct combat and deliberately positions herself as ceremonial rather than combative. If forced to fight, she employs Enhancement-based techniques to amplify her physical capabilities—speed, strength, and durability. She favors defensive positioning and uses her natural charisma to de-escalate conflicts before they become violent. Against multiple opponents, she creates distance and seeks support from other game masters rather than engaging in prolonged individual combat. Her greatest strength is her diplomatic skill and player morale influence; her weakness is her reluctance to engage in serious violence and reliance on support from combat-focused allies."
+      ],
+      "tier": "mythic",
+      "level": 9,
+      "hpMax": 88,
+      "known": true,
+      "voiceTag": "female charismatic warm"
+    },
+    "Battera": {
+      "name": "Battera",
+      "type": "Civilian",
+      "currentLocation": "Yorknew City",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Battera's Clear Campaign",
+      "basicInfo": "A reclusive billionaire funding the Greed Island Clear Campaign, Battera exercises enormous financial and political influence from behind the scenes, though his public presence remains minimal. He is of indeterminate age with features softened by wealth and comfort, well-groomed appearance suggesting professional stylists, and clothing of obvious expense that avoids ostentation. He is typically seen in private settings rather than public forums.",
+      "personality": [
+        "Reclusive: strongly prefers privacy and limited social interaction; public appearances are rare and uncomfortable",
+        "Resolute: maintains firm commitment to stated objectives despite obstacles or external pressure",
+        "Proprietary: views his resources and contracted personnel as extensions of his will; questions to his authority are unwelcome",
+        "Calculated: makes financial and strategic decisions through careful analysis; impulse and emotion are minimized"
+      ],
+      "hiddenInfo": "Battera is an extraordinarily wealthy businessman whose primary motivation for funding Greed Island's Clear Campaign is not personal competition or card collection—it is his deep love for a young comatose companion. His beloved partner entered an inexplicable coma years ago and remains unresponsive to all medical treatment. During one of his investigative searches for miraculous cures, Battera learned that Greed Island contained rare healing cards rumored to possess curative powers. He bankrolled the entire Clear Campaign with the singular objective of obtaining these cards and attempting to heal his beloved. This deeply personal motivation drives every decision and expense, though Battera never publicly discusses the true reason. Tragedy strikes when his beloved dies during the game—whether from the illness's natural progression or from complications related to the healing card attempts remains unclear. Battera's reaction to this loss is private and severe. He withdraws from public life almost entirely following the arc's conclusion. His financial resources remain immense, but his motivation for Greed Island and similar ventures evaporates. ARC VALIDITY: A5 featured (Clear Campaign funding, hidden motivation); post-A5 largely absent due to personal devastation.",
+      "abilities": [
+        "Financial Resource Mobilization: Battera can deploy vast sums of currency to achieve objectives; his wealth enables hiring of elite professionals and acquisition of rare items.",
+        "Strategic Planning: Battera approaches large-scale objectives through careful analysis, identifying necessary resources and optimal allocation strategies.",
+        "Political Influence: Battera's wealth and connections grant him influence within governmental and corporate hierarchies, enabling favorable regulatory treatment.",
+        "Information Acquisition: Battera can fund extensive investigative efforts, enabling rapid acquisition of specialized knowledge regarding rare locations or items.",
+        "Personnel Management: Battera effectively hires and manages elite professionals, maintaining their loyalty through fair treatment and generous compensation.",
+        "Negotiation Expertise: Battera negotiates complex agreements with skilled professionals, securing favorable terms through combination of wealth and diplomatic skill.",
+        "\nfighting style: Battera is a Civilian without combat Nen training; he avoids direct physical conflict entirely. Instead, he resolves problems through wealth mobilization, hiring capable professionals, or negotiating favorable outcomes. When direct threats emerge, Battera responds by contracting additional security or offering financial incentives for problem resolution. His greatest strength is his unlimited resources and ability to hire others to solve problems; his greatest weakness is his complete lack of personal combat capability—he is entirely dependent on hired protection."
+      ],
+      "tier": "mythic",
+      "level": 3,
+      "hpMax": 40,
+      "known": true,
+      "voiceTag": "male calm composed"
+    },
+    "Kite": {
+      "name": "Kite",
+      "type": "Nen Master",
+      "currentLocation": "NGL Border Checkpoint",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "Ging Freecss's first student and a legendary hunter known for fearless expeditions into dangerous territories, Kite possesses an almost reckless serenity in the face of danger. He is lanky and lean with prominent long white hair, calm serene eyes that suggest unshakeable inner peace, and a distinctive personal style mixing practical expedition gear with informal clothing. He carries a strange scythe-like weapon and moves with economical grace.",
+      "personality": [
+        "Fearless: shows no visible anxiety regarding danger or death; approaches life-threatening situations with calm acceptance",
+        "Intuitive: makes decisions based on instinct and read of situations rather than conscious analysis or planning",
+        "Protective: demonstrates genuine care for expedition members and novice hunters, prioritizing their safety and development",
+        "Philosophical: speaks in abstract terms about life, death, and purpose; presents a zen-like perspective on existence"
+      ],
+      "hiddenInfo": "Kite is Ging Freecss's first and most trusted student, taught the foundational principles of Nen and exploration philosophy. As a double-star Hunter, Kite possesses extraordinary capability and is famous for leading expeditions into the Dark Continent itself—making him one of the handful of Hunters ever to survive extended DC exposure. His Nen category is Conjuration, and his signature technique is 'Crazy Slots'—an unprecedented Hatsu that creates a conjured clown-roulette manifestation from which he draws random weaponry during combat. The critical limitation is that Kite cannot choose his weapon; the slots operate independently, and Kite must adapt his combat style to whatever weapon emerges—whether a sword, hammer, gun, or entirely unexpected form. This creates a chaotic but ultimately effective combat philosophy—Kite believes that accepting what chance provides and adapting fluidly is the truest path to mastery. He discovers Gon as a child on Whale Island and influences Gon's decision to become a Hunter. He appears briefly at Greed Island's conclusion as the contact point for delivery to Ging. However, his true significance emerges in Arc 6: During the Chimera Ant arc, Kite heads an expedition to NGL to investigate the Queen's emergence. He encounters Neferpitou and is brutally defeated and killed—his death becomes the emotional catalyst for Gon's later transformation vow. In one of the arc's most poignant moments, the King ensures Kite's corpse is restored as a humanoid soldier ant—and later a pink-haired Chimera Ant girl—extending his existence in a horrifying new form. Kite's awareness as a reborn Ant and his identity retention remain ambiguous; his arc ends with him living as Meruem's sibling. ARC VALIDITY: alive and present A1-A5 early; dies to Pitou during A6 early-mid; reborn as Ant A6 late onward; A7-A8 existence unclear but presumably continued as Ant.",
+      "abilities": [
+        "Crazy Slots Conjuration: Kite conjures a random weapon generator from which he draws weapons during combat. The weapon selection is entirely random and beyond his control—Kite must adapt his fighting style to whatever weapon emerges.",
+        "Adaptive Combat Mastery: Kite possesses exceptional capability with virtually any weapon type, enabling him to function effectively with whatever Crazy Slots produces.",
+        "Exploration Expertise: Kite possesses unparalleled knowledge of hazardous environments, including Dark Continent survival techniques inaccessible to most Hunters.",
+        "Nen Instruction: Kite can teach foundational Nen principles effectively; students trained by Kite develop strong philosophical grounding for their Nen practice.",
+        "Expeditionary Leadership: Kite coordinates complex expeditions into life-threatening territories, managing team morale and logistics in extreme conditions.",
+        "Danger Intuition: Kite possesses uncanny ability to sense imminent danger and environmental hazards, protecting expedition members through subtle warnings.",
+        "\nfighting style: Kite fights with philosophical acceptance of whatever weapon Crazy Slots provides, adapting his style fluidly to match the conjured weapon's properties. He combines technical skill with psychological centeredness—his calm demeanor and acceptance of chaos unsettle opponents expecting predictable patterns. Against multiple opponents, he uses space and terrain management to isolate threats. His greatest strength is his adaptive flexibility and psychological resilience; his weakness is his reliance on weapon-dependent tactics—opponents who negate his conjuration or prevent weapon manifestation expose significant vulnerability. Against the overwhelming power of Chimera Ant Royal Guards, his adaptive philosophy proves insufficient, leading to his defeat and death at Neferpitou's hands."
+      ],
+      "tier": "mythic",
+      "level": 14,
+      "hpMax": 128,
+      "known": true,
+      "voiceTag": "male calm serene"
     }
   },
   "premadeCharacters": [],
