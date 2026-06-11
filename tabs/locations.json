@@ -1,3 +1,1207 @@
 {
-  "locations": {}
+  "locations": {
+    "Whale Island": {
+      "name": "Whale Island",
+      "basicInfo": "A modest rocky island dotted with humble wooden buildings and dense green forest, the bucolic heart of a sleepy fishing hamlet. The scent of salt-spray mingles with forest earth; modest docks stretch into clear blue waters where small fishing vessels anchor. The island's interior rises to forested heights with rocky outcrops offering distant ocean views. Simple folk—fishermen, farmers, and retired hunters of modest skill—tend their lives here in peaceful obscurity. A single paved road winds from the harbor to the forest interior, passing Mito's small cottage. The air carries a quietude rare in the wider world, a sense that time moves differently here, measured in tides and seasons rather than ambition.",
+      "x": -15,
+      "y": -8,
+      "radius": 5,
+      "region": "Whale Island & Southern Seas",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Whale Island is where Gon grew up under Mito's guardianship after his father Ging abandoned him as an infant. The cottage contains remnants of Ging's passing presence—old journals, fishing gear, a faded photograph. The forest interior conceals old hunter training grounds where Ging once practiced. LOCAL KNOWLEDGE: islanders are protective of Gon's story; few outsiders know of his connection to Ging. HIDDEN RESOURCES: the surrounding waters harbor unusual marine fauna, attracting occasional professional hunters seeking rare game.",
+      "areas": {
+        "Mito's House": {
+          "description": "A weathered cottage of dark wood and stone nestled in the forest fringe, with a small garden and modest furnishings. Inside, aged photographs and curious artifacts hint at secrets held close.",
+          "paths": [
+            "Harbor Village",
+            "Forest Heights"
+          ]
+        },
+        "Harbor Village": {
+          "description": "A small cluster of waterfront buildings—fish stalls, boat repair workshops, a modest inn—where fishermen gather to trade tales and repair nets.",
+          "paths": [
+            "Mito's House",
+            "Forest Heights"
+          ]
+        },
+        "Forest Heights": {
+          "description": "Dense woodland rising to rocky outcrops with distant ocean vistas. Overgrown training grounds and natural clearings dot the terrain.",
+          "paths": [
+            "Mito's House",
+            "Harbor Village"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 1,
+        "max": 15
+      }
+    },
+    "Dolle Harbor": {
+      "name": "Dolle Harbor",
+      "basicInfo": "A larger, more cosmopolitan port town serving the southern archipelago's merchant traffic. Stone docks extend into deep blue waters crowded with cargo vessels and trading ships; warehouse districts rise beyond the waterfront, their architecture a weathered mix of trade-post practicality. The air carries the salt-tang of open sea, the bustle of commerce, and the cries of dock workers. Taverns and ship-provisioning shops line the main streets; the architecture becomes rougher, older the further from the docks. Unlike Whale Island's quiet, Dolle throbs with commerce and transient energy—merchant captains and wanderers pass through constantly, each seeking passage or goods.",
+      "x": 8,
+      "y": -12,
+      "radius": 8,
+      "region": "Whale Island & Southern Seas",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Dolle Harbor is a hub for merchant ships and occasionally hosts pirate contacts; rumors of smuggling operations circulate among the dock workers. Several mercenary companies maintain recruitment offices here. HIDDEN ACTIVITY: underground information brokers operate from back-room taverns, trading news for coin.",
+      "areas": {
+        "Docks": {
+          "description": "A sprawling waterfront of stone quays, cargo nets, and loading cranes where ships of all sizes dock. The smell of tar, salt, and wet wood is overwhelming.",
+          "paths": [
+            "Market Street"
+          ]
+        },
+        "Market Street": {
+          "description": "A bustling thoroughfare of merchant stalls, ship-supply shops, taverns, and trading posts where deals are struck and gossip flows like ale.",
+          "paths": [
+            "Docks"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 5,
+        "max": 25
+      }
+    },
+    "Zaban City": {
+      "name": "Zaban City",
+      "basicInfo": "A sprawling metropolis serving as the official starting point for the Hunter Exam, its streets a labyrinth of noodle shops, hostels, and bureaucratic offices. Towering neon signs advertise lodging and food; the architecture is utilitarian and maze-like, designed to confuse the uninitiated. The air thrums with the energy of thousands of candidates arriving annually—nervous energy, hushed conversations, the clatter of dishes in packed noodle restaurants. Underground passages snake beneath the city's surface, concealing examination tunnels and secret administrative chambers. The city possesses an atmosphere of controlled chaos; authorities maintain tight oversight while the streets themselves feel perpetually on the edge of pandemonium.",
+      "x": -35,
+      "y": -30,
+      "radius": 12,
+      "region": "The Exam Circuit",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Zaban City is the primary intake hub for the Hunter Exam; the Exam Tunnel Entrance beneath the Noodle Stand Front leads directly to the examination's first trials. The city is deliberately constructed to disorient newcomers, a first test of navigation. SECURITY: Hunter Association maintains discrete watchers throughout the city, observing candidate behavior before formal testing begins. HIDDEN NETWORKS: the underground passages contain multiple secret administrative chambers where examiners and Association officials conduct pre-exam surveillance.",
+      "areas": {
+        "Exam Tunnel Entrance": {
+          "description": "A concealed descending passage accessed through the Noodle Stand's basement—reinforced stone walls, ancient plaques bearing the Hunter Association seal, and the palpable atmosphere of trials to come.",
+          "paths": [
+            "Noodle Stand Front",
+            "Underground Hall"
+          ]
+        },
+        "Noodle Stand Front": {
+          "description": "An iconic narrow alleyway crowded with competing noodle restaurants and small hostels, perpetually thick with steam and the aroma of broth. Cheap, vital sustenance for the starving and desperate.",
+          "paths": [
+            "Exam Tunnel Entrance",
+            "Underground Hall"
+          ]
+        },
+        "Underground Hall": {
+          "description": "A vast subterranean chamber serving as the initial gathering point for Exam candidates before the first trial, with stone archways and examination registration desks.",
+          "paths": [
+            "Exam Tunnel Entrance",
+            "Noodle Stand Front"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 1,
+        "max": 30
+      }
+    },
+    "Kukuroo Mountain Base": {
+      "name": "Kukuroo Mountain Base",
+      "basicInfo": "An imposing mountain estate serving as the public-facing entrance to the Zoldyck family compound, where tourists arrive for the treacherous climb to the Testing Gate. The mountain rises steeply from forested lower slopes, its peak shrouded in mist. At the base, a modest facility processes visitor permits and organizes tours; a famous bus stop marks the endpoint of commercial tourism. The Testing Gate looms higher up the mountain—a massive stone archway that has never been passed by a visitor. The air grows colder and more oppressive as one ascends; the forest becomes twisted and gnarled, and an indefinable sense of danger permeates the mountainside. The lower slopes are open to tourists; above the gate is forbidden territory.",
+      "x": -8,
+      "y": 15,
+      "radius": 10,
+      "region": "Republic of Padokea",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Kukuroo Mountain Base conceals the true nature of the Zoldyck estate behind layers of misdirection. The 'tourist route' is genuine but deliberately exhausting and humiliating; no tourist has ever reached the Testing Gate. Beyond the gate lies the true family compound, complete with assassin training grounds, servant quarters, and defense mechanisms that have never been breached. INTERIOR SECRETS: the Testing Gate's 'impossible to pass' reputation is enforced by the estate's defensive systems—weight-testing mechanisms, trap floors, and trained guard hounds. The upper compound contains Killua's personal chambers, family training facilities, and sealed areas (Alluka's chamber) that family members themselves rarely access.",
+      "areas": {
+        "Testing Gate": {
+          "description": "A colossal stone archway carved into the mountainside, inscribed with the Zoldyck family crest. Tourist legends claim it weighs impossibly; in truth, it's a checkpoint filtered for specific bloodlines and trained assassins.",
+          "paths": [
+            "Servants' Quarters Path",
+            "Tourist Bus Stop"
+          ]
+        },
+        "Servants' Quarters Path": {
+          "description": "A winding service corridor leading deeper into the mountain, used by household staff and family members. Stone walls bear faded glyphs and occasional training apparatus.",
+          "paths": [
+            "Testing Gate",
+            "Tourist Bus Stop"
+          ]
+        },
+        "Tourist Bus Stop": {
+          "description": "A small platform and rest facility at the mountain's base where tourist buses arrive and depart, staffed by courteous but implacable attendants in Zoldyck livery.",
+          "paths": [
+            "Testing Gate",
+            "Servants' Quarters Path"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 10,
+        "max": 40
+      }
+    },
+    "Heavens Arena": {
+      "name": "Heavens Arena",
+      "basicInfo": "A colossal 251-floor tower dominating the city skyline, its interior a vertical labyrinth of combat arenas, training chambers, and fighter accommodations. The exterior gleams with polished stone and brass fixtures bearing the names of legendary floor masters. Inside, the air thrums with the sound of clashing weapons, roaring crowds, and the visceral energy of combat. Lower floors host brutal novice matches with sparse audiences; as one ascends, the crowds grow denser and the fighters more formidable. Floor 200 marks a mystical threshold—the 'Nen hazing line' where unprepared fighters are maimed or killed by techniques they cannot comprehend. Above that, the masters hold court, with Hisoka loitering as an amused gatekeeper. The entire structure pulses with an almost predatory hunger for combat and blood.",
+      "x": 8,
+      "y": 2,
+      "radius": 12,
+      "region": "Arena City",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Heavens Arena is a Nen-economy unto itself; fighters wager massive sums, and the tower's administrators maintain rigid control over matches and floor progression. Floor 200 functions as an initiation gauntlet—fighters who pass it have proven competence with Nen; those who fail often sustain permanent injuries. Hisoka maintains a fake Phantom Troupe spider tattoo as disguise and uses floor 200 as a hunting ground for talented opponents. HIDDEN POWER NETWORK: Wing and Zushi operate a shadow-training facility teaching the 'true' Nen fundamentals; this network bridges legitimate Fighter associations and underworld Nen circles.",
+      "areas": {
+        "Registration Lobby": {
+          "description": "A grand entrance hall with polished marble floors and registration desks, where fighters sign contracts and pay entry fees. The atmosphere oscillates between professional bureaucracy and barely-restrained violence.",
+          "paths": [
+            "Lower Floors",
+            "Floor 200 Corridor"
+          ]
+        },
+        "Lower Floors": {
+          "description": "Tiers 1-199 housing brutal novice and intermediate matches, fighter lodgings, and training gyms. The air is thick with sweat and blood; spectators are rowdy and crude.",
+          "paths": [
+            "Registration Lobby",
+            "Floor 200 Corridor"
+          ]
+        },
+        "Floor 200 Corridor": {
+          "description": "An ornate passage marking the threshold of Nen mastery, where fighters must display competence with aura techniques or face humiliation and injury. A deadly gauntlet and a rite of passage.",
+          "paths": [
+            "Lower Floors",
+            "Floor Masters' Halls"
+          ]
+        },
+        "Floor Masters' Halls": {
+          "description": "Tiers 201-251 where masters maintain their chambers and hold court. The architecture becomes increasingly elaborate; only proven Nen users can ascend here.",
+          "paths": [
+            "Floor 200 Corridor"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 5,
+        "max": 50
+      }
+    },
+    "Yorknew City": {
+      "name": "Yorknew City",
+      "basicInfo": "An opulent metropolitan center of gleaming skyscrapers, manicured plazas, and monuments to mercantile power, where wealth accumulates and secrets fester beneath polished surfaces. The architecture blends ancient grandeur with modern ostentation; the Southernpiece Auction House dominates the skyline as a temple to high commerce. During auction season, the city transforms into a carnival of the ultrawealthy—exotic vehicles, private security details, and the palpable tension of hundred-million-Jenny transactions. Beyond the glittering facade, the city's lower levels conceal flea markets, underground auction halls, and the intricate operations of mafia families. The atmosphere shifts from day-lit prosperity to neon-soaked decadence as evening falls; the city's true nature—mercenary, amoral, and utterly ruthless—emerges only after dark.",
+      "x": -30,
+      "y": 0,
+      "radius": 15,
+      "region": "Yorknew & Environs",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Yorknew City is the operational hub of the underground auction and mafia family politics. The Nostrade family maintains deep roots here through Neon's prophetic ability ('Lovely Ghostwriter'), which drives their fortune and influence. The underground auction operates year-round; the public seasonal auction is a cover for the true, hidden market where priceless artifacts—including Scarlet Eyes—circulate among the Ten Dons' families. HIDDEN NETWORKS: mafia intelligence operatives, assassin contacts, and stolen-goods fences operate throughout the city; the Phantom Troupe has historical ties here (Kurta massacre artifacts surface here). The city's sewers and catacombs connect to the Cemetery Building, forming a shadow infrastructure beneath the prosperous surface.",
+      "areas": {
+        "Southernpiece Auction House": {
+          "description": "An architectural marvel of white marble and crystal, the world's most prestigious auction venue. Chandeliers illuminate bidding floors where fortunes exchange hands with a gavel strike.",
+          "paths": [
+            "Hotel Beitacle",
+            "Flea Market"
+          ]
+        },
+        "Hotel Beitacle": {
+          "description": "An exclusive high-rise resort where auction attendees lodge, its suites reflecting the tastes of the ultrawealthy. Discretion and impeccable service are the house rules.",
+          "paths": [
+            "Southernpiece Auction House",
+            "Flea Market",
+            "Underground Auction Hall"
+          ]
+        },
+        "Flea Market": {
+          "description": "A sprawling bazaar of merchant stalls and small shops selling everything from legitimate goods to thinly-veiled stolen merchandise. The air is thick with haggling and opportunity.",
+          "paths": [
+            "Southernpiece Auction House",
+            "Hotel Beitacle",
+            "Underground Auction Hall"
+          ]
+        },
+        "Underground Auction Hall": {
+          "description": "A vast subterranean chamber accessible only to vetted buyers, where the true valuables change hands. The catacombs below hint at even deeper secrets.",
+          "paths": [
+            "Hotel Beitacle",
+            "Flea Market"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 15,
+        "max": 45
+      }
+    },
+    "NGL Border Checkpoint": {
+      "name": "NGL Border Checkpoint",
+      "basicInfo": "A heavily fortified border station marking the entrance to the Neo Green Life autonomous zone, a hermetic nation that has sealed itself from the outside world by law and fierce cultural conviction. The checkpoint is a monument to isolation—high stone walls, minimal bureaucratic ceremony, and guards with an unsettling lack of warmth. The contrast is stark: on the outside, the temperate lands of the Mitene Union with their modest development; on the inside, a deceptive pastoral idyll. All vehicles, goods, and people are subjected to rigorous quarantine inspections; cell phones and external technology are confiscated. The guards speak little; their efficiency is absolute. Crossing the border feels less like entering a nation and more like being admitted to a sealed vault.",
+      "x": 35,
+      "y": 30,
+      "radius": 6,
+      "region": "Mitene Union",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "The NGL Border Checkpoint is the gateway to a nation-state that officially practices radical isolationism—no external technology, no cultural contamination. In truth, the interior harbors the Chimera Ant colony nest, a catastrophe concealed by both NGL authorities and international intelligence services. The checkpoint's 'quarantine' procedures are partially a cover for monitoring colony activity; select high-level officials know the truth. DARK SECRET: the colony's presence has been known to NGL leadership for years; they have attempted containment while maintaining the isolationist facade. The checkpoint guards are trained for anti-Ant protocols, though this is never explicitly stated.",
+      "areas": {
+        "Quarantine Gate": {
+          "description": "A heavy steel archway with inspection booths on either side, where all entering parties submit to thorough document and baggage review. The guards' eyes are cold and assessing.",
+          "paths": [
+            "Inspection Yard"
+          ]
+        },
+        "Inspection Yard": {
+          "description": "An open courtyard where vehicles are searched, goods inventoried, and technology surrendered. Waiting areas are austere; efficiency is paramount.",
+          "paths": [
+            "Quarantine Gate"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 12,
+        "max": 35
+      }
+    },
+    "Greed Island Gateway": {
+      "name": "Greed Island Gateway",
+      "basicInfo": "A sprawling arrival point on the shore of a Nen-construct island that poses as a video game, where players materialize after paying the entrance fee or being smuggled in. The landscape here exists in an uncanny valley between reality and artificiality—the sky has a painted quality, trees shimmer with subtle magical auras, and the grass is too perfectly verdant. NPCs move with algorithmic friendliness; their dialogue repeats with minor variations. A vast plain stretches before the arrivals, with merchant tents, tutorial stones inscribed with game rules, and the distant shimmer of the first settlement (Antokiba). The atmosphere is one of manufactured wonder—technically flawless, emotionally hollow, with an underlying sense that something essential about the world is 'off' in ways players cannot quite articulate.",
+      "x": -40,
+      "y": -15,
+      "radius": 8,
+      "region": "Greed Island — Settled Lands",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Greed Island Gateway is the primary entry point for players who have purchased legitimate access. The island itself is a Nen-construct created by Ging Freecss and ten game masters, designed as both a genuine game and a hidden mechanism for distributing Nen-learning among talented players worldwide. The Tutorial Stone provides legitimate game information; however, knowledgeable players recognize it as carefully crafted propaganda. GAME MECHANICS: the island enforces strict Nen-economy rules—spell cards, item collections, alliance mechanics, and the mysterious 'Accompany' spell that serves as the game's hidden victory condition. Greed Island exists in the real world as a physical location, not merely a virtual space; player deaths here can manifest as real-world catatonia or trauma.",
+      "areas": {
+        "Arrival Plain": {
+          "description": "A vast, featureless grassland where new players materialize, with merchant tents scattered across the plain offering basic supplies and equipment. The air shimmers with palpable Nen.",
+          "paths": [
+            "Tutorial Stone"
+          ]
+        },
+        "Tutorial Stone": {
+          "description": "An ancient monolith carved with game rules and instructions, glowing faintly with Nen energy. Information inscribed here defines the core mechanics for new players.",
+          "paths": [
+            "Arrival Plain"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 15,
+        "max": 45
+      }
+    },
+    "Hunter Association HQ": {
+      "name": "Hunter Association HQ",
+      "basicInfo": "An ancient, imposing institutional complex serving as the global seat of Hunter authority, built into a grand metropolitan center (Swardani City). The architecture is a blend of classical grandeur and modernist function—columns and arches alternate with glass-and-steel administration buildings. At the complex's heart stands the colossal World Tree, a living monument of incalculable age whose upper reaches remain perpetually mysterious. Inside, the atmosphere is one of hierarchical order undergirded by terrible knowledge—the Association holds secrets about the world that would shatter public understanding. Security is absolute; access is restricted by rank and clearance. The halls echo with the footsteps of licensed Hunters and administrative staff; the walls seem to listen.",
+      "x": -20,
+      "y": 15,
+      "radius": 8,
+      "region": "Swardani City",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "The Hunter Association HQ is the operational center of global Hunter licensing, intelligence operations, and the management of restricted knowledge about Nen, the Dark Continent, and the Five Calamities. Chairman Isaac Netero maintains absolute authority (in arcs 1-6); his office is a sanctum few are permitted to enter. The Zodiacs (twelve elite Hunters bearing animal codenames) operate from secure chambers within the complex, conducting intelligence and policy operations beyond public scrutiny. DEEP SECRETS: the Association is far older than official history suggests; the World Tree's origins are unknown even to senior staff. The Election Hall serves as the venue for the chairman succession procedure, a arcane ritual that triggers global events. Press Floor exists as a media interface; the Association's true operations remain hidden behind institutional opacity.",
+      "areas": {
+        "Election Hall": {
+          "description": "A vast amphitheater designed for the rare but consequential process of electing a new Hunter Association chairman, with sophisticated voting mechanisms and security systems.",
+          "paths": [
+            "Chairman's Office",
+            "Press Floor"
+          ]
+        },
+        "Chairman's Office": {
+          "description": "A sanctum of power housed in the Association's tower, where the chairman holds authority over 600+ licensed hunters and shapes global policy from behind closed doors.",
+          "paths": [
+            "Election Hall",
+            "Press Floor"
+          ]
+        },
+        "Press Floor": {
+          "description": "A media center where official Association statements are released and journalist inquiries are fielded with calculated opacity and carefully managed information control.",
+          "paths": [
+            "Election Hall",
+            "Chairman's Office"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 15,
+        "max": 50
+      }
+    },
+    "The Black Whale": {
+      "name": "The Black Whale",
+      "basicInfo": "A colossal oceangoing vessel serving as a mobile city-state, harboring 200,000 passengers and carrying the V5 nations' expedition into the Dark Continent. The ship is a architectural marvel—a floating metropolis of stacked tiers, from luxurious royal quarters to cramped steerage, with cargo holds, medical bays, and recreational zones. The vessel's interior is a complete microcosm of society: aristocrats, soldiers, scholars, assassins, and desperate seekers all confined within steel and mahogany. The air inside carries the mingled scents of perfume, machine oil, and human sweat; the atmosphere oscillates between oppressive claustrophobia and the strange camaraderie of those bound together by isolation and danger. Above deck, the endless expanse of Lake Mobius stretches to the horizon—dark water and unknown depths.",
+      "x": -20,
+      "y": -15,
+      "radius": 25,
+      "region": "Lake Mobius — The Voyage",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "The Black Whale serves as the primary vessel for Beyond Netero's expedition into the Dark Continent, authorized by the now-reconstituted V6 (the original V5 nations plus the Kakin Empire). Aboard are representatives of global powers, members of the Phantom Troupe (hunting Hisoka), the Zodiacs conducting intelligence operations, and Prince Woble's succession-war entourage. The ship's tiers are carefully segregated—royalty and elite on upper decks, soldiers and servants below. EXTREME HAZARD: the Succession War occurs aboard the Black Whale, with each of 14 Kakin princes commanding Nen-beast guardians in a lethal game of elimination. The Troupe has murdered crew members (Kortopi and Shalnark were eliminated by Hisoka). Multiple factions operate with lethal intent—political assassination, treasure hunting, and parasitic Nen-beast protocols all create an environment of constant danger beneath the surface.",
+      "areas": {
+        "Tier 1 Royal Quarters": {
+          "description": "Luxurious chambers reserved for royalty and elite VIPs, with fine furnishings, private dining, and security details. Each suite represents immense wealth and privilege.",
+          "paths": [
+            "Banquet Hall",
+            "Tier 3 Steerage"
+          ]
+        },
+        "Tier 3 Steerage": {
+          "description": "Mid-level accommodations for soldiers, scholars, and support staff, with modest but functional quarters and common dining areas. The atmosphere is more utilitarian.",
+          "paths": [
+            "Tier 1 Royal Quarters",
+            "Tier 4 Hold",
+            "Prince Woble's Suite"
+          ]
+        },
+        "Tier 4 Hold": {
+          "description": "Deep cargo holds and crew quarters, where supplies are stored and the ship's vast machinery operates. Few passengers venture here; security is strict.",
+          "paths": [
+            "Tier 3 Steerage",
+            "Brig"
+          ]
+        },
+        "Prince Woble's Suite": {
+          "description": "A specialized royal chamber housing the youngest prince and her entourage, including bodyguards and attendants. Heavily protected and sealed from general access.",
+          "paths": [
+            "Tier 1 Royal Quarters",
+            "Tier 3 Steerage"
+          ]
+        },
+        "Banquet Hall": {
+          "description": "A grand dining venue for state functions and diplomatic gatherings, where the ship's elite conduct politics over elaborate meals. The atmosphere is tense with subtext.",
+          "paths": [
+            "Tier 1 Royal Quarters"
+          ]
+        },
+        "Brig": {
+          "description": "A secure detention facility holding prisoners and prisoners-of-war, with reinforced cells and vigilant guards. Few leave it alive.",
+          "paths": [
+            "Tier 4 Hold"
+          ]
+        }
+      },
+      "known": false,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 25,
+        "max": 50
+      }
+    },
+    "Milsy Wetlands": {
+      "name": "Milsy Wetlands",
+      "basicInfo": "A vast expanse of fog-choked marshland dotted with pools and vegetation, serving as the second trial location for the Hunter Exam. The air is perpetually thick with moisture and the croaking of unseen amphibians. Visibility rarely extends beyond a few meters; navigation is a nightmare without preparation. The water's depth is unknown in most places; sinkholes and hidden currents claim the careless. This location appears deceptively pastoral from a distance, but close inspection reveals the presence of venomous creatures, poisonous plants, and conditions designed specifically to challenge an unprepared candidate.",
+      "x": 8,
+      "y": -25,
+      "radius": 8,
+      "region": "The Exam Circuit",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Milsy Wetlands is the location of the Exam Circuit's second trial, where examiners release predatory amphibious creatures and monitor candidates' survival instincts. The fog is partially a natural phenomenon, partially enhanced by Hunter Association Nen practitioners to increase disorientation. HIDDEN CHALLENGE: the location contains frog hollow, a depression in the wetland where poisonous frogs congregate; passing through is a crucial (and lethal for the unprepared) test.",
+      "areas": {
+        "Fog Bank": {
+          "description": "A particularly dense section of wetland where visibility drops to arm's length. The sound of water and unseen movement surrounds travelers constantly.",
+          "paths": [
+            "Frog Hollow"
+          ]
+        },
+        "Frog Hollow": {
+          "description": "A natural depression in the wetland packed with amphibious life, including venomous species. The ground is uncertain; sinking is a constant danger.",
+          "paths": [
+            "Fog Bank"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 5,
+        "max": 20
+      }
+    },
+    "Visca Forest Preserve": {
+      "name": "Visca Forest Preserve",
+      "basicInfo": "A vast woodland sanctuary managed as a wildlife preserve, serving as the location for the third Hunter Exam trial. Towering trees create a dense canopy; sunlight filters through in scattered patches. The forest hosts large predators and dangerous herbivores; the air carries the constant background of animal calls and the rustling of undergrowth. Streams cut through the forest floor; mossy rocks and fallen logs create treacherous footing. The preserve has an ancient quality, as if the forest has stood untouched for centuries. In truth, the Hunter Association carefully manages its use as an examination location, strategically controlling animal populations.",
+      "x": 20,
+      "y": 35,
+      "radius": 8,
+      "region": "The Exam Circuit",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Visca Forest Preserve is the third trial location, where examiners release predatory creatures and test candidates' resourcefulness. Examiner Satotz oversees this location. HIDDEN NETWORK: the forest contains designated safe zones and hidden watchtower stations where Association staff monitor candidate progress and intervene only if death appears imminent.",
+      "areas": {
+        "Biska Forest Camp": {
+          "description": "A semi-permanent camp used by examination staff and supplies. Contains crude shelters and monitoring stations hidden from candidate view.",
+          "paths": [
+            "Examiner's Clearing"
+          ]
+        },
+        "Examiner's Clearing": {
+          "description": "An open area in the forest where examiners station themselves to oversee the trial. The location contains subtle markers invisible to unprepared observers.",
+          "paths": [
+            "Biska Forest Camp"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 8,
+        "max": 25
+      }
+    },
+    "Trick Tower": {
+      "name": "Trick Tower",
+      "basicInfo": "An ancient stone structure rising imposingly from barren terrain, serving as the location for the fourth Hunter Exam trial. The tower is a mechanical maze of sliding walls, trap doors, and puzzle chambers designed centuries ago. Its interior is a labyrinth of contradictions—some passages are straightforward while others loop endlessly; some walls are illusory while others are deceptively solid. The architecture suggests purpose, but its original function has been lost to time. The Exam uses the tower as a test of logic, physical endurance, and ethical compromise. Candidates ascend or descend depending on the rules of each floor's specific trial.",
+      "x": -15,
+      "y": 40,
+      "radius": 6,
+      "region": "The Exam Circuit",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Trick Tower serves as the fourth trial of the Hunter Exam, where candidates must navigate puzzle chambers and trap mechanisms. Examiner Menchi oversees this location. The tower contains a secret passage system known only to Association personnel. HIDDEN MECHANICS: certain floors employ a 'Majority-Rules' voting system where candidate cooperation or betrayal becomes a social test, not merely a physical one.",
+      "areas": {
+        "Rooftop": {
+          "description": "The tower's peak, offering panoramic views of the surrounding terrain. A dangerous location for confrontation due to exposure.",
+          "paths": [
+            "Majority-Rules Block"
+          ]
+        },
+        "Majority-Rules Block": {
+          "description": "A floor designed around a voting mechanism where candidates must decide collectively how to proceed. Betrayal and politics become as important as strength.",
+          "paths": [
+            "Rooftop",
+            "Arena Pits"
+          ]
+        },
+        "Arena Pits": {
+          "description": "Deep chambers within the tower converted into combat arenas. The architecture creates natural amphitheaters where fights echo dramatically.",
+          "paths": [
+            "Majority-Rules Block"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 10,
+        "max": 35
+      }
+    },
+    "Zevil Island": {
+      "name": "Zevil Island",
+      "basicInfo": "A volcanic island shrouded in mist and covered in dense jungle, serving as the location for the Hunter Exam's badge-hunting phase. The island's interior is a mixture of natural terrain and ancient ruins, suggesting inhabitation by some long-extinct civilization. Waterfalls cascade from rocky escarpments; the ground radiates residual heat from volcanic activity. Dangerous fauna roams freely—creatures adapted to the island's unique environment. The island is intentionally chaotic; examiners have minimal control over its trials. Candidates must hunt badges by confronting other candidates or by surviving encounters with the island's wildlife.",
+      "x": 40,
+      "y": 5,
+      "radius": 8,
+      "region": "The Exam Circuit",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Zevil Island is the location of the badge-hunting phase where candidates must collect badges by defeating other candidates. The location is deliberately chaotic to test adaptability. HIDDEN INHABITANTS: dangerous apex predators control different sections of the island. Some sections are unreachable without specific Nen knowledge, creating natural advantages for prepared candidates.",
+      "areas": {
+        "Landing Beach": {
+          "description": "The arrival point on the island's shore, where candidates initially land. Relatively safe but resource-poor; candidates must venture inland.",
+          "paths": [
+            "Deep Jungle"
+          ]
+        },
+        "Deep Jungle": {
+          "description": "The island's interior, a dense tangle of vegetation and danger where most badge-hunting occurs. Navigation is treacherous.",
+          "paths": [
+            "Landing Beach",
+            "Lookout Crag"
+          ]
+        },
+        "Lookout Crag": {
+          "description": "A high vantage point offering views across the island. Several apex predators make this area particularly dangerous.",
+          "paths": [
+            "Deep Jungle"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 12,
+        "max": 30
+      }
+    },
+    "Final Selection Hall": {
+      "name": "Final Selection Hall",
+      "basicInfo": "An enormous underground chamber carved into stone, containing a combat arena designed for the final tournament phase of the Hunter Exam. The walls are scarred with centuries of battle; the stone floor is worn smooth by countless fights. Viewing galleries rise on all sides, creating a natural amphitheater where the Association's leadership observes the finalists. The architecture is massive and deliberately intimidating. The chamber feels ancient, as if battles have been fought here since the dawn of civilization. The air carries the accumulated tension of every candidate's final struggle for the Hunter license.",
+      "x": 5,
+      "y": -40,
+      "radius": 6,
+      "region": "The Exam Circuit",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Final Selection Hall is the location of the final tournament, where surviving candidates fight each other for the remaining Hunter licenses. The location is closely observed by Association leadership, including the Chairman. The tournament is broadcast globally via secure channels; this is the public face of the Exam. HIDDEN POWER: the chamber itself is reinforced with Nen-laced stone, allowing powerful techniques without structural damage.",
+      "areas": {
+        "Tournament Floor": {
+          "description": "The main combat arena, a vast circle of polished stone designed to accommodate dramatic battles. The floor bears scars from countless previous tournaments.",
+          "paths": [
+            "Waiting Gallery"
+          ]
+        },
+        "Waiting Gallery": {
+          "description": "A holding area where candidates wait between their tournament matches. The tension here is palpable and suffocating.",
+          "paths": [
+            "Tournament Floor"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 15,
+        "max": 35
+      }
+    },
+    "Zoldyck Estate": {
+      "name": "Zoldyck Estate",
+      "basicInfo": "The true family compound hidden behind the Testing Gate, a fortress of architectural grandeur and lethal design concealed within Kukuroo Mountain. The interior reveals manicured grounds, servant quarters, training facilities, and the ornate Main House where the family conducts its affairs. The estate's layout is deliberately confusing to outsiders; internal passages and hidden defenses are known only to family members and long-serving butlers. The air carries the weight of absolute authority and controlled danger. Every architectural feature serves a purpose in the estate's defensive systems. The compound is a perfect marriage of elegance and lethal efficiency—a place where beauty masks absolute danger.",
+      "x": -30,
+      "y": 35,
+      "radius": 8,
+      "region": "Republic of Padokea",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "The Zoldyck Estate is the true operational center of the world's premier assassination family. The compound contains family chambers (Silva, Kikyo, Illumi, Milluki, Kalluto), servant quarters, training grounds, and sealed areas. Killua's personal chambers contain evidence of his rebellion and childhood struggles. DEEP SECRETS: Alluka's chamber exists in a sealed wing, known only to family members and long-serving staff. The estate's defenses include weight-testing gates, automated defense mechanisms, and trained guard animals. The butlers (Gotoh, Canary, Tsubone, Amane) are master Nen users bound by complex loyalties.",
+      "areas": {
+        "Butlers' Quarters": {
+          "description": "Luxurious accommodations for the family's most trusted servants, including Gotoh, Canary, and others. These quarters reflect their status as skilled Nen users.",
+          "paths": [
+            "Training Grounds",
+            "Main House"
+          ]
+        },
+        "Training Grounds": {
+          "description": "Extensive facilities for assassin training, including combat arenas, obstacle courses, and meditation chambers. The grounds bear the scars of intense physical conditioning.",
+          "paths": [
+            "Butlers' Quarters",
+            "Main House"
+          ]
+        },
+        "Main House": {
+          "description": "The family's primary residence, featuring private chambers for each family member, dining halls, and administrative offices. Access is strictly controlled.",
+          "paths": [
+            "Butlers' Quarters",
+            "Training Grounds",
+            "Killua's Room"
+          ]
+        },
+        "Killua's Room": {
+          "description": "Killua's personal chamber within the Main House, decorated in his chosen style and containing evidence of his personal interests and conflicts.",
+          "paths": [
+            "Main House"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 20,
+        "max": 50
+      }
+    },
+    "Dentora City": {
+      "name": "Dentora City",
+      "basicInfo": "A modest metropolitan hub positioned in the foothills of Kukuroo Mountain, serving as the primary port of entry and commerce for the Republic of Padokea. The city blends old-world architecture with practical trade-post functionality. An airship port dominates the skyline, handling the regular traffic of trade vessels and passenger dirigibles. The Old Town district retains historical architecture and cultural traditions; newer quarters sprawl beyond the original settlement. The atmosphere is one of managed prosperity—the city's economy is fundamentally dependent on its position as gateway to the Zoldyck territories, and this creates a careful balance of openness and discretion.",
+      "x": 20,
+      "y": 0,
+      "radius": 8,
+      "region": "Republic of Padokea",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Dentora City serves as the primary international gateway to the Republic of Padokea. The Zoldyck family maintains quiet influence over the city's governance through intermediaries and subtle pressure. HIDDEN NETWORKS: the city hosts intelligence operatives from multiple nations, all seeking information about Zoldyck activities. The airship port is a hub for smuggling operations and underground trading.",
+      "areas": {
+        "Airship Port": {
+          "description": "A sprawling docking facility with massive mooring towers and cargo-handling equipment. Airships from across the world dock here, creating a cosmopolitan atmosphere.",
+          "paths": [
+            "Old Town"
+          ]
+        },
+        "Old Town": {
+          "description": "Historic districts with traditional architecture, local markets, and family-operated shops. The cultural heart of the city.",
+          "paths": [
+            "Airship Port"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 8,
+        "max": 30
+      }
+    },
+    "Arena District": {
+      "name": "Arena District",
+      "basicInfo": "The sprawling neighborhood surrounding the base of Heavens Arena, a hive of fighter culture and nocturnal energy. Street-level establishments cater to every conceivable need of combat athletes—training gyms, fight clubs, equipment shops, medical clinics specializing in fight injuries, and establishments of ill repute. The architecture is a mixture of renovated historic buildings and new construction designed for function over aesthetics. The district's character changes dramatically between day and night—during daylight, it's utilitarian and practical; after dark, it becomes a den of hedonism and violence. The air carries the scent of sweat, liniment, and spilled blood.",
+      "x": 35,
+      "y": 20,
+      "radius": 5,
+      "region": "Arena City",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Arena District is the operational hub of underground Nen-fighter culture. The district contains fight clubs where illegal matches occur, healing practitioners who ask no questions, and intelligence networks tracking fighter movements. HIDDEN OPERATIONS: several underworld syndicates maintain headquarters in the district, using fighter establishments as cover for criminal operations.",
+      "areas": {
+        "Fighters' Lodgings": {
+          "description": "Cheap boarding houses and modest apartments housing transient fighters from across the world. The buildings are worn but functional.",
+          "paths": [
+            "Night Market"
+          ]
+        },
+        "Night Market": {
+          "description": "A nocturnal bazaar where fighters trade equipment, information, and favors. The market operates with its own set of unwritten rules.",
+          "paths": [
+            "Fighters' Lodgings"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 5,
+        "max": 35
+      }
+    },
+    "Cemetery Building": {
+      "name": "Cemetery Building",
+      "basicInfo": "An imposing necropolis serving as a vast underground mausoleum and crypt system, housing the remains of centuries of aristocratic and wealthy families. The structure rises from ground level as an architectural monument—ornate stonework and funerary sculptures dominate the exterior. The interior descends into darkness, with corridors lined with burial chambers and sepulchral vaults. The air carries the scent of age and preservation; echoes of footsteps reverberate strangely in the vast spaces. The building serves as both a pilgrimage site for the bereaved and a repository of family secrets buried with the dead.",
+      "x": 0,
+      "y": 25,
+      "radius": 6,
+      "region": "Yorknew & Environs",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "The Cemetery Building is a vast structure connecting to Yorknew City's underground via catacombs and secret passages. The building contains burial vaults for prominent families, many of whom maintain sealed chambers containing family treasures and secrets. HIDDEN CONNECTION: the catacombs beneath the Cemetery Building connect to the Underground Auction Hall in Yorknew City, forming a shadow infrastructure used by mafia families for discreet movement.",
+      "areas": {
+        "Grand Hall": {
+          "description": "The entrance level, a vast chamber with soaring ceilings and elaborate funerary sculptures. The scale is deliberately overwhelming.",
+          "paths": [
+            "Catacombs"
+          ]
+        },
+        "Catacombs": {
+          "description": "Descending passages lined with burial chambers. The air grows colder and older the deeper one ventures. Few visitors penetrate far.",
+          "paths": [
+            "Grand Hall"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 8,
+        "max": 28
+      }
+    },
+    "Lingon Airport": {
+      "name": "Lingon Airport",
+      "basicInfo": "A large-scale transportation hub serving Yorknew and the surrounding regions, featuring modern aircraft facilities and security infrastructure. The airport's exterior is all glass and steel—contemporary architecture emphasizing efficiency and control. Inside, the terminal is organized with the sterile precision of major international airports. Security checkpoints, customs barriers, and surveillance systems are omnipresent. The underground level contains cargo facilities and restricted areas accessible only to authorized personnel. The atmosphere is one of controlled transit—thousands of travelers pass through daily, most with business or secrets they prefer unexamined.",
+      "x": 25,
+      "y": 18,
+      "radius": 8,
+      "region": "Yorknew & Environs",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Lingon Airport is Yorknew's primary international transportation hub and a key venue for mafia operations. The underground tunnel system connects to Yorknew City's security infrastructure and serves as a location for discrete exchanges. HIDDEN NETWORKS: multiple mafia families maintain intelligence operations at the airport; customs officials are often on the take.",
+      "areas": {
+        "Terminal": {
+          "description": "The main departure and arrival facility, crowded with travelers and security personnel. The atmosphere is utilitarian and impersonal.",
+          "paths": [
+            "Underground Tunnel"
+          ]
+        },
+        "Underground Tunnel": {
+          "description": "A secure passage system beneath the airport, used for cargo transport and discrete movement. Access is restricted to authorized personnel.",
+          "paths": [
+            "Terminal"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 10,
+        "max": 32
+      }
+    },
+    "Nostrade City Base": {
+      "name": "Nostrade City Base",
+      "basicInfo": "The operational headquarters of the Nostrade family, a sprawling compound of administrative offices and private quarters positioned within Yorknew City proper. The architecture is imposing and deliberately fortress-like, projecting wealth and power through every detail. The exterior walls are discrete but reinforced; security measures are present but subtle. Inside, multiple floors house administrative operations, family quarters, and secure chambers where the family's most valuable secrets are kept. The atmosphere is one of calculated order—the Nostrade family conducts its business with ruthless efficiency and meticulous attention to detail. Every surface speaks of wealth accumulated through careful manipulation of information and prophecy.",
+      "x": -20,
+      "y": 25,
+      "radius": 6,
+      "region": "Yorknew & Environs",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "The Nostrade City Base is the operational center of the Nostrade family's mafia influence and Neon's prophecy operations. The compound contains Neon's sealed chamber where she produces her prophecies ('Lovely Ghostwriter'). HIDDEN POWER: Neon's prophetic ability is the family's true source of power and wealth; this fact is concealed from all but senior family members and closest allies. The base contains secure communication systems linking to the family's global operations.",
+      "areas": {
+        "Operations Floor": {
+          "description": "Administrative offices where the family conducts its business operations, manages intelligence networks, and coordinates mafia activities.",
+          "paths": [
+            "Neon's Suite"
+          ]
+        },
+        "Neon's Suite": {
+          "description": "Sealed chambers housing Neon and her attendants, with special protections and restricted access. Only trusted family members and staff are permitted entry.",
+          "paths": [
+            "Operations Floor"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 15,
+        "max": 38
+      }
+    },
+    "NGL Interior": {
+      "name": "NGL Interior",
+      "basicInfo": "The interior lands of the Neo Green Life autonomous zone, a nation deliberately sealed from external technology and cultural contact. The landscape appears bucolic and peaceful—pastoral villages, farmland, and forest preserve. Wooden structures reflect traditional architectural styles; technology is conspicuously absent. However, the pastoral facade conceals a dark secret: Chimera Ant colony nests have established themselves in the interior, a catastrophe that the isolationist government has attempted to contain. The air carries an ominous quality for those who know to sense it—the faint presence of something ancient and wrong lurking beneath the seemingly peaceful surface.",
+      "x": -10,
+      "y": 28,
+      "radius": 6,
+      "region": "Mitene Union",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "The NGL Interior harbors a Chimera Ant colony nest established years ago when the Queen washed ashore. The colony's growth has been monitored by NGL authorities but not publicly disclosed. HIDDEN HORROR: the colony has transformed captured humans into humanoid ants and established a hierarchical society. Several squad leaders have emerged—Colt, Rammot, Cheetu, Zazan, and others. Gyro, an industrialist and crime boss, maintained partial control over certain colony factions before the King's rise. The Interior contains villages (marked for assimilation), the Colony Nest (the primary hive), and Gyro's Factory Ruins (abandoned industrial facilities).",
+      "areas": {
+        "Villages": {
+          "description": "Traditional human settlements gradually being assimilated into the colony's ecosystem. The villagers are unaware of the full extent of the threat.",
+          "paths": [
+            "Colony Nest"
+          ]
+        },
+        "Colony Nest": {
+          "description": "The primary hive of the Chimera Ant colony, a massive structure of chitin and flesh serving as the center of the colony's operations. Few humans have glimpsed it and survived.",
+          "paths": [
+            "Villages",
+            "Gyro's Factory Ruins"
+          ]
+        },
+        "Gyro's Factory Ruins": {
+          "description": "Abandoned industrial facilities formerly controlled by the crime lord Gyro. Now partially reclaimed by the colony as additional nesting space.",
+          "paths": [
+            "Colony Nest"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 8,
+        "max": 40
+      }
+    },
+    "Peijin": {
+      "name": "Peijin",
+      "basicInfo": "The capital city of the Mitene Union, a moderately developed urban center serving as the administrative seat of the nation that includes NGL and East Gorteau. The city blends practical governance infrastructure with modest architectural ambitions. Streets are orderly and well-maintained; government buildings dominate the skyline. The atmosphere is one of bureaucratic efficiency tempered by the underlying tension of managing two very different territories—the isolationist NGL and the royal dictatorship of East Gorteau. Hidden beneath the city's formal face are intelligence networks and criminal operations.",
+      "x": -5,
+      "y": 42,
+      "radius": 8,
+      "region": "Mitene Union",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Peijin serves as the administrative center of the Mitene Union, managing both NGL's isolationist policies and East Gorteau's royal dictatorship. The city contains government operations, intelligence services monitoring both territories, and crime syndicates using the city as a hub. HIDDEN NETWORKS: the government maintains careful control over information about the Chimera Ant colony; few officials acknowledge its existence.",
+      "areas": {
+        "Capital Streets": {
+          "description": "The public administrative district where government buildings and official institutions conduct their business with studied neutrality.",
+          "paths": [
+            "Hideout Cellars"
+          ]
+        },
+        "Hideout Cellars": {
+          "description": "Underground tunnel systems beneath the city where criminals, intelligence operatives, and dissidents maintain hidden operations.",
+          "paths": [
+            "Capital Streets"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 8,
+        "max": 32
+      }
+    },
+    "East Gorteau Royal Palace": {
+      "name": "East Gorteau Royal Palace",
+      "basicInfo": "An ornate royal residence serving as the seat of power for East Gorteau's monarchy, a fortress of architectural grandeur and lethal security hidden within an urban center. The palace rises imposingly above the surrounding city, its towers and ramparts visible from great distances. Interior chambers are a labyrinth of throne halls, administrative offices, royal living quarters, and reception chambers. The architecture blends intimidating military fortification with elaborate ornamentation—beauty and power merged seamlessly. The palace's depths conceal secrets of royal succession, political intrigue, and the presence of the young prodigy Komugi, a genius musician whose talents shaped the fate of nations.",
+      "x": -25,
+      "y": 38,
+      "radius": 8,
+      "region": "Mitene Union",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "The East Gorteau Royal Palace is the seat of the monarchy controlling East Gorteau. The palace contains royal chambers, administrative offices, and hidden sections. DARK SECRET: during the Chimera Ant arc, the palace becomes the seat of Meruem's government after the King dispatches the Queen and assassinates the previous regime. Komugi, a blind musical genius, becomes the King's closest companion and moral influence. The palace's throne hall becomes the setting for final political negotiations and the King's ultimate defeat. The Dragon-Strike Courtyard serves as a training ground and execution venue.",
+      "areas": {
+        "Central Stairway": {
+          "description": "A grand ascending staircase serving as the palace's architectural centerpiece, connecting lower administrative levels to the throne.",
+          "paths": [
+            "Throne Hall",
+            "Dragon-Strike Courtyard"
+          ]
+        },
+        "Throne Hall": {
+          "description": "The chamber where the monarch conducts official business and receives subjects. The throne itself is an ornate sculpture of power and authority.",
+          "paths": [
+            "Central Stairway",
+            "Komugi's Chamber"
+          ]
+        },
+        "Dragon-Strike Courtyard": {
+          "description": "An open courtyard used for ceremonies, training, and executions. The space carries an atmosphere of controlled violence.",
+          "paths": [
+            "Central Stairway"
+          ]
+        },
+        "Komugi's Chamber": {
+          "description": "Sealed private quarters where Komugi resides, decorated for her comfort and equipped with musical instruments. Access is restricted to those with royal permission.",
+          "paths": [
+            "Throne Hall"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 15,
+        "max": 45
+      }
+    },
+    "Antokiba": {
+      "name": "Antokiba",
+      "basicInfo": "The first settled town encountered by players entering Greed Island, a sprawling merchant hub where players exchange cards, purchase supplies, and gather intelligence. The town's architecture carries that uncanny video-game quality—buildings shimmer with subtle magical auras, streets are perfectly maintained, and NPCs move with algorithmic precision. Market stalls line the central square; trophy vendors display impossible valuables. The atmosphere is one of mercantile energy—players hustle for advantage, forge alliances, and scheme for rare cards. The town serves as the game's economic hub, where the Nen-economy operates with crystalline clarity.",
+      "x": -20,
+      "y": 5,
+      "radius": 6,
+      "region": "Greed Island — Settled Lands",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Antokiba is the primary player hub on Greed Island, where the game's economic mechanics operate most visibly. The town contains spell-card merchants, prize vendors, and player accommodations. GAME KNOWLEDGE: knowledgeable players recognize that Antokiba's NPCs are far more sophisticated than typical game characters—they possess genuine personality and adapt to player interactions in unexpected ways.",
+      "areas": {
+        "Town Square": {
+          "description": "The central gathering point of the town, where merchant stalls cluster and players congregate to trade and negotiate.",
+          "paths": [
+            "Prize Hall"
+          ]
+        },
+        "Prize Hall": {
+          "description": "A grand building where the rarest in-game valuables are displayed and distributed as quest rewards. Only proven players gain access to the deepest vaults.",
+          "paths": [
+            "Town Square"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 15,
+        "max": 40
+      }
+    },
+    "Masadora": {
+      "name": "Masadora",
+      "basicInfo": "A merchant town specializing in spell-card trading and acquisition, serving as a secondary hub for player commerce. The town's architecture emphasizes commercial functionality; spell shops line the main streets, their windows glowing with magical energy. Player guilds maintain headquarters here; information brokers operate from back rooms. The town sits on the edge of Greed Island's settled lands, with wilderness visible beyond. The atmosphere is one of cautious commerce—players are friendly but guarded, aware that alliances shift like sand.",
+      "x": -10,
+      "y": 15,
+      "radius": 5,
+      "region": "Greed Island — Settled Lands",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Masadora is a secondary player hub specializing in spell-card economics. The town contains spell shops offering rare enchantments and player guild headquarters. HIDDEN ALLIANCE: several powerful player guilds maintain bases here and coordinate their activities.",
+      "areas": {
+        "Spell Shop Row": {
+          "description": "A merchant district lined with spell vendors, each specializing in different magical categories and offering unique inventory.",
+          "paths": [
+            "Cliff Approach"
+          ]
+        },
+        "Cliff Approach": {
+          "description": "A terraced approach leading toward the cliff edge, where views extend across the game world. A popular location for player meetings and negotiations.",
+          "paths": [
+            "Spell Shop Row"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 18,
+        "max": 45
+      }
+    },
+    "Soufrabi": {
+      "name": "Soufrabi",
+      "basicInfo": "A coastal town on Greed Island serving as a harbor and haven for players seeking maritime routes. The town combines merchant functionality with pirate atmosphere—trading vessels dock at ramshackle piers, and the air carries the salt-tang of sea spray. The town attracts players seeking nautical adventures and alternative trading routes. Taverns cluster near the waterfront; the atmosphere is rough but energetic. The town's connection to the outside ocean creates a sense of possibility and danger absent in inland settlements.",
+      "x": -35,
+      "y": 8,
+      "radius": 5,
+      "region": "Greed Island — Settled Lands",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Soufrabi is a coastal player hub with maritime connections. The town is controlled by a pirate faction led by Razor (a game master masquerading as a player), who dominates the harbor and surrounding waters through alliance politics. HIDDEN TRUTH: Razor is one of the island's ten game masters, maintaining his presence here to observe player activity and maintain the game's balance.",
+      "areas": {
+        "Harbor": {
+          "description": "A working waterfront where player vessels dock and maritime trade occurs. The docks are crowded with mercenary sailors and player adventurers.",
+          "paths": [
+            "Razor's Pirate House"
+          ]
+        },
+        "Razor's Pirate House": {
+          "description": "The headquarters of the pirate faction controlling the harbor, a fortified compound where Razor conducts operations and dominates local politics.",
+          "paths": [
+            "Harbor"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 20,
+        "max": 45
+      }
+    },
+    "Limeiro": {
+      "name": "Limeiro",
+      "basicInfo": "A mysterious town centered around an imposing castle structure, serving as a location of strategic importance on Greed Island. The castle rises dramatically from the surrounding terrain; its architecture suggests both fortress and residence. The town clusters around the castle's base; the atmosphere is one of military discipline tempered by commerce. Access to the castle's interior is restricted and highly sought; rumors suggest that completing the castle's challenges yields rare treasures and magical advantages.",
+      "x": 5,
+      "y": -8,
+      "radius": 5,
+      "region": "Greed Island — Settled Lands",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Limeiro is centered on a castle serving as a major in-game dungeon and quest location. The castle's architecture conceals complex mechanisms and valuable treasures. GAME MECHANICS: completion of the Clear-Bonus Chamber within the castle grants significant rewards and reputation. The castle serves as a testing ground for player skill and cooperation.",
+      "areas": {
+        "Castle Gate": {
+          "description": "The imposing entrance to the castle structure, guarded and fortified. The gate's design suggests both welcome and deterrent.",
+          "paths": [
+            "Clear-Bonus Chamber"
+          ]
+        },
+        "Clear-Bonus Chamber": {
+          "description": "A sealed chamber within the castle accessible only to players who complete specific challenges. Reaching it grants exceptional rewards.",
+          "paths": [
+            "Castle Gate"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 20,
+        "max": 42
+      }
+    },
+    "Dorias Wastes": {
+      "name": "Dorias Wastes",
+      "basicInfo": "A barren desert region on Greed Island where the game's wilderness content concentrates. Scorched earth, minimal vegetation, and dangerous fauna characterize the landscape. Bandit camps and creature lairs dot the terrain. The atmosphere is hostile and unforgiving—players venturing here accept the risk of permanent trauma or catatonia. The wastes represent the game's most dangerous territory, where resource scarcity and danger combine into lethal conditions.",
+      "x": -15,
+      "y": -20,
+      "radius": 8,
+      "region": "Greed Island — Wilds",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Dorias Wastes is a wilderness zone containing dangerous encounters and valuable resources. The wastes are controlled by the Bomber trio (Genthru, Sub, Bara), who farm players for rare cards using the Countdown bomb ability. HIDDEN DANGER: the trio's activities make this region extraordinarily lethal; few players survive encounters here.",
+      "areas": {
+        "Bandit Camp": {
+          "description": "A settlement of in-game bandits and the Bomber trio's operational base. The camp is fortified and heavily defended.",
+          "paths": [
+            "Monster Dens"
+          ]
+        },
+        "Monster Dens": {
+          "description": "Lairs where dangerous game creatures establish territories. Monster encounters here are frequent and severe.",
+          "paths": [
+            "Bandit Camp"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 20,
+        "max": 45
+      }
+    },
+    "Mt. Kabool": {
+      "name": "Mt. Kabool",
+      "basicInfo": "A volcanic mountain range on Greed Island's wild side, characterized by switchback passages and dangerous terrain. The mountain's peaks are perpetually shrouded in mist; the slopes offer commanding views of the surrounding wilderness. Dangerous creatures inhabit the mountain; traversal requires careful planning and resource management. The mountain serves as a natural barrier dividing different regions of the game world.",
+      "x": 15,
+      "y": -25,
+      "radius": 7,
+      "region": "Greed Island — Wilds",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Mt. Kabool is a wilderness location containing valuable resources and dangerous encounters. The mountain's peaks offer strategic vantage points; guild wars occasionally occur here over territorial control. HIDDEN VALUE: certain card types spawn preferentially on the mountain, attracting dedicated farming expeditions.",
+      "areas": {
+        "Switchbacks": {
+          "description": "A treacherous mountain pass with sharp elevational changes and narrow passages. Navigation is difficult; ambush points are numerous.",
+          "paths": [
+            "Wolf Pass"
+          ]
+        },
+        "Wolf Pass": {
+          "description": "A high-altitude passage inhabited by aggressive wolf-type creatures. The pass is frequently contested territory.",
+          "paths": [
+            "Switchbacks"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 22,
+        "max": 45
+      }
+    },
+    "Harbview Hospital": {
+      "name": "Harbview Hospital",
+      "basicInfo": "A major medical facility serving Swardani City and the surrounding region, specializing in treatment of severe injuries and conditions beyond conventional medicine. The building is modern and efficiently designed; its interior carries the sterile, hopeless atmosphere of institutions dedicated to the incurable. Multiple floors house patient wards, intensive care units, and research laboratories. The facility's reputation attracts the desperately ill from across the world, creating a constant stream of human tragedy and hope.",
+      "x": 30,
+      "y": 18,
+      "radius": 6,
+      "region": "Swardani City",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Harbview Hospital is a major medical facility where gravely injured individuals receive treatment. During the Chimera Ant arc, Gon is admitted here in a comatose state following his transformation and subsequent collapse. The hospital's staff includes world-class physicians and specialists in Nen-related injuries. HIDDEN RESEARCH: the hospital conducts classified research on Nen and its medical applications, some of it funded by the Hunter Association.",
+      "areas": {
+        "Intensive Ward": {
+          "description": "The hospital's most critical care unit, where the gravest cases receive round-the-clock monitoring and treatment.",
+          "paths": [
+            "Rooftop"
+          ]
+        },
+        "Rooftop": {
+          "description": "A medical facility rooftop with helicopter landing pad and observation areas. A location for quiet contemplation and private conversations.",
+          "paths": [
+            "Intensive Ward"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 10,
+        "max": 35
+      }
+    },
+    "World Tree": {
+      "name": "World Tree",
+      "basicInfo": "An immense, ancient tree of incalculable age and mysterious origin, serving as a living monument at the heart of Swardani City. The tree rises to impossible heights; its canopy extends across the skyline. The trunk is wide enough to contain internal structures; the upper boughs remain perpetually obscured by mist. The tree's origin is unknown even to the Hunter Association's leadership. It exerts a subtle influence on the surrounding area—the air beneath its canopy feels different, older, pregnant with significance. The tree is simultaneously a pilgrimage site, a research subject, and a deeply unsettling mystery.",
+      "x": 0,
+      "y": 35,
+      "radius": 8,
+      "region": "Swardani City",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "The World Tree is one of the world's greatest mysteries. The Hunter Association maintains research facilities within and around the tree, investigating its origins and properties. DEEP MYSTERY: the tree's origins predate human civilization; its purpose remains unknown. The tree exerts subtle effects on those who spend extended time near it—mood alteration, heightened sensory perception, and occasional reality distortions have been reported.",
+      "areas": {
+        "Visitor Base": {
+          "description": "A public facility at the tree's base where visitors are processed and guided. The area is heavily controlled and monitored.",
+          "paths": [
+            "Upper Boughs"
+          ]
+        },
+        "Upper Boughs": {
+          "description": "The tree's accessible upper reaches, where the Association maintains research installations and observation platforms. Access is strictly restricted.",
+          "paths": [
+            "Visitor Base"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 10,
+        "max": 40
+      }
+    },
+    "Kakin Royal Capital": {
+      "name": "Kakin Royal Capital",
+      "basicInfo": "The capital city of the Kakin Empire, a sprawling metropolis of marble monuments and merchant quarters reflecting the empire's rapid rise to global prominence. The city's architecture celebrates imperial power—wide avenues, grand plazas, towering palace structures. The harbor district throbs with international commerce; military installations project martial strength. The atmosphere oscillates between celebration of prosperity and the underlying anxiety of an empire built on ambition rather than stability. The royal palace dominates the skyline, its architecture suggesting both elegance and ruthlessness.",
+      "x": 35,
+      "y": 25,
+      "radius": 12,
+      "region": "Kakin Empire",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "The Kakin Royal Capital is the seat of the Kakin Empire's power and the operational center of the empire's global ambitions. The royal palace contains administrative chambers, royal quarters, and secure facilities. POLITICAL INTRIGUE: the empire's stability rests on succession politics; multiple heirs compete for influence. The empire's wealth comes partially from legitimate trade, partially from military expansion, and partially from illicit activities concealed behind diplomatic immunity.",
+      "areas": {
+        "Royal Palace": {
+          "description": "The imperial residence and administrative center, a fortress of architectural grandeur and absolute security.",
+          "paths": [
+            "Harbor of Ten Thousand Banners"
+          ]
+        },
+        "Harbor of Ten Thousand Banners": {
+          "description": "A major maritime hub where merchant vessels from across the world dock. The harbor projects imperial power through merchant activity.",
+          "paths": [
+            "Royal Palace"
+          ]
+        }
+      },
+      "known": true,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 12,
+        "max": 40
+      }
+    },
+    "Forbidden Landing": {
+      "name": "Forbidden Landing",
+      "basicInfo": "A mysterious beachhead on the Dark Continent's new shore, marked as forbidden territory by the expedition leadership due to its association with ancient ruins and inexplicable phenomena. The landing is characterized by sandy beaches, partially excavated ruins suggesting pre-human civilization, and an atmosphere of primordial strangeness. The soil seems to pulse with presence; the air carries electromagnetic disturbances and unidentified spores. The landscape contradicts known biology—flora and fauna exhibit characteristics that suggest fundamental differences from known species. Few expeditions have ventured beyond the beachhead; those that returned reported permanent alterations in perception and understanding.",
+      "x": -30,
+      "y": -10,
+      "radius": 10,
+      "region": "The New Shore",
+      "complexityType": "complex",
+      "detailType": "detailed",
+      "hiddenInfo": "Forbidden Landing represents the expedition's first contact point with the Dark Continent beyond Lake Mobius. The location is designated forbidden due to hazardous conditions and unknown lifeforms. EXTREME CAUTION: the landing zone is exposed to multiple Five Calamities influences. The ruins suggest a pre-human civilization of sophisticated technological and mystical capability. NOTE: Content describing experiences beyond the beachhead represents speculative continuation beyond published source material.",
+      "areas": {
+        "Beachhead Camp": {
+          "description": "A fortified expedition camp serving as the primary settlement on the Dark Continent. The camp is heavily secured against unknown threats.",
+          "paths": [
+            "Ruined Gate of the Ancients"
+          ]
+        },
+        "Ruined Gate of the Ancients": {
+          "description": "A partially excavated structure suggesting pre-human architecture and purpose. The gate's function and origins remain mysterious.",
+          "paths": [
+            "Beachhead Camp"
+          ]
+        }
+      },
+      "known": false,
+      "imageUrl": "",
+      "npcLevelRange": {
+        "min": 30,
+        "max": 50
+      }
+    }
+  }
 }
