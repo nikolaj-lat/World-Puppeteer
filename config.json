@@ -6879,6 +6879,238 @@
         "Civilian Prodigy"
       ],
       "replacesNpc": "Komugi"
+    },
+    {
+      "name": "Meruem",
+      "gender": "male",
+      "description": "The King—the strongest being ever born, the apex predator engineered by Chimera Ant instinct. Meruem is a towering humanoid creature with an insectoid crown, obsidian eyes, and an aura of absolute dominion. He was born already a master of Nen, his category Specialization itself, his technique a synthesis of all Nen schools. Meruem's power is not static—it grows with every creature he consumes, every Nen user he absorbs. His aura expands exponentially, fed by the life force of others. His Developing Hatsu embodies synthesis itself: he can adopt any ability he witnesses, merge it with his own arsenal, and emerge stronger. Meruem is born to rule, conditioned to conquer. Yet during the Chimera Ant arc, a blind girl named Komugi teaches him something impossible: that not all strength is measured in aura, that a human of ordinary power can be undefeatable in their chosen domain, that meaning exists beyond domination. Playing as Meruem means embodying godlike power with the slow realization of what 'being human' might cost. ARC VALIDITY: Chimera Ant arc (A6+); most Chimera Ants die in A6 — Meruem persists uniquely.",
+      "traits": [
+        "Nen Master",
+        "Specialist",
+        "Developing Hatsu (Specialization)"
+      ],
+      "replacesNpc": "Meruem"
+    },
+    {
+      "name": "Neferpitou",
+      "gender": "non-binary",
+      "description": "The Showman Royal Guard—a creature of lethal grace and predatory intelligence. Neferpitou is a humanoid Chimera Ant with a feline face, clawed hands, and an unsettling beauty. Its Nen mastery is absolute; its category is Specialization, its technique is Terpsichora. Terpsichora is a dance of spatial manipulation and somatic control: Neferpitou can enter a state of perfect bodily synchronization where every movement flows into devastating precision. Its strikes become a choreography of death; its defenses flow like water. Terpsichora grants Neferpitou the ability to move with supernatural grace, coordinate multiple limbs in devastating patterns, and reshape its body mid-combat with horrifying flexibility. Neferpitou is loyal to Meruem, devoted to its King, yet capable of independent cunning and manipulation. It is charming, playful, and utterly remorseless. Playing as Neferpitou means wielding a Hatsu of pure bodily mastery—grace that becomes a weapon, dance that becomes devastation. ARC VALIDITY: Chimera Ant arc (A6+); Neferpitou dies protecting the King.",
+      "traits": [
+        "Nen Master",
+        "Specialist",
+        "Hatsu: Terpsichora"
+      ],
+      "replacesNpc": "Neferpitou"
+    },
+    {
+      "name": "Shaiapouf",
+      "gender": "male",
+      "description": "The Butterfly Royal Guard—a creature of swarm mastery and illusory control. Shaiapouf is a humanoid Chimera Ant with butterfly wings, serrated mandibles, and an almost-human face marked by inhuman beauty. Its Nen category is Manipulation; its Developing Hatsu is the creation of scaled clones—miniature versions of itself spawned from its own aura. These clones can scout, infiltrate, manipulate, and coordinate; they retain a fraction of Shaiapouf's strength and cunning. By dividing its aura, Shaiapouf creates a network intelligence, a swarm consciousness spread across dozens of tiny bodies. This grants it surveillance capability unmatched in the world. Shaiapouf is fiercely protective of Meruem, suspicious of all outsiders, and willing to sacrifice any number of clones to preserve the King's security and purity. Its Manipulator nature makes it a master of deception, psychology, and social engineering. Playing as Shaiapouf means commanding a distributed intelligence, orchestrating through proxies and illusion, becoming a network rather than a single entity. ARC VALIDITY: Chimera Ant arc (A6+); Shaiapouf dies in its failed coup against Meruem.",
+      "traits": [
+        "Nen Master",
+        "Manipulator",
+        "Developing Hatsu (Manipulation)"
+      ],
+      "replacesNpc": "Shaiapouf"
+    },
+    {
+      "name": "Menthuthuyoupi",
+      "gender": "male",
+      "description": "The Beast Royal Guard—a creature of overwhelming physical power and rage metamorphosis. Menthuthuyoupi is a muscular humanoid Chimera Ant with bestial features, prominent fangs, and clawed hands. Its Nen category is Enhancement; its Developing Hatsu channels pure aura amplification into devastating physical transformation. When enraged or in peak combat state, Menthuthuyoupi's body undergoes radical metamorphosis: muscles bulge and re-sculpt, bone hardens, its physical form expands into something even more monstrous and powerful. This transformation grants catastrophic strength, durability, and striking force—but it is driven by emotional intensity, making Menthuthuyoupi a creature of raw power rather than technical mastery. Menthuthuyoupi is loyal to Meruem but less psychologically complex than Neferpitou or Shaiapouf; it is a blunt instrument of force, relying on overwhelming physical superiority. Playing as Menthuthuyoupi means embodying Enhancement at its most raw—brutal strength that grows with fury, a power that respects no subtlety. ARC VALIDITY: Chimera Ant arc (A6+); Menthuthuyoupi dies in combat against the assembled Hunter Association.",
+      "traits": [
+        "Nen Master",
+        "Enhancer",
+        "Developing Hatsu (Enhancement)"
+      ],
+      "replacesNpc": "Menthuthuyoupi"
+    },
+    {
+      "name": "Colt",
+      "gender": "male",
+      "description": "The Young Soldier—a Chimera Ant prodigy and bridge between human and insect. Colt is a relatively humanoid Chimera Ant, younger and smaller than the Royal Guards, with an insectoid structure that nonetheless retains a boyish quality. He is the first Chimera Ant to develop Nen, and his rapid growth in power astonishes even Meruem. Colt's Nen category is Emission; his Developing Hatsu channels aura projection at range, granting him long-distance combat capability rare among his kind. Colt is emotionally complex—raised among humans as a child soldier, he retains fragments of human morality and sympathy, yet his nature as a Chimera Ant pulls him toward loyalty to the colony and Meruem. He represents the potential for coexistence between the species, a possibility that makes him dangerous to both humans and pure-blooded Chimera Ants. Playing as Colt means navigating the liminal space between two species, wielding Emission-based power while grappling with conflicting loyalties. ARC VALIDITY: Chimera Ant arc (A6+); Colt dies early in the arc.",
+      "traits": [
+        "Nen Practitioner",
+        "Emitter",
+        "Developing Hatsu (Emission)"
+      ],
+      "replacesNpc": "Colt"
+    },
+    {
+      "name": "Zazan",
+      "gender": "female",
+      "description": "The Wasp Commander—a regional Chimera Ant leader and predatory strategist. Zazan is a humanoid Chimera Ant with vestigial insectoid features, sharp-edged beauty, and an aura of command. She leads a colony of lesser Chimera Ants with ruthless efficiency, treating them as expendable assets in her quest for power and territory. Zazan's Nen category is Manipulation; her Developing Hatsu grants her the ability to command and dominate her subordinates, extending her will across her hive-colony. She can coordinate her soldiers with perfect synchronization, sacrifice them without hesitation, and absorb their aura upon consumption. Zazan is tactically brilliant but emotionally shallow—she views all other beings as prey or tools. She has no loyalty beyond her own ascendancy. Playing as Zazan means wielding Manipulation at scale, treating soldiers as extensions of your own consciousness, conducting warfare through networked command. ARC VALIDITY: Chimera Ant arc (A6+); Zazan dies in early A6, killed by the Hunters.",
+      "traits": [
+        "Nen Adept",
+        "Manipulator",
+        "Developing Hatsu (Manipulation)"
+      ],
+      "replacesNpc": "Zazan"
+    },
+    {
+      "name": "Cheetu",
+      "gender": "male",
+      "description": "The Leopard—a Chimera Ant built for speed and predatory joy. Cheetu is a lean, feline-featured Chimera Ant with spotted skin and an almost-playful cruelty. His Nen category is Conjuration; his Developing Hatsu allows him to conjure a specialized arena or territorial space in which his speed is amplified to supernatural levels. Within his conjured domain, Cheetu becomes nearly impossible to catch—he moves faster than perception allows, his reflexes inhuman. But his Conjuration is bound to a specific location; outside his arena, he loses this overwhelming advantage. Cheetu is hedonistic and sadistic—he views combat as entertainment, treating prey as playthings. He has no strategic depth, relying instead on overwhelming speed and the joy of the hunt. Playing as Cheetu means wielding Conjuration to create advantage in specific spaces, embodying velocity itself, reducing opponents to desperate prey in your domain. ARC VALIDITY: Chimera Ant arc (A6+); Cheetu dies in A6.",
+      "traits": [
+        "Nen Adept",
+        "Conjurer",
+        "Developing Hatsu (Conjuration)"
+      ],
+      "replacesNpc": "Cheetu"
+    },
+    {
+      "name": "Leol",
+      "gender": "male",
+      "description": "The Debt Master—a Chimera Ant who weaponizes obligation and favor-binding. Leol is a humanoid Chimera Ant with leonine features, muscular and imposing. His Nen category is Specialization; his Developing Hatsu is the Rental Pod—a conjured space where Leol can bind other beings into debt relationships. Those who accept his offer gain temporary power amplification or resources, but become indebted to Leol. He can then call in these debts at critical moments, forcing his debtors to act against their own interests or face catastrophic aura backlash. Leol weaponizes the human tendency toward transaction and compromise, turning kindness and need against those who accept his deals. He is smooth, persuasive, and fundamentally predatory. Playing as Leol means orchestrating a network of obligated beings, calling in favors at precisely the right moment, turning survival instinct into leverage. ARC VALIDITY: Chimera Ant arc (A6+); Leol dies in combat.",
+      "traits": [
+        "Nen Adept",
+        "Specialist",
+        "Developing Hatsu (Specialization)"
+      ],
+      "replacesNpc": "Leol"
+    },
+    {
+      "name": "Ikalgo",
+      "gender": "male",
+      "description": "The Corpse Pilot—a Chimera Ant who transcends death through stolen bodies. Ikalgo is a squid-like Chimera Ant, small and seemingly fragile compared to his brethren. His Nen category is Emission; his Developing Hatsu is Fleadom—the ability to detach his consciousness from his body and pilot the corpses of fallen creatures as remote-controlled shells. Ikalgo spreads microscopic clones of himself throughout his environment; when a body dies, he can anchor into it and operate it like a puppet. This grants him functional immortality as long as corpses remain available, and the ability to disguise himself as nearly any creature. Ikalgo is contemplative and strategic, lacking the predatory sadism of his stronger brethren. He is the most alien of the Chimera Ants, viewing bodies as tools and survival as a puzzle of resource management. Playing as Ikalgo means becoming a distributed consciousness, inhabiting corpses, existing as a ghost in the machine, transcending singular identity. ARC VALIDITY: Chimera Ant arc (A6+); Ikalgo survives the arc and becomes uniquely important.",
+      "traits": [
+        "Nen Practitioner",
+        "Emitter",
+        "Developing Hatsu (Emission)"
+      ],
+      "replacesNpc": "Ikalgo"
+    },
+    {
+      "name": "Meleoron",
+      "gender": "male",
+      "description": "The Invisible Strategist—a Chimera Ant who commands through perfect concealment and divine partnership. Meleoron is a humanoid Chimera Ant with a gentle, almost noble appearance despite his lethal nature. His Nen category is Specialization; his Developing Hatsu is the combination of Perfect Plan and God's Accomplice. Perfect Plan allows Meleoron to intuit the optimal course of action in complex tactical situations, granting him prescient strategic awareness. God's Accomplice lets him hold his breath indefinitely while perfectly still—during this state, his aura becomes completely undetectable, rendering him invisible to Nen detection. When he resumes breathing, his power returns fully. Meleoron weaponizes patience and preparation, waiting in perfect silence for the ideal moment to strike or influence. He is contemplative and philosophical, viewing combat as a dance of timing rather than force. Playing as Meleoron means winning through strategy and invisibility, becoming a ghost until the moment perfection aligns. ARC VALIDITY: Chimera Ant arc (A6+); Meleoron survives and becomes a key ally.",
+      "traits": [
+        "Nen Adept",
+        "Specialist",
+        "Developing Hatsu (Specialization)"
+      ],
+      "replacesNpc": "Meleoron"
+    },
+    {
+      "name": "Welfin",
+      "gender": "male",
+      "description": "The Missile Master—a Chimera Ant who weaponizes explosive aura projection. Welfin is a weasel-like Chimera Ant, smaller and quicker than the Royal Guards, with sharp features and intense eyes. His Nen category is Manipulation; his Developing Hatsu is Missileman—the ability to conjure and launch explosive projectiles of compressed aura. These missiles track their targets with frightening accuracy, detonate on impact or command, and can be controlled mid-flight. Welfin is a tactician who relies on preparation and bombardment rather than close combat, turning his smaller stature into an asset by staying at range. He is calculated, patient, and willing to sacrifice lesser Chimera Ants as distractions or blockers. Welfin is also uniquely capable of introspection, questioning his loyalty to Meruem more than most of his brethren. Playing as Welfin means orchestrating ranged firepower, controlling the battlefield through projectile dominance, manipulating distance and timing. ARC VALIDITY: Chimera Ant arc (A6+); Welfin survives and becomes one of the few to question the colony's ideology.",
+      "traits": [
+        "Nen Adept",
+        "Manipulator",
+        "Developing Hatsu (Manipulation)"
+      ],
+      "replacesNpc": "Welfin"
+    },
+    {
+      "name": "Beyond Netero",
+      "gender": "male",
+      "description": "The Legendary Rogue Hunter—a license holder who chose the Dark Continent over civilization. Beyond Netero is a seasoned, weathered hunter of tremendous capability, famous for leading an expedition into the Dark Continent at the world's edge—a journey that defies the Hunter Association's explicit prohibition. He is a master of Enhancement Nen, his aura vast and precise despite his age. Beyond's philosophy is simple: the greatest rewards lie in the most forbidden places. He views the Association's rules as obstacles rather than wisdom, and his expeditions into uncharted territory have yielded knowledge and artifacts that reshape understanding of Nen itself. Beyond is charismatic but ruthless, willing to sacrifice team members for the sake of discovery. He treats danger as a welcome teacher. Playing as Beyond Netero means leading an expedition, defying institutional authority, seeking power in forbidden places. ARC VALIDITY: Dark Continent arc (A7+); he is a bridge figure between Election and the unknown lands.",
+      "traits": [
+        "Nen Master",
+        "Enhancer",
+        "Developing Hatsu (Enhancement)"
+      ],
+      "replacesNpc": "Beyond Netero"
+    },
+    {
+      "name": "Tserriednich Hui Guo Rou",
+      "gender": "male",
+      "description": "The Prince of Darkness—a royal prodigy ascending to Nen mastery at an obscene pace. Tserriednich is a Kakin court prince and one of thirteen heirs locked in a succession war. He is young, beautiful, and possessed of a hunger for power that borders on pathological. His growth rate in Nen is unprecedented; he learns techniques in weeks that should take years. His Nen category is Specialization; his Hatsu is Future Sight—the ability to glimpse moments seconds into the future, granting him the power to predict and counter his enemies' actions before they commit to them. Future Sight functions through a Vow: Tserriednich's power is bound to his breath—he can glimpse the future only as long as he holds his breath, and the duration is measured in seconds. This creates a rhythm of prediction and vulnerability, strategy and desperation. Tserriednich is a villain of the blackest kind: intelligent, ruthless, and absolutely convinced of his right to rule. He collects victims, weaponizes retainers, and treats human life as currency. Playing as Tserriednich means ascending through overwhelming natural talent, wielding precognition to outmaneuver enemies, walking the path of a tyrant. ARC VALIDITY: Election arc (A7); post-manga extrapolation for continued play.",
+      "traits": [
+        "Nen Adept",
+        "Specialist",
+        "Hatsu: Future Sight",
+        "Vow: Time-Boxed Power"
+      ],
+      "replacesNpc": "Tserriednich Hui Guo Rou"
+    },
+    {
+      "name": "Benjamin Hui Guo Rou",
+      "gender": "male",
+      "description": "The War King—eldest heir to the Kakin throne and commander of armies. Benjamin is a massive, imposing man with military bearing and absolute authority over his faction. He is a master of Enhancement Nen, his Developing Hatsu channeling aura amplification into the creation and empowerment of subordinates through inherited Nen. His signature technique is the Benjamin Baton—a conjured weapon that he passes down to chosen retainers, granting them amplified strength and loyalty bonds. Benjamin is a pragmatist and a general, viewing his siblings as enemies to be defeated through superior force and better strategy. He commands tens of thousands of soldiers and conjured constructs. Playing as Benjamin Hui Guo Rou means leading armies, wielding Enhancement for mass amplification, conquering through overwhelming organized force. ARC VALIDITY: Election arc (A7); post-manga extrapolation.",
+      "traits": [
+        "Nen Adept",
+        "Enhancer",
+        "Developing Hatsu (Enhancement)"
+      ],
+      "replacesNpc": "Benjamin Hui Guo Rou"
+    },
+    {
+      "name": "Camilla Hui Guo Rou",
+      "gender": "female",
+      "description": "The Cat's Shadow—a royal heir whose Hatsu defies death and resurrection. Camilla is a Kakin court princess, elegant and enigmatic, whose Nen mastery focuses on the impossible: revival from death. Her Nen category is Specialization; her Developing Hatsu is Cat's Name—a technique that allows her to resurrect corpses (including her own) or recover from lethal damage by invoking a binding contract. The mechanism is subtle and strange: she assigns names and roles to her targets, binding them into a narrative of her design. When a named target dies, they are compelled to return, to fulfill their assigned purpose, to continue playing their role. Camilla's power is less direct combat and more existential manipulation—she turns death into a narrative requirement rather than a final state. Playing as Camilla means binding others into supernatural resurrection contracts, transcending death through narrative magic, becoming unkillable through sheer will and Specialization mastery. ARC VALIDITY: Election arc (A7); post-manga extrapolation.",
+      "traits": [
+        "Nen Adept",
+        "Specialist",
+        "Developing Hatsu (Specialization)"
+      ],
+      "replacesNpc": "Camilla Hui Guo Rou"
+    },
+    {
+      "name": "Zhang Lei Hui Guo Rou",
+      "gender": "male",
+      "description": "The Coin Guardian—a Kakin prince whose Hatsu summons and commands divine entities. Zhang Lei is a thoughtful, introspective prince who engages with Nen philosophy as deeply as with martial practice. His Nen category is Conjuration; his Developing Hatsu conjures an ancient guardian—a powerful spirit or magical construct bound to a coin. This guardian obeys Zhang Lei's commands, can be sent on missions, and grows in power as Zhang Lei himself grows in Nen mastery. The guardian is semi-independent, possessing its own intelligence and personality, making it a companion and ally as much as a tool. Zhang Lei's power scales with patience and preparation; his Conjured guardian becomes stronger the longer he cultivates it. Playing as Zhang Lei means building a legendary ally, channeling power through summoned spirit-guardians, combining Eastern philosophy with Nen mastery. ARC VALIDITY: Election arc (A7); post-manga extrapolation.",
+      "traits": [
+        "Nen Practitioner",
+        "Conjurer",
+        "Developing Hatsu (Conjuration)"
+      ],
+      "replacesNpc": "Zhang Lei Hui Guo Rou"
+    },
+    {
+      "name": "Halkenburg Hui Guo Rou",
+      "gender": "male",
+      "description": "The Soul Archer—a royal heir who binds souls into servitude. Halkenburg is a Kakin prince known for his philosophical bent and his exploration of Nen's darker applications. His Nen category is Manipulation; his Developing Hatsu is the creation of a spiritual bow that fires arrows capable of binding the souls of living targets. Those whose souls are bound become servants of Halkenburg, compelled to obey his will. The binding can be subtle or absolute depending on Halkenburg's intent; he can enslave outright or create voluntary contracts that still fundamentally alter the bound individual's agency. Halkenburg's power is fundamentally about taking away choice and imposing his will upon others through supernatural means. Playing as Halkenburg means building an army of soul-bound servants, weaponizing Manipulation at the deepest level, imposing order through spiritual coercion. ARC VALIDITY: Election arc (A7); post-manga extrapolation.",
+      "traits": [
+        "Nen Practitioner",
+        "Manipulator",
+        "Developing Hatsu (Manipulation)"
+      ],
+      "replacesNpc": "Halkenburg Hui Guo Rou"
+    },
+    {
+      "name": "Queen Oito",
+      "gender": "female",
+      "description": "The Powerless Mother—a royal without Nen in the deadliest of courts. Queen Oito is a pregnant Kakin royal bearing the infant prince Woble, who may become the next king. She possesses no Nen whatsoever, no combat training, no special ability. In a world of power, she is utterly vulnerable. Yet her position is paradoxically powerful: whoever controls her controls the succession. This makes her simultaneously the most valuable and most hunted figure in the royal family. Queen Oito is intelligent, strategic, and aware of her own weakness. She must navigate courts of Nen-using predators armed only with cunning, politics, and the protection of hired hunters. Playing as Queen Oito is a survival-horror run—you have no power, no Nen, and everything wants to kill you. Victory comes through alliances, manipulation, and staying alive until another player kills enough enemies that you can claim the throne by default. ARC VALIDITY: Election arc (A7); post-manga extrapolation for continued play.",
+      "traits": [
+        "Nen-Unawakened",
+        "Undivined",
+        "No Hatsu Yet"
+      ],
+      "replacesNpc": "Queen Oito"
+    },
+    {
+      "name": "Theta",
+      "gender": "female",
+      "description": "The Loyal Bodyguard—a licensed Hunter bound by contract and loyalty. Theta is a seasoned female hunter employed as a bodyguard and Nen instructor, serving the royal court during the succession crisis. She is calm, professional, and possessed of genuine martial skill. Theta's Nen category is Emission; her Developing Hatsu allows her to project aura at range and create defensive shields of condensed energy. She is not a prodigy, but a solid, dependable combatant—the kind of person who survives through competence and good judgment rather than overwhelming power. Theta's role in the world is primarily supportive; she protects others and teaches them, finding meaning in loyalty and the mentorship of younger hunters. Playing as Theta means being the reliable ally, the skilled but not-broken professional, the mentor who chooses her causes carefully. ARC VALIDITY: Dark Continent arc (A7+).",
+      "traits": [
+        "Nen Adept",
+        "Emitter",
+        "Developing Hatsu (Emission)"
+      ],
+      "replacesNpc": "Theta"
+    },
+    {
+      "name": "Bill",
+      "gender": "male",
+      "description": "The Expeditionist—a licensed Hunter and veteran of the Dark Continent. Bill is a male hunter known for his experience in extreme environments and his unflappable demeanor under pressure. He is employed as part of the expedition team investigating the Dark Continent and the threats emerging from beyond civilization's borders. Bill's Nen category is Emission; his Developing Hatsu allows him to project aura as sensory constructs, extending his awareness across vast distances. This makes him invaluable for reconnaissance and early warning in uncharted territories. Bill is competent, steady, and pragmatic—he survives because he is careful and because he knows when to retreat. Playing as Bill means exploring the unknown, using sensory Emission to navigate danger, being the scout who keeps the expedition alive. ARC VALIDITY: Dark Continent arc (A7+).",
+      "traits": [
+        "Nen Adept",
+        "Emitter",
+        "Developing Hatsu (Emission)"
+      ],
+      "replacesNpc": "Bill"
+    },
+    {
+      "name": "Nasubi Hui Guo Rou",
+      "gender": "male",
+      "description": "The King of Succession—the ruling monarch who engineered his own family's internal warfare. Nasubi is the current king of Kakin, an old man who set his thirteen children against each other in a battle for the throne. He possesses no Nen whatsoever—he chose politics, economics, and institutional power over individual martial skill. This makes him unique among the royal heirs: while they wield Nen and Hatsu, Nasubi wields laws, economics, and the court apparatus. He engineered the succession law knowing it would tear his family apart, yet he never developed Nen himself, remaining vulnerable to any Nen user who wished to kill him. Nasubi's power is entirely institutional—control of courts, armies, and bureaucratic machinery. Playing as Nasubi Hui Guo Rou is a pure politics run. You have no Nen, no combat power, and every other player is stronger than you. Your victories come through alliance-building, turning enemies against each other, controlling information, and surviving through social engineering. ARC VALIDITY: Election arc (A7); post-manga extrapolation.",
+      "traits": [
+        "Nen-Unawakened",
+        "Undivined",
+        "No Hatsu Yet"
+      ],
+      "replacesNpc": "Nasubi Hui Guo Rou"
     }
   ],
   "quests": {},
