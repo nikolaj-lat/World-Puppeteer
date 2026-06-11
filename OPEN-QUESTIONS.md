@@ -35,6 +35,9 @@ No Gemini key → image-gen utility will NOT be run. Plan: populate `imagePrompt
 
 ---
 
+### D-010: Validator conflict on `newSkillGenerationEnabled` (2026-06-11)
+Confirmed two-way conflict: local `post-edit-validate.js` flags the field as "Unknown field — not in schema" while the remote validator REQUIRES it. Field kept (remote is authority per D-005); the local hook's complaint is non-fatal noise on every settings edit. **Proposal pending creator OK (per .claude rules, config edits need approval): patch the local validator schema in `.claude/scripts/` to accept the field.**
+
 ## OPEN QUESTIONS (batched for creator)
 
 *Q-001 resolved → D-005. Q-002 resolved → D-006.*
