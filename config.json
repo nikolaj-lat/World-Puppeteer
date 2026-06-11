@@ -6272,6 +6272,261 @@
         "Vow: Announce the Kill"
       ],
       "replacesNpc": "Kastro"
+    },
+    {
+      "name": "Chrollo Lucilfer",
+      "gender": "male",
+      "description": "The leader of the Phantom Troupe, a man of rare intellect and surgical precision. Chrollo is handsome in an unsettling way—dark hair, sharp eyes, a voice that commands absolute attention. He was born in Meteor City, a scavenger metropolis inhabited by the stateless and forgotten, and rose from that ash to become the head of the Spider—a thief collective of thirteen members, each marked with a spider tattoo and a number. Chrollo's Nen category is Specialist, a classification held by fewer than one in ten thousand users. His signature Hatsu, Skill Hunter, allows him to absorb the abilities of other Nen users through a conjured book, stealing their techniques permanently and making them his own. He is a master strategist, caring for the Spider's survival above all else—every member is a limb of the Spider, and the head will protect every limb or rebuild the body. Chrollo speaks with intellectual passion about theft as philosophy. A crucial note for play: in the Yorknew arc and beyond until the Election, Chrollo's Nen is sealed by Kurapika's Judgment Chain—he cannot use Nen and cannot contact his members. This premade best suits pre-Yorknew encounters or post-Election play when his seal is broken and his power restored.",
+      "traits": [
+        "Nen Master",
+        "Specialist",
+        "Hatsu: Skill Hunter",
+        "Meteor City Survivor"
+      ],
+      "replacesNpc": "Chrollo Lucilfer"
+    },
+    {
+      "name": "Nobunaga Hazama",
+      "gender": "male",
+      "description": "A member of the Phantom Troupe (#1) and a swordmaster steeped in martial heritage. Nobunaga is lean and dangerous, with an expressionless face and a warrior's bearing. His historical name suggests samurai lineage; he carries himself with the discipline of a traditional iaido practitioner. Nobunaga's Nen category is Enhancement, and his signature Hatsu, Battōjutsu En, fuses the traditional Japanese sword draw with aura amplification. His strikes are impossibly fast, his blade-work flawless. When Nobunaga draws, he moves with practiced speed that borders on invisible. He is a member of the Spider not out of loyalty to Chrollo's philosophy but out of respect—Nobunaga serves the collective because he believes in the strength of the Troupe as a unified body. He speaks little, acts with decisive force, and will sacrifice anything for the Spider's survival. His era note: canonical through all arcs, alive and operational.",
+      "traits": [
+        "Nen Master",
+        "Enhancer",
+        "Hatsu: Battōjutsu En",
+        "Meteor City Survivor"
+      ],
+      "replacesNpc": "Nobunaga Hazama"
+    },
+    {
+      "name": "Feitan Portor",
+      "gender": "male",
+      "description": "A member of the Phantom Troupe (#2) and the resident master of agony. Feitan is small and childlike in frame, with pale skin and an accent that marks him as an outsider to most cultures. His appearance is deceptive—beneath that slight frame lies a torturer of surgical precision and a Nen user of terrifying power. Feitan's Nen category is Transmutation, and his signature technique, Pain Packer, manifests in his Rising Sun form—a state of absolute rage where his aura transforms into a sphere of destructive heat that will consume everything in its radius. He channels suffering itself, turning trauma into technique. Feitan is quiet, detached, and treats torture as both craft and philosophy. He binds himself with a Vow: Stake of Lifeblood—a binding that deepens his power but ties him to a personal principle of absolute commitment. He is dangerous in ways that go beyond simple strength; he is the Troupe's instrument of pain, and he has refined it into an art. Canon validity: alive and operational through all published arcs.",
+      "traits": [
+        "Nen Master",
+        "Transmuter",
+        "Hatsu: Pain Packer",
+        "Meteor City Survivor",
+        "Vow: Stake of Lifeblood"
+      ],
+      "replacesNpc": "Feitan Portor"
+    },
+    {
+      "name": "Machi Komacine",
+      "gender": "female",
+      "description": "A member of the Phantom Troupe (#3) and one of the few women in the Spider's ranks. Machi is calm, practical, and utterly without sentimentality. She is an Nen Adept with a Transmuter's category, and her signature Hatsu, Nen Stitches, allows her to conjure thin threads of aura that can bind wounds, repair damage, or serve as tools of restraint and binding. Her threads are extraordinarily fine and nearly invisible—a mark of a master Transmuter's control. She carries the Spider's supplies and serves as a healer when needed, though her threads serve equally well in combat, wrapping opponents or cutting through flesh with surgical precision. Machi is fiercely loyal to the Spider as an organization; she will protect its unity above personal bonds. She is sometimes the voice of reason when Troupe members clash, but she never questions the head's decisions. Machi's bearing is quiet, observant, and dangerous. She speaks rarely but is always listening.",
+      "traits": [
+        "Nen Adept",
+        "Transmuter",
+        "Hatsu: Nen Stitches",
+        "Meteor City Survivor"
+      ],
+      "replacesNpc": "Machi Komacine"
+    },
+    {
+      "name": "Phinks Magcub",
+      "gender": "male",
+      "description": "A member of the Phantom Troupe (#5) and a machine of raw Enhancement. Phinks is muscular, aggressive, and impulsive—he wears his violence openly. His Nen category is Enhancement, and his signature Hatsu, Ripper Cyclotron, allows him to spin his entire body at terrifying speed while channeling aura, creating a rotating blade of pure force. When activated, Phinks becomes a human cyclone, shredding anything in his path. The more he winds up, the stronger the effect; but he loses fine control, making it a technique of pure devastation rather than precision. Phinks is straightforward in his thinking—problems are solved with force; hesitation is weakness. He is not stupid, but he is direct to the point of simplicity. He respects the Spider's hierarchy and Chrollo's leadership, but his loyalty is pragmatic; he stays because the Troupe is strong and because his fellow members are the closest thing to a family he has known. Phinks is the kind of fighter who wins through overwhelming aggression and the refusal to back down.",
+      "traits": [
+        "Nen Adept",
+        "Enhancer",
+        "Hatsu: Ripper Cyclotron",
+        "Meteor City Survivor"
+      ],
+      "replacesNpc": "Phinks Magcub"
+    },
+    {
+      "name": "Franklin Bordeau",
+      "gender": "male",
+      "description": "A member of the Phantom Troupe (#7) and an unstoppable ranged combatant. Franklin is large, dark-skinned, with dreadlocks and a laid-back demeanor that masks absolute lethality. His Nen category is Emission, and his signature Hatsu, Double Machine Gun, transforms his aura into projectile weapons—bullets of pure force that fire from his fingertips in rapid, devastating volleys. He literally shoots his aura as ammunition, firing continuously with destructive precision. Franklin has an unusual vow binding him: Vow: Stake of Lifeblood, in which he bound his own severed fingertips to the power, deepening the technique at a permanent cost. His hands are marked by this sacrifice; he is missing fingertips, a visible reminder of his commitment. Franklin is relaxed, philosophical, and genuinely kind to his Troupe members—he is the closest thing the Spider has to a genuine voice of compassion, though his compassion does not extend to outsiders. He is a family man, dedicated to the Spider's collective survival.",
+      "traits": [
+        "Nen Master",
+        "Emitter",
+        "Hatsu: Double Machine Gun",
+        "Meteor City Survivor",
+        "Vow: Stake of Lifeblood"
+      ],
+      "replacesNpc": "Franklin Bordeau"
+    },
+    {
+      "name": "Shalnark",
+      "gender": "male",
+      "description": "A member of the Phantom Troupe (#6) and a communications specialist with a predatory intelligence. Shalnark is boyish and cheerful in appearance, with a constant smile and an air of casual friendliness that masks lethal cunning. His Nen category is Manipulation, and his signature Hatsu, Black Voice, allows him to implant a needle in a victim's head, granting him complete control over their body and mind. Once activated, the victim becomes an extension of Shalnark's will—a puppet. Black Voice is one of the most insidious Nen techniques in existence, turning sentient beings into mere tools. Shalnark is brilliant with technology and communications, serving the Spider as both tactician and coordinator. He is charming and personable, making it easy to forget his fundamental amorality. He is not sadistic; he simply does not view others as people in the same way he views himself. Shalnark belongs entirely to the Troupe; the Spider's survival is his only directive. Era note: canon through most arcs, but dies in the Dark Continent expedition (A8) when Hisoka murders him as part of the war on the Troupe.",
+      "traits": [
+        "Nen Master",
+        "Manipulator",
+        "Hatsu: Black Voice",
+        "Meteor City Survivor"
+      ],
+      "replacesNpc": "Shalnark"
+    },
+    {
+      "name": "Shizuku Murasaki",
+      "gender": "female",
+      "description": "A member of the Phantom Troupe (#8) and a specialist in asset acquisition and erasure. Shizuku is young, quiet, and has a vacant, dreamy quality to her demeanor—she often speaks slowly and seems half-asleep. This façade conceals a sharp mind and a Nen ability that is horrifyingly effective. She is a Nen Adept with a Conjurer's category, and her signature Hatsu, Blinky, manifests as a sentient vacuum cleaner—a conjured creature that absorbs anything Shizuku commands into its internal void. Blinky is living, obedient, and nearly indestructible; it can consume entire buildings, people, or objets d'art and store them in its internal pocket dimension. Shizuku often wanders off to find and collect interesting items, her vacuum trailing behind her. She is the Troupe's acquisitions expert, but she is also genuinely eccentric—her interests are idiosyncratic and often puzzling to her comrades. She is loyal to the Troupe but in a distant, detached way. She does not hate her victims; she simply does not think of them as mattering.",
+      "traits": [
+        "Nen Adept",
+        "Conjurer",
+        "Hatsu: Blinky",
+        "Meteor City Survivor"
+      ],
+      "replacesNpc": "Shizuku Murasaki"
+    },
+    {
+      "name": "Pakunoda",
+      "gender": "female",
+      "description": "A member of the Phantom Troupe (#9) and a keeper of secrets through force. Pakunoda is beautiful and sharp, with an air of controlled intensity. Her Nen category is Specialist, a rarity that marks her as possessing a unique gift. Her signature Hatsu, Memory Bomb, allows her to read the memories of others through touch and share those memories with other people. By touching an opponent or ally, she can extract their memories or implant memories from others into their minds. This makes her invaluable for reconnaissance, interrogation, and information warfare. Memory Bomb has a fatal limitation—each use consumes a portion of her remaining lifespan. Pakunoda is aware of this cost and accepts it as the price of her power. She is serious, loyal to the Troupe above all else, and willing to sacrifice herself to protect her comrades. Her arc validity note: A1-A4; she dies at the end of the Yorknew arc, spending her remaining life in a final activation of Memory Bomb to save Troupe members from a memory erasure. Her death is one of sacrifice.",
+      "traits": [
+        "Nen Adept",
+        "Specialist",
+        "Hatsu: Memory Bomb",
+        "Meteor City Survivor"
+      ],
+      "replacesNpc": "Pakunoda"
+    },
+    {
+      "name": "Uvogin",
+      "gender": "male",
+      "description": "A member of the Phantom Troupe (#11) and the embodiment of overwhelming physical power. Uvogin is massive, muscular, and carries himself with the casual confidence of someone who has never met an opponent he could not overpower. His Nen category is Enhancement, and his signature Hatsu, Big Bang Impact, channels all of his aura into a single concentrated punch—a strike that detonates with the force of an explosion, leveling everything in its path. When Uvogin activates Big Bang Impact at full power, he becomes an unstoppable force of destruction. Uvogin is not subtle; he is not strategic. He is direct, aggressive, and honestly believes that strength solves all problems. He is loud, confident, and genuinely good-natured with his Troupe members despite his terrifying power. He has made a Vow: Death Before Retreat—a binding that prevents him from fleeing or surrendering, no matter the circumstances. This vow costs him his life in the Yorknew arc when he is captured and interrogated by Kurapika. Arc validity: A1-A4; dies end of Yorknew City arc through Kurapika's Judgment Chain.",
+      "traits": [
+        "Nen Master",
+        "Enhancer",
+        "Hatsu: Big Bang Impact",
+        "Meteor City Survivor",
+        "Vow: Death Before Retreat"
+      ],
+      "replacesNpc": "Uvogin"
+    },
+    {
+      "name": "Bonolenov Ndongo",
+      "gender": "male",
+      "description": "A member of the Phantom Troupe (#10) and an artist of violence. Bonolenov is tall and dark-skinned, with a musical quality to his speech and a theatrical bearing. He is a Nen Adept with a Conjurer's category, and his signature Hatsu, Battle Cantabile, allows him to conjure a sophisticated aura construct—a musical instrument of devastating power. His Hatsu channels music and rhythm into combat; by playing, he shapes aura into weaponized sound and conjured forms that respond to the melody. Battle Cantabile transforms him into a one-man orchestra of destruction. Bonolenov is cultured, artistic, and genuinely appreciates beauty in the world. He is thoughtful and often serves as a voice of perspective within the Troupe. He is loyal to the Spider's survival but maintains his own artistic principles. He is a skilled performer in his own right, and his Nen abilities reflect a deep understanding of aesthetics and form.",
+      "traits": [
+        "Nen Adept",
+        "Conjurer",
+        "Hatsu: Battle Cantabile",
+        "Meteor City Survivor"
+      ],
+      "replacesNpc": "Bonolenov Ndongo"
+    },
+    {
+      "name": "Kortopi",
+      "gender": "male",
+      "description": "A member of the Phantom Troupe (#12) and a forger of impossible precision. Kortopi is short and has a mouse-like quality to his appearance, which belies his technical genius. His Nen category is Conjuration, and his signature Hatsu, Gallery Fake, allows him to create perfect duplicates of any object he touches—paintings, weapons, artifacts, money. The duplicates are indistinguishable from originals; only Kortopi can identify them. Gallery Fake makes him invaluable for heists and forgery operations; the Troupe uses him to replicate stolen goods, create false evidence, and acquire duplicate artifacts. Kortopi is quiet, technical, and focused on his craft. He does not engage in philosophical discussion about theft the way Chrollo does; he simply enjoys the challenge of perfect replication. He is loyal to the Troupe out of practical attachment—they value his skill and protect him in return. Arc validity: A1-A7; dies in the Dark Continent expedition (A8) when Hisoka murders him as part of his war on the Troupe.",
+      "traits": [
+        "Nen Adept",
+        "Conjurer",
+        "Hatsu: Gallery Fake",
+        "Meteor City Survivor"
+      ],
+      "replacesNpc": "Kortopi"
+    },
+    {
+      "name": "Kalluto Zoldyck",
+      "gender": "male",
+      "description": "A member of the Phantom Troupe (#4) and the youngest Zoldyck heir to join the Spider. Kalluto is beautiful in a delicate, angular way, with long silver hair and the refined bearing of his family's training. Unlike his brothers, Kalluto is graceful and artistic—his Nen category is Manipulation, and his signature Hatsu, Dance of the Serpent's Bite, manifests through conjured paper martial arts. His technique involves creating origami-like weapons and constructs from pure aura, which he commands with serpentine fluidity. Kalluto joined the Troupe after the Yorknew arc, becoming the Spider's #4 member and filling the vacancy left by Hisoka's departure. Kalluto is skilled, devoted, and carries the Zoldyck family's assassin training into the Troupe's ranks. Unlike his siblings who view assassination as a vocation, Kalluto views the Troupe as family—perhaps the only family that has ever truly wanted him. He is loyal to Chrollo's leadership and to the Spider's collective purpose. His background is Zoldyck-Trained Assassin, reflecting his heritage. Arc validity: A5+, joining as #4 after Yorknew's conclusion.",
+      "traits": [
+        "Nen Practitioner",
+        "Manipulator",
+        "Hatsu: Dance of the Serpent's Bite",
+        "Zoldyck-Trained Assassin"
+      ],
+      "replacesNpc": "Kalluto Zoldyck"
+    },
+    {
+      "name": "Silva Zoldyck",
+      "gender": "male",
+      "description": "The current head of the Zoldyck household and the father of Killua, Illumi, Milluki, Kalluto, and Alluka. Silva is an imposing figure—tall, muscular, with white hair and piercing eyes that reflect decades of assassination training. He is a Nen Master with a Transmuter's category, and his signature Hatsu, Twin Orbs, allows him to conjure and control two spheres of condensed aura that orbit his body. These orbs can be launched as projectiles or rotated for defense; they are both weapon and shield. Silva is the architect of the Zoldyck family's modern power structure and discipline. He is emotionally restrained, professional, and absolutely committed to the family's survival and reputation. He treats his children with a mixture of pride and ruthlessness—they are heirs to a legacy, and they must prove themselves worthy of that legacy. Silva made a dramatic exception for Killua, publicly releasing him from the family after Gon's rescue mission, allowing his son the freedom to choose his own path. This act of paternal concern marks a rare moment of softness in an otherwise relentless life.",
+      "traits": [
+        "Nen Master",
+        "Transmuter",
+        "Hatsu: Twin Orbs",
+        "Zoldyck-Trained Assassin"
+      ],
+      "replacesNpc": "Silva Zoldyck"
+    },
+    {
+      "name": "Zeno Zoldyck",
+      "gender": "male",
+      "description": "The patriarch of the Zoldyck family and Silva's father, Zeno is an elderly man of extraordinary vitality and power. Despite his age, he maintains the bearing and physicality of a master warrior. Zeno is a Nen Master with a Transmuter's category, and his signature technique, Dragon Lance (or Dragon Head / Dragon Dive), manifests as a large, scaled dragon constructed from his aura. The dragon obeys his mental commands, striking with devastating force and defending him from harm. Zeno is calm, philosophical, and deeply observant. He views people through the lens of genealogy and legacy—a person's bloodline determines their potential, and the Zoldycks are among the world's finest bloodlines. He genuinely respects worthy opponents and finds joy in testing himself against strong foes. In the Chimera Ant arc, Zeno participates in the palace invasion, fighting alongside the Hunter Association forces. He is formidable, tactical, and ultimately pragmatic. Despite his age, he remains among the world's strongest Nen users.",
+      "traits": [
+        "Nen Master",
+        "Transmuter",
+        "Hatsu: Dragon Lance",
+        "Zoldyck-Trained Assassin"
+      ],
+      "replacesNpc": "Zeno Zoldyck"
+    },
+    {
+      "name": "Kikyo Zoldyck",
+      "gender": "female",
+      "description": "The matriarch of the Zoldyck household and the mother of Killua, Illumi, Milluki, Kalluto, and Alluka. Kikyo is elegant and sharp, with white hair styled carefully and an air of refined authority. She is a Nen Adept with a Manipulator's category, and her Hatsu remains in development, focused on the principles of Manipulation. As matriarch, Kikyo oversees the day-to-day operations of the household, manages the staff, and trains the younger heirs in assassination technique and Nen fundamentals. She is strict, demanding, and genuinely cares for her children—though her expression of that care manifests as relentless pressure to improve and perform. Kikyo is the emotional center of the household, though her emotions are always expressed through the lens of duty and legacy. She is loyal to Silva's vision for the family and trusts his judgment implicitly.",
+      "traits": [
+        "Nen Adept",
+        "Manipulator",
+        "Developing Hatsu (Manipulation)",
+        "Zoldyck-Trained Assassin"
+      ],
+      "replacesNpc": "Kikyo Zoldyck"
+    },
+    {
+      "name": "Milluki Zoldyck",
+      "gender": "male",
+      "description": "The armorer and technology specialist of the Zoldyck household, Milluki is the second Zoldyck heir and perhaps the most unusual member of his family. While his siblings embraced the family's assassination legacy, Milluki chose the path of technological innovation and remote combat. He is soft-bodied, wears civilian clothing, and spends most of his time in his room designing weapons and torture devices for the family's operations. Milluki is a Nen Practitioner with a Manipulator's category, and his Hatsu remains in development, focused on Manipulation. His primary strength lies not in direct combat but in creating tools that give others advantages. He designs drones, surveillance systems, and remote-controlled devices that amplify the family's operational reach. Milluki is socially awkward, more comfortable with machinery than people, and views the world through a lens of efficiency and innovation. He is loyal to the family but in a detached way; his true passion is engineering. His background is Civilian Prodigy, reflecting his unconventional role within the martial family.",
+      "traits": [
+        "Nen Practitioner",
+        "Manipulator",
+        "Developing Hatsu (Manipulation)",
+        "Civilian Prodigy"
+      ],
+      "replacesNpc": "Milluki Zoldyck"
+    },
+    {
+      "name": "Alluka Zoldyck",
+      "gender": "female",
+      "description": "The youngest Zoldyck heir and the bearer of a power that transcends normal Nen classification. Alluka is innocent, kind-hearted, and fundamentally different from her ruthless siblings. She is kept isolated in the family home, rarely seen by outsiders, her existence treated as a secret by the household. The reason: Alluka is the host body of Nanika, a mysterious entity that may be Nen-sentient, may be an artificial construct, or may be something far stranger. Alluka's Hatsu, Nanika's Wish, allows her to grant wishes with reality-warping power—but each wish comes at an escalating cost. The first wish is nearly free; each subsequent wish demands exponentially more in exchange (death of innocents, loss of memories, transformation of the world). The rules are incomprehensible to outsiders and understood only by Alluka/Nanika. Alluka is the only person who can grant Killua's wish—to save Gon's life during the Election arc. Playing as Alluka is profoundly different from playing as other characters: you do not choose the cost of your power; the wish-granter determines what must be paid. Her category is Specialist; her tier is tier-exempt (her power is not hers, and its rules are unique). Arc validity: hidden through A6; revealed and playable A7+. Her background is Civilian Prodigy.",
+      "traits": [
+        "Nen-Unawakened",
+        "Specialist",
+        "Hatsu: Nanika's Wish",
+        "Civilian Prodigy"
+      ],
+      "replacesNpc": "Alluka Zoldyck"
+    },
+    {
+      "name": "Canary",
+      "gender": "female",
+      "description": "A young butler of the Zoldyck household and one of the few staff members whose face is regularly seen by visitors. Canary is delicate and soft-spoken, with a gentle demeanor that masks genuine strength. She is a Nen Initiate with an Emitter's category, and her Hatsu remains in development, focused on the principles of Emission. Canary's role is to greet visitors at the Testing Gate and assist with household management. During the Zoldyck Family arc, she faces a profound moral conflict when Gon, Kurapika, and Leorio arrive to retrieve Killua—she is duty-bound to prevent their entry, yet she genuinely cares for Killua's wellbeing and wishes him to be free of the family's oppressive structure. This conflict defines her character arc: the tension between loyalty to an institution and compassion for an individual. Canary is kind, conscientious, and slowly awakening to the possibility that there might be more to life than serving a family that treats her as property. Her background is Meteor City Survivor, indicating her connection to the city of stateless people where many Zoldyck staff originated.",
+      "traits": [
+        "Nen Initiate",
+        "Emitter",
+        "Developing Hatsu (Emission)",
+        "Meteor City Survivor"
+      ],
+      "replacesNpc": "Canary"
+    },
+    {
+      "name": "Gotoh",
+      "gender": "male",
+      "description": "The head butler of the Zoldyck household and a fierce protector of the family's interests. Gotoh is elderly, dignified, and carries himself with the bearing of a master servant—perfectly trained, perfectly composed, and utterly loyal. He is a Nen Adept with an Emitter's category, and his signature Hatsu, Coin Bullets, allows him to conjure coins and fire them as projectiles with devastating force. He channels his aura into the coins, making them move at bullet speed and strike with lethal precision. Gotoh's technique is elegant and economical; a single coin can be lethal. Gotoh serves as the gatekeeper of the family, greeting visitors and defending the household against intrusion. He is respectful, professional, and genuinely cares for his position and the family he serves. During the Zoldyck Family arc, he assists Gon and his friends in traversing the Testing Gate, respecting their determination even as he tests their strength. Gotoh is wise, measured, and has likely forgotten more about Nen and combat than most users will ever know. Arc validity: A1-A7; dies in the Dark Continent expedition (A8, offscreen) when Hisoka hunts down individuals connected to Chrollo.",
+      "traits": [
+        "Nen Adept",
+        "Emitter",
+        "Hatsu: Coin Bullets",
+        "Zoldyck-Trained Assassin"
+      ],
+      "replacesNpc": "Gotoh"
+    },
+    {
+      "name": "Tsubone",
+      "gender": "female",
+      "description": "An elderly butler of the Zoldyck household and a master of ancient Nen techniques. Tsubone is small, aged, and moves with surprising agility despite her years. She is a Nen Master with a Conjurer's category, and her signature Hatsu, Rider's High, allows her to conjure magnificent beast forms—horses, hawks, dragons, and other creatures—which she can ride and control. Each conjured beast grants her enhanced mobility and combat capability; she can summon different forms to suit different situations. Tsubone is professional, fierce, and utterly devoted to the Zoldyck family. She is one of the household's most powerful Nen users despite her age, and she serves as a mentor to the younger heirs, training them in combat and assassination technique. Tsubone speaks rarely, moves with purpose, and commands respect from everyone in the household. She is the kind of character whose quiet presence conveys absolute competence. Her age belies her strength; her stillness hides lethal capability.",
+      "traits": [
+        "Nen Master",
+        "Conjurer",
+        "Hatsu: Rider's High",
+        "Zoldyck-Trained Assassin"
+      ],
+      "replacesNpc": "Tsubone"
     }
   ],
   "quests": {},
