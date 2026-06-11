@@ -498,6 +498,198 @@
         "Zoldyck-Trained Assassin"
       ],
       "replacesNpc": "Tsubone"
+    },
+    {
+      "name": "Cheadle Yorkshire",
+      "gender": "female",
+      "description": "A composed and meticulous figure in the Zodiacs' inner circle, serving as the Dog of the zodiac election council during the 13th Chairman's succession. Cheadle Yorkshire is a Licensed Hunter with a methodical approach to governance and bureaucracy. She possesses a quiet demeanor but commands absolute respect; her clinical precision in decision-making stems from her background as a Disease Hunter, trained to diagnose and contain outbreaks with surgical precision. Her Nen mastery is substantial, yet her true power lies in administrative authority and political negotiation. She develops her Hatsu within the Manipulation school, a discipline she is carefully learning. Cheadle represents order, duty, and the Hunter Association's institutional framework—she is the one who keeps records, enforces rules, and ensures decisions are documented. Her arc-7 prominence comes as Pariston's foil: where he plays games, she insists on principles. By the Election's close, she becomes the 14th Chairman, a position earned through competence rather than charisma. Her background is Licensed Hunter; her era begins on-stage at the Election (A7+).",
+      "traits": [
+        "Nen Adept",
+        "Developing Hatsu (Manipulation)",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Cheadle Yorkshire"
+    },
+    {
+      "name": "Mizaistom Nana",
+      "gender": "male",
+      "description": "The Ox of the Zodiacs and a Crime Hunter of considerable standing, Mizaistom Nana cuts an imposing figure despite his calm demeanor. He is a Nen Adept with natural affinity for Conjuration, having mastered his signature Hatsu—Cattle Bell—a technique that materializes harmonic conjured cards or charms that can transmit warnings, marshal followers, or coordinate across distance. His power is subtle, bureaucratic, and indispensable to the Association's operational stability. Mizaistom is measured, patient, and deeply embedded in the Association's institutional framework; he speaks only when necessary and carries the weight of administrative authority alongside combat capability. As a Crime Hunter, he has spent his career tracking organized crime networks, giving him a particular interest in information control and coordination. During the Election arc, he appears as one of the steady hands among the Zodiacs—not flashy, but impossibly reliable. His background is Licensed Hunter; his era begins clearly on-stage at the Election (A7+).",
+      "traits": [
+        "Nen Adept",
+        "Conjurer",
+        "Hatsu: Cattle Bell",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Mizaistom Nana"
+    },
+    {
+      "name": "Kanzai",
+      "gender": "male",
+      "description": "The Tiger of the Zodiacs, Kanzai is a Licensed Hunter whose approach to combat mirrors his zodiac nature—direct, fearless, and pouncing with calculated ferocity. He is a Nen Adept with a natural inclination toward Enhancement, allowing him to amplify his body's physical capabilities beyond human limits. His Hatsu remains in development, but he has committed his Nen practice to the Enhancement school, focusing on transmuting raw aura into overwhelming force. Kanzai is confident, unflinching in the face of danger, and carries himself with the bearing of a seasoned warrior. During the Election arc, he is present among the Zodiacs as one of the council's combat specialists—a heavyweight voice in decisions involving physical confrontation. He speaks plainly, without pretense, and respects direct opponents more than political schemers. His tiger-nature extends to his temperament: he can be both protective of those he considers allies and ruthlessly predatory toward those marked as threats. His background is Licensed Hunter; his era begins on-stage at the Election (A7+).",
+      "traits": [
+        "Nen Adept",
+        "Enhancer",
+        "Developing Hatsu (Enhancement)",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Kanzai"
+    },
+    {
+      "name": "Pyon",
+      "gender": "female",
+      "description": "The Rabbit of the Zodiacs, Pyon is a Licensed Hunter whose demeanor carries the quick-footed vigilance of her animal aspect. She is a Nen Adept with natural affinity for Emission, allowing her to project aura at distance with remarkable control and precision. Her Hatsu is still in development—she has committed to the Emission school but has not yet locked in a singular signature technique, preferring instead to maintain flexibility across multiple projected-aura applications. Pyon's voice is calm and measured; she listens more than she speaks, but when she does speak, others lean in to hear. She carries herself with a gentle confidence that belies her combat prowess. During the Election arc, she appears among the Zodiacs as a voice for pragmatism—quick-thinking, adaptive, and focused on finding the path of least resistance that still achieves the necessary outcome. Her background is Licensed Hunter; her era begins on-stage at the Election (A7+).",
+      "traits": [
+        "Nen Adept",
+        "Emitter",
+        "Developing Hatsu (Emission)",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Pyon"
+    },
+    {
+      "name": "Botobai Gigante",
+      "gender": "male",
+      "description": "The Dragon of the Zodiacs, Botobai Gigante is a Nen Master and a Licensed Hunter whose power and bearing command immediate respect. As a Terrorist Hunter, he has built his career on confronting some of the world's most dangerous individuals and organizations. He is a Nen Master with natural mastery of Enhancement, allowing him to push his body and aura to superhuman extremes. His Developing Hatsu builds on Enhancement principles, exploring how far aura amplification can be driven. Botobai is an older man with a broad, formidable frame; his presence carries weight and authority. He speaks with the confidence of someone who has faced genuine existential threats and survived. During the Election arc, he is one of the Zodiacs' elder statesmen, representing the council's toughest combat capability. His relationship with Pariston Hill is one of mutual respect tinged with friction—Botobai appreciates direct power, while Pariston represents an order of complexity that can frustrate the straightforward. His background is Licensed Hunter; his era begins on-stage at the Election (A7+).",
+      "traits": [
+        "Nen Master",
+        "Enhancer",
+        "Developing Hatsu (Enhancement)",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Botobai Gigante"
+    },
+    {
+      "name": "Gel",
+      "gender": "female",
+      "description": "The Snake of the Zodiacs, Gel is a Licensed Hunter whose quiet demeanor masks lethal chemical mastery. She is a Nen Adept with natural affinity for Transmutation, allowing her to reshape her aura into various compounds and venoms. Her signature power—the Poison Arm—manifests as aura transmuted into caustic, acidic substances that can corrode flesh, bone, and matter with terrifying speed. She channels this poison through her limbs, turning her touch into a weapon of dissolution. Gel is reserved, focused, and speaks rarely; when she does, her words carry precision and economy. She is comfortable with silence and observation. During the Election arc, she stands among the Zodiacs as a specialist in subtle, devastating power—the kind of threat that doesn't announce itself until the damage is irreversible. Her relationship with Pariston is one of clinical assessment; she can appreciate his strategic mind without being seduced by his charm. Her background is Licensed Hunter; her era begins on-stage at the Election (A7+).",
+      "traits": [
+        "Nen Adept",
+        "Transmuter",
+        "Developing Hatsu (Transmutation)",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Gel"
+    },
+    {
+      "name": "Saccho Kobayakawa",
+      "gender": "male",
+      "description": "The Horse of the Zodiacs, Saccho Kobayakawa is a Licensed Hunter and a Trouble Hunter by specialization—a career focused on resolving complex, dangerous situations that resist conventional resolution. He is a Nen Adept with natural affinity for Emission, allowing him to project and manipulate his aura at considerable range. His Hatsu remains in development, but his commitment to Emission principles gives him versatility in ranged combat and aura-projection applications. Saccho is an unassuming man with a calm demeanor and keen observational skills; he has the bearing of someone who has navigated countless compromises and conflicts. During the Election arc, he appears among the Zodiacs as a pragmatist whose experience in troubleshooting makes him valuable in complex negotiations. He tends to think several moves ahead, planning for contingencies. His background is Licensed Hunter; his era begins on-stage at the Election (A7+).",
+      "traits": [
+        "Nen Adept",
+        "Emitter",
+        "Developing Hatsu (Emission)",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Saccho Kobayakawa"
+    },
+    {
+      "name": "Ginta",
+      "gender": "male",
+      "description": "The Sheep of the Zodiacs, Ginta is a Licensed Hunter whose nature mirrors his animal aspect—gentle on the surface but capable of remarkable strength when roused. He is a Nen Adept with natural affinity for Enhancement, allowing him to amplify his physical body and aura beyond normal human limits. His Hatsu remains in development, but his commitment to Enhancement principles gives him solid martial capability and the foundation for future signature techniques. Ginta carries himself with a quiet friendliness; he is approachable and easy to underestimate. During the Election arc, he appears among the Zodiacs as one of the steadier hands—not flashy, not political, simply reliable and competent. There is a solidity to him that others gravitate toward, an unshakeable presence that anchors the council during heated debates. His background is Licensed Hunter; his era begins on-stage at the Election (A7+).",
+      "traits": [
+        "Nen Adept",
+        "Enhancer",
+        "Developing Hatsu (Enhancement)",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Ginta"
+    },
+    {
+      "name": "Saiyu",
+      "gender": "male",
+      "description": "The Monkey of the Zodiacs, Saiyu is a Licensed Hunter whose demeanor is deceptively cheerful and approachable. He is a Nen Adept with mastery of Conjuration, having developed a signature Hatsu called the Three Monkeys—a technique that manifests conjured aura constructs representing the ancient proverb: see no evil, hear no evil, speak no evil. These constructs serve as sensory blocks, communication barriers, or perceptual manipulators. Saiyu is clever, witty, and possesses a ready smile for any occasion. During the Election arc, he moves easily among the Zodiacs, maintaining warm relationships across the council. His camaraderie seems genuine, his interest in others authentic. However, there are depths to Saiyu that remain hidden, secrets beneath the affable surface. His background is Licensed Hunter; his era begins on-stage at the Election (A7+). Note: Saiyu harbors a concealed betrayal—he is the zodiac mole, a revelation that lies well outside the player-facing world state.",
+      "traits": [
+        "Nen Adept",
+        "Conjurer",
+        "Hatsu: Three Monkeys",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Saiyu"
+    },
+    {
+      "name": "Cluck",
+      "gender": "female",
+      "description": "The Chicken of the Zodiacs, Cluck is a Licensed Hunter whose sharp wit and incisive commentary make her a memorable presence in council meetings. She is a Nen Adept with natural affinity for Manipulation, allowing her to influence and direct aura and intent at distance. Her Hatsu remains in development, but her commitment to Manipulation principles gives her formidable capability for strategic aura-work. Cluck does not hesitate to voice disagreement, challenge poor logic, or call out political maneuvering when she sees it. She is opinionated without being reckless—her critiques come from genuine concern for the Association's welfare. During the Election arc, she appears among the Zodiacs as one of the council's conscience-keepers, the one most likely to ask difficult questions and demand accountability. Her relationship with Pariston is one of mutual respect tinged with a healthy skepticism; she admires his brilliance while remaining unswayed by his charm. Her background is Licensed Hunter; her era begins on-stage at the Election (A7+).",
+      "traits": [
+        "Nen Adept",
+        "Manipulator",
+        "Developing Hatsu (Manipulation)",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Cluck"
+    },
+    {
+      "name": "Ging Freecss",
+      "gender": "male",
+      "description": "The Boar of the Zodiacs, Ging Freecss is a Licensed Hunter and a double-star Ruins Hunter, one of the Association's most decorated specialists. He is Gon's father—a name that haunts his son's entire journey through the world. Ging is a Nen Master whose Nen category remains functionally unrevealed; his true power lies in his ability to replicate techniques on sight, a Specialist capability that allows him to copy and execute nearly any Nen application he observes. This adaptability makes him unpredictably dangerous; opponents never know which of his opponent's own techniques he might turn against them. Ging is charismatic, brilliant, and profoundly self-interested. He speaks with infectious enthusiasm about his passions—archaeology, exploration, Nen theory—but his personal relationships are secondary to his work. He left Gon as an infant to pursue his Hunter career; the fact that his son spent years chasing his shadow is something Ging acknowledges with mild affection but no apparent guilt. During the Election arc, he appears as the mysterious Zodiac whose identity had been kept hidden until the election's later stages. Meeting his son face to face becomes a quiet culmination of Gon's original quest. His background is Civilian Prodigy; his era begins clearly visible only at the Election (A7+), though he has existed off-stage since the beginning.",
+      "traits": [
+        "Nen Master",
+        "Specialist",
+        "Hatsu: Mimicry",
+        "Civilian Prodigy"
+      ],
+      "replacesNpc": "Ging Freecss"
+    },
+    {
+      "name": "Pariston Hill",
+      "gender": "male",
+      "description": "The Rat of the Zodiacs and the Association's vice-chairman, Pariston Hill is a Nen Master whose true Nen category and signature Hatsu remain unrevealed—and he prefers it that way. His weapon is not aura or technique but intellect, charisma, and an unsettling smile that suggests he knows far more than he's saying. Pariston's power lies in his ability to manipulate people and situations, to see ten moves ahead and enjoy the game of positioning players like chess pieces. He is beautiful, charming, and utterly amoral—a man who views the world as an elaborate puzzle to be solved for personal entertainment. His relationship with Netero is one of profound mutual affection and sharp rivalry; they respect each other as equals while constantly testing and challenging one another. After Netero's death, Pariston's interest shifts to the Succession War and to watching how his colleagues navigate the chaos of the Election. He is a Specialist by nature—not through Nen classification but through his unique and unreplicable approach to power. His background is Hunter Association Staff; his era spans the Election (A7) and beyond (A8). Note: Pariston develops friction with multiple Zodiacs, particularly Cheadle (his foil in governance philosophy) and Botobai (who respects direct power over games).",
+      "traits": [
+        "Nen Master",
+        "Specialist",
+        "Developing Hatsu (Specialization)",
+        "Hunter Association Staff"
+      ],
+      "replacesNpc": "Pariston Hill"
+    },
+    {
+      "name": "Melody",
+      "gender": "female",
+      "description": "A Licensed Hunter and a Nen Practitioner whose gentle soul belies the trauma scarring her past. Melody is an Emitter with a signature Hatsu called Song of Healing—a technique that manifests her aura as pure, harmonic sound waves capable of mending wounds, soothing pain, and restoring damaged tissue. Her music is said to be achingly beautiful, a balm to the grieving and broken. Yet Melody knows suffering intimately. Years before her employment in Yorknew's mafia underworld, she encountered the Phantom Troupe's Feitan Portor during his rampage. The experience left her physically scarred and emotionally fractured; the wounds never fully healed. She carries visible damage—burn marks, twisted tissue—across her body, reminders of Rising Sun's agony. Despite this, Melody chose a path of pacifism, taking a vow early in her Nen practice: she would never use her power to harm, only to heal. This vow—the Pacifist's Edge—is both her greatest limitation and her greatest source of strength. She serves the Nostrade family during the Yorknew arc as Neon's attendant and bodyguard. She is the gentlest person in that mafia circle, a conscience in an amoral world. Her background is Licensed Hunter; her Vow defines her arc-4 availability.",
+      "traits": [
+        "Nen Practitioner",
+        "Emitter",
+        "Hatsu: Song of Healing",
+        "Licensed Hunter",
+        "Vow: Pacifist's Edge"
+      ],
+      "replacesNpc": "Melody"
+    },
+    {
+      "name": "Basho",
+      "gender": "male",
+      "description": "A Mafia Community Member and a Nen Practitioner of considerable artistic sensibility, Basho is a Conjurer whose signature Hatsu is called the Great Haiku—a technique that manifests his aura as living poetry, written words and conceptual constructs drawn from classical Japanese verse. His conjured haiku-form aura can encode instructions, create barriers, or manipulate perception through the power of poetic language itself. Basho is a contemplative man with a passion for traditional arts and literature; he views his Nen practice as an extension of his spiritual discipline. He is refined, patient, and carries himself with the bearing of a scholar. During the Yorknew arc, he serves the Nostrade family as an attendant and enforcer, a position that requires him to marry his artistic sensitivity with brutal pragmatism. Basho is one of the few members of the mafia circle who retains any aesthetic sense, who views beauty and function as compatible rather than opposed. His background is Mafia Community Member; his arc-4 role is Nostrade-adjacent.",
+      "traits": [
+        "Nen Practitioner",
+        "Conjurer",
+        "Hatsu: Great Haiku",
+        "Mafia Community Member"
+      ],
+      "replacesNpc": "Basho"
+    },
+    {
+      "name": "Neon Nostrade",
+      "gender": "female",
+      "description": "A Civilian Prodigy and a Specialist whose Nen power comes unbidden, arising without formal training or discipline. Neon Nostrade is the daughter of Light Nostrade, a rising power in Yorknew's mafia underworld. She possesses a signature Hatsu called Lovely Ghostwriter—a technique that allows her to divine the future through written oracles, manifestations of her aura appearing as ghostly text or spectral messages that reveal possible outcomes. Her power is real, unpredictable, and immensely valuable; her family's entire fortune rises on the strength of her divinations. Yet Neon is untrained in Nen, unaware of even basic principles, and fundamentally vulnerable. She is spoiled, entitled, and casually cruel—the product of wealth and indulgence. During the Yorknew arc, she is simultaneously the most protected and most endangered person in the Nostrade circle, surrounded by bodyguards including Kurapika. The arc concludes with her power catastrophically failing; by the arc's end, her Lovely Ghostwriter ceases to function permanently. Her background is Civilian Prodigy; her arc-4 presence is Yorknew-centered, and her power loss marks her unavailability in later arcs. She represents the danger of unearned, inexplicable ability—a girl caught between her family's exploitation and genuine peril.",
+      "traits": [
+        "Nen-Unawakened",
+        "Specialist",
+        "Hatsu: Lovely Ghostwriter",
+        "Civilian Prodigy"
+      ],
+      "replacesNpc": "Neon Nostrade"
+    },
+    {
+      "name": "Zepile",
+      "gender": "male",
+      "description": "A Mafia Community Member and a non-combat specialist in forgery, appraisal, and social engineering, Zepile is an Undivined Nen user who has never awakened his potential—and he is perfectly content remaining that way. His strength lies not in aura or combat but in his ability to read people, craft convincing falsehoods, and navigate the criminal underworld's social networks. He is an honest forger in a world of dishonest ones; he takes pride in his craft and delivers exactly what he promises. During the Yorknew arc, he can serve as a companion for non-combat focused players, offering access to the mafia underworld through social channels rather than martial ones. Zepile is charming, quick-witted, and genuinely likable—a rarity among criminals. He is clever without being ruthless, ambitious without being cutthroat. His background is Mafia Community Member; he represents the possibility of meaningful play without Nen awakening, a reminder that the world's power structure has room for those who navigate it through intellect and charm rather than aura-based combat.",
+      "traits": [
+        "Nen-Unawakened",
+        "Undivined",
+        "No Hatsu Yet",
+        "Mafia Community Member"
+      ],
+      "replacesNpc": "Zepile"
     }
   ]
 }
