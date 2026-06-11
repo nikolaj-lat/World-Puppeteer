@@ -1,3 +1,463 @@
 {
-  "npcs": {}
+  "npcs": {
+    "Gon Freecss": {
+      "name": "Gon Freecss",
+      "type": "Nen Initiate",
+      "currentLocation": "Whale Island",
+      "currentArea": "Harbor Village",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "A determined young hunter of humble origins raised in island solitude, Gon possesses an infectious optimism and surprising combat instinct. He is lean and muscular with distinctive spiky dark hair, large innocent eyes, and a perpetually cheerful expression despite hardship. He wears simple green shorts and a sleeveless white shirt, along with practical boots for constant travel.",
+      "personality": [
+        "Optimistic: believes in the inherent goodness of others and sees potential where others see ruin",
+        "Impulsive: makes decisions based on emotion and instinct rather than calculation",
+        "Selfless: willing to sacrifice personal advantage for friends' wellbeing",
+        "Direct and honest: speaks plainly without artifice or diplomatic tact"
+      ],
+      "hiddenInfo": "Gon is the biological son of Ging Freecss, a legendary Hunter and future Zodiac member, though he was abandoned as an infant and raised by his aunt Mito. His connection to his father is his driving motivation—he became a Hunter to find Ging and understand why he left. In the Hunter Exam arc, Gon is completely untrained in Nen but possesses an extraordinary natural aptitude that examiners recognize immediately. His Nen category is Enhancement, and his signature technique 'Jajanken' (Rock-Paper-Scissors) will eventually become legendary. He forms deep bonds with Killua, Kurapika, and Leorio that define his emotional arc. ARC VALIDITY: present and major in A1-A5; central to A6 (Chimera Ant—undergoes catastrophic transformation at arc's end, spending his aura in a vow that transforms him into an adult Nen user capable of defeating Neferpitou, then enters comatose recovery); A7 emerges healed but Nen-less (vow spent), a poignant limitation; absent or recovering throughout A8.",
+      "abilities": [
+        "Enhanced Durability: Gon's aura reinforces his body, granting him resistance to physical trauma and allowing him to endure conditions that would kill ordinary humans. He can tank multiple strikes from trained fighters.",
+        "Jajanken Mastery: A unique Hatsu ability where Gon channels his aura into three distinct forms—Rock (pure destructive power), Paper (flexible defensive aura), and Scissors (cutting aura precision). Each form counters one other; selection requires tactical judgment.",
+        "Intuitive Combat Sense: Gon possesses an uncanny ability to predict opponent movements and adapt tactics mid-battle. His instincts often outpace his conscious understanding.",
+        "Aura Sensing: Gon can detect the aura of other Nen users at close range, identifying power levels and emotional states through subtle aura fluctuations.",
+        "Physical Conditioning: Years of island life have made Gon exceptionally fit—his reflexes, agility, and endurance exceed those of most untrained humans. He climbs and runs with effortless grace.",
+        "\nfighting style: Gon fights with explosive energy and fearless commitment, launching himself at opponents with full-body strikes and acrobatic repositioning. He relies on intuition over strategy, often turning apparent disadvantage into opportunity through sheer determination and willingness to absorb damage. His Jajanken creates tactical layers—he shifts between forms to maintain pressure while reading his opponent's responses. Against stronger foes, Gon fights to survive and learn, extrapolating combat principles from single encounters. His greatest strength is adaptability; his weakness is overcommitment to personal codes and occasional recklessness that endangers allies."
+      ],
+      "tier": "mythic",
+      "level": 8,
+      "hpMax": 88,
+      "known": true,
+      "voiceTag": "male child expressive"
+    },
+    "Killua Zoldyck": {
+      "name": "Killua Zoldyck",
+      "type": "Nen Initiate",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Killua's Room",
+      "gender": "male",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The youngest Zoldyck heir and a prodigy assassin raised from infancy in lethal conditioning, Killua possesses a deceptive boyish charm masking a career killer. He is pale-skinned with distinctive white hair, large violet-blue eyes, and delicate features that contradict his deadly capability. He typically wears a sleeveless black shirt, purple shorts, and simple sandals, along with a golden cat-like amulet.",
+      "personality": [
+        "Loyal: forms intense bonds with a select few and prioritizes their wellbeing above all other concerns",
+        "Sarcastic: deflects serious emotion with sharp humor and cynicism honed by years of manipulation",
+        "Conflicted: struggles between his family's assassination conditioning and his desire for genuine human connection",
+        "Socially awkward: lacks normal social development and often misinterprets social cues despite his intelligence"
+      ],
+      "hiddenInfo": "Killua is the youngest of the Zoldyck children and was selected by his eldest brother Illumi to become the family's perfect heir through a Nen needle implanted directly in his brain—a control mechanism that suppressed his autonomous will and forced obedience. During the Hunter Exam, Illumi manipulated him into killing fellow examinee Bodoro, causing him to be disqualified. Killua's awakening to independent choice begins when he meets Gon; his friendship becomes the catalyst for psychological liberation. His Nen category is Transmutation, and he will eventually develop 'Godspeed' (lightning-infused acceleration), one of the world's most devastating techniques. In the Zoldyck rescue arc (A2), his father Silva offers him a bargain: return home when his adventures are complete, in exchange for freedom to choose his own path. This becomes the emotional cornerstone of his character arc. ARC VALIDITY: present in A1 (Exam, disqualified); central to A2 (rescue), A3-A5 (with Gon); vital to A6 (Chimera Ant—the needle is removed mid-arc, unlocking Godspeed and his full potential); A7 present (searching for Alluka); A8 aboard the Black Whale with Alluka.",
+      "abilities": [
+        "Assassin Training: Killua possesses lethal precision honed from infancy—he can kill silently, move unseen, and execute complex assassination protocols. This training is both his greatest strength and deepest psychological wound.",
+        "Enhanced Reflexes: Killua's reaction time far exceeds human baseline. He dodges attacks by reading micro-expressions and predicting trajectories with uncanny accuracy.",
+        "Transmutation Aura: Killua transforms his aura into electricity, granting him lightning-fast movement and electrical striking capability. His control is exceptional even among professional Nen users.",
+        "Needle Manipulation: Before the Chimera Ant arc, Killua operates under a Nen needle implanted by Illumi that suppresses his autonomous decision-making. After removal, he gains full agency and access to his true potential.",
+        "Acrobatic Precision: Killua moves with feline grace—climbing, leaping, and repositioning with minimal wasted motion. His footwork allows him to maintain balance on unstable terrain.",
+        "\nfighting style: Killua approaches combat like a professional assassin—analytical, efficient, and ruthlessly pragmatic. He favors quick decisive strikes, evasion, and positional advantage over sustained engagement. His electrical Transmutation creates speed that allows him to strike multiple times before opponents respond. Against overwhelming force, he chooses withdrawal and regrouping over sacrifice. His greatest struggle is emotional—he fights to protect Gon and his friends, a motivation that sometimes overrides his assassin training and creates vulnerability. Post-needle removal, his combat style becomes more aggressive and self-directed, marking his psychological liberation through violence."
+      ],
+      "tier": "mythic",
+      "level": 9,
+      "hpMax": 96,
+      "known": true,
+      "voiceTag": "male child calm"
+    },
+    "Kurapika": {
+      "name": "Kurapika",
+      "type": "Nen Professional",
+      "currentLocation": "Nostrade City Base",
+      "currentArea": "Operations Floor",
+      "gender": "male",
+      "faction": "Nostrade Family",
+      "basicInfo": "The last living member of the Kurta clan, a stoic and methodical collector of Scarlet Eyes, Kurapika carries the weight of genocide and vengeance with quiet dignity. He is slender and androgynous with pristine white skin, intense eyes that glow crimson-red when activated (a Kurta trait), and long blonde hair typically worn in a long braid. He favors simple dark formal clothing—long-sleeved shirts, dark slacks, and polished shoes suggesting both nobility and mourning.",
+      "personality": [
+        "Disciplined: maintains absolute focus on his primary objective despite emotional trauma and distractions",
+        "Vengeful: driven by desire to eliminate the Phantom Troupe members responsible for his clan's genocide",
+        "Protective: deeply loyal to those under his care, especially young Neon Nostrade whom he guards during the Yorknew arc",
+        "Analytical: approaches problems methodically, gathering information before acting rather than relying on intuition"
+      ],
+      "hiddenInfo": "Kurapika is the sole survivor of the Kurta clan, which was slaughtered by the Phantom Troupe five years before the Hunter Exam for their Scarlet Eyes—a genetic Kurta trait that grants enhanced perception and aura amplification. His family's massacre haunts every moment; he became a Hunter specifically to find and eliminate Troupe members. His Nen category is Conjuration, but he possesses an extraordinary ability: when his eyes turn Scarlet (an involuntary Kurta activation), he becomes a Specialist Nen user, gaining access to six chain techniques of devastating power—Holy Chain, Chain Jail, Judgment Chain, Dowsing Chain, Steal Chain, and Bind Chain. His ultimate vow is to use his Specialist abilities exclusively against Troupe members; using them against anyone else breaks the vow and seals his Nen. During the Yorknew arc, he serves as bodyguard to Neon Nostrade, a position that brings him directly into conflict with the Phantom Troupe. He seals Chrollo's Nen with Judgment Chain, a curse that persists across multiple arcs and fundamentally weakens the Troupe's leader. ARC VALIDITY: present in A1 (Exam, #404); A2 present; A3 present; central to A4 (Yorknew—confronts Troupe directly, seals Chrollo); A5-A6 offstage pursuing Troupe members; A7 returns as new Zodiac member (Rat, replacing Pariston); A8 aboard the Black Whale as bodyguard to Prince Woble.",
+      "abilities": [
+        "Scarlet Eyes Activation: When emotionally activated (typically through exposure to Phantom Troupe members), Kurapika's eyes glow bright crimson, granting him Specialist-class Nen access and chain mastery. This transformation is involuntary and tied to his deepest trauma.",
+        "Holy Chain: A conjured chain materialized from pure aura, capable of binding targets with supernatural strength. It serves as his foundational technique and primary restraint tool.",
+        "Judgment Chain: A devastating sealing ability that permanently locks a target's Nen aura, rendering them unable to use their Hatsu or even basic Nen techniques. Used on Chrollo Lucilfer during the Yorknew arc.",
+        "Chain Jail: An inescapable containment created from chains that isolates victims in a separate spatial pocket. Breaking free requires destroying the chains themselves—nearly impossible without outside assistance.",
+        "Dowsing Chain & Steal Chain: Specialized utility chains for tracking targets and extracting objects respectively. These require Scarlet Eyes activation to function.",
+        "Unconditional Loyalty: Kurapika forms intense bonds and prioritizes protecting those under his guardianship with absolute dedication, sometimes compromising his vengeance goals.",
+        "\nfighting style: Kurapika fights with calculated precision, preferring containment and control over direct assault. His chains allow him to engage from distance, restricting enemy movement while maintaining safety. Against the Phantom Troupe specifically, he becomes a Specialist capable of impossible feats—sealing aura, creating inescapable prisons, and overwhelming stronger opponents through vow-empowered abilities. His emotional state directly affects his power; Scarlet Eyes activation grants a massive power surge at the cost of losing analytical judgment. Against non-Troupe enemies, he relies on basic Conjuration and strategy rather than chain mastery. His greatest vulnerability is his emotional connection to vengeance—Troupe encounters cause him to abandon tactical restraint and risk everything."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 104,
+      "known": true,
+      "voiceTag": "male calm steady"
+    },
+    "Leorio Paladiknight": {
+      "name": "Leorio Paladiknight",
+      "type": "Nen Initiate",
+      "currentLocation": "Zaban City",
+      "currentArea": "Noodle Stand Front",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "An ambitious young man from humble origins pursuing a dream of becoming a doctor, Leorio combines idealism with entrepreneurial confidence. He is tall and well-built with dark skin, sharp features, and styled dark hair swept back from his forehead. He favors fashionable suits and dress shoes, projecting an air of refinement despite his limited resources—a man who dresses for the life he intends to live.",
+      "personality": [
+        "Ambitious: driven by a clear goal (medicine) and willing to work relentlessly to achieve it",
+        "Ethical: insists on moral principles even when they conflict with pragmatism or personal benefit",
+        "Hot-tempered: prone to explosive anger when he perceives injustice or disrespect",
+        "Witty: uses humor and verbal sparring as both defense mechanism and genuine expression of personality"
+      ],
+      "hiddenInfo": "Leorio comes from poverty and views the Hunter license as a financial opportunity—the prestige and compensation can fund his medical education. His idealism about helping others coexists with very practical money concerns, creating occasional contradiction. He is driven not by the glory of Hunting but by the goal of becoming a doctor, a profession he views as noble and lucrative. During the Hunter Exam, he forms a deep friendship with Gon, Killua, and Kurapika despite coming from entirely different backgrounds. His Nen category is Emission, and he develops a unique technique called 'Remote Punch' (later known as 'Warping Punch')—an ability to project aura-based strikes at distance. ARC VALIDITY: present in A1 (Exam); A2-A5 present with main cast; A6 present during Chimera Ant arc; A7 central to the election arc, where he punches the Zodiac Pariston Hill live on broadcast, gains massive voter support, and is elected as Zodiac Boar (replacing Ging)—a position he maintains into A8 aboard the Black Whale.",
+      "abilities": [
+        "Remote Punch Manifestation: Leorio projects aura-infused strikes at distance, channeling punching force through the air to strike targets beyond arm's reach. The technique requires precise aura control and grows more powerful with practice.",
+        "Enhanced Durability: As a Nen user, Leorio hardens his body through Ten, granting him resistance to physical trauma and allowing him to withstand strikes from trained fighters.",
+        "Aura Sensing: Leorio can detect the presence and approximate power level of other Nen users at moderate range, identifying emotional intensity through aura fluctuations.",
+        "Medical Knowledge: Though not fully trained as a doctor, Leorio possesses foundational medical knowledge that allows him to provide basic first aid and diagnose common ailments.",
+        "Aggressive Tactics: Leorio fights with straightforward aggression—he launches himself at opponents with full-force strikes, prioritizing overwhelming power over technique.",
+        "\nfighting style: Leorio fights with explosive confidence and moral certainty. He launches heated assaults using his Remote Punch to maintain distance advantage, overwhelming opponents with sheer aura-powered force. Against stronger foes, he relies on desperation and willingness to sacrifice himself for allies. His greatest strength is his unpredictability—his emotional passion causes him to take risks that calculating fighters don't anticipate. His weakness is that anger clouds judgment, leading him to overcommit and expose himself to counterattack. As he develops, he learns to channel his passion into more disciplined technique, but recklessness remains his signature."
+      ],
+      "tier": "mythic",
+      "level": 7,
+      "hpMax": 80,
+      "known": true,
+      "voiceTag": "male confident energetic"
+    },
+    "Hisoka Morow": {
+      "name": "Hisoka Morow",
+      "type": "Nen Master",
+      "currentLocation": "Heavens Arena",
+      "currentArea": "Floor 200 Corridor",
+      "gender": "male",
+      "basicInfo": "A predatory stage magician and serial killer masquerading as a Phantom Troupe member, Hisoka exudes charismatic menace beneath a carefully maintained charming facade. He possesses an androgynous appearance with pale skin, multicolored dyed hair (typically magenta or purple), and makeup-adorned features including stars on his cheeks. He favors flamboyant clothing—tailored suit jackets, colorful shirts, and dramatic accessories reflecting his theatrical nature.",
+      "personality": [
+        "Predatory: views people as specimens to be hunted and tested, seeking worthy opponents like a connoisseur seeking ripe fruit",
+        "Theatrical: presents himself as a performer and entertainer, treating combat as artistic expression",
+        "Emotionally detached: lacks genuine human connection despite his charm; sees relationships as strategic or entertainment-based",
+        "Obsessive: fixates on opponents he considers worthy, pursuing them across years or continents for rematches"
+      ],
+      "hiddenInfo": "Hisoka is one of the world's most dangerous individuals—a Specialist Nen user and master of the Transmutation ability 'Bungee Gum,' which grants rubber-and-gum properties to his aura. He maintains a fake Phantom Troupe tattoo (spider #4) as a disguise, using Troupe affiliation as cover while pursuing his own agenda of finding and testing strong opponents. His true loyalty lies nowhere—he views the Troupe as convenient camouflage and potential hunting ground. During the Yorknew arc, he abandons the Troupe disguise after killing some lower-tier members. He eventually engages in direct war with the Troupe after the Chimera Ant arc, hunting members (killing Kortopi and Shalnark before being defeated by Chrollo at Heavens Arena). In a stunning development, Hisoka self-resurrects after his defeat using Bungee Gum to restart his own heart—a fact kept secret even from the Troupe. ARC VALIDITY: present and dangerous in all arcs (A1-A8); initially hidden as Troupe #4 in A1, revealed as fake in A4; at war with Troupe in A8 after previous defeats; revival state in A8 is hidden from most NPCs.",
+      "abilities": [
+        "Bungee Gum Manifestation: Hisoka transforms his aura into a substance possessing both the elasticity of rubber and the adhesiveness of gum. This allows him to create floating platforms, launch opponents, catch falling objects, and stick to surfaces.",
+        "Texture Surprise: A deceptive technique where Hisoka alters the perceived texture of his aura, making it feel harder or softer than it actually is. This creates strategic advantages in close combat by subverting opponent expectations.",
+        "Master Sleight of Hand: Years of stage magic practice grant Hisoka exceptional manual dexterity and the ability to manipulate objects with precision impossible for ordinary humans. He uses this for concealing weapons and creating misdirection.",
+        "Specialist Versatility: Despite being a Transmuter, Hisoka has learned enough of other Nen categories to employ Conjuration (creating aura explosives), Manipulation (controlling objects with aura), and other techniques for flexibility.",
+        "Exceptional Physical Conditioning: Hisoka maintains peak athletic fitness—his reflexes, speed, and endurance exceed professional standards. He moves with acrobatic grace during combat.",
+        "\nfighting style: Hisoka fights as a hunter stalking prey—cautious, calculating, and always searching for information about opponent capabilities. He uses Bungee Gum to control battlefield space and distance, restricting opponent movement while maintaining his own mobility. He experiments during fights, testing abilities and searching for weaknesses while appearing to struggle. Against opponents he respects, he becomes more aggressive and creative, pushing himself for mutual growth. Against lesser foes, he toys mercilessly, dragging out combat for entertainment. His greatest strength is his versatility and adaptability—he switches tactics mid-fight without hesitation. His weakness is his obsession with worthy opponents; he sometimes spares strong fighters to ensure future rematches, compromising immediate tactical advantage."
+      ],
+      "tier": "mythic",
+      "level": 14,
+      "hpMax": 120,
+      "known": true,
+      "voiceTag": "male deep calculating"
+    },
+    "Illumi Zoldyck": {
+      "name": "Illumi Zoldyck",
+      "type": "Nen Master",
+      "currentLocation": "Zoldyck Estate",
+      "currentArea": "Main House",
+      "gender": "male",
+      "faction": "Zoldyck Family",
+      "basicInfo": "The eldest Zoldyck heir and master of needle manipulation, Illumi embodies the family's assassination ethos with cold precision and emotionless control. He possesses an unnaturally pale appearance with long straight black hair, blank expressionless features, and eyes that reveal no emotion. He favors simple dark formal clothing—long-sleeved shirts, dark pants, and polished shoes reflecting his role as family enforcer.",
+      "personality": [
+        "Controlling: obsessed with dominating others, particularly his youngest brother Killua, whom he views as family property",
+        "Emotionless: processes the world through pure logic and efficiency; emotional expression is strategic rather than genuine",
+        "Methodical: plans actions carefully and executes with inhuman patience, willing to wait years for opportunities",
+        "Protective of family hierarchy: views Zoldyck family interests as absolute and non-negotiable"
+      ],
+      "hiddenInfo": "Illumi is the eldest son of Silva Zoldyck and the family's enforcer of succession discipline. He implanted a Nen needle directly in his youngest brother Killua's brain as an infant—a control mechanism designed to suppress Killua's autonomous will and force obedience to family interests. This needle can only be removed by the person who implanted it or through extreme Nen trauma. Illumi's Nen category is Manipulation, and his signature technique involves conjuring needles from his own body that he can fire into targets, controlling their actions and even their minds. During the Hunter Exam, he disguises himself as a male candidate named 'Gittarackur' to manipulate Killua's participation. In later arcs, he becomes obsessed with controlling Killua's life choices, pursuing him relentlessly even after Killua escapes the family. His obsession with Killua and alignment with Hisoka create unexpected alliances. ARC VALIDITY: present in A1 (disguised as Gittarackur); A2-A6 actively pursuing Killua's control; A7 working with Hisoka to hunt down Killua and Alluka; A8 aboard the Black Whale continuing his control campaign.",
+      "abilities": [
+        "Needle Conjuration & Manipulation: Illumi creates razor-sharp needles from his own body and fires them into targets with perfect accuracy. Once implanted, these needles allow him to control the target's movements like a puppet.",
+        "Mind Control Needle: A specialized needle capable of entering the brain and suppressing the target's autonomous will, creating a permanent puppet state. Killua's needle is the most famous example of this technique.",
+        "Disguise Proficiency: Illumi can alter his appearance through a combination of aura manipulation and strategic makeup, allowing him to impersonate others effectively enough to deceive trained observers.",
+        "Assassin Training: Like all Zoldycks, Illumi possesses lethal precision honed from infancy. He can move silently, kill without hesitation, and execute complex assassination protocols.",
+        "Aura Sensitivity: Illumi can detect the presence of other Nen users and identify their aura signatures with exceptional clarity, allowing him to track targets across distances.",
+        "\nfighting style: Illumi fights with mechanical precision, treating combat as a puzzle to be solved through information gathering and optimal response. He fires needles from distance, controlling the battlefield through puppet manipulation rather than direct engagement. Against lesser opponents, he toys with them using puppet control, demonstrating his superiority. Against strong opponents, he gathers information first, firing needles carefully while analyzing response patterns before committing fully. His emotional detachment gives him a psychological advantage—he never panics or doubts. His greatest weakness is his obsession with control; when control slips, his response patterns become erratic and vulnerable. His family loyalty also creates potential leverage—threats to the Zoldyck family hierarchy can momentarily distract him from tactical focus."
+      ],
+      "tier": "mythic",
+      "level": 13,
+      "hpMax": 112,
+      "known": true,
+      "voiceTag": "male calm steady"
+    },
+    "Satotz": {
+      "name": "Satotz",
+      "type": "Nen Professional",
+      "currentLocation": "Zaban City",
+      "currentArea": "Underground Hall",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "A distinctive examiner characterized by his almost complete lack of visible arms and his well-groomed appearance, Satotz presents an intimidating yet professional demeanor. He possesses dark skin, a sharp angular face with defined features, and a perfectly trimmed mustache that he maintains with obvious pride. He wears formal dark clothing—a long-sleeved shirt and dark vest—that conceals his lack of arms entirely.",
+      "personality": [
+        "Professional: maintains absolute focus on examination procedures and evaluation criteria without deviation",
+        "Observant: notices minute details about candidate behavior and uses them to assess compatibility",
+        "Stoic: expresses little emotion, maintaining an air of detached authority throughout the exam",
+        "Precise: speaks with careful articulation and expects similar clarity from those around him"
+      ],
+      "hiddenInfo": "Satotz is a veteran Hunter and professional examiner tasked with leading candidates through the first trial of the 287th Hunter Exam—the Exam Run through Milsy Wetlands. His apparent lack of arms is a notable characteristic that candidates often misinterpret as disability, though he navigates the wetlands with perfect efficiency regardless. He is secretly observing candidate performance not just for physical capability but for psychological traits—decision-making under pressure, ethical choices, and leadership potential. Satotz's Nen category is Enhancement (unrevealed to candidates), and he possesses exceptional physical capability despite (or perhaps because of) his missing arms. He serves as a neutral, unbiased evaluator and maintains the exam's integrity across multiple years. ARC VALIDITY: present in A1 (Exam examiner); A2-A8 background role as Association member but not featured prominently.",
+      "abilities": [
+        "Enhanced Mobility Despite Missing Arms: Satotz has developed exceptional balance, footwork, and acrobatic capability to compensate for his lack of arms. He navigates complex terrain with speed equal to or exceeding two-armed competitors.",
+        "Aura Reinforcement: Satotz hardens his body through constant aura application, granting him exceptional durability against physical assault. His torso and legs are reinforced defensive shields.",
+        "Nen Sensing: Satotz can detect the presence of other Nen users and assess their relative power level through aura perception, allowing him to evaluate candidate capability accurately.",
+        "Examination Protocol Authority: Satotz maintains absolute authority within examination chambers and can enforce rules through a combination of physical presence and official position.",
+        "Physical Conditioning: Despite his missing arms, Satotz maintains peak athletic fitness—his legs and core are exceptionally strong, and his balance rivals acrobats.",
+        "\nfighting style: Satotz fights primarily using his legs and body positioning, utilizing exceptional balance and footwork to control battlefield space. He employs aura reinforcement to absorb strikes and maintain defensive presence. Against candidates during exams, he never engages seriously—his role is evaluation, not combat. Against actual threats, he would likely employ techniques unknown to exam candidates, favoring kicks and grappling holds that don't require arms. His missing arms give him a psychological advantage over unprepared opponents—they underestimate him until his actual capability becomes apparent. His greatest strength is his discipline and calm; his weakness is his limited tactical flexibility in unexpected situations."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 100,
+      "known": true,
+      "voiceTag": "male commanding blunt"
+    },
+    "Menchi": {
+      "name": "Menchi",
+      "type": "Nen Professional",
+      "currentLocation": "Zaban City",
+      "currentArea": "Underground Hall",
+      "gender": "female",
+      "faction": "Hunter Association",
+      "basicInfo": "A sharp-tongued Gourmet Hunter serving as an examiner, Menchi combines infectious passion about food with exacting professional standards that leave no room for mediocrity. She possesses a lithe, athletic frame with dark skin, braided dark hair adorned with beads, and expressive features that shift rapidly between enthusiasm and stern disapproval. She favors casual practical clothing—tank tops, cargo pants, and hiking boots reflecting her outdoors hunter lifestyle.",
+      "personality": [
+        "Passionate: speaks with genuine enthusiasm about her interests, particularly food and hunting",
+        "Exacting: maintains extremely high standards and becomes frustrated when others fail to meet them",
+        "Approachable: despite her high standards, she treats people with respect and genuine interest in their perspectives",
+        "Practical: makes pragmatic decisions without sentimentality and expects others to do the same"
+      ],
+      "hiddenInfo": "Menchi is a renowned Gourmet Hunter—a specialist in locating and procuring rare, high-quality food resources from dangerous locations. She uses her Gourmet Hunter expertise to design the fourth Hunter Exam trial, requiring candidates to hunt for specific high-quality game within Visca Forest Preserve. Her standards for what constitutes 'acceptable' game are notoriously strict; she famously disqualified an entire cohort of candidates in a previous exam year for submitting substandard meat. Her Nen category is Transmutation, and she can detect the quality and composition of food by taste alone—a Hatsu that makes her uniquely suited to her specialty. She serves multiple years as an examiner, building a reputation for fairness combined with absolutely refusal to compromise on standards. ARC VALIDITY: present in A1 (Exam examiner); A2-A8 background role as Association member, occasionally mentioned but not featured.",
+      "abilities": [
+        "Gourmet Taste Perception: Menchi can taste food and instantly determine its quality, nutritional composition, preparation method, and age. She can also identify poisons and contaminants by taste alone.",
+        "Food Hunting Expertise: Through years as a Gourmet Hunter, Menchi has learned to identify high-quality game resources in wild terrain. She understands animal behavior, butchering techniques, and preparation methods for exotic fauna.",
+        "Transmutation Aura Control: Menchi transforms her aura to enhance her sensory perception, particularly taste and smell. This allows her to detect subtle flavor variations and sense food quality from distance.",
+        "Wilderness Survival: Menchi possesses exceptional knowledge of forest navigation, resource identification, and survival in dangerous environments. She can locate food and water under adverse conditions.",
+        "Physical Conditioning: As a professional hunter, Menchi maintains excellent fitness—her climbing, running, and climbing ability is far above average human levels.",
+        "\nfighting style: Menchi fights with calculated efficiency, using her enhanced senses to anticipate opponent movements and weaknesses. She employs Transmutation-enhanced strikes that exploit structural vulnerabilities. Against lesser opponents, she overwhelms through superior speed and conditioning. Against strong opponents, she gathers information through initial engagement before committing to serious technique. Her greatest strength is her pragmatism—she views combat as a problem to solve rather than an emotional expression. Her weakness is her tendency to become frustrated with inefficiency, which can distract her from tactical focus."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 92,
+      "known": true,
+      "voiceTag": "female warm friendly"
+    },
+    "Buhara": {
+      "name": "Buhara",
+      "type": "Nen Professional",
+      "currentLocation": "Zaban City",
+      "currentArea": "Underground Hall",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "A massive Gourmet Hunter distinguished by his enormous appetite and jovial demeanor, Buhara presents an image of abundance and carefree enjoyment. He is extremely large and muscular with dark skin, short dark hair, and broad features that exude good nature and uncomplicated confidence. He favors simple practical clothing—sleeveless shirts and loose pants accommodating his considerable bulk.",
+      "personality": [
+        "Jovial: possesses genuine warmth and friendliness toward others; his good humor is difficult to diminish",
+        "Straightforward: lacks complexity or hidden agendas; says exactly what he thinks without filter",
+        "Capable: despite his casual demeanor, he is a skilled professional who takes his Hunter duties seriously",
+        "Gluttonous: views food not just as sustenance but as one of life's primary joys and sources of meaning"
+      ],
+      "hiddenInfo": "Buhara is perhaps the most personable of the Hunter Exam examiners—his geniality masks genuine professional capability. He serves as an examiner for the third Hunter Exam trial, which evaluates candidates' ability to gather specified game under time pressure. Despite his seemingly easy-going nature, he maintains professional standards and has disqualified candidates who failed his requirements. His Nen category is unknown to most candidates, but he is a capable Nen user whose Enhancement-based Hatsu allows him to process and digest virtually any organic material, granting him the famous 'bottomless stomach' reputation. This ability is both practical (allowing him to survive on foraged foods in dangerous locations) and combat-relevant (potentially allowing him to consume hazardous substances without harm). ARC VALIDITY: present in A1 (Exam examiner); A2-A8 background role as Association member, occasionally mentioned but not featured.",
+      "abilities": [
+        "Bottomless Appetite Processing: Buhara's Hatsu allows his digestive system to process and derive nutrition from virtually any organic material, granting him an effectively unlimited food supply. His stomach capacity appears genuinely boundless.",
+        "Aura Enhancement: Buhara augments his already substantial physical strength through constant aura reinforcement, granting him exceptional lifting and striking power.",
+        "Food Appreciation Knowledge: Despite his casual demeanor, Buhara possesses deep knowledge of food quality, preparation, and nutritional value. He can identify food quality almost as well as Menchi, though less fastidiously.",
+        "Physical Strength: Buhara's enormous frame houses exceptional muscular strength. He can lift heavy objects and deliver devastating strikes that exploit his size advantage.",
+        "Good-Natured Intimidation: Buhara's size and strength create natural intimidation even when he intends none. People underestimate him due to his jovial nature, creating tactical advantage.",
+        "\nfighting style: Buhara fights with simple directness—he launches straightforward physical strikes relying on his superior size, strength, and durability. He absorbs damage and wears down opponents through superior conditioning. Against stronger opponents, he maintains good humor while exploring their capabilities, treating the encounter as an enjoyable challenge rather than life-threat. His emotional stability gives him psychological advantage over emotionally volatile opponents. His greatest strength is his resilience and straightforward power; his weakness is his lack of tactical subtlety—prepared opponents can exploit his directness and limited combat creativity."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 120,
+      "known": true,
+      "voiceTag": "male baritone warm"
+    },
+    "Lippo": {
+      "name": "Lippo",
+      "type": "Nen Professional",
+      "currentLocation": "Trick Tower",
+      "currentArea": "Arena Pits",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "A stern examiner presiding over Trick Tower's complex trials, Lippo projects absolute authority through his bearing and presence. He possesses a lean muscular frame with dark skin, severe features, and a shaved head reflecting his military-style discipline. He favors formal dark clothing—long-sleeved shirts and dark formal pants—creating an image of unwavering professionalism.",
+      "personality": [
+        "Authoritarian: believes in absolute adherence to rules and procedures without exception or mercy",
+        "Observant: notices minute details about candidate behavior and maintains meticulous records",
+        "Impartial: makes evaluation decisions based strictly on objective criteria rather than personal preference",
+        "Demanding: expects highest standards of professionalism and conduct from those under his supervision"
+      ],
+      "hiddenInfo": "Lippo is the examiner responsible for the fourth Hunter Exam trial—Trick Tower. He maintains absolute order within the tower and has authority to disqualify candidates for rule violations without mercy. His role is evaluating candidates' ability to solve complex puzzles, navigate social dynamics, and make ethical choices under pressure. His Nen category is unknown to candidates but he is a competent professional capable of enforcing order through aura presence alone. He serves multiple years as an examiner and maintains a consistent reputation for fairness and absolute adherence to procedure. His understanding of Trick Tower's mechanisms is complete; he serves simultaneously as evaluator and safety monitor, intervening only if candidates face genuine death-threat situations. ARC VALIDITY: present in A1 (Exam examiner); A2-A8 background role as Association member, occasionally mentioned but not featured.",
+      "abilities": [
+        "Trick Tower Mastery: Lippo possesses complete understanding of Trick Tower's mechanisms, puzzles, and hidden passages. He can navigate the tower faster than any candidate and identify solution paths instantly.",
+        "Aura Authority: Lippo projects an intimidating aura presence that establishes immediate authority without aggressive action. People naturally defer to his commands.",
+        "Nen Sensing: Lippo can detect the presence of other Nen users and perceive their aura signatures, allowing him to identify power levels and emotional states accurately.",
+        "Enforcement Capability: Lippo is a capable Nen user capable of restraining or disqualifying candidates through physical force if necessary, though he strongly prefers procedural enforcement.",
+        "Memory & Organization: Lippo maintains meticulous records of candidate performance and can recall details about individual candidates across years of exams.",
+        "\nfighting style: Lippo fights with methodical precision, employing efficient technique rather than flashy ability. He uses aura presence to establish psychological dominance, often causing opponents to surrender rather than continue. Against candidates during exams, he never engages seriously—his role is evaluation and safety. Against actual threats, he would employ straightforward Nen techniques designed for rapid incapacitation. His greatest strength is his psychological authority and calm; his weakness is his inflexibility—creative or unconventional opponents might exploit his preference for standard procedures."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 96,
+      "known": true,
+      "voiceTag": "male commanding intense"
+    },
+    "Hanzo": {
+      "name": "Hanzo",
+      "type": "Trained Fighter",
+      "currentLocation": "Zaban City",
+      "currentArea": "Noodle Stand Front",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "A chatty shinobi from the Jappon region trained in assassination arts, Hanzo combines lethal capability with surprising sociability. He possesses an athletic lean frame with tanned skin, sharp angular features, and dark intense eyes. He favors practical shinobi garments—dark fitted clothing and wraps—reflecting his ninja origins.",
+      "personality": [
+        "Talkative: unlike stereotypical silent assassins, Hanzo freely shares conversation and forms quick connections",
+        "Confident: possesses absolute belief in his combat capability derived from years of professional training",
+        "Honorable: maintains a personal code about targets and contracts; kills without hesitation but respects worthy opponents",
+        "Playful: treats dangerous situations with gallows humor and finds amusement in combat challenges"
+      ],
+      "hiddenInfo": "Hanzo is a professional assassin from the Jappon shinobi tradition and a candidate in the 287th Hunter Exam. During the Exam, he demonstrates exceptional combat capability while maintaining a deceptively friendly demeanor that surprises other candidates. His Nen status is initially Untrained in the Exam arc (representing pre-awakening baseline), but he clearly possesses the potential to become a Nen user—his reflexes and combat sense exceed what untrained humans typically achieve. He advances through the Exam tournament and faces off against Gon in the final bracket, pinning him with intent to kill before choosing to release him upon seeing Gon's determination. This act of honor defines his character arc and marks his transition from pure assassin toward Hunter ethics. ARC VALIDITY: featured heavily in A1 (Exam); A2-A5 background mentions; A8 present on the Black Whale (with note: has mastered Nen by this point, making him significantly more dangerous; his signature technique 'Hide-and-Seek' reflects Conjuration specialty).",
+      "abilities": [
+        "Shinobi Training: Hanzo possesses lethal precision honed through years of professional assassination work. He can kill silently, move unseen, and execute complex assassination protocols.",
+        "Enhanced Reflexes: Hanzo's reaction time far exceeds human baseline through years of combat training. He anticipates attacks by reading micro-movements and environmental cues.",
+        "Acrobatic Mastery: Hanzo moves with exceptional grace and efficiency—climbing, leaping, and repositioning with minimal wasted motion. His footwork allows him to maintain balance on unstable terrain.",
+        "Pain Tolerance: Hanzo's shinobi training includes conditioning to endure and fight through pain that would incapacitate ordinary people. He remains combat-effective despite serious injuries.",
+        "Stealth Proficiency: Hanzo can move silently and conceal himself effectively, making him nearly impossible to detect without aura sensing.",
+        "\nfighting style: Hanzo fights with professional efficiency—he employs lethal strikes with anatomical precision, avoids wasted motion, and always prioritizes practical advantage over flashy technique. Against opponents he respects, he becomes more engaged and creative. Against lesser foes, he dispatches them quickly with minimal ceremony. His greatest strength is his versatility and composure—he adapts instantly to changing circumstances and rarely panics. His weakness is his professional detachment; opponents who can appeal to his honor code (as Gon did) can sometimes divert him from optimal tactical choices. Post-arc development suggests he becomes significantly more dangerous once Nen-awakened."
+      ],
+      "tier": "mythic",
+      "level": 8,
+      "hpMax": 84,
+      "known": true,
+      "voiceTag": "male confident casual"
+    },
+    "Pokkle": {
+      "name": "Pokkle",
+      "type": "Trained Fighter",
+      "currentLocation": "Zevil Island",
+      "currentArea": "Landing Beach",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "A young bow-and-arrow specialist from a remote region, Pokkle combines traditional hunting skills with innovative poison application. He possesses an average build with fair skin, short reddish-brown hair, and sharp focused eyes. He favors practical archery gear—leather armor, arm guards, and a quiver of custom-crafted arrows.",
+      "personality": [
+        "Focused: concentrates entirely on his specialty (archery and poison) without distraction",
+        "Practical: views hunting as both profession and personal calling; lacks pretension about his humble origins",
+        "Quiet: speaks little, preferring to observe and listen rather than dominate conversations",
+        "Resourceful: creates solutions from available materials and adapts to challenging circumstances"
+      ],
+      "hiddenInfo": "Pokkle is a skilled archer from a hunter family and candidate in the 287th Hunter Exam. His primary advantage is his custom bow and exceptional poisoned arrows—he has spent years perfecting arrow craftsmanship and venom composition. He advances through the Exam and survives through the Zevil Island badge-hunting phase, establishing himself as a competent if unremarkable candidate. However, his ultimate fate is tragic and horrifying: during the Chimera Ant arc, Pokkle is captured by the colony and becomes a subject of the Queen's phagogenesis process. He is dissected alive by the colony, and his knowledge—his memories of human society, his arrow-crafting techniques, his understanding of poison chemistry—is directly consumed and integrated into the colony itself, particularly feeding the developing intelligence of the Royal Guards. His death represents the beginning of the arc's shift toward genuine horror. ARC VALIDITY: A1 present (Exam candidate); A2-A5 background references; A6 captured and killed by Chimera Ants (remains present in the colony's collective consciousness but dead as a person); absent from A7-A8.",
+      "abilities": [
+        "Master Archery: Pokkle crafts and fires arrows with exceptional precision and power. His draw strength and aim are far above professional standards.",
+        "Poison Crafting: Pokkle has spent years developing custom venoms—he can identify toxic plants, extract poisons, and apply them to arrows for enhanced lethality.",
+        "Hunting Knowledge: Through family tradition, Pokkle understands animal behavior, tracking, and resource management in wilderness environments.",
+        "Physical Conditioning: Pokkle maintains good fitness from constant hunting practice—his cardio and explosive power serve him well in extended engagements.",
+        "Improvisation: Pokkle can craft effective weapons and tools from natural materials, making him adaptable to unexpected circumstances.",
+        "\nfighting style: Pokkle fights at distance using his bow, remaining mobile to avoid close-range engagement where his advantages diminish. He employs poisoned arrows to inflict cumulative damage over time, allowing him to wear down opponents. Against multiple opponents, he uses terrain to maintain superior positioning. Against opponents who reach close range, he is at significant disadvantage and generally attempts withdrawal or surrender rather than hand-to-hand combat. His greatest strength is his arrow accuracy and poison knowledge; his greatest weakness is his dependence on ranged capability—he becomes effectively helpless in close-quarters combat."
+      ],
+      "tier": "mythic",
+      "level": 6,
+      "hpMax": 72,
+      "known": true,
+      "voiceTag": "male grounded conversational"
+    },
+    "Ponzu": {
+      "name": "Ponzu",
+      "type": "Trained Fighter",
+      "currentLocation": "Zevil Island",
+      "currentArea": "Deep Jungle",
+      "gender": "female",
+      "faction": "Hunter Association",
+      "basicInfo": "A bee-handler specialist employing insects as both allies and weapons, Ponzu carries an air of quiet competence and unusual comfort with danger. She possesses an average female frame with tan skin, dark hair typically worn in a practical knot, and focused intelligent eyes. She favors practical field clothing—canvas pants, reinforced vests, and protective gear suited to beekeeping.",
+      "personality": [
+        "Independent: prefers self-reliance and minimal dependence on others; works well solo",
+        "Analytical: observes situations carefully before acting; rarely makes impulsive decisions",
+        "Pragmatic: makes survival-focused choices without sentiment; understands harsh realities",
+        "Naturalist: possesses deep understanding of and respect for natural systems and animal behavior"
+      ],
+      "hiddenInfo": "Ponzu is a bee-handler specialist and candidate in the 287th Hunter Exam. She uses trained bees as both intelligence-gathering tools and combat allies—her swarms can attack, distract, and overwhelm opponents while remaining under her control. She advances through the Exam and Zevil Island badge-hunting phase by utilizing her bee swarms as force multipliers. Like Pokkle, her ultimate fate in the Chimera Ant arc is tragic: she is captured by the colony and becomes a victim of the Queen's phagogenesis. Her understanding of insect behavior, her knowledge of bee chemistry, and her control techniques are all integrated into the developing colony intelligence. Her death is presented as loss—she was a strong candidate with unusual capability, cut down by forces beyond her control. ARC VALIDITY: A1 present (Exam candidate); A2-A5 background references; A6 captured and killed by Chimera Ants (integrated into colony consciousness but dead as individual); absent from A7-A8.",
+      "abilities": [
+        "Bee Swarm Command: Ponzu maintains trained bee colonies that respond to her commands. Her swarms can attack, distract, or scout without breaking formation.",
+        "Insect Knowledge: Ponzu understands bee behavior, communication, and chemistry at a deep level. She can train new swarms and identify insect species instantly.",
+        "Venom Application: Ponzu can harvest bee venom and apply it as a weapon—she carries venom-coated weapons that cause allergic reactions and cumulative toxin damage.",
+        "Wilderness Survival: Through years of working with natural systems, Ponzu possesses exceptional knowledge of forest resources, navigation, and survival techniques.",
+        "Sensory Integration: Ponzu perceives the world partially through her bees' senses—she can sense approaching threats and environmental details through bee-mediated awareness.",
+        "\nfighting style: Ponzu fights primarily through her bee swarms rather than direct personal combat. She positions herself at distance while swarms engage opponents, using numbers and aerial superiority to overwhelm. Against single opponents without aerial capability, her swarms create significant advantage. Against opponents with area-effect attacks or flame capability, her swarms become vulnerable and she must retreat or adapt. Her greatest strength is her ability to control the engagement through swarm management; her greatest weakness is her limited personal combat capability—if her swarms are neutralized, she becomes relatively vulnerable."
+      ],
+      "tier": "mythic",
+      "level": 6,
+      "hpMax": 68,
+      "known": true,
+      "voiceTag": "female calm controlled"
+    },
+    "Tonpa": {
+      "name": "Tonpa",
+      "type": "Civilian",
+      "currentLocation": "Zaban City",
+      "currentArea": "Noodle Stand Front",
+      "gender": "male",
+      "basicInfo": "A perpetual Hunter Exam candidate whose repeated failures have become legendary, Tonpa presents a deceptively harmless appearance masking a cunning and toxic personality. He possesses a soft middle-aged frame with average features, balding dark hair, and an unremarkable appearance designed to fade into crowds. He favors casual comfortable clothing reflecting his status as perpetual exam-taker.",
+      "personality": [
+        "Manipulative: systematically poisons other candidates through psychological undermining and substance abuse",
+        "Self-pitying: frames his failures as victim narratives rather than taking personal responsibility",
+        "Cowardly: avoids direct confrontation and prefers indirect psychological attacks",
+        "Persistent: returns year after year to the exam despite his lack of capability, driven by some undefined obsession"
+      ],
+      "hiddenInfo": "Tonpa is perhaps the most pathetic figure in the Hunter Exam canon—a middle-aged man who has failed the Exam 35 times and shows no signs of improving. Rather than developing strength, he has instead become expert at psychological manipulation and poisoning other candidates through physical and psychological means. He carries poisoned juice that he disguises as normal fruit juice, systematically drugging candidates to weaken them before major trials. His strategy is to eliminate competition through sabotage rather than personal capability. Despite his efforts during the Exam, he fails again—his poisoning attempts are discovered, and he is disqualified. His character represents the dark side of Hunter culture: individuals obsessed with the status and prestige of a Hunter license without the capability or character to earn it legitimately. ARC VALIDITY: A1 featured (Exam candidate, disqualified); A2-A8 background references as permanent fixture of Exam-taker culture but not featured.",
+      "abilities": [
+        "Poison Crafting: Tonpa has developed a subtle poison that produces incapacitation without obvious symptoms. He can administer it through food and drink without detection.",
+        "Psychological Manipulation: Tonpa is skilled at identifying vulnerabilities in others and exploiting them through suggestion, lies, and emotional manipulation.",
+        "Deception: Tonpa presents an unthreatening appearance and manner that causes people to underestimate him or lower their guard.",
+        "Survivor Instinct: Despite his lack of combat capability, Tonpa has survived 35 exam attempts through careful risk avoidance and strategic withdrawal.",
+        "\nfighting style: Tonpa does not fight—he systematically avoids direct confrontation entirely. His entire strategy is avoiding capable opponents while eliminating lesser candidates through poisoning and psychological sabotage. When forced into direct combat, he panics and attempts escape or surrender. He represents a complete absence of combat spirit or capability—a man who became a repeat Exam candidate not through determination or strength, but through obsession and psychological dysfunction."
+      ],
+      "tier": "mythic",
+      "level": 1,
+      "hpMax": 40,
+      "known": true,
+      "voiceTag": "male grounded conversational"
+    },
+    "Beans": {
+      "name": "Beans",
+      "type": "Civilian",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "non-binary",
+      "faction": "Hunter Association",
+      "basicInfo": "An unremarkable administrative assistant to Chairman Netero whose most distinctive feature is his green skin coloration, Beans presents a quietly capable demeanor suggesting years of institutional experience. He possesses an average humanoid build with distinct green skin (indicating possible non-human heritage), simple facial features, and an expression of quiet competence. He favors neat business casual clothing—simple shirts and pants appropriate to administrative work.",
+      "personality": [
+        "Professional: maintains absolute competence and discretion regarding confidential Association matters",
+        "Loyal: serves Chairman Netero with unquestioning dedication and understands the weight of that responsibility",
+        "Observant: notices details about people and situations that others overlook; offers quiet wisdom when asked",
+        "Measured: speaks carefully and rarely volunteers information; when asked direct questions, provides direct answers"
+      ],
+      "hiddenInfo": "Beans serves as Chairman Netero's personal secretary and administrative assistant, a position requiring absolute trustworthiness and discretion. He has intimate knowledge of Association operations, Zodiac politics, and Netero's private decision-making. Beans is present at crucial moments—particularly at Netero's death and the subsequent succession procedures that trigger the election arc. His green skin suggests possible non-human heritage, though this is never explicitly addressed in canon. He represents institutional continuity and knowledge; the Association's operations depend partly on trusted long-serving staff like Beans who maintain continuity across leadership changes. ARC VALIDITY: background presence in all arcs; featured prominently during A7 (Election arc) where he executes Netero's will and facilitates the succession process; A8 continues in administrative role.",
+      "abilities": [
+        "Administrative Mastery: Beans possesses complete knowledge of Association procedures, filing systems, and communication protocols. He can navigate bureaucratic systems with ease.",
+        "Confidentiality Maintenance: Beans can be trusted with sensitive information; he maintains absolute discretion and never reveals classified details.",
+        "Institutional Knowledge: Beans understands the history, politics, and informal structures of the Hunter Association better than most official members.",
+        "People Reading: Despite his quiet demeanor, Beans is an excellent judge of character and can assess honesty and capability in others.",
+        "\nfighting style: Beans does not engage in combat—he is a non-combatant administrative professional. He remains outside direct action and serves support roles only. His value lies in institutional knowledge and administrative capability rather than combat potential."
+      ],
+      "tier": "mythic",
+      "level": 1,
+      "hpMax": 50,
+      "known": true,
+      "voiceTag": "male calm steady"
+    },
+    "Mito Freecss": {
+      "name": "Mito Freecss",
+      "type": "Civilian",
+      "currentLocation": "Whale Island",
+      "currentArea": "Mito's House",
+      "gender": "female",
+      "basicInfo": "Gon's beloved aunt and true maternal figure despite lacking biological relation, Mito combines practical competence with deep emotional warmth. She possesses a middle-aged female frame with tanned island skin, warm brown eyes, and simple practical features reflecting years of island life. She favors practical work clothing—simple dresses and aprons suited to household management and island living.",
+      "personality": [
+        "Nurturing: provides emotional support and practical care for those under her protection with unconditional commitment",
+        "Honest: speaks truth directly even when uncomfortable; refuses to soften hard realities with false comfort",
+        "Strong-willed: makes independent decisions based on personal conviction rather than external pressure",
+        "Protective: will resist others' influence when she believes her child's wellbeing is at stake"
+      ],
+      "hiddenInfo": "Mito Freecss raised Gon from infancy after Ging abandoned him on Whale Island. She provided the only stable maternal presence in Gon's life—a role that defined both their characters. Mito was initially opposed to Gon pursuing the Hunter Exam, understanding that it represented his departure from the safe island life she created for him. However, she ultimately accepted his dream while extracting a promise that he would only become a Hunter if he defeated her in a wrestling match—a challenge she knew was impossible for young Gon, but which represented her assertion of maternal will and her attempt to delay his departure. When Gon defeated her anyway (through determination rather than strength), she accepted his choice though it clearly caused her pain. Mito represents the human cost of adventure—those left behind who must let go of loved ones pursuing greater dreams. She harbors no Nen capability and possesses no combat training; she is purely domestic and emotional anchor. ARC VALIDITY: featured prominently in A1 (establishing Gon's backstory and motivation); A2-A8 background references as emotional anchor and reason Gon returns home between adventures.",
+      "abilities": [
+        "Household Management: Mito maintains the island cottage with exceptional efficiency. She can prepare food, manage resources, and maintain living spaces with minimal waste.",
+        "Parenting Wisdom: Mito possesses deep understanding of child psychology and emotional development. She recognizes when people (especially Gon) are struggling emotionally.",
+        "Physical Strength: Despite lacking Nen training, Mito is a strong woman whose island life has built practical strength. She can handle physical labor and defend herself reasonably.",
+        "Emotional Perception: Mito reads emotional states with remarkable accuracy and can often identify what others truly need even when they ask for something else.",
+        "\nfighting style: Mito does not engage in combat except in dire emergencies. She is a non-combatant domestic professional. Her wrestling match with Gon during A1 represented her maximum physical effort—she lost to his determination though she was stronger. Her value lies in emotional support and home stability rather than combat potential."
+      ],
+      "tier": "mythic",
+      "level": 1,
+      "hpMax": 55,
+      "known": true,
+      "voiceTag": "female warm soft"
+    }
+  }
 }
