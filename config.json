@@ -6719,6 +6719,166 @@
         "Mafia Community Member"
       ],
       "replacesNpc": "Zepile"
+    },
+    {
+      "name": "Biscuit Krueger",
+      "gender": "female",
+      "description": "A double-star Licensed Hunter and a Nen Master whose true form belies her deceptive appearance. Biscuit manifests in the world as a short, young-looking girl with a cheerful demeanor and an endless appetite for sweets and treasure. This form is her choice—her true body, hidden away and rarely revealed, is that of a muscular, powerfully built 57-year-old woman of tremendous strength and dignity. She is a Transmuter whose signature technique, Cookie-chan (Magical Esthetician), allows her to conjure powerful restorative sweets that can heal wounds, restore Nen reserves, and amplify physical capability. Biscuit's philosophy is that Nen training should be playful, creative, and focused on the joy of improvement rather than suffering. She becomes a mentor figure to Gon and Killua on Greed Island, teaching them advanced Nen techniques and recovery methods. She is motherly, wise, and genuinely invested in her students' growth. Beneath her sweetness lies a formidable fighter; her true form is capable of overwhelming combat power. She is present as a game master on Greed Island, working within Ging's game structure. Her background is Licensed Hunter; her era spans A5 (Greed Island) and beyond.",
+      "traits": [
+        "Nen Master",
+        "Transmuter",
+        "Hatsu: Cookie-chan",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Biscuit Krueger"
+    },
+    {
+      "name": "Razor",
+      "gender": "male",
+      "description": "A Nen Master and an Emitter whose presence dominates Greed Island's hunter culture. Razor is one of the game's original ten Masters, recruited by Ging to maintain the game's balance and serve as the ultimate test-encounter for players seeking the highest-tier cards. He is physically imposing, with a predatory bearing and an aura of controlled menace. Razor's signature technique, 14 Devils, manifests as the conjuration of fourteen humanoid aura constructs that serve as independent fighters. These 'devils' can be deployed in various tactical formations, can fight autonomously, and represent some of the game's most dangerous encounters. Razor himself is a master tactician and combatant, capable of overwhelming even veteran Nen users through sheer power and strategy. However, Razor is also principled—he views the game as a legitimate test and respects worthy opponents. He maintains a professional demeanor and enjoys the chess-like complexity of encounters with skilled players. His role on Greed Island is unique: he is not a traditional NPC but rather a key game mechanic made flesh. Razor exists within the game's construct; his life is the game. His background is Greed Island Player (specifically, game master); his arc is A5 only.",
+      "traits": [
+        "Nen Master",
+        "Emitter",
+        "Hatsu: 14 Devils",
+        "Greed Island Player"
+      ],
+      "replacesNpc": "Razor"
+    },
+    {
+      "name": "Genthru",
+      "gender": "male",
+      "description": "A Nen Master and a Conjurer known by the sinister epithet 'the Bomber.' Genthru is ambitious, cruel, and utterly focused on accumulating wealth and power through Greed Island. He is the leader of a three-person squad (Genthru, Sub, Bara) that preys on other players, farming them for cards through systematic violence and exploitation. His signature technique, Little Flower, manifests as small conjured plants that serve as markers or sentries. His true power, however, lies in Countdown—a devastating Hatsu that allows him to implant aura-based countdown bombs within victims' bodies. Once activated, the countdown ticks toward detonation; the victim must retrieve specific items within a set timeframe to defuse the bomb, or it detonates spectacularly. Countdown transforms Genthru from a mere fighter into a psychological weapon; he doesn't need to overcome opponents in direct combat because his bombs force them to comply with his demands. Genthru has made a vow binding his technique: he must announce the kill—state the victim's name and 'Countdown' before activating the bomb, a theatrical choice that reflects his confidence and his desire to be remembered. Genthru is a villain run—a playable antagonist whose methods are ruthless, whose goals are selfish, and whose arc concludes with his defeat by Gon in a high-stakes card duel. His background is Greed Island Player; his arc is A5 only.",
+      "traits": [
+        "Nen Master",
+        "Conjurer",
+        "Hatsu: Little Flower & Countdown",
+        "Greed Island Player",
+        "Vow: Announce the Kill"
+      ],
+      "replacesNpc": "Genthru"
+    },
+    {
+      "name": "Tsezguerra",
+      "gender": "male",
+      "description": "A Nen Adept and an Emitter whose Hatsu remains in development, focused on the principles of Emission. Tsezguerra is a veteran Greed Island player and a combat specialist hired by Battera, a wealthy collector, to clear the game and retrieve rare cards for his personal collection. Tsezguerra leads a small squad of hunters on this expedition, commanding respect through his experience and his solid Nen mastery. He is professional, tactical, and genuinely interested in testing himself against the game's challenges. Unlike Genthru, Tsezguerra operates within informal ethical boundaries—he is not a predator but a soldier-for-hire, willing to work within the game's structure to accomplish his mission. Tsezguerra is calm, analytical, and makes decisions based on pragmatism rather than cruelty. He respects worthy opponents and collaborates effectively with his team. His presence on Greed Island represents the possibility of mercenary play—engaging with the game not for personal glory but for contractual obligation and payment. His background is Greed Island Player; his arc is A5 only.",
+      "traits": [
+        "Nen Adept",
+        "Emitter",
+        "Developing Hatsu (Emission)",
+        "Greed Island Player"
+      ],
+      "replacesNpc": "Tsezguerra"
+    },
+    {
+      "name": "Goreinu",
+      "gender": "male",
+      "description": "A Nen Practitioner and an Emitter whose signature technique, Twin Gorillas, manifests as the conjuration of two massive aura-constructed gorilla forms. Goreinu can summon these beasts to fight alongside him, effectively tripling his combat power through their independent aggression and strength. The gorillas are not sophisticated—they are simple, brutal constructs—but they are effective. Goreinu is a Greed Island player pursuing the game's completion for the challenge and the prize. He is enthusiastic, straightforward, and genuinely enjoys the camaraderie of group play. Goreinu often seeks alliances with other players, preferring cooperative hunts over solitary grinding. He is friendly, energetic, and lacks the cynicism that characterizes many veteran players. His Twin Gorillas strategy is effective but not subtle; stronger Nen users can counter his approach, but his willingness to work with allies often compensates for his individual power ceiling. Goreinu represents the social-play approach to Greed Island—finding strength in numbers and genuine human connection rather than ruthless competition. His background is Greed Island Player; his arc is A5 only.",
+      "traits": [
+        "Nen Practitioner",
+        "Emitter",
+        "Hatsu: Twin Gorillas",
+        "Greed Island Player"
+      ],
+      "replacesNpc": "Goreinu"
+    },
+    {
+      "name": "Abengane",
+      "gender": "male",
+      "description": "A Nen Practitioner and a Conjurer whose signature Hatsu, Exorcist's Beast, allows him to conjure a supernatural creature capable of detecting, binding, and exorcising Nen-based constructs and conjured entities. Abengane is a specialized hunter—his expertise lies not in raw combat but in identifying and neutralizing Nen traps, curses, and hostile aura constructs. On Greed Island, his ability is particularly valuable for dealing with players who rely on conjured constructs (like Goreinu's gorillas or conjured minions of other players). Abengane is methodical, patient, and carries himself with the bearing of a specialist in his craft. He views Nen use as a system to be understood and countered rather than merely overcome through superior power. Abengane is calm, professional, and genuinely interested in the theoretical applications of Nen exorcism. He represents the expertise-based approach to Nen mastery—a player who achieves power not through overwhelming aura but through deep specialization and understanding. His background is Greed Island Player; his arc is A5 only.",
+      "traits": [
+        "Nen Practitioner",
+        "Conjurer",
+        "Hatsu: Exorcist's Beast",
+        "Greed Island Player"
+      ],
+      "replacesNpc": "Abengane"
+    },
+    {
+      "name": "Kite",
+      "gender": "male",
+      "description": "A Licensed Hunter and a Nen Master whose Nen category is Conjuration. Kite is Ging Freecss's first student, a relationship that profoundly shaped his life and his approach to Nen mastery. He is calm, thoughtful, and carries himself with the bearing of someone who has learned from the very best. Kite's signature technique, Crazy Slots, manifests as a conjured game of chance—a spinning roulette wheel that determines which of seven different Hatsu manifestations he can access in any given moment. This unpredictability makes him formidable in combat; even Kite himself cannot predict which ability will be available, forcing him to adapt and improvise. Crazy Slots is both blessing and curse—incredible power tempered by absolute uncertainty. Kite joins Gon and Killua as a companion and mentor figure during the Greed Island arc's conclusion, leading them from the game into the real world. However, Kite's arc takes a tragic turn in the Chimera Ant invasion: he encounters the Royal Guard Neferpitou while attempting to rescue victims from the ant incursion, and he is killed in a devastating one-sided battle. Yet his story does not end in death—he is reborn as a Chimera Ant, one of the few humans to be reincarnated in that form. As an ant-child, Kite retains fragmented human memories and becomes something wholly unique: a bridge between humanity and the ant collective, a living remnant of a complex, beautiful human soul reborn in an inhuman body. His background is Licensed Hunter; his era spans A5 (Greed Island, end of arc) through A6 (Chimera Ant, dies and is reborn), and continues as an ant-child beyond.",
+      "traits": [
+        "Nen Master",
+        "Conjurer",
+        "Hatsu: Crazy Slots",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Kite"
+    },
+    {
+      "name": "Morel Mackernasey",
+      "gender": "male",
+      "description": "A Licensed Hunter and a Nen Master whose Nen category is Manipulation. Morel is a seasoned veteran of the Hunter Association, a large man with a weathered face and the bearing of someone who has faced genuine existential threats and survived them all. His signature technique, Deep Purple, is one of the most formidable Nen constructs in existence: it manifests as an enormous cloud of conjured smoke that rises from his pipe—a living, controllable miasma that he can manipulate through his Manipulator category. Within the smoke, Morel can create false copies of himself, become invisible, suffocate opponents, and obscure all sensory input. The technique is limited only by the aura he can channel through his pipe, making the pipe itself a binding factor in his power. Morel is loyal, principled, and genuinely cares about protecting those weaker than himself. During the Chimera Ant arc, he serves as a commanding officer in the Hunter Association's palace invasion force, leading soldiers and coordinating tactical responses to the Royal Guards. He is thoughtful, strategic, and willing to sacrifice himself for the mission's success. Morel is one of the arc's emotional anchors—a man who understands the gravity of what they face and who rises to meet that challenge with dignity and resolve. His background is Licensed Hunter; his era is A6 (Chimera Ant campaign and beyond).",
+      "traits": [
+        "Nen Master",
+        "Manipulator",
+        "Hatsu: Deep Purple",
+        "Licensed Hunter",
+        "Vow: Conditional Arsenal"
+      ],
+      "replacesNpc": "Morel Mackernasey"
+    },
+    {
+      "name": "Knov",
+      "gender": "male",
+      "description": "A Licensed Hunter and a Nen Master whose Nen category is Conjuration. Knov is a master of spatial Nen—his signature technique, Hide and Seek, allows him to conjure pocket dimensions and doorways through which he can enter and exit hidden spaces. His portals are nearly undetectable and can be used for storage, concealment, rapid transit, or escape. Knov's mastery of Hide and Seek is so complete that he can create entire hideouts within his conjured dimensions, spaces that feel impossibly large despite existing within conjured aura. Knov is calm, quiet, and carries himself with the precision of an academic. He is methodical in his approach and genuinely interested in understanding the theoretical limits of spatial Nen. During the Chimera Ant arc, Knov serves as the Hunter Association's logistics specialist and portal-creator, using Hide and Seek to establish secure positions and evacuate wounded. However, the arc reveals a crucial vulnerability: when the Royal Guard Shaiapouf uses his En (aura field) during the invasion, Knov's mental state fractures. The overwhelming sensory input from Pouf's enormous En causes psychological damage that breaks Knov's ability to focus—and therefore, his ability to maintain his conjured portals. He survives the arc but is fundamentally changed, his mind fractured by the experience. His background is Licensed Hunter; his era is A6 (Chimera Ant campaign and beyond, with post-traumatic limitations).",
+      "traits": [
+        "Nen Master",
+        "Conjurer",
+        "Hatsu: Hide and Seek",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Knov"
+    },
+    {
+      "name": "Knuckle Bine",
+      "gender": "male",
+      "description": "A Licensed Hunter and a Nen Adept whose Nen category is Emission. Knuckle is a young man with an earnest, straightforward demeanor and a surprising depth of principle. His signature technique, Hakoware (literally, 'box breaking'), manifests as a conjured aura creature called A.P.R. (Automatic Punishment Response)—a small, cute entity that attaches to an opponent and accumulates their accumulated aura on a metaphorical debt counter. Once the accumulated debt reaches a critical threshold, A.P.R. detonates with tremendous force, punishing the opponent for their aura usage. Knuckle has made a vow that fundamentally limits his technique: he cannot finish a crying opponent. If an opponent breaks down emotionally, Knuckle refuses to continue the fight, a principle born from genuine compassion. This vow transforms him from a pure combatant into a character of remarkable moral depth. Knuckle fights with honor and restraint, using his power to incapacitate rather than destroy. During the Chimera Ant arc, he serves as part of the hunter taskforce and becomes a mentor figure to Gon and Killua. He is earnest, kind, and genuinely invested in protecting those weaker than himself. His background is Licensed Hunter; his era is A6 (Chimera Ant campaign and beyond).",
+      "traits": [
+        "Nen Adept",
+        "Emitter",
+        "Hatsu: Hakoware",
+        "Licensed Hunter",
+        "Vow: Pacifist's Edge"
+      ],
+      "replacesNpc": "Knuckle Bine"
+    },
+    {
+      "name": "Shoot McMahon",
+      "gender": "male",
+      "description": "A Licensed Hunter and a Nen Adept whose Nen category is Manipulation. Shoot is a quiet, reserved man who carries himself with the precision of someone trained in high-stakes operations. His signature technique, Hotel Rafflesia, conjures a sophisticated Nen construct—a building-like structure from which he can manifest and control multiple conjured human-form constructs (floating hands, armed soldiers, defense systems). The hotel structure serves as his command center; from within it, he can project his will across the battlefield and coordinate multiple simultaneous threats. What makes Shoot's technique particularly devastating is that he can detach his own left arm and float it independently, using it as a conjured limb-weapon to strike at distance while his body remains protected within Hotel Rafflesia. Shoot has made a vow that binds this left arm: Conditional Arsenal—his detached arm only functions under specific conditions, limiting its use but deepening its power. Shoot is the most reserved of the hunter-team characters, speaking rarely and observing carefully. He is loyal, competent, and carries out his duties with mechanical precision. During the Chimera Ant arc, he serves as part of the palace invasion team, using Hotel Rafflesia to establish secure positions and provide ranged support. His background is Licensed Hunter; his era is A6 (Chimera Ant campaign and beyond).",
+      "traits": [
+        "Nen Adept",
+        "Manipulator",
+        "Hatsu: Hotel Rafflesia",
+        "Licensed Hunter",
+        "Vow: Conditional Arsenal"
+      ],
+      "replacesNpc": "Shoot McMahon"
+    },
+    {
+      "name": "Palm Siberia",
+      "gender": "female",
+      "description": "A Licensed Hunter and a Nen Adept whose Nen category is Enhancement. Palm is a young woman of considerable Nen aptitude and a member of the hunter taskforce deployed during the Chimera Ant invasion. She is earnest, driven, and approaches Nen mastery with the focus of someone who understands that weakness can be fatal. Her signature technique, Wink Blue, channels her aura through her eyes, allowing her to predict the movements of opponents by reading their aura patterns and subtle physical tells. Wink Blue is primarily a sensory and defensive technique—rather than amplifying her striking power, it amplifies her perceptual capability. Palm is capable, professional, and genuinely invested in the mission's success. However, the Chimera Ant arc marks a turning point in her life: she is captured and converted into a human-ant hybrid during the invasion, her body fundamentally altered by ant biology. Rather than lose her life entirely, Palm becomes something new—a chimera hybrid who retains her human consciousness and memories while gaining the physical capabilities of an ant. Her transformation is one of the arc's most profound moments: the loss of her humanity in exchange for survival, the remaking of her body by forces beyond her control. As a hybrid, her Nen capabilities potentially shift and evolve. Her background is Licensed Hunter; her era spans A6 (Chimera Ant campaign) onwards, with a note that her post-transformation capabilities evolve beyond standard Enhancement.",
+      "traits": [
+        "Nen Adept",
+        "Enhancer",
+        "Hatsu: Wink Blue",
+        "Licensed Hunter"
+      ],
+      "replacesNpc": "Palm Siberia"
+    },
+    {
+      "name": "Komugi",
+      "gender": "female",
+      "description": "The world's greatest Gungi player and the hardest playable character in Hunter x Hunter. Komugi is a blind girl, completely lacking in combat ability, Nen mastery, or any martial training whatsoever. She cannot see, cannot fight, and cannot protect herself. Yet she possesses something that transcends physical power: an absolute mastery of Gungi, an ancient board game of breathtaking complexity. Komugi has spent her entire life studying Gungi, committing every strategy and counterstrategy to memory, developing an intuitive understanding of the game that borders on supernatural. She is the world champion, undefeated, her reputation built entirely on genius and discipline rather than physical prowess. During the Chimera Ant arc, Komugi encounters Meruem, the Chimera Ant King, and becomes his companion through Gungi. Meruem, for all his godlike power, discovers that Komugi can defeat him at Gungi—not through luck but through genuine superiority of intellect and preparation. Their relationship becomes the emotional heart of the arc: a being of unimaginable power and a blind girl playing a board game, each finding in the other a kindred spirit and a worthy opponent. Komugi represents the possibility of meaning and strength that transcends conventional combat; she proves that mastery of a single domain can make a person undefeatable in that domain. Playing as Komugi means engaging with the world entirely through non-combat means—negotiation, cleverness, and the depth of a single consuming passion. Her background is Civilian Prodigy; her arc is A6 (Chimera Ant campaign), and she remains significant throughout.",
+      "traits": [
+        "Nen-Unawakened",
+        "Undivined",
+        "No Hatsu Yet",
+        "Civilian Prodigy"
+      ],
+      "replacesNpc": "Komugi"
     }
   ],
   "quests": {},
