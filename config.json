@@ -7603,7 +7603,11 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Jajanken: Rock",
+        "Jajanken: Scissors",
+        "Jajanken: Paper"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7615,7 +7619,11 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Lightning Palm",
+        "Thunderbolt",
+        "Godspeed"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7627,7 +7635,13 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Holy Chain",
+        "Chain Jail",
+        "Dowsing Chain",
+        "Judgment Chain",
+        "Emperor Time"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7639,7 +7653,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Remote Punch"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7651,7 +7667,10 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Bungee Gum",
+        "Texture Surprise"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7663,7 +7682,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Needle People"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7675,7 +7696,10 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Skill Hunter",
+        "Steal the Ability"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7687,7 +7711,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Battōjutsu: Severing Circle"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7699,7 +7725,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Pain Packer: Rising Sun"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7711,7 +7739,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Nen Stitches"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7723,7 +7753,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Ripper Cyclotron"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7735,7 +7767,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Double Machine Gun"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7747,7 +7781,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Black Voice"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7759,7 +7795,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Blinky"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7771,7 +7809,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Memory Bomb"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7783,7 +7823,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Big Bang Impact"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7795,7 +7837,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Battle Cantabile: Jupiter"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7807,7 +7851,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Gallery Fake"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7819,7 +7865,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Dance of the Serpent's Bite"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7831,7 +7879,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Dragon Lance"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7843,7 +7893,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Twin Orbs"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7855,7 +7907,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Nanika's Wish"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7867,7 +7921,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Coin Bullets"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7879,7 +7935,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Rider's High"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7891,7 +7949,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "100-Type Guanyin Bodhisattva"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7903,7 +7963,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Cattle Bell"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7915,7 +7977,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Three Monkeys"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7927,7 +7991,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Technique Mimicry"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7939,7 +8005,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Tiger Bite Double"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7951,7 +8019,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Song of Healing"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7963,7 +8033,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Great Haiku"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7975,7 +8047,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Lovely Ghostwriter"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7987,7 +8061,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Magical Esthetician"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -7999,7 +8075,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "14 Devils"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8011,7 +8089,10 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Little Flower",
+        "Countdown"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8023,7 +8104,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Twin Gorillas"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8035,7 +8118,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Exorcist's Beast"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8047,7 +8132,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Crazy Slots"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8059,7 +8146,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Deep Purple"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8071,7 +8160,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Hide and Seek"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8083,7 +8174,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Hakoware"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8095,7 +8188,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Hotel Rafflesia"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8107,7 +8202,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Wink Blue"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8119,7 +8216,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Terpsichora"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     },
@@ -8131,7 +8230,9 @@
       "skills": [],
       "resources": [],
       "startingItems": [],
-      "abilities": [],
+      "abilities": [
+        "Future Sight"
+      ],
       "unlockedBy": [],
       "excludedBy": []
     }
