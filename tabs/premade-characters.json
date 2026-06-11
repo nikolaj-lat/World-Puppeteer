@@ -10,6 +10,14 @@
         "No Hatsu Yet",
         "Rookie Hunter Applicant"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 10,
+        "endurance": 9,
+        "intellect": 8,
+        "willpower": 12,
+        "presence": 12
+      },
       "replacesNpc": "Gon Freecss"
     },
     {
@@ -23,6 +31,14 @@
         "Licensed Hunter",
         "Vow: Sworn Nemesis"
       ],
+      "attributes": {
+        "strength": 12,
+        "agility": 11,
+        "endurance": 12,
+        "intellect": 8,
+        "willpower": 12,
+        "presence": 5
+      },
       "replacesNpc": "Gon Freecss"
     },
     {
@@ -35,6 +51,14 @@
         "No Hatsu Yet",
         "Zoldyck-Trained Assassin"
       ],
+      "attributes": {
+        "strength": 8,
+        "agility": 14,
+        "endurance": 8,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 8
+      },
       "replacesNpc": "Killua Zoldyck"
     },
     {
@@ -47,6 +71,14 @@
         "Hatsu: Lightning Aura",
         "Zoldyck-Trained Assassin"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 14,
+        "endurance": 9,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Killua Zoldyck"
     },
     {
@@ -60,6 +92,14 @@
         "Kurta Survivor",
         "Vow: Sworn Nemesis"
       ],
+      "attributes": {
+        "strength": 8,
+        "agility": 10,
+        "endurance": 9,
+        "intellect": 13,
+        "willpower": 15,
+        "presence": 5
+      },
       "replacesNpc": "Kurapika"
     },
     {
@@ -72,6 +112,14 @@
         "Hatsu: Remote Punch",
         "Rookie Hunter Applicant"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 8,
+        "endurance": 9,
+        "intellect": 11,
+        "willpower": 10,
+        "presence": 11
+      },
       "replacesNpc": "Leorio Paladiknight"
     },
     {
@@ -84,6 +132,14 @@
         "Hatsu: Bungee Gum",
         "Arena Fighter"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 12,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 10,
+        "presence": 5
+      },
       "replacesNpc": "Hisoka Morow"
     },
     {
@@ -96,6 +152,14 @@
         "Hatsu: Needle People",
         "Zoldyck-Trained Assassin"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 12,
+        "presence": 5
+      },
       "replacesNpc": "Illumi Zoldyck"
     },
     {
@@ -109,6 +173,14 @@
         "Licensed Hunter",
         "Vow: Ascetic's Discipline"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Isaac Netero"
     },
     {
@@ -121,6 +193,14 @@
         "Developing Hatsu (Enhancement)",
         "Hunter Association Staff"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 9,
+        "willpower": 11,
+        "presence": 9
+      },
       "replacesNpc": "Satotz"
     },
     {
@@ -133,6 +213,14 @@
         "Developing Hatsu (Transmutation)",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 9,
+        "endurance": 10,
+        "intellect": 10,
+        "willpower": 10,
+        "presence": 12
+      },
       "replacesNpc": "Menchi"
     },
     {
@@ -145,6 +233,14 @@
         "Developing Hatsu (Enhancement)",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 13,
+        "agility": 8,
+        "endurance": 13,
+        "intellect": 8,
+        "willpower": 10,
+        "presence": 8
+      },
       "replacesNpc": "Buhara"
     },
     {
@@ -157,6 +253,14 @@
         "Developing Hatsu (Manipulation)",
         "Hunter Association Staff"
       ],
+      "attributes": {
+        "strength": 8,
+        "agility": 9,
+        "endurance": 10,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 11
+      },
       "replacesNpc": "Lippo"
     },
     {
@@ -169,6 +273,14 @@
         "Developing Hatsu (Conjuration)",
         "Civilian Prodigy"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 12,
+        "endurance": 9,
+        "intellect": 10,
+        "willpower": 12,
+        "presence": 7
+      },
       "replacesNpc": "Hanzo"
     },
     {
@@ -181,6 +293,14 @@
         "Developing Hatsu (Emission)",
         "Rookie Hunter Applicant"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 9,
+        "endurance": 9,
+        "intellect": 8,
+        "willpower": 10,
+        "presence": 15
+      },
       "replacesNpc": "Pokkle"
     },
     {
@@ -193,6 +313,14 @@
         "Developing Hatsu (Manipulation)",
         "Rookie Hunter Applicant"
       ],
+      "attributes": {
+        "strength": 8,
+        "agility": 10,
+        "endurance": 8,
+        "intellect": 9,
+        "willpower": 10,
+        "presence": 15
+      },
       "replacesNpc": "Ponzu"
     },
     {
@@ -205,6 +333,14 @@
         "No Hatsu Yet",
         "Rookie Hunter Applicant"
       ],
+      "attributes": {
+        "strength": 8,
+        "agility": 8,
+        "endurance": 8,
+        "intellect": 13,
+        "willpower": 8,
+        "presence": 15
+      },
       "replacesNpc": "Tonpa"
     },
     {
@@ -217,6 +353,14 @@
         "Developing Hatsu (Enhancement)",
         "Hunter Association Staff"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 12,
+        "presence": 5
+      },
       "replacesNpc": "Wing"
     },
     {
@@ -229,6 +373,14 @@
         "No Hatsu Yet",
         "Arena Fighter"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 9,
+        "endurance": 10,
+        "intellect": 8,
+        "willpower": 11,
+        "presence": 13
+      },
       "replacesNpc": "Zushi"
     },
     {
@@ -242,6 +394,14 @@
         "Arena Fighter",
         "Vow: Announce the Kill"
       ],
+      "attributes": {
+        "strength": 12,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 9,
+        "willpower": 10,
+        "presence": 7
+      },
       "replacesNpc": "Kastro"
     },
     {
@@ -254,6 +414,14 @@
         "Hatsu: Skill Hunter",
         "Meteor City Survivor"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 13,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Chrollo Lucilfer"
     },
     {
@@ -266,6 +434,14 @@
         "Hatsu: Battōjutsu En",
         "Meteor City Survivor"
       ],
+      "attributes": {
+        "strength": 12,
+        "agility": 13,
+        "endurance": 11,
+        "intellect": 9,
+        "willpower": 10,
+        "presence": 5
+      },
       "replacesNpc": "Nobunaga Hazama"
     },
     {
@@ -279,6 +455,14 @@
         "Meteor City Survivor",
         "Vow: Stake of Lifeblood"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 10,
+        "willpower": 12,
+        "presence": 5
+      },
       "replacesNpc": "Feitan Portor"
     },
     {
@@ -291,6 +475,14 @@
         "Hatsu: Nen Stitches",
         "Meteor City Survivor"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 7
+      },
       "replacesNpc": "Machi Komacine"
     },
     {
@@ -303,6 +495,14 @@
         "Hatsu: Ripper Cyclotron",
         "Meteor City Survivor"
       ],
+      "attributes": {
+        "strength": 14,
+        "agility": 11,
+        "endurance": 12,
+        "intellect": 8,
+        "willpower": 10,
+        "presence": 5
+      },
       "replacesNpc": "Phinks Magcub"
     },
     {
@@ -316,6 +516,14 @@
         "Meteor City Survivor",
         "Vow: Stake of Lifeblood"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 12,
+        "endurance": 12,
+        "intellect": 10,
+        "willpower": 10,
+        "presence": 5
+      },
       "replacesNpc": "Franklin Bordeau"
     },
     {
@@ -328,6 +536,14 @@
         "Hatsu: Black Voice",
         "Meteor City Survivor"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 12,
+        "endurance": 10,
+        "intellect": 13,
+        "willpower": 10,
+        "presence": 5
+      },
       "replacesNpc": "Shalnark"
     },
     {
@@ -340,6 +556,14 @@
         "Hatsu: Blinky",
         "Meteor City Survivor"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 10,
+        "endurance": 10,
+        "intellect": 6,
+        "willpower": 11,
+        "presence": 13
+      },
       "replacesNpc": "Shizuku Murasaki"
     },
     {
@@ -352,6 +576,14 @@
         "Hatsu: Memory Bomb",
         "Meteor City Survivor"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Pakunoda"
     },
     {
@@ -365,6 +597,14 @@
         "Meteor City Survivor",
         "Vow: Death Before Retreat"
       ],
+      "attributes": {
+        "strength": 14,
+        "agility": 10,
+        "endurance": 13,
+        "intellect": 8,
+        "willpower": 10,
+        "presence": 5
+      },
       "replacesNpc": "Uvogin"
     },
     {
@@ -377,6 +617,14 @@
         "Hatsu: Battle Cantabile",
         "Meteor City Survivor"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Bonolenov Ndongo"
     },
     {
@@ -389,6 +637,14 @@
         "Hatsu: Gallery Fake",
         "Meteor City Survivor"
       ],
+      "attributes": {
+        "strength": 8,
+        "agility": 10,
+        "endurance": 8,
+        "intellect": 14,
+        "willpower": 10,
+        "presence": 10
+      },
       "replacesNpc": "Kortopi"
     },
     {
@@ -401,6 +657,14 @@
         "Hatsu: Dance of the Serpent's Bite",
         "Zoldyck-Trained Assassin"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 13,
+        "endurance": 9,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 7
+      },
       "replacesNpc": "Kalluto Zoldyck"
     },
     {
@@ -413,6 +677,14 @@
         "Hatsu: Twin Orbs",
         "Zoldyck-Trained Assassin"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Silva Zoldyck"
     },
     {
@@ -425,6 +697,14 @@
         "Hatsu: Dragon Lance",
         "Zoldyck-Trained Assassin"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Zeno Zoldyck"
     },
     {
@@ -437,6 +717,14 @@
         "Developing Hatsu (Manipulation)",
         "Zoldyck-Trained Assassin"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Kikyo Zoldyck"
     },
     {
@@ -449,6 +737,14 @@
         "Developing Hatsu (Manipulation)",
         "Civilian Prodigy"
       ],
+      "attributes": {
+        "strength": 6,
+        "agility": 8,
+        "endurance": 8,
+        "intellect": 15,
+        "willpower": 11,
+        "presence": 12
+      },
       "replacesNpc": "Milluki Zoldyck"
     },
     {
@@ -461,6 +757,14 @@
         "Hatsu: Nanika's Wish",
         "Civilian Prodigy"
       ],
+      "attributes": {
+        "strength": 6,
+        "agility": 7,
+        "endurance": 7,
+        "intellect": 10,
+        "willpower": 15,
+        "presence": 15
+      },
       "replacesNpc": "Alluka Zoldyck"
     },
     {
@@ -473,6 +777,14 @@
         "Developing Hatsu (Emission)",
         "Meteor City Survivor"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 10,
+        "endurance": 9,
+        "intellect": 9,
+        "willpower": 10,
+        "presence": 13
+      },
       "replacesNpc": "Canary"
     },
     {
@@ -485,6 +797,14 @@
         "Hatsu: Coin Bullets",
         "Zoldyck-Trained Assassin"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Gotoh"
     },
     {
@@ -497,6 +817,14 @@
         "Hatsu: Rider's High",
         "Zoldyck-Trained Assassin"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Tsubone"
     },
     {
@@ -508,6 +836,14 @@
         "Developing Hatsu (Manipulation)",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 9,
+        "endurance": 10,
+        "intellect": 13,
+        "willpower": 12,
+        "presence": 7
+      },
       "replacesNpc": "Cheadle Yorkshire"
     },
     {
@@ -520,6 +856,14 @@
         "Hatsu: Cattle Bell",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 12,
+        "willpower": 11,
+        "presence": 6
+      },
       "replacesNpc": "Mizaistom Nana"
     },
     {
@@ -532,6 +876,14 @@
         "Developing Hatsu (Enhancement)",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 13,
+        "agility": 10,
+        "endurance": 12,
+        "intellect": 9,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Kanzai"
     },
     {
@@ -544,6 +896,14 @@
         "Developing Hatsu (Emission)",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 12,
+        "endurance": 10,
+        "intellect": 11,
+        "willpower": 10,
+        "presence": 8
+      },
       "replacesNpc": "Pyon"
     },
     {
@@ -556,6 +916,14 @@
         "Developing Hatsu (Enhancement)",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 10,
+        "endurance": 12,
+        "intellect": 10,
+        "willpower": 12,
+        "presence": 5
+      },
       "replacesNpc": "Botobai Gigante"
     },
     {
@@ -568,6 +936,14 @@
         "Developing Hatsu (Transmutation)",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 11,
+        "presence": 6
+      },
       "replacesNpc": "Gel"
     },
     {
@@ -580,6 +956,14 @@
         "Developing Hatsu (Emission)",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 12,
+        "willpower": 11,
+        "presence": 6
+      },
       "replacesNpc": "Saccho Kobayakawa"
     },
     {
@@ -592,6 +976,14 @@
         "Developing Hatsu (Enhancement)",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 10,
+        "willpower": 11,
+        "presence": 7
+      },
       "replacesNpc": "Ginta"
     },
     {
@@ -604,6 +996,14 @@
         "Hatsu: Three Monkeys",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 11,
+        "presence": 6
+      },
       "replacesNpc": "Saiyu"
     },
     {
@@ -616,6 +1016,14 @@
         "Developing Hatsu (Manipulation)",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 10,
+        "endurance": 10,
+        "intellect": 13,
+        "willpower": 11,
+        "presence": 7
+      },
       "replacesNpc": "Cluck"
     },
     {
@@ -628,6 +1036,14 @@
         "Hatsu: Mimicry",
         "Civilian Prodigy"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Ging Freecss"
     },
     {
@@ -640,6 +1056,14 @@
         "Developing Hatsu (Specialization)",
         "Hunter Association Staff"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 13,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Pariston Hill"
     },
     {
@@ -653,6 +1077,14 @@
         "Licensed Hunter",
         "Vow: Pacifist's Edge"
       ],
+      "attributes": {
+        "strength": 8,
+        "agility": 9,
+        "endurance": 9,
+        "intellect": 11,
+        "willpower": 14,
+        "presence": 9
+      },
       "replacesNpc": "Melody"
     },
     {
@@ -665,6 +1097,14 @@
         "Hatsu: Great Haiku",
         "Mafia Community Member"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 10,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 11,
+        "presence": 7
+      },
       "replacesNpc": "Basho"
     },
     {
@@ -677,6 +1117,14 @@
         "Hatsu: Lovely Ghostwriter",
         "Civilian Prodigy"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 9,
+        "endurance": 9,
+        "intellect": 9,
+        "willpower": 9,
+        "presence": 15
+      },
       "replacesNpc": "Neon Nostrade"
     },
     {
@@ -689,6 +1137,14 @@
         "No Hatsu Yet",
         "Mafia Community Member"
       ],
+      "attributes": {
+        "strength": 8,
+        "agility": 8,
+        "endurance": 7,
+        "intellect": 13,
+        "willpower": 9,
+        "presence": 15
+      },
       "replacesNpc": "Zepile"
     },
     {
@@ -701,6 +1157,14 @@
         "Hatsu: Cookie-chan",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Biscuit Krueger"
     },
     {
@@ -713,6 +1177,14 @@
         "Hatsu: 14 Devils",
         "Greed Island Player"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 12,
+        "intellect": 11,
+        "willpower": 10,
+        "presence": 5
+      },
       "replacesNpc": "Razor"
     },
     {
@@ -726,6 +1198,14 @@
         "Greed Island Player",
         "Vow: Announce the Kill"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Genthru"
     },
     {
@@ -738,6 +1218,14 @@
         "Developing Hatsu (Emission)",
         "Greed Island Player"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 6
+      },
       "replacesNpc": "Tsezguerra"
     },
     {
@@ -750,6 +1238,14 @@
         "Hatsu: Twin Gorillas",
         "Greed Island Player"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 9,
+        "endurance": 10,
+        "intellect": 9,
+        "willpower": 10,
+        "presence": 11
+      },
       "replacesNpc": "Goreinu"
     },
     {
@@ -762,6 +1258,14 @@
         "Hatsu: Exorcist's Beast",
         "Greed Island Player"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 10,
+        "endurance": 9,
+        "intellect": 13,
+        "willpower": 10,
+        "presence": 9
+      },
       "replacesNpc": "Abengane"
     },
     {
@@ -774,6 +1278,14 @@
         "Hatsu: Crazy Slots",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Kite"
     },
     {
@@ -787,6 +1299,14 @@
         "Licensed Hunter",
         "Vow: Conditional Arsenal"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 12,
+        "presence": 5
+      },
       "replacesNpc": "Morel Mackernasey"
     },
     {
@@ -799,6 +1319,14 @@
         "Hatsu: Hide and Seek",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 10,
+        "endurance": 10,
+        "intellect": 13,
+        "willpower": 11,
+        "presence": 6
+      },
       "replacesNpc": "Knov"
     },
     {
@@ -812,6 +1340,14 @@
         "Licensed Hunter",
         "Vow: Pacifist's Edge"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 10,
+        "willpower": 13,
+        "presence": 5
+      },
       "replacesNpc": "Knuckle Bine"
     },
     {
@@ -825,6 +1361,14 @@
         "Licensed Hunter",
         "Vow: Conditional Arsenal"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 7
+      },
       "replacesNpc": "Shoot McMahon"
     },
     {
@@ -837,6 +1381,14 @@
         "Hatsu: Wink Blue",
         "Licensed Hunter"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 10,
+        "willpower": 11,
+        "presence": 6
+      },
       "replacesNpc": "Palm Siberia"
     },
     {
@@ -849,6 +1401,14 @@
         "No Hatsu Yet",
         "Civilian Prodigy"
       ],
+      "attributes": {
+        "strength": 5,
+        "agility": 6,
+        "endurance": 7,
+        "intellect": 15,
+        "willpower": 15,
+        "presence": 12
+      },
       "replacesNpc": "Komugi"
     },
     {
@@ -860,6 +1420,14 @@
         "Specialist",
         "Developing Hatsu (Specialization)"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Meruem"
     },
     {
@@ -871,6 +1439,14 @@
         "Specialist",
         "Hatsu: Terpsichora"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Neferpitou"
     },
     {
@@ -882,6 +1458,14 @@
         "Manipulator",
         "Developing Hatsu (Manipulation)"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Shaiapouf"
     },
     {
@@ -893,6 +1477,14 @@
         "Enhancer",
         "Developing Hatsu (Enhancement)"
       ],
+      "attributes": {
+        "strength": 12,
+        "agility": 11,
+        "endurance": 12,
+        "intellect": 10,
+        "willpower": 10,
+        "presence": 5
+      },
       "replacesNpc": "Menthuthuyoupi"
     },
     {
@@ -904,6 +1496,14 @@
         "Emitter",
         "Developing Hatsu (Emission)"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 7
+      },
       "replacesNpc": "Colt"
     },
     {
@@ -915,6 +1515,14 @@
         "Manipulator",
         "Developing Hatsu (Manipulation)"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Zazan"
     },
     {
@@ -926,6 +1534,14 @@
         "Conjurer",
         "Developing Hatsu (Conjuration)"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 14,
+        "endurance": 10,
+        "intellect": 9,
+        "willpower": 10,
+        "presence": 6
+      },
       "replacesNpc": "Cheetu"
     },
     {
@@ -937,6 +1553,14 @@
         "Specialist",
         "Developing Hatsu (Specialization)"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Leol"
     },
     {
@@ -948,6 +1572,14 @@
         "Emitter",
         "Developing Hatsu (Emission)"
       ],
+      "attributes": {
+        "strength": 9,
+        "agility": 11,
+        "endurance": 9,
+        "intellect": 13,
+        "willpower": 11,
+        "presence": 7
+      },
       "replacesNpc": "Ikalgo"
     },
     {
@@ -959,6 +1591,14 @@
         "Specialist",
         "Developing Hatsu (Specialization)"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 12,
+        "presence": 5
+      },
       "replacesNpc": "Meleoron"
     },
     {
@@ -970,6 +1610,14 @@
         "Manipulator",
         "Developing Hatsu (Manipulation)"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 12,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Welfin"
     },
     {
@@ -981,6 +1629,14 @@
         "Enhancer",
         "Developing Hatsu (Enhancement)"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 11,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 5
+      },
       "replacesNpc": "Beyond Netero"
     },
     {
@@ -993,6 +1649,14 @@
         "Hatsu: Future Sight",
         "Vow: Time-Boxed Power"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 12,
+        "presence": 5
+      },
       "replacesNpc": "Tserriednich Hui Guo Rou"
     },
     {
@@ -1004,6 +1668,14 @@
         "Enhancer",
         "Developing Hatsu (Enhancement)"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 11,
+        "willpower": 12,
+        "presence": 5
+      },
       "replacesNpc": "Benjamin Hui Guo Rou"
     },
     {
@@ -1015,6 +1687,14 @@
         "Specialist",
         "Developing Hatsu (Specialization)"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 10,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 13,
+        "presence": 5
+      },
       "replacesNpc": "Camilla Hui Guo Rou"
     },
     {
@@ -1026,6 +1706,14 @@
         "Conjurer",
         "Developing Hatsu (Conjuration)"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 10,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 13,
+        "presence": 5
+      },
       "replacesNpc": "Zhang Lei Hui Guo Rou"
     },
     {
@@ -1037,6 +1725,14 @@
         "Manipulator",
         "Developing Hatsu (Manipulation)"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 10,
+        "endurance": 10,
+        "intellect": 12,
+        "willpower": 13,
+        "presence": 5
+      },
       "replacesNpc": "Halkenburg Hui Guo Rou"
     },
     {
@@ -1048,6 +1744,14 @@
         "Undivined",
         "No Hatsu Yet"
       ],
+      "attributes": {
+        "strength": 6,
+        "agility": 7,
+        "endurance": 7,
+        "intellect": 12,
+        "willpower": 13,
+        "presence": 15
+      },
       "replacesNpc": "Queen Oito"
     },
     {
@@ -1059,6 +1763,14 @@
         "Emitter",
         "Developing Hatsu (Emission)"
       ],
+      "attributes": {
+        "strength": 11,
+        "agility": 10,
+        "endurance": 11,
+        "intellect": 10,
+        "willpower": 11,
+        "presence": 7
+      },
       "replacesNpc": "Theta"
     },
     {
@@ -1070,6 +1782,14 @@
         "Emitter",
         "Developing Hatsu (Emission)"
       ],
+      "attributes": {
+        "strength": 10,
+        "agility": 11,
+        "endurance": 10,
+        "intellect": 11,
+        "willpower": 11,
+        "presence": 7
+      },
       "replacesNpc": "Bill"
     },
     {
@@ -1081,6 +1801,14 @@
         "Undivined",
         "No Hatsu Yet"
       ],
+      "attributes": {
+        "strength": 8,
+        "agility": 7,
+        "endurance": 8,
+        "intellect": 14,
+        "willpower": 12,
+        "presence": 11
+      },
       "replacesNpc": "Nasubi Hui Guo Rou"
     }
   ]
