@@ -4636,6 +4636,613 @@
       "hpMax": 88,
       "known": true,
       "voiceTag": "female warm intense"
+    },
+    "Cheadle Yorkshire": {
+      "name": "Cheadle Yorkshire",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "female",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Dog of the Zodiacs and a triple-star Disease Hunter, Cheadle embodies judicial precision and conservative ethics beneath an ornate aristocratic demeanor. She is a small-framed woman with distinctive features, carefully styled hair adorned with ornamental accessories, and formal dignified bearing. She wears elaborate formal gowns adorned with fur and precious accents reflecting her elevated status.",
+      "personality": [
+        "Scrupulously just: operates strictly within legal and ethical frameworks, believing rules exist for essential reasons",
+        "Aristocratic precision: maintains meticulous attention to procedure and formal protocol in all interactions",
+        "Cautiously conservative: prefers established structures over innovation; resists change unless thoroughly justified",
+        "Surprisingly warm: beneath her formal exterior, she demonstrates genuine care for the Association's members and welfare"
+      ],
+      "hiddenInfo": "Cheadle Yorkshire is the Dog of the Zodiacs—one of twelve elite Hunters serving as senior advisors to the Hunter Association. She is a triple-star Disease Hunter specializing in epidemiology and public health protection. During the Election arc (A7), Cheadle becomes the 14th Chairman of the Hunter Association after Pariston's resignation, cementing her transformation from Zodiac member to supreme authority figure. Her leadership style emphasizes rule-of-law, proper procedure, and institutional stability over charismatic authority or experimental approaches. She is notably conservative—advocating against risky expeditions and favoring cautious, measured expansion. She boards the Black Whale during the Dark Continent Expedition (A8), though her boarding is detailed as part of official delegation rather than pure expedition participation. Her hidden concern throughout is institutional integrity—she worries constantly about the Association's reputation and proper governance. ARC VALIDITY: background Zodiac presence in A1-A6; central figure in A7 (election arc—becomes 14th Chairman); A8 aboard Black Whale as representative of the Association's official interests.",
+      "abilities": [
+        "Disease Analysis Mastery: Cheadle possesses encyclopedic knowledge of disease transmission, diagnosis, and containment. She can identify pathogens by symptom observation and design rapid containment protocols.",
+        "Epidemiological Planning: Cheadle can analyze disease patterns, predict outbreak trajectories, and implement population-scale prevention strategies with remarkable accuracy.",
+        "Aura Reinforcement Expertise: As a triple-star Hunter, Cheadle maintains exceptional aura control and defensive capability through Ten reinforcement.",
+        "Legal Authority Projection: Cheadle's official status grants her administrative authority over Association operations; her commands carry force of institutional law.",
+        "Institutional Understanding: Cheadle possesses deep knowledge of Hunter Association structure, procedure, and political dynamics enabling her to navigate complex organizational challenges.",
+        "\nfighting style: Cheadle avoids direct combat when possible, preferring to exercise administrative and political authority. When forced into engagement, she employs straightforward Nen reinforcement and defensive positioning. Her greatest strength is her institutional authority and deep understanding of Association procedures; her weakness is her aversion to violence and direct combat—prepared opponents with combat specialization significantly outmatch her martial capability. Her effectiveness derives from her role as administrator, not warrior, making her vulnerable once removed from institutional support."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 104,
+      "known": true,
+      "voiceTag": "female formal precise"
+    },
+    "Mizaistom Nana": {
+      "name": "Mizaistom Nana",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Ox of the Zodiacs and a double-star Crime Hunter, Mizaistom projects unassuming steadiness and old-fashioned martial virtue beneath his deceptively gentle exterior. He possesses a substantial frame suggesting athletic strength, calm features reflecting patient resolve, and wears a distinctive cattle-suit costume reflecting his Zodiac designation. He carries himself with unpretentious authority.",
+      "personality": [
+        "Steadfastly honorable: maintains old-fashioned martial codes emphasizing loyalty, duty, and honest conduct",
+        "Unflinchingly straightforward: expresses opinions directly without diplomatic softening; believes honesty supersedes comfort",
+        "Patiently calm: demonstrates remarkable emotional stability and tolerance for frustration or provocation",
+        "Quietly dependable: inspires trust through consistent reliability; people instinctively know Mizaistom will follow through on commitments"
+      ],
+      "hiddenInfo": "Mizaistom Nana is the Ox of the Zodiacs—one of twelve elite Hunters. He is a double-star Crime Hunter specializing in organized crime investigation and enforcement. His Nen category is Conjuration, and his signature ability is 'Cattle Bell Cards'—a Hatsu enabling him to conjure playing cards infused with distinctive properties. Each card type corresponds to different effects: detection, restraint, communication, or barrier creation. He uses these cards with tactical precision to track criminals and establish containment zones. During the Dark Continent Expedition (A8), Mizaistom assumes responsibility for guarding Beyond Netero, the expedition figurehead. This assignment positions him as a critical safety officer, as Beyond represents both the expedition's primary resource and a significant security risk if compromised. Mizaistom's role encompasses both protecting Beyond and subtly monitoring his actions—a delicate balance reflecting his honest, straightforward nature. His greatest strength lies in his unflinching commitment to duty and his patience with complex situations. ARC VALIDITY: background Zodiac presence in A1-A6; featured in A7 (election arc); A8 central (guards Beyond Netero during expedition—critical security role).",
+      "abilities": [
+        "Cattle Bell Card Conjuration: Mizaistom conjures specialized playing cards infused with distinctive Nen properties. Card types enable detection, communication, restraint, and barrier effects depending on suit and value.",
+        "Card-Based Tracking: Mizaistom can place detection cards on targets enabling remote tracking and aura monitoring across extended distances.",
+        "Restraint Card Activation: Certain card combinations create binding effects capable of temporarily immobilizing even enhanced Nen users through strategic card placement.",
+        "Barrier Manifestation: Mizaistom can activate card combinations to create protective barriers and containment zones around people or locations.",
+        "Crime Investigation Expertise: Mizaistom possesses exceptional capability for analyzing criminal patterns, identifying organizational structures, and predicting operation patterns.",
+        "\nfighting style: Mizaistom fights by establishing card networks enabling tracking and restraint, then moving to secure targets or establish containment. He avoids direct physical engagement when possible, relying on his cards to handle tactical problems. Against opponents entering his card-established zones, he gains significant advantage through card coordination. His greatest strength is his card system's versatility and his tactical discipline; his weakness is his reliance on establishing card networks—opponents who move beyond card range or destroy cards before activation can bypass his system. His straightforward approach also makes him somewhat predictable to sophisticated opponents."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 100,
+      "known": true,
+      "voiceTag": "male calm steady strong"
+    },
+    "Kanzai": {
+      "name": "Kanzai",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Tiger of the Zodiacs and a passionate treasure hunter of considerable renown, Kanzai combines explosive emotional intensity with surprising tactical depth. He possesses a muscular athletic build, angular sharp features, and wears practical adventuring clothing suggesting constant readiness for field operation. His bearing suggests barely-contained energy and aggressive enthusiasm.",
+      "personality": [
+        "Passionately hot-headed: experiences emotions intensely and expresses them with minimal restraint; quick to anger and quick to enthusiasm",
+        "Competitive combatant: treats challenges as opportunities to test himself; views worthy opponents as exciting discoveries",
+        "Surprisingly strategic: beneath his emotional explosiveness lies hidden tactical depth and careful planning capacity",
+        "Loyal and protective: forms strong bonds with team members and defends them with fierce commitment"
+      ],
+      "hiddenInfo": "Kanzai is the Tiger of the Zodiacs—one of twelve elite Hunters. He is a renowned treasure hunter specializing in locating valuable artifacts in hostile environments and high-risk expeditions. His Nen category remains largely unrevealed, though he is clearly a capable Master-tier user. Kanzai's passion for treasure hunting extends beyond mere financial interest—he pursues the thrill of discovery and the challenge of navigating dangerous locations. His hot-headed nature occasionally creates conflict within the Zodiac group, particularly with more cautious members like Cheadle, but his fundamental loyalty to the Association and his team members is unquestionable. During the Election arc (A7), Kanzai participates in the election proceedings, though he remains largely in the background compared to more politically active members. He boards the Black Whale during A8, contributing to the expedition's treasure hunting focus. His secret frustration is his awareness that treasure hunting faces increasing regulatory restrictions as the Association becomes more bureaucratic—he worries that institutional caution will eliminate future expeditions. ARC VALIDITY: background Zodiac presence in A1-A6; present in A7 (election arc); A8 aboard Black Whale expedition.",
+      "abilities": [
+        "Treasure Location Expertise: Kanzai possesses exceptional capability for identifying valuable artifacts, predicting locations based on legend and geographical analysis, and navigating to treasure sites.",
+        "Hostile Environment Navigation: Kanzai demonstrates mastery of dangerous terrain, extreme climates, and hostile ecosystem navigation required for treasure expeditions.",
+        "Aura Combat Proficiency: Kanzai employs straightforward aggressive Nen combat relying on enhanced strength and speed rather than complex technique.",
+        "Rapid Tactical Assessment: Despite his emotional intensity, Kanzai analyzes combat situations quickly and identifies optimal tactical approaches.",
+        "Physical Conditioning: Kanzai maintains exceptional athletic fitness enabling him to endure extended expeditions and physical challenges.",
+        "\nfighting style: Kanzai fights with explosive aggression, launching rapid strikes and aggressive pressure that overwhelms opponents through sheer intensity and speed. He favors direct confrontation and does not typically employ evasion or defensive positioning. His emotional intensity grants him psychological advantage against calculating opponents—his enthusiasm and commitment unsettle those who rely on manipulation. His greatest strength is his direct aggressive approach and his physical conditioning; his weakness is his emotional volatility—disciplined opponents can use his anger against him, provoking tactical errors. His hot-headedness occasionally causes him to overcommit and expose himself to counterattack."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 108,
+      "known": true,
+      "voiceTag": "male intense passionate"
+    },
+    "Pyon": {
+      "name": "Pyon",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "female",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Rabbit of the Zodiacs and a tech-fluent paralegal Hunter, Pyon combines sharp analytical intelligence with an ever-present habit of gum-snapping. She possesses a lean athletic frame, alert features reflecting constant mental engagement, dark hair worn in a practical style, and favors sleek professional clothing suggesting legal practice. She carries specialized tablet technology for research.",
+      "personality": [
+        "Analytically sharp: possesses exceptional logical reasoning capability and legal knowledge; identifies legal loopholes with unsettling speed",
+        "Socially direct: communicates clearly and efficiently; dislikes small talk and unnecessary verbal elaboration",
+        "Habitually fidgety: constantly chews gum, taps surfaces, or engages in repetitive motions reflecting nervous energy",
+        "Intellectually confident: displays supreme assurance in her analytical judgment; rarely doubts her reasoning"
+      ],
+      "hiddenInfo": "Pyon is the Rabbit of the Zodiacs—one of twelve elite Hunters. She specializes in legal analysis and regulatory compliance for the Hunter Association, serving as paralegal advisor and constitutional interpreter. Her Nen category remains largely unrevealed, though she is clearly a capable Master-tier practitioner. Pyon's primary value to the Zodiacs is intellectual rather than combat-focused—she serves as legal strategist and policy advisor. She is extraordinarily tech-fluent, maintaining extensive digital research networks and legal databases on custom tablet technology. Her constant gum-snapping habit is a nervous/thinking tick that has become so characteristic that other Zodiacs can identify her presence by sound alone. During the Election arc (A7), Pyon participates in election proceedings with particular focus on constitutional compliance and procedural legality. She boards the Black Whale during A8 as official legal advisor ensuring expedition compliance with Association regulations. Her hidden concern is her awareness that Nen regulations frequently conflict with democratic governance—she worries that secret magical enforcement mechanisms circumvent legitimate legal process. ARC VALIDITY: background Zodiac presence in A1-A6; present in A7 (election arc); A8 aboard Black Whale as legal advisor.",
+      "abilities": [
+        "Legal Analysis Mastery: Pyon possesses encyclopedic legal knowledge and exceptional capability for identifying regulatory loopholes, constitutional contradictions, and legal vulnerabilities.",
+        "Constitutional Interpretation: Pyon can analyze complex regulatory frameworks and identify proper procedural compliance pathways even within sophisticated bureaucratic systems.",
+        "Digital Research Networks: Pyon maintains extensive tech infrastructure enabling rapid information access and legal precedent research.",
+        "Regulatory Compliance Planning: Pyon designs procedures and protocols ensuring institutional actions remain legally defensible regardless of scrutiny.",
+        "Nen Theory Knowledge: Despite her legal focus, Pyon possesses academic-level knowledge of Nen mechanics and theoretical framework.",
+        "\nfighting style: Pyon avoids direct combat entirely, instead seeking to establish legal framework advantages and procedural compliance that eliminate conflict necessity. When forced into combat, she relies on straightforward Nen reinforcement and defensive positioning. Her greatest strength is her legal and analytical capability—she can eliminate combat through regulatory means. Her weakness is her lack of combat specialization—prepared warriors significantly outmatch her martial ability. Her effectiveness derives from prevention and procedure rather than combat engagement."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 96,
+      "known": true,
+      "voiceTag": "female sharp intelligent"
+    },
+    "Botobai Gigante": {
+      "name": "Botobai Gigante",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Dragon of the Zodiacs and a triple-star Terrorist Hunter of granite-like bearing, Botobai projects immovable authority and prosecutorial gravitas. He is a massive man of enormous frame and strength, possessing hard chiseled features suggesting age and experience, dark coloring, and wears formal serious clothing reflecting his judicial role. He carries himself with monolithic stillness.",
+      "personality": [
+        "Prosecutorially stern: approaches all situations with grave seriousness; views violations as requiring absolute accountability",
+        "Immovably principled: refuses compromise on core values; his positions are inflexible once established",
+        "Authoritative presence: naturally commands attention and obedience through bearing alone; his presence silences dissent",
+        "Surprisingly fair: beneath his severity, he maintains strict fairness and equal application of law regardless of status"
+      ],
+      "hiddenInfo": "Botobai Gigante is the Dragon of the Zodiacs—one of twelve elite Hunters. He is a triple-star Terrorist Hunter specializing in counter-terrorism operations and internal security threat assessment. His Nen category remains unrevealed, though he is clearly a Master-tier practitioner of significant power. Botobai's role within the Zodiacs emphasizes enforcement and accountability—he serves as disciplinarian and investigator, tracking internal violations and external threats. His granite-like demeanor masks unexpected philosophical depth; he believes that order requires harsh application of law equally regardless of status or political connection. During the Election arc (A7), Botobai participates in election proceedings while simultaneously investigating irregular activities and ensuring procedural compliance. He boards the Black Whale during A8, where his security and counter-terrorism expertise becomes critical for expedition safety. His hidden concern is his awareness that political pressure frequently undermines proper law enforcement—he resents occasions where powerful individuals escape accountability due to institutional politics. ARC VALIDITY: background Zodiac presence in A1-A6; present in A7 (election arc); A8 aboard Black Whale as security operations lead.",
+      "abilities": [
+        "Terrorist Threat Assessment: Botobai possesses exceptional capability for identifying security threats, analyzing attack patterns, and predicting operational methodologies.",
+        "Counter-Terrorism Strategy: Botobai designs security protocols and counter-measures against organized threats, anticipating attacker approaches and establishing defensive frameworks.",
+        "Enforcement Authority: Botobai's official status grants him authority to enforce Association law and pursue internal security violations with institutional backing.",
+        "Aura Mastery: Botobai maintains exceptional aura control and defensive capability through advanced Ten reinforcement, granting him significant durability.",
+        "Intimidating Presence: Botobai's bearing and gravitas naturally inspire obedience and caution even in those unaware of his combat capability.",
+        "\nfighting style: Botobai fights with measured precision, employing efficient technique rather than flashy ability. He establishes dominant positioning and uses aura reinforcement to absorb strikes while methodically defeating opponents through superior conditioning and experience. He does not pursue unnecessary violence but, when engaged, commits fully to overwhelming opponents through superior martial capability. His greatest strength is his immovable principle and absolute authority—most opponents surrender rather than engage him. His weakness is his refusal to compromise or adapt strategy—creative opponents can sometimes exploit his methodical approach through unconventional tactics."
+      ],
+      "tier": "mythic",
+      "level": 13,
+      "hpMax": 112,
+      "known": true,
+      "voiceTag": "male deep commanding"
+    },
+    "Gel": {
+      "name": "Gel",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Snake of the Zodiacs and a master poison specialist, Gel is a figure of unsettling calm whose true depth remains mysteriously obscured. He possesses an average build, calm unrevealing features that rarely express emotion, dark coloring, and wears simple practical clothing suggesting emphasis on function over presentation. He favors dark tones and minimal ornamentation.",
+      "personality": [
+        "Profoundly unreadable: his expressions and motivations remain opaque even to those who know him well; he reveals almost nothing of his internal state",
+        "Intellectually penetrating: observes others with calculated attention, identifying patterns and vulnerabilities others miss",
+        "Minimally communicative: speaks only when necessary; his rare statements carry disproportionate weight due to their scarcity",
+        "Emotionally distant: maintains perfect professional detachment from all interpersonal relationships"
+      ],
+      "hiddenInfo": "Gel is the Snake of the Zodiacs—one of twelve elite Hunters. He is a poison specialist whose Nen category remains completely unrevealed even to Zodiac colleagues. His signature ability involves transmuting his aura into various toxins and poisons that he can deliver through precise strikes or environmental distribution. He is extraordinarily dangerous in ways that remain deliberately opaque—his full capability is never displayed, and even during the Election arc (A7), he remains largely in the background. Gel's unreadability is his defining characteristic; he operates according to unknown agenda and principles that he never explains or discusses. During A7, he participates in election proceedings while maintaining mysterious distance from factional alignments. He boards the Black Whale during A8, where his presence becomes even more enigmatic—his role in expedition operations remains deliberately obscured. His greatest secret is unknown even to the other Zodiacs; whether he maintains hidden allegiances, alternative goals, or simply prefers isolation remains a mystery. ARC VALIDITY: background Zodiac presence in A1-A6; present in A7 (election arc—mysterious background role); A8 aboard Black Whale with mysterious purpose.",
+      "abilities": [
+        "Poison Transmutation: Gel transmutes his aura into various toxins and poisons of devastating effect, delivering them through precise strikes or environmental distribution.",
+        "Toxin Classification Mastery: Gel possesses encyclopedic knowledge of poisons—their composition, effects, delivery mechanisms, and antidotes.",
+        "Precision Aura Delivery: Gel can deliver poison through minimal aura expenditure with surgical precision, ensuring maximum effect from minimal material.",
+        "Antidote Creation: Gel can synthesize antidotes for toxins he has encountered, though his knowledge is kept confidential and rarely shared.",
+        "Analytical Observation: Gel perceives minute details about people and situations, identifying vulnerabilities and patterns others overlook.",
+        "\nfighting style: Gel fights by establishing poison distribution systems and delivering toxins through precise strikes or environmental means. He rarely engages in direct combat, instead allowing his toxins to do damage while he maintains distance. His greatest strength is his mysterious poison capability and his analytical observation; opponents cannot predict his methods or capabilities. His weakness is his reliance on toxins—opponents with poison immunity or treatment capabilities can significantly reduce his effectiveness. His minimal communication also prevents tactical coordination with allies, limiting team synergy."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 100,
+      "known": true,
+      "voiceTag": "male calm mysterious"
+    },
+    "Saccho Kobayakawa": {
+      "name": "Saccho Kobayakawa",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Horse of the Zodiacs and a Trouble Hunter of surprising reasonableness, Saccho combines official duty with unexpected pragmatism and emotional intelligence. He possesses an average build, calm features reflecting contemplative nature, dark coloring, and wears formal professional clothing. He carries himself with thoughtful deliberation.",
+      "personality": [
+        "Oddly reasonable: approaches conflicts with genuine desire to understand all perspectives and identify compromise solutions",
+        "Professionally conscientious: takes his official duties seriously and fulfills responsibilities with reliability and care",
+        "Emotionally intuitive: demonstrates surprising empathy and understanding of others' motivations and emotional states",
+        "Quietly philosophical: reflects on deeper meanings and approaches situations with wisdom beyond surface observation"
+      ],
+      "hiddenInfo": "Saccho Kobayakawa is the Horse of the Zodiacs—one of twelve elite Hunters. He is a Trouble Hunter specializing in problem-solving and mediating disputes between conflicting parties. His Nen category remains unrevealed, though he is clearly a capable Master-tier practitioner. Saccho's defining characteristic is his surprising reasonableness in situations that would provoke conflict—he genuinely seeks to understand all perspectives and identify solutions satisfying all parties. This approach is unusual among the typically more aggressive or principled Zodiac members, making him valuable as mediator and negotiator. During the Election arc (A7), Saccho participates in election proceedings while maintaining diplomatic distance from factional conflicts. He boards the Black Whale during A8, where his diplomatic and problem-solving capability becomes essential for managing the expedition's complex political dynamics. His hidden philosophy is his belief that most human conflicts stem from inadequate communication and mutual misunderstanding; he dedicates himself to bridging these gaps. ARC VALIDITY: background Zodiac presence in A1-A6; present in A7 (election arc); A8 aboard Black Whale as diplomatic mediator.",
+      "abilities": [
+        "Problem Analysis: Saccho demonstrates exceptional capability for identifying core issues within complex situations and designing solutions addressing root causes.",
+        "Diplomatic Negotiation: Saccho possesses rare ability to mediate between hostile parties, finding compromise solutions that satisfy all stakeholders.",
+        "Emotional Intelligence: Saccho perceives emotional undercurrents in situations and understands others' motivations with unusual clarity.",
+        "Conflict De-escalation: Saccho can reduce tension in volatile situations through calm presence and perspective-shifting communication.",
+        "Aura Mastery: Saccho maintains competent aura control and defensive capability through standard Ten reinforcement.",
+        "\nfighting style: Saccho avoids direct combat when possible, instead seeking diplomatic resolution. When forced into engagement, he employs straightforward Nen reinforcement and defensive positioning. His greatest strength is his ability to identify solutions avoiding combat—he can eliminate conflict through understanding and compromise. His weakness is his reliance on cooperation from others; against opponents refusing negotiation or understanding, he becomes less effective. His emphasis on reasonableness sometimes prevents him from committing fully to necessary violence."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 96,
+      "known": true,
+      "voiceTag": "male warm reasonable"
+    },
+    "Ginta": {
+      "name": "Ginta",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Sheep of the Zodiacs and a wild-maned bruiser of surprising gentleness, Ginta presents an image of barely-contained physical power paired with unexpected emotional warmth. He possesses an enormous muscular frame, wild unkempt hair, strong features reflecting good nature, and wears simple practical clothing. He carries himself with a surprising lack of arrogance despite his obvious physical superiority.",
+      "personality": [
+        "Genuinely gentle: possesses unexpected kindness and care for others despite his terrifying physical capability",
+        "Emotionally open: demonstrates surprising vulnerability and willingness to express feelings without shame",
+        "Physically confident: moves without tension or uncertainty; his strength is so natural that he rarely needs to demonstrate it",
+        "Surprisingly insightful: offers observations that cut through complexity with unexpected wisdom"
+      ],
+      "hiddenInfo": "Ginta is the Sheep of the Zodiacs—one of twelve elite Hunters. He is a powerful Nen Master whose Nen category remains unrevealed, though his physical intensity suggests Enhancement or Transmutation focus. Ginta's defining characteristic is the contrast between his terrifying physical appearance and his genuine gentleness—he is genuinely kind to those around him and demonstrates surprising emotional depth. This combination makes him valuable within the Zodiac group; he provides both intimidating physical presence and unexpected emotional support. During the Election arc (A7), Ginta participates in election proceedings largely in background role. He boards the Black Whale during A8, where his combination of strength and gentleness becomes valuable for managing both security concerns and interpersonal dynamics. His hidden nature is his awareness that few people see beyond his threatening physical appearance to recognize his actual kindness—he has become resigned to this misunderstanding. ARC VALIDITY: background Zodiac presence in A1-A6; present in A7 (election arc); A8 aboard Black Whale.",
+      "abilities": [
+        "Overwhelming Physical Strength: Ginta possesses extraordinary muscular power enabling him to lift enormous weights and deliver devastating strikes with minimal effort.",
+        "Physical Conditioning: Ginta maintains exceptional physical fitness enabling him to endure extended physical exertion without fatigue.",
+        "Aura Reinforcement: Ginta hardens his body through constant aura application, granting him exceptional durability against physical assault.",
+        "Gentle Technique Control: Despite his overwhelming power, Ginta can modulate his striking force with precision enabling him to hurt or help targets as desired.",
+        "Emotional Grounding: Ginta's genuine kindness and stability provide psychological support to those around him, reducing panic and maintaining team morale.",
+        "\nfighting style: Ginta fights by overwhelming opponents through superior physical power and aura reinforcement. He delivers devastating strikes relying on strength rather than complex technique. Against multiple opponents, he uses his physical strength to control space and separate attackers. His emotional stability enables him to remain calm in chaotic situations. His greatest strength is his overwhelming physical power—few can match his pure strength and durability. His weakness is his reliance on direct physical engagement—opponents with aura-based techniques or ranged capabilities can sometimes outmaneuver him. His gentleness also means he occasionally holds back against opponents, creating tactical vulnerability."
+      ],
+      "tier": "mythic",
+      "level": 12,
+      "hpMax": 120,
+      "known": true,
+      "voiceTag": "male warm deep"
+    },
+    "Saiyu": {
+      "name": "Saiyu",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Monkey of the Zodiacs and a Blacklist Hunter carrying the mysterious Three Monkeys staff, Saiyu projects calm competence beneath an unremarkable exterior. He possesses an average build suggesting careful maintenance rather than spectacular natural talent, calm neutral features, and wears practical field clothing. He carries a distinctive wooden staff carved with three monkey figurines representing see-not, hear-not, speak-not.",
+      "personality": [
+        "Professionally neutral: maintains emotional distance from events and relationships; his motivations remain deliberately obscure",
+        "Strategically observant: notices patterns others miss and maintains careful situational awareness",
+        "Carefully trustworthy on surface: presents appearance of reliability while concealing deeper agenda",
+        "Seemingly straightforward: expresses opinions directly while obscuring his actual internal logic"
+      ],
+      "hiddenInfo": "Saiyu is the Monkey of the Zodiacs—one of twelve elite Hunters. He is a Blacklist Hunter whose primary specialty involves tracking dangerous individuals. His Nen category remains unrevealed, though his signature ability is the 'Three Monkeys' staff Hatsu—a conjured staff manifesting three monkey figurines with distinctive properties: see-not (blindness effect), hear-not (deafness effect), and speak-not (silencing effect). By activating combinations of these effects, Saiyu can isolate opponents through sensory deprivation. His greatest secret is something he will never reveal to any other Zodiac member in any arc: Saiyu is a traitor to the Hunter Association, secretly working for Pariston Hill as his agent and informant. He feeds intelligence to Pariston, maintains hidden allegiances, and operates according to orders from his true master rather than Association interests. This betrayal is revealed only after the election (A7 end), when Saiyu's defection becomes apparent. During the Black Whale expedition (A8), Saiyu's double loyalty creates constant tension—he reports to both Pariston and the Association simultaneously, maintaining a careful balance until his true allegiances become undeniable. This information is marked explicitly as hidden because it must not appear in basicInfo or surface personality. ARC VALIDITY: background Zodiac presence in A1-A6; present in A7 (election arc—secretly reporting to Pariston); A8 aboard Black Whale as obvious mole and Pariston agent; defection revealed by late A8.",
+      "abilities": [
+        "Three Monkeys Staff Manifestation: Saiyu conjures a staff carved with three monkey figurines, each enabling distinctive sensory-deprivation effects: see-not (blindness), hear-not (deafness), speak-not (silencing).",
+        "Sensory Isolation Combination: Saiyu can activate multiple monkey effects simultaneously, completely isolating opponents from external perception and communication.",
+        "Blacklist Tracking: Saiyu possesses exceptional capability for tracking dangerous individuals across regions, identifying patterns and predicting movement.",
+        "Aura Mastery: Saiyu maintains competent aura control and defensive capability through advanced Ten reinforcement.",
+        "Intelligence Gathering: Saiyu can extract information through patient questioning and subtle interrogation, identifying valuable intelligence from reluctant sources.",
+        "\nfighting style: Saiyu fights by activating his Three Monkeys effects to isolate opponents sensory-wise, then delivering precise strikes against blinded/deafened/silenced targets. He maintains distance and uses the staff's reach to his advantage. His greatest strength is his ability to completely isolate opponents from external perception—blinded and deafened enemies cannot effectively defend. His weakness is his reliance on the staff's effects—opponents with aura-based sensory replacement or those resisting sensory deprivation can bypass his primary strategy. His unreadable nature also makes him unpredictable to allies, limiting team coordination."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 100,
+      "known": true,
+      "voiceTag": "male calm neutral"
+    },
+    "Cluck": {
+      "name": "Cluck",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Chicken of the Zodiacs and a somewhat haughty exorcism-adjacent Hunter of mysterious specialization, Cluck projects aristocratic superiority beneath a facade of professional competence. He possesses an average refined build, sharp features suggesting intelligence and education, dark coloring, and wears elegant formal clothing reflecting elevated status. He carries himself with visible arrogance.",
+      "personality": [
+        "Aristocratically haughty: views most people as intellectually and socially inferior; expresses this through subtle condescension",
+        "Proudly capable: confident in his abilities and dismissive of those he perceives as less skilled",
+        "Mysteriously evasive: avoids direct discussion of his specialty and capabilities; maintains deliberate obscurity about his methods",
+        "Fascinatingly complex: demonstrates contradictions suggesting hidden depths beneath his pretentious surface"
+      ],
+      "hiddenInfo": "Cluck is the Chicken of the Zodiacs—one of twelve elite Hunters. He is an exorcism-adjacent specialist whose true Nen category and capabilities remain deliberately obscured. His expertise involves supernatural threats and entities, though his methods and abilities are kept confidential even from fellow Zodiac members. Cluck's haughtiness masks genuine expertise and unusual depth—he is far more capable and knowledgeable than his arrogant demeanor suggests. During the Election arc (A7), Cluck participates in election proceedings while maintaining superior distance from other members. He boards the Black Whale during A8, where his expertise in supernatural threats becomes potentially valuable. His hidden nature involves his awareness of supernatural entities and threats unknown to most Association members; he serves as specialist consultant on phenomena that standard Hunters cannot address. ARC VALIDITY: background Zodiac presence in A1-A6; present in A7 (election arc); A8 aboard Black Whale as specialist consultant.",
+      "abilities": [
+        "Supernatural Entity Expertise: Cluck possesses extensive knowledge of supernatural entities, possession mechanics, and exorcism methodologies applicable to Nen-based phenomena.",
+        "Exorcism Capability: Cluck can identify and neutralize supernatural entities and possession effects through methods he does not discuss with outsiders.",
+        "Mysterious Nen Technique: Cluck employs undisclosed Nen abilities applicable to supernatural threats, keeping his methods confidential.",
+        "Intellectual Analysis: Cluck combines academic knowledge with practical experience, enabling him to understand complex supernatural phenomena.",
+        "Aura Mastery: Cluck maintains competent aura control and defensive capability through advanced Ten reinforcement.",
+        "\nfighting style: Cluck's fighting style is deliberately mysterious—he employs undisclosed techniques applicable to supernatural threats that normal combat specialists cannot address. He maintains distance and uses intellectual advantage to outmaneuver opponents. His greatest strength is his unique expertise in supernatural threats; his weakness is his haughty demeanor, which sometimes prevents effective cooperation with others. His secrecy about his actual capabilities makes it difficult to coordinate team tactics."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 100,
+      "known": true,
+      "voiceTag": "male sophisticated haughty"
+    },
+    "Ging Freecss": {
+      "name": "Ging Freecss",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Boar of the Zodiacs (until his election-arc resignation) and a double-star Ruins Hunter of legendary status, Ging embodies genius-level intelligence and profound irresponsibility in equal measure. He is a lean man of athletic build, sharp handsome features, and wears casual practical field clothing suggesting constant readiness for exploration. He carries himself with casual confidence verging on arrogance.",
+      "personality": [
+        "Intellectually brilliant: possesses genius-level problem-solving capability and immediate understanding of complex systems",
+        "Fundamentally irresponsible: demonstrates complete disregard for consequences of his actions or impact on those depending on him",
+        "Passionately curious: experiences genuine enthusiasm for exploration and discovery; his drive to understand overrides all other concerns",
+        "Casually confident: expresses supreme confidence in his judgment and capability without self-doubt or hesitation"
+      ],
+      "hiddenInfo": "Ging Freecss is Gon's biological father, a legendary double-star Ruins Hunter of extraordinary skill, and the Boar of the Zodiacs. His Nen category remains officially unrevealed, but his signature ability is his unnamed mimicry Hatsu—he can observe any technique once and immediately copy it with perfect precision, granting him virtually unlimited access to any Nen ability in existence. This extraordinary capability makes him one of the world's most dangerous individuals. Ging's irresponsibility manifests most notably in his abandonment of Gon as an infant, leaving his son to be raised by his aunt Mito without explanation or support. His abandonment is motivated by his genuine obsession with exploration and discovery—Ging simply did not care about parenthood or stability, viewing them as obstacles to his primary interest: understanding the world and creating Greed Island, an elaborate Nen-construct game designed as a trail leading others toward his father Netero and, ultimately, the Dark Continent. During the Election arc (A7), Ging surfaces publicly for the first time in years, officially joining the Zodiacs as the Boar. He participates in the election proceedings while simultaneously engaging in his classic pattern of irresponsible behavior. He confronts Pariston in the election's climactic moment, and after Pariston wins then immediately resigns, Ging resigns from the Zodiacs as well. He then races ahead of the official Dark Continent expedition, having secured Beyond Netero's cooperation to pursue his exploration agenda. Ging never appears in the story before A7 (explicitly name-only), respecting the arc-validity rule that keeps him hidden until the election reveal. ARC VALIDITY: explicitly A7 on-stage only (election arc reveal); name-only reference in A1-A6 through Gon's search threads; A8 departed ahead of main Black Whale expedition pursuing Dark Continent exploration (EXTRAPOLATED beyond ch.410).",
+      "abilities": [
+        "Unnamed Mimicry Hatsu: Ging observes any Nen technique once and immediately copies it with perfect precision. He can execute the technique at 100% potency equal to the original user, granting him virtually unlimited access to any Nen ability.",
+        "Ruins Exploration Mastery: Ging demonstrates exceptional capability for navigating dangerous ancient ruins, identifying security systems, and extracting valuable artifacts.",
+        "Intuitive Problem-Solving: Ging possesses almost supernatural capability for solving complex problems and understanding systems through intuition and rapid analysis.",
+        "Greed Island Construction: Ging co-designed and partially created Greed Island, a massive Nen-construct game with extraordinary complexity and embedded layers of functionality.",
+        "Nen Theory Mastery: Ging understands Nen mechanics at theoretical and practical levels exceeding even Netero's knowledge in certain specialized domains.",
+        "\nfighting style: Ging fights by observing opponent techniques then copying them perfectly, creating a perfect counter through mimicry. He analyzes opponent patterns and optimal tactical approaches. He demonstrates supreme adaptability—every technique he faces becomes a tool he can employ. His greatest strength is his mimicry ability and intellectual analysis; opponents cannot employ secret techniques without revealing them to his copying capability. His weakness is his fundamental irresponsibility—he sometimes abandons fights due to lost interest or pursuit of more interesting challenges. His casual confidence sometimes leads him to underestimate opponents, creating occasional vulnerability. His defining characteristic is that he fights as exploration and discovery rather than genuine combat engagement."
+      ],
+      "tier": "mythic",
+      "level": 17,
+      "hpMax": 140,
+      "known": true,
+      "voiceTag": "male casual genius"
+    },
+    "Beyond Netero": {
+      "name": "Beyond Netero",
+      "type": "Nen Master",
+      "currentLocation": "The Black Whale",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Black Whale Expedition",
+      "basicInfo": "The son of Isaac Netero and magnetic figurehead of the Dark Continent expedition, Beyond combines his father's intellectual legacy with rebellious drive toward forbidden knowledge. He possesses a lean athletic build, sharp features suggesting high intelligence, and wears casual practical field clothing. He carries himself with confident enthusiasm despite the weight of his father's legendary shadow.",
+      "personality": [
+        "Driven by forbidden knowledge: possesses genuine obsession with the Dark Continent and aspects of reality his father kept hidden",
+        "Intellectually ambitious: demonstrates exceptional intelligence and desire to understand systems and secrets beyond conventional limits",
+        "Surprisingly vulnerable: beneath his driven exterior, he carries awareness of his father's vastly superior capability and occasional self-doubt",
+        "Charismatically magnetic: naturally attracts followers and inspires confidence despite his relative inexperience"
+      ],
+      "hiddenInfo": "Beyond Netero is the son of Isaac Netero and serves as the magnetic figurehead of the Dark Continent Expedition. His Nen category remains unrevealed; his true power level is deliberately obscured. Beyond represents the continuation of his father's exploration agenda but with different motivations—where Netero pursued enlightenment and self-transcendence, Beyond pursues forbidden knowledge and the revelation of secrets his father deliberately concealed from the world. Most critically, Beyond's participation in the expedition is part of an elaborate arrangement with the V5 Council: he agreed to be voluntarily placed in V6 custody (after the expedition reaches certain milestones) as part of the deal enabling the expedition's existence. This arrangement is maintained in secret between Beyond and institutional leadership. Beyond's role is exceptionally important—the expedition's legitimacy and public support derive significantly from his status as Netero's son and the perceived continuation of his father's legacy. His greatest secret is his awareness that his father viewed him with complex emotions—pride in his capability combined with resignation about his irresponsibility. ARC VALIDITY: A7 reveals his identity and expedition plans (name-only, off-stage before); A8 central to expedition narrative (EXTRAPOLATED status beyond ch.410—V6 custody arrangement, expedition outcomes, continent landing, calamity encounters all speculative).",
+      "abilities": [
+        "Dark Continent Knowledge: Beyond possesses extensive theoretical knowledge about the Dark Continent gathered from forbidden texts and his father's research.",
+        "Expedition Leadership: Beyond demonstrates capability for organizing large-scale expeditions and coordinating complex logistical operations.",
+        "Nen Capability: Beyond possesses Master-tier Nen ability, though his specific Hatsu and category remain unrevealed and deliberately obscured.",
+        "Legacy Advantage: Beyond's status as Netero's son grants him unparalleled access to restricted knowledge and institutional authority.",
+        "Intellectual Analysis: Beyond demonstrates sharp analytical capability for interpreting complex information and identifying patterns.",
+        "\nfighting style: Beyond's combat style is undisclosed and deliberately obscured. He avoids direct engagement, preferring to rely on his role as figurehead and his expedition's security forces. When forced into combat, his approach is unknown to most NPCs. His greatest strength is his institutional authority and his inherited resources; his weakness is his relative inexperience compared to his father and his awareness of this disparity. His motivation in combat situations is unclear—whether he fights to win or merely to survive and continue his expedition remains ambiguous."
+      ],
+      "tier": "mythic",
+      "level": 16,
+      "hpMax": 136,
+      "known": true,
+      "voiceTag": "male confident intelligent"
+    },
+    "Theta": {
+      "name": "Theta",
+      "type": "Nen Professional",
+      "currentLocation": "The Black Whale",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Kakin Royal Court",
+      "basicInfo": "A professional Hunter serving as bodyguard and tutor to Fourth Prince Tserriednich Hui Guo Rou, Theta embodies professional competence and moral conscience in an impossible situation. She possesses a lean athletic frame, sharp professional features, and wears practical tactical bodyguard clothing. She carries herself with focused intensity and obvious capability.",
+      "personality": [
+        "Professionally disciplined: maintains absolute focus on her duties; her work is her primary concern above all else",
+        "Surprisingly compassionate: demonstrates unexpected humanity and care for those around her despite professional detachment",
+        "Morally conflicted: struggles constantly with the contradiction between her duty to her employer and her ethical concerns about his behavior",
+        "Carefully controlled: expresses emotions minimally, maintaining professional distance while managing internal distress"
+      ],
+      "hiddenInfo": "Theta is a professional Hunter hired by the Kakin Royal Court to serve as bodyguard and personal instructor to Fourth Prince Tserriednich Hui Guo Rou, a brilliant but deeply disturbing individual. Theta's Nen category is Emission, and she possesses capability around Nen Professional baseline—a competent user but not exceptional. Her position is extraordinarily difficult: she is tasked with teaching Nen to a serial murderer of exceptional talent who demonstrates terrifying Nen growth potential. Theta is acutely aware of Tserriednich's nature—his collection of preserved human bodies, his psychological manipulation of those around him, his escalating violence and unpredictability. She must maintain professional duty while managing her profound ethical concern about unleashing his full potential. Theta has become something like a moral conscience for the prince, attempting through subtle means to guide him away from his worst impulses while knowing that direct confrontation would be futile and fatal. Her hidden struggle is the constant tension between her professional loyalty and her moral obligation to prevent catastrophe. She boards the Black Whale during A8, continuing her impossible role. ARC VALIDITY: A8 only (hired specifically for expedition); her pre-A8 existence is not established (post-A7 hire).",
+      "abilities": [
+        "Professional Combat Training: Theta demonstrates competent Nen Professional-level capability in direct combat, with emphasis on protective positioning.",
+        "Emission Aura Control: Theta transmits her aura externally with precision, enabling ranged strikes and defensive positioning.",
+        "Tactical Bodyguard Technique: Theta excels at positioning, threat assessment, and rapid response to attacks on protected individuals.",
+        "Nen Instruction: Theta possesses capability to teach fundamental Nen techniques, though her teaching is compromised by ethical concerns about her student's growth.",
+        "Moral Reasoning: Theta demonstrates unexpected depth in philosophical reasoning and ethical analysis despite her professional role.",
+        "\nfighting style: Theta fights with defensive priority, focusing on protecting those under her care rather than personal offense. She employs straightforward Emission-based strikes and strategic positioning. Against direct threats, she fights professionally but cautiously—her priority is protection rather than victory. Her greatest strength is her protective focus and professional discipline; her weakness is her ethical limitation—she struggles to commit fully to necessary violence when it involves her student Tserriednich, creating vulnerability. Her moral conflict also limits her tactical effectiveness, as she constantly holds back out of ethical concern."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 92,
+      "known": true,
+      "voiceTag": "female professional composed"
+    },
+    "Nasubi Hui Guo Rou": {
+      "name": "Nasubi Hui Guo Rou",
+      "type": "Civilian",
+      "currentLocation": "Kakin Royal Capital",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Kakin Royal Court",
+      "basicInfo": "The aging king of Kakin Empire and architect of the deadly succession-war mechanism, Nasubi projects ceremonial authority beneath visible physical decline and exhaustion. He is an elderly man of diminished physical presence, weathered features reflecting decades of rule, and wears formal ornate royal regalia befitting his status. He moves with visible difficulty and evident fatigue.",
+      "personality": [
+        "Strategically pragmatic: views succession as a mechanism requiring ruthless effectiveness rather than sentiment",
+        "Wearily experienced: demonstrates resignation about human nature and power dynamics after decades of rule",
+        "Emotionally distant from his children: maintains formal relationship with his many heirs rather than parental warmth",
+        "Surprisingly reflective: expresses moments of genuine philosophical contemplation about the nature of power and succession"
+      ],
+      "hiddenInfo": "Nasubi Hui Guo Rou is the aging king of Kakin Empire, a vast hereditary dictatorship operating as a young democracy. He is not a Nen user and maintains only minimal Nen defensive capability. His genius lies in political and institutional design rather than martial power. Nasubi instituted the kill-each-other succession mechanism—a device where his fourteen legitimate sons compete via Nen beasts (parasitic guardians born from his aura and vows, created through mysterious ritual) to eliminate each other. Only one heir survives; this heir becomes the next king. This mechanism ensures succession while preventing the fractious internal politics that destroy weak dynasties. Nasubi's role is carefully circumscribed—he initiated the succession and remains in capital authority, but true power lies with his surviving heirs and their beasts. His hidden nature involves his awareness that this mechanism is extraordinarily brutal and destabilizing, yet he views it as necessary for institutional survival. He remains in the capital during A8 while the succession war proceeds aboard the Black Whale. ARC VALIDITY: A1-A7 background (Kakin Empire exists as established nation-state, Nasubi as known king, not featured); A8 on-stage as originator of succession mechanism; boarding status (off-ship, maintains capital authority).",
+      "abilities": [
+        "Institutional Design: Nasubi possesses genius-level capability for designing complex political systems and institutional frameworks.",
+        "Political Authority: Nasubi maintains absolute authority over Kakin Empire through established institutional channels and cultural legitimacy.",
+        "Nen Beast Ritual Knowledge: Nasubi understands the mysterious ritual creating Nen beasts from his aura and vows, though this knowledge is not fully explained.",
+        "Succession Mechanism Design: Nasubi created the succession-war framework, demonstrating sophisticated understanding of psychological and competitive dynamics.",
+        "Minimal Nen Capability: Nasubi maintains only basic Ten reinforcement; he is not a combat specialist.",
+        "\nfighting style: Nasubi avoids direct combat entirely, relying instead on institutional authority and security forces. If forced into engagement, his combat capability is extremely limited—he is elderly, physically weak, and possesses only basic Nen reinforcement. His greatest strength is his institutional authority; his weakness is his complete vulnerability in direct martial conflict. His role is strategic rather than tactical; he influences the succession through mechanism design rather than personal participation."
+      ],
+      "tier": "mythic",
+      "level": 5,
+      "hpMax": 60,
+      "known": true,
+      "voiceTag": "male elderly formal"
+    },
+    "Tserriednich Hui Guo Rou": {
+      "name": "Tserriednich Hui Guo Rou",
+      "type": "Nen Professional",
+      "currentLocation": "The Black Whale",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Kakin Royal Court",
+      "basicInfo": "The Fourth Prince of Kakin and a brilliant collector of human specimens, Tserriednich embodies precarious genius coupled with terrifying psychopathy. He possesses an androgynous slender build, beautiful delicate features suggesting aristocratic refinement, and wears elaborate formal clothing adorned with precious accents. He carries himself with casual arrogance suggesting supreme confidence.",
+      "personality": [
+        "Intellectually prodigious: demonstrates genius-level intelligence and exceptional analytical capability",
+        "Pathologically sadistic: derives genuine satisfaction from inflicting suffering; views torture as an art form",
+        "Possessively controlling: views people as objects to be collected, controlled, and disposed of according to his preferences",
+        "Chillingly charismatic: projects superficial charm enabling him to manipulate and deceive others; his smile never reaches his eyes"
+      ],
+      "hiddenInfo": "Tserriednich Hui Guo Rou is the Fourth Prince of Kakin Empire and perhaps the world's most disturbing individual—a serial murderer and psychological torturer of genius-level capability. His Nen category is Specialist, and he possesses a Hatsu of terrifying potency: future-sight enabling him to perceive ten seconds into the future while holding his breath. This ability grants him extraordinary combat advantage and enables him to anticipate attacks before they manifest. His specialty involves collecting human bodies, preserving them in his private chambers, and studying them with psychopathic interest. He is particularly fascinated by Scarlet Eyes—a genetic Kurta trait—and maintains a collection of preserved Kurta eyes and bodies. His growth rate in Nen is extraordinarily rapid, suggesting natural prodigy-level talent combined with his already-considerable resources and instruction. Theta serves as his bodyguard and instructor, constantly struggling with the contradiction between her professional duty and her ethical horror at his nature. His role during A8 is central—he participates in the succession war and boards the Black Whale. His future-sight Hatsu makes him extraordinarily dangerous despite his age and relative lack of seasoning compared to adult Nen Masters. ARC VALIDITY: A8 only (succession war participant, on-board Black Whale); pre-A8 existence not established (post-A7 introduction).",
+      "abilities": [
+        "Future-Sight Hatsu: Tserriednich's signature ability enables him to perceive ten seconds into the future while holding his breath. This grants extraordinary combat anticipation and enables him to dodge or counter attacks before they manifest.",
+        "Specialist Nen Mastery: Tserriednich demonstrates exceptional Specialist-level Nen control despite his youth, suggesting natural prodigy-level talent.",
+        "Psychological Torture Expertise: Tserriednich possesses encyclopedic knowledge of psychological manipulation, pain administration, and breaking victim resistance.",
+        "Collection Curation: Tserriednich demonstrates exceptional capability for identifying, acquiring, and preserving rare specimens according to his obsessive criteria.",
+        "Rapid Nen Growth: Tserriednich's Nen development rate exceeds normal progression, suggesting accelerated learning capacity and natural aptitude.",
+        "\nfighting style: Tserriednich fights using his future-sight Hatsu to maintain absolute predictive advantage—he perceives attacks ten seconds before execution and counters them flawlessly. He combines this with straightforward Nen-reinforced strikes. Against opponents, his strategy is perfect—he sees their actions before they perform them. His greatest strength is his future-sight ability making him virtually unbeatable in direct combat prediction; his weakness is his reliance on breath-holding for the ability—opponents who force him to speak or preventing breath-holding can disable his prediction. His psychopathy also makes him unpredictable to normal tactical analysis—his choices often defy rational motivation, creating occasional vulnerability to prepared opponents. His age and relative inexperience compared to adult Masters occasionally creates tactical blindness about strategic consequences beyond the ten-second prediction window."
+      ],
+      "tier": "mythic",
+      "level": 13,
+      "hpMax": 112,
+      "known": true,
+      "voiceTag": "male aristocratic cold"
+    },
+    "Benjamin Hui Guo Rou": {
+      "name": "Benjamin Hui Guo Rou",
+      "type": "Nen Master",
+      "currentLocation": "The Black Whale",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Kakin Royal Court",
+      "basicInfo": "The First Prince of Kakin and militant mountain of martial ambition, Benjamin combines devastating physical capability with ruthless strategic clarity. He possesses an enormous muscular frame suggesting intense physical conditioning, harsh features reflecting military discipline, and wears armor suggesting constant readiness for combat. He carries himself with absolute confidence and controlled intimidation.",
+      "personality": [
+        "Militaristically ambitious: views existence as warfare and competition; peace represents weakness or temporary cessation of conflict",
+        "Strategically ruthless: makes decisions prioritizing advantage without moral constraint; cost in human life is irrelevant calculation",
+        "Commanding authority: naturally assumes leadership position; people instinctively defer to his bearing despite his lack of charm",
+        "Contemptuous of weakness: expresses open disdain for those he perceives as inferior or incapable; compassion is alien concept"
+      ],
+      "hiddenInfo": "Benjamin Hui Guo Rou is the First Prince of Kakin and the succession-war's primary military strategist. His Nen category is Enhancement, and his signature Hatsu is 'Benjamin Baton'—an ability enabling him to inherit the Nen abilities of soldiers under his command who die. Each soldier death transfers their power to Benjamin, creating a growing collective power base. This incentivizes him to command vast forces and accept casualties as power-amplification mechanism. Benjamin's strategy throughout the succession war focuses on assembling maximum military force and leveraging his ability to absorb power from fallen subordinates. He is extraordinarily dangerous—not only as an individual Nen Master but as a force-commander capable of coordinating significant military operations. His ruthlessness is absolute; he views his soldiers as disposable resources and readily sacrifices them to gain incremental power advantage. His role in A8 is major—he boards the Black Whale and becomes one of the succession-war's primary threats. EXTRAPOLATED status beyond ch.410: his ultimate fate in the succession war is undetermined; his military campaign continues through the published chapters. ARC VALIDITY: A8 only (succession war participant, central military strategist).",
+      "abilities": [
+        "Benjamin Baton Inheritance: Benjamin's signature ability allows him to inherit the Nen abilities of soldiers under his command who die, creating a growing power base with each subordinate casualty.",
+        "Military Strategy: Benjamin demonstrates exceptional capability for designing large-scale military operations, coordinating troop movements, and managing tactical complexity.",
+        "Enhancement Mastery: Benjamin reinforces his body to extraordinary degree through Enhancement Nen, granting him exceptional strength and durability.",
+        "Command Authority: Benjamin naturally assumes leadership position and inspires obedience through bearing and demonstrated capability.",
+        "Tactical Ruthlessness: Benjamin makes cold calculated decisions prioritizing military advantage regardless of human cost.",
+        "\nfighting style: Benjamin fights by commanding armies and absorbing fallen soldiers' power through his Baton ability, creating a growing personal power base. In direct combat, he relies on overwhelming strength and Enhancement-reinforced strikes. He treats individual battles as part of larger strategic campaigns. His greatest strength is his ability to grow stronger with each allied casualty and his capacity for large-scale military coordination; his weakness is his reliance on subordinate soldiers—without forces to command, his power gain mechanism becomes inert. His contempt for weakness sometimes causes him to underestimate capable individual opponents who survive his initial assault."
+      ],
+      "tier": "mythic",
+      "level": 13,
+      "hpMax": 112,
+      "known": true,
+      "voiceTag": "male commanding intense"
+    },
+    "Camilla Hui Guo Rou": {
+      "name": "Camilla Hui Guo Rou",
+      "type": "Nen Master",
+      "currentLocation": "The Black Whale",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Kakin Royal Court",
+      "basicInfo": "The Second Princess of Kakin and imperious counter-queen of succession ambition, Camilla projects crystalline aristocratic superiority masked beneath sophisticated beauty and calculated charm. She possesses an elegant refined build, striking aristocratic features, and wears elaborate formal gowns adorned with precious materials. She carries herself with visible arrogance.",
+      "personality": [
+        "Imperiously aristocratic: views herself as inherently superior to all others; her class position is natural law rather than circumstance",
+        "Calculatingly strategic: combines charm with ruthlessness; she manipulates through sophistication rather than direct force",
+        "Vengefully proud: takes perceived slights as grave insults demanding disproportionate retaliation",
+        "Superficially charming: projects warmth and elegance masking genuine indifference to others' wellbeing"
+      ],
+      "hiddenInfo": "Camilla Hui Guo Rou is the Second Princess of Kakin and a formidable succession-war competitor. Her Nen category is Specialist, and her signature Hatsu is 'Cat's Name'—a revenge-revival guardian beast that kills anyone who kills her. If an assassin or enemy eliminates Camilla, Cat's Name automatically activates and hunts down her killer, executing them. This creates extraordinary defensive advantage—potential assassins must accept certainty of retaliation. Camilla's strategy involves maintaining networks of allies, accumulating political leverage, and using her revenge-beast as ultimate deterrent against direct threats. Her arrogance is both strength and weakness—she believes her aristocratic position grants her protection while simultaneously blinding her to tactical vulnerabilities. Her role in A8 is major—she boards the Black Whale and participates actively in succession-war scheming and assassination attempts. EXTRAPOLATED status beyond ch.410: her ultimate fate in the succession war is undetermined; her schemes continue through published chapters. ARC VALIDITY: A8 only (succession war participant).",
+      "abilities": [
+        "Cat's Name Guardian Beast: Camilla's signature ability manifests a revenge-revival beast that automatically hunts and kills anyone responsible for her death. This creates ultimate defensive mechanism against assassination.",
+        "Specialist Nen Control: Camilla demonstrates competent Specialist-level Nen control appropriate to her beast-based Hatsu.",
+        "Political Networking: Camilla excels at building alliances, identifying leverage points, and manipulating political dynamics through sophisticated schemes.",
+        "Assassination Evasion: Camilla maintains security protocols and intelligence networks enabling her to identify threats before they manifest.",
+        "Sophisticated Charm: Camilla projects genuine charisma enabling her to manipulate others through social means rather than force.",
+        "\nfighting style: Camilla avoids direct combat, instead relying on her Cat's Name beast for defense and her political networks for offense. She manipulates situations rather than engaging directly. Against direct threats, her strategy depends on her beast's automatic retaliation deterring assassins. Against opponents willing to accept death-by-retaliation, she becomes vulnerable—her direct combat capability is limited compared to dedicated warriors. Her greatest strength is her revenge-beast and political leverage; her weakness is her reliance on deterrence rather than actual combat capability."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 100,
+      "known": true,
+      "voiceTag": "female aristocratic elegant"
+    },
+    "Zhang Lei Hui Guo Rou": {
+      "name": "Zhang Lei Hui Guo Rou",
+      "type": "Nen Master",
+      "currentLocation": "The Black Whale",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Kakin Royal Court",
+      "basicInfo": "The Third Prince of Kakin and pragmatic broker of diplomatic solutions, Zhang Lei combines coin-dispensing diplomacy with surprisingly genuine desire for reasonable succession outcomes. He possesses an average athletic build, intelligent features suggesting thoughtfulness, and wears formal elegant clothing suggesting diplomatic practice. He carries himself with measured confidence.",
+      "personality": [
+        "Pragmatically diplomatic: seeks compromise and mutually-beneficial solutions where possible; views excessive violence as counterproductive",
+        "Opportunistically flexible: adapts strategy based on circumstances; his principles bend toward advantage",
+        "Seemingly reasonable: projects image of moderation and fairness masking underlying ruthlessness when required",
+        "Financially sophisticated: understands economic leverage and uses money as tool for political advantage"
+      ],
+      "hiddenInfo": "Zhang Lei Hui Guo Rou is the Third Prince of Kakin and perhaps the succession-war's most pragmatic participant. His Nen category remains undisclosed, though he maintains basic Nen Professional capability. His signature Hatsu involves a coin-dispensing guardian beast—his beast can extend coin to others, providing financial resources and establishing financial obligation/relationship. This creates extensive networks of debt-relationships enabling influence without direct force. Zhang Lei's strategy involves diplomacy, bribery, and creating networks of mutual obligation among other princes and outside factions. He maintains contact with global mafia tripartite, creating cross-factional allegiances that give him leverage beyond traditional Kakin politics. His pragmatism makes him relatively humane compared to his siblings—he genuinely attempts to find diplomatic solutions before resorting to assassination. His role in A8 is major—he boards the Black Whale and becomes a key diplomatic figure navigating succession-war alliances. EXTRAPOLATED status beyond ch.410: his ultimate fate in the succession war is undetermined. ARC VALIDITY: A8 only (succession war participant, major diplomatic figure).",
+      "abilities": [
+        "Coin Guardian Beast: Zhang Lei's beast dispenses coin enabling him to establish networks of financial obligation and leverage.",
+        "Diplomatic Negotiation: Zhang Lei demonstrates exceptional capability for negotiating mutually-beneficial arrangements and identifying compromise solutions.",
+        "Mafia Network Connections: Zhang Lei maintains relationships with global mafia structures, granting him leverage through criminal-political nexuses.",
+        "Financial Analysis: Zhang Lei possesses sophisticated understanding of financial systems and economic leverage mechanics.",
+        "Basic Nen Capability: Zhang Lei maintains competent but not exceptional Nen control appropriate to his Professional tier.",
+        "\nfighting style: Zhang Lei avoids direct combat when possible, instead using diplomacy and financial leverage to achieve goals. When forced into engagement, he relies on straightforward Nen reinforcement. His coin beast can support allies through financial gifts. His greatest strength is his diplomatic network and financial leverage; his weakness is his reliance on negotiation—opponents unwilling to negotiate or accept financial incentive can bypass his primary strategy. His pragmatism sometimes causes him to abandon positions when direct force becomes overwhelming, creating perception of weakness."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 96,
+      "known": true,
+      "voiceTag": "male calm diplomatic"
+    },
+    "Halkenburg Hui Guo Rou": {
+      "name": "Halkenburg Hui Guo Rou",
+      "type": "Nen Master",
+      "currentLocation": "The Black Whale",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Kakin Royal Court",
+      "basicInfo": "The Ninth Prince of Kakin and conscience-stricken idealist, Halkenburg combines devastating combat capability with genuine ethical opposition to his family's succession-war mechanism. He possesses an athletic build suggesting intense training, sharp intelligent features reflecting thoughtfulness, and wears formal elegant clothing. He carries himself with surprising humility despite obvious capability.",
+      "personality": [
+        "Ethically committed: genuinely opposes the succession-war mechanism and attempts to find alternatives; his principles are deeply held",
+        "Introspectively conflicted: struggles with contradiction between his role as prince and his ethical opposition to the system",
+        "Surprisingly humble: downplays his own capability and defers to others despite his considerable strength",
+        "Loyally protective: forms deep bonds with those under his care and defends them with fierce commitment"
+      ],
+      "hiddenInfo": "Halkenburg Hui Guo Rou is the Ninth Prince of Kakin and perhaps the only succession-war participant who genuinely opposes the system. His Nen category remains unrevealed, though he is clearly a capable Nen Master. His signature Hatsu involves a guardian beast that enables him to establish unbreakable soul-binding bonds with loyal followers—essentially creating a group soul-link where his followers gain enhanced capabilities and perfect coordination. Halkenburg uses this ability to recruit followers of exceptional loyalty who believe in his vision of reform. His strategy throughout the succession war focuses on gathering supporters, protecting the innocent, and attempting to change the system from within rather than simply eliminating rivals. He is extraordinarily dangerous despite his ethical opposition to violence—his soul-binding beast enables him to create perfectly-coordinated group combat operations where followers fight as unified consciousness. His role in A8 is significant—he boards the Black Whale and becomes a focal point for those opposing the succession-war system. EXTRAPOLATED status beyond ch.410: his ultimate fate in the succession war is undetermined; whether he succeeds in reform or falls to superior force remains speculative. ARC VALIDITY: A8 only (succession war participant, idealist figure).",
+      "abilities": [
+        "Soul-Binding Guardian Beast: Halkenburg's signature ability enables him to establish unbreakable soul-bonds with loyal followers, creating perfect coordination and enhanced capability within the bonded group.",
+        "Group Combat Coordination: Halkenburg's soul-bonds enable him to coordinate group combat with telepathic precision and unified tactical approach.",
+        "Ethical Leadership: Halkenburg demonstrates genuine care for his followers and commitment to their wellbeing, inspiring exceptional loyalty.",
+        "Reformed Philosophy: Halkenburg advocates for systematic reform of the succession mechanism, attempting to create alternatives to pure elimination-based competition.",
+        "Nen Master Capability: Halkenburg maintains Master-tier Nen control appropriate to his sophisticated soul-binding Hatsu.",
+        "\nfighting style: Halkenburg fights by establishing soul-bonds with loyal followers, then coordinating group combat with perfect unity and telepathic communication. Individual members become extensions of his tactical consciousness. He avoids unnecessary violence against non-combatants and attempts negotiation before combat. His greatest strength is his group-coordination capability and the loyalty of his followers; his weakness is his ethical limitations—he refuses to employ tactics involving harm to innocent parties, creating vulnerability against ruthless opponents. His idealism sometimes prevents him from committing fully to necessary violence, creating tactical hesitation."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 100,
+      "known": true,
+      "voiceTag": "male warm idealistic"
+    },
+    "Queen Oito": {
+      "name": "Queen Oito",
+      "type": "Civilian",
+      "currentLocation": "The Black Whale",
+      "currentArea": "",
+      "gender": "female",
+      "faction": "Kakin Royal Court",
+      "basicInfo": "The Eighth Queen and lowest-born consort of King Nasubi, Oito is a civilian woman of humble origins thrust into palace intrigue and succession-war horror. She possesses an average build, expressive features reflecting emotional intensity, and wears formal gowns befitting her royal status. She carries herself with surprising dignity despite her overwhelming fear and confusion.",
+      "personality": [
+        "Desperately protective: her primary motivation is protecting her infant son Woble from the succession-war mechanism; everything else is secondary",
+        "Genuinely fearful: experiences constant terror about the succession war, assassination attempts, and threats to her child",
+        "Surprisingly resilient: despite her fear and civilian status, she persists and survives through determination and willingness to accept allies",
+        "Emotionally honest: expresses her feelings directly; her authenticity creates unusual depth in a court of deception"
+      ],
+      "hiddenInfo": "Queen Oito is the Eighth Queen of Kakin—the lowest-ranked consort, married to Nasubi to legitimize her connection to his household. She is not a Nen user and possesses minimal combat capability. Her son Woble is Prince Fourteen, the youngest heir, and therefore most vulnerable to older siblings in the succession war. Her pregnancy during the expedition makes her extraordinarily vulnerable—she is confined, threatened, and desperate for protection. She is contractually bound to Kurapika, a professional Hunter hired as bodyguard for herself and Woble. This relationship is perhaps the most genuine emotional connection she possesses—Kurapika becomes both protector and moral anchor in horrifying circumstances. Her hidden nature involves her awareness that her low status makes her and Woble particularly expendable—higher-ranking queens have more institutional protection. During A8, she is essentially a hostage trapped aboard the Black Whale, participating in the succession war not by choice but by circumstance. Woble's Nen beast properties are never fully explained in canon; its exact nature remains mysterious and terrifying. ARC VALIDITY: A8 only (survival-horror run, pregnant during expedition—EXTRAPOLATED post-ch.410).",
+      "abilities": [
+        "Maternal Determination: Oito's fierce protective drive toward Woble grants her surprising resilience and willingness to risk herself for her child.",
+        "Minimal Nen Capability: Oito is not a Nen user and possesses only basic physical capability.",
+        "Emotional Intelligence: Despite her civilian status, Oito demonstrates surprising insight into people and situations through emotional perception.",
+        "Survival Instinct: Oito possesses exceptional capability to assess threats and identify safest courses of action.",
+        "Kurapika Contract Bond: Oito is contractually bound to Kurapika, granting her access to his protective capability and establishing lasting emotional connection."
+      ],
+      "tier": "mythic",
+      "level": 2,
+      "hpMax": 40,
+      "known": true,
+      "voiceTag": "female warm fearful"
+    },
+    "Bill": {
+      "name": "Bill",
+      "type": "Nen Professional",
+      "currentLocation": "The Black Whale",
+      "currentArea": "",
+      "gender": "male",
+      "faction": "Black Whale Expedition",
+      "basicInfo": "A dependable bodyguard recruited into Beyond Netero's expedition team, Bill combines farmer-like solidity with professional Nen capability. He possesses a sturdy build suggesting agricultural background, calm weathered features reflecting pragmatic experience, and wears practical field clothing. He carries himself with quiet reliability.",
+      "personality": [
+        "Dependably reliable: follows through on commitments without question; his word is absolute guarantee",
+        "Pragmatically stoic: approaches challenges with patience and acceptance rather than emotional reaction",
+        "Quietly competent: performs his duties without seeking recognition or praise; efficiency is its own reward",
+        "Surprisingly wise: offers occasional observations suggesting depth of understanding beneath his simple exterior"
+      ],
+      "hiddenInfo": "Bill is a professional Hunter and bodyguard recruited directly into Beyond Netero's Black Whale expedition. His Nen category is Emission, and he maintains Nen Professional-level capability appropriate to bodyguard work. Bill's origin is humble—he comes from farming background and maintains that sensibility despite his professional Nen training. His role on the expedition is practical security and task execution rather than strategic planning. He is extraordinarily dependable—he accepts assignments without question and executes them with reliability. His greatest advantage is his lack of ambition—he has no personal agenda beyond serving his employer and maintaining professional standards. During A8, Bill works as part of the expedition's security and logistical operations, contributing essential groundwork that enables more prominent figures to operate. His hidden nature is his awareness of his own limitations—he knows he is not a genius or exceptional fighter, and he accepts this without bitterness. ARC VALIDITY: A8 only (recruited specifically for expedition).",
+      "abilities": [
+        "Emission Aura Control: Bill transmits his aura externally with practical precision, enabling Nen-based techniques and ranged engagement.",
+        "Professional Bodyguard Training: Bill demonstrates competent protective positioning and threat assessment appropriate to security operations.",
+        "Practical Equipment Mastery: Bill excels with practical field gear and logistics equipment, enabling expedition setup and maintenance.",
+        "Reliable Execution: Bill's greatest strength is his absolute reliability—he executes orders perfectly and adapts fluidly to circumstance changes.",
+        "Steady Presence: Bill's calm demeanor and lack of panic provide stabilizing influence in chaotic situations."
+      ],
+      "tier": "mythic",
+      "level": 9,
+      "hpMax": 88,
+      "known": true,
+      "voiceTag": "male calm steady practical"
     }
   },
   "premadeCharacters": [],
