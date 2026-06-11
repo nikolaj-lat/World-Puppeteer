@@ -698,6 +698,344 @@
       ],
       "bonus": 6,
       "cooldown": 2
+    },
+    "Twin Orbs": {
+      "name": "Twin Orbs",
+      "description": "Silva manifests twin spheres of compressed aura, each humming with lethal potential. Costs 18-25% aura per sphere and allows independent targeting or synchronized detonation. The orbs carry the weight of Silva's raw enhancement power, capable of piercing through heavy fortifications and Nen armor with brutal efficiency.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Twin Orbs",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 2
+    },
+    "Nanika's Wish": {
+      "name": "Nanika's Wish",
+      "description": "Killua's parasitic sister grants any wish after three prior requests have been fulfilled. The price scales precisely to the wish's magnitude—greater wishes demand greater costs, often lives or years of life. Failure to pay the price accrues as a debt that compounds with interest. EXCEPTION: Killua holds unique command authority and may issue orders directly without request-fulfillment. The narrator must mechanically enforce all payment terms and track accumulated debt.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Nanika's Wish",
+          "amount": 1
+        }
+      ],
+      "bonus": 7,
+      "cooldown": 3
+    },
+    "Coin Bullets": {
+      "name": "Coin Bullets",
+      "description": "Gotoh flicks ordinary coins with surgical precision, accelerating them to gunfire velocity and beyond. Costs 8-12% aura per shot and allows rapid, unpredictable fire from concealment. The coins are nearly impossible to trace; their small profile and high speed make them ideal for assassination or precision elimination.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Coin Bullets",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 1
+    },
+    "Rider's High": {
+      "name": "Rider's High",
+      "description": "Tsubone transforms her body into any wheeled or tracked vehicle, becoming a living conveyance. Costs 15-20% aura per transformation and allows others to ride/fuel her through Nen transfer. The transformed state grants mobility appropriate to the vehicle type; different forms enable different tactical roles.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Rider's High",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 2
+    },
+    "100-Type Guanyin Bodhisattva": {
+      "name": "100-Type Guanyin Bodhisattva",
+      "description": "Netero's prayer-born goddess materializes as a colossal Nen avatar channeling his accumulated devotion. The technique escalates through ninety-nine hand techniques, each amplifying power exponentially—First Hand through Ninety-Ninth Hand to the absolute Zero Hand, which expends every drop of Netero's aura for an all-encompassing, reality-bending strike. Costs 25-50% per hand escalation; Zero Hand leaves him completely empty. The narrator must strictly enforce the cost and escalation sequence.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: 100-Type Guanyin Bodhisattva",
+          "amount": 1
+        }
+      ],
+      "bonus": 7,
+      "cooldown": 2
+    },
+    "Cattle Bell": {
+      "name": "Cattle Bell",
+      "description": "Mizaistom conjures judgment cards that impose restraints or render binding verdicts on targets. Costs 10-15% aura per card and serves as conditional control—the targeted entity faces the stated judgment. Useful for negotiation, enforcement, and strategic incapacitation of dangerous combatants.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Cattle Bell",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 2
+    },
+    "Three Monkeys": {
+      "name": "Three Monkeys",
+      "description": "Saiyu's staff strikes impose psychic prisons that blind, deafen, or silence targets—the three monkey conditions. Costs 12-18% aura per strike and requires staff contact to activate. A target bound by See-Not cannot track visually, one bound by Hear-Not cannot receive audio signals, and one bound by Speak-Not cannot vocalize or cast voice-based Nen techniques. The narrator enforces these sensory deprivations strictly.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Three Monkeys",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 2
+    },
+    "Technique Mimicry": {
+      "name": "Technique Mimicry",
+      "description": "Ging replicates any Nen technique he has personally received or witnessed in direct combat. Costs 15-25% aura per replication and allows perfect execution matching the original user's proficiency. Limited to techniques he has directly experienced; merely hearing about an ability does not grant replication rights.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Mimicry",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 2
+    },
+    "Tiger Bite Double": {
+      "name": "Tiger Bite Double",
+      "description": "Kastro conjures a perfect doppelgänger of himself, doubling his combat presence and striking capability. Costs 20-30% aura to maintain the double and drains additional aura if the double takes damage. CRITICAL FLAW: Controlling the double causes severe memory-overdraft effects in Kastro's mind—sustained use risks cognitive degradation and personality fragmentation.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Tiger Bite Double",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 2
+    },
+    "Song of Healing": {
+      "name": "Song of Healing",
+      "description": "Melody plays a soothing flute melody that calms minds and bodies, restoring vitality to allies within earshot. Costs 8-12% aura per performance and serves as utility support—accelerates healing, steadies panicked allies, and relieves psychological distress. The melody must remain uninterrupted; broken concentration cancels the effect.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Song of Healing",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 1
+    },
+    "Great Haiku": {
+      "name": "Great Haiku",
+      "description": "Basho declares a verse in the traditional 5-7-5 syllable structure, and the declared poem becomes reality in proportion to its literary quality and emotional resonance. Costs 12-18% aura per haiku and serves as conditional reality-alteration—a perfectly crafted verse manifests more completely than a clumsy one. The narrator judges the haiku's artistic merit to determine effect magnitude.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Great Haiku",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 1
+    },
+    "Lovely Ghostwriter": {
+      "name": "Lovely Ghostwriter",
+      "description": "Neon's automatic-writing prophecy manifests cryptic, poetic verses that reveal potential futures and hidden truths. Costs 18-25% aura per prophecy session and produces information involuntarily—Neon cannot consciously control or read her own output, making interpretation a collaborative process. The prophecies are always accurate but deliberately obscure, requiring narrative decoding.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Lovely Ghostwriter",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 3
+    },
+    "Magical Esthetician": {
+      "name": "Magical Esthetician",
+      "description": "Bisky summons Cookie-chan, a conjured esthetician companion who performs massage and restoration magic. Costs 12-18% aura per session and grants 30 minutes of uninterrupted treatment equivalent to 8 hours of natural sleep, erasing fatigue and mental strain completely. The conjured esthetician cannot engage in combat but provides invaluable recovery support.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Cookie-chan",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 2
+    },
+    "14 Devils": {
+      "name": "14 Devils",
+      "description": "Razor emits a gang of fourteen powerful demon constructs, each with independent agency and distinct capabilities. Costs 25-35% aura for full summoning and allows sustained control of the squad. The demons operate under strict rules—they acknowledge the Nen dodgeball court ruleset and respect those boundaries. Each demon can be dismissed individually to conserve aura.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: 14 Devils",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 2
+    },
+    "Little Flower": {
+      "name": "Little Flower",
+      "description": "A palm-contact explosion that detonates on impact, releasing devastating concussive force. Costs 10-15% aura per detonation and serves as a close-range offensive tool. The technique is simple but extremely effective at destroying fortifications and overpowering direct opposition.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Little Flower & Countdown",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 1
+    },
+    "Countdown": {
+      "name": "Countdown",
+      "description": "Plant a time-bomb Nen construct that detonates on a specified delay or trigger condition. Costs 18-25% aura per bomb placement and allows strategic trapping. Release conditions are strict: only the planter can trigger early release; defusal requires severing the Nen connection or equivalent magical nullification. The narrator mechanically enforces all timer mechanics.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Little Flower & Countdown",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 3
+    },
+    "Twin Gorillas": {
+      "name": "Twin Gorillas",
+      "description": "White conjures two massive gorilla constructs, enabling rapid positional swaps. Costs 15-20% aura and allows White to swap positions with one gorilla, and the gorillas to swap with targets within their range. The technique enables hit-and-run tactics and chaotic spatial manipulation.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Twin Gorillas",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 1
+    },
+    "Exorcist's Beast": {
+      "name": "Exorcist's Beast",
+      "description": "Summon a parasitic-eating entity through a binding ritual, consuming foreign Nen constructs and aura-based afflictions from a target. Costs 20-30% aura per ritual invocation and serves as specialized utility for removing curses, unwanted Nen attachments, or contaminated aura. CRITICAL: Each exorcism requires binding ritual preparation; the process cannot be rushed or improvised.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Exorcist's Beast",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 3
+    },
+    "Crazy Slots": {
+      "name": "Crazy Slots",
+      "description": "Roll a slot machine that conjures a random weapon numbered 1-9—a gun, sword, spear, shuriken, or others. Costs 10-15% aura per roll and binds the user to the result until the weapon is used or discarded. No re-rolls are permitted until deployment; inability to choose is a binding limitation. The clown attendant talks back, offering cryptic commentary on each roll. (A hidden tenth outcome may exist, but remains mysterious.)",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Crazy Slots",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 1
+    },
+    "Deep Purple": {
+      "name": "Deep Purple",
+      "description": "Morel transforms his pipe-breath into sentient smoke constructs capable of independent action within a defined radius. Costs 20-30% aura per summon and creates an entire subordinate army bound by Morel's breath capacity—the larger his aura reserve, the more constructs he can sustain. The smoke cloud obscures vision and allows mobile fortification.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Deep Purple",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 2
+    },
+    "Hide and Seek": {
+      "name": "Hide and Seek",
+      "description": "Knov manifests pocket-dimension apartments accessible through Nen-infused windows and exits. Costs 15-25% aura per portal creation and grants interior space independent of exterior reality. The 4th floor is permanently restricted and cannot be accessed by normal means; traversal to restricted zones requires explicit narrative permission.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Hide and Seek",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 2
+    },
+    "Hakoware": {
+      "name": "Hakoware",
+      "description": "Knuckle lends Nen power as debt through his A.P.R. system, charging exponential interest compounded interest on borrowed aura. Costs 0 aura to lend (debt-based), but failure to repay interest accrues bankruptcy penalties—forced Zetsu for 30 consecutive days. The I.R.S. enforcement rules are strict and narrator-enforced; debt cannot be escaped through death or incapacitation.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Hakoware",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 2
+    },
+    "Hotel Rafflesia": {
+      "name": "Hotel Rafflesia",
+      "description": "Shoot manifests three independent floating hands capable of manipulation and construction, encaging targets within an expanding birdcage barrier. Costs 18-25% aura per construct and allows defensive fortification or offensive encirclement. CRITICAL: Targets within the birdcage are subject to continuous shrinking—the longer they remain trapped, the smaller they become, eventually becoming insignificant.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Hotel Rafflesia",
+          "amount": 1
+        }
+      ],
+      "bonus": 5,
+      "cooldown": 2
+    },
+    "Wink Blue": {
+      "name": "Wink Blue",
+      "description": "Palm's third eye grants clairvoyant vision of anyone she has previously beheld directly. Costs 8-12% aura to activate and provides real-time visual contact with distant targets. Once a person enters the third eye's memory, they can never hide from Palm's perception.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Wink Blue",
+          "amount": 1
+        }
+      ],
+      "bonus": 4,
+      "cooldown": 2
+    },
+    "Terpsichora": {
+      "name": "Terpsichora",
+      "description": "Neferpitou achieves supreme marionette mastery, puppeting defeated opponents as perfect extensions of will while granting surgical precision through conjured Doctor Blythe field medicine. Costs 25-40% aura per marionette and allows full cognitive control of puppet-bodies. Doctor Blythe procedures can be performed mid-combat, healing or modifying puppets as needed. The narrator enforces all puppet limitations and surgical precision rules.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Terpsichora",
+          "amount": 1
+        }
+      ],
+      "bonus": 7,
+      "cooldown": 2
+    },
+    "Future Sight": {
+      "name": "Future Sight",
+      "description": "Tserriednich perceives ten seconds of potential future while holding his breath, gaining precognitive advantage in decision-making and combat. Costs 8-12% aura per use and requires continuous breath-holding to maintain; release of breath ends the vision immediately. SPECULATIVE: This ability extends beyond manga canon and should be treated as an extrapolated interpretation—the narrator may adjust mechanics or range as narrative appropriateness demands.",
+      "requirements": [
+        {
+          "type": "trait",
+          "variable": "Hatsu: Future Sight",
+          "amount": 1
+        }
+      ],
+      "bonus": 6,
+      "cooldown": 2
     }
   }
 }
