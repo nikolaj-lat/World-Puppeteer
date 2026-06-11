@@ -2953,6 +2953,459 @@
       "level": 12,
       "hpMax": 108,
       "known": true
+    },
+    "Wing": {
+      "name": "Wing",
+      "type": "Nen Professional",
+      "currentLocation": "Heavens Arena",
+      "currentArea": "Floor Masters' Halls",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "A shabby but genuine Nen teacher of advanced years, Wing carries the bearing of someone who has seen much and cares little for appearance. He is thin and weathered with gray hair, lined face, and eyes that gleam with sharp intelligence despite his humble dress. He wears simple worn robes and carries minimal possessions, reflecting a life spent in pursuit of knowledge rather than wealth.",
+      "personality": [
+        "Principled: refuses to teach Nen to those he judges morally unsuitable, regardless of payment or pressure",
+        "Honest: shares genuine knowledge and refuses to perpetuate lies or shortcuts, even when they would be profitable",
+        "Observant: notices latent talent and potential in students others overlook",
+        "Weary: has become somewhat disillusioned with humanity but continues teaching out of obligation"
+      ],
+      "hiddenInfo": "Wing is one of the world's few genuinely ethical Nen teachers—a rarity in a profession often dominated by frauds and mercenaries. He was instrumental in exposing the 'Hyakushiki-juu' lie, a false meditation technique that charlatans peddle to desperate students, demonstrating publicly that it was worthless and actually dangerous. This act of integrity cost him significantly—he lost students, lost reputation in certain circles, and gained enemies among the frauds he exposed. Yet he continues teaching true Nen, employing Water Divination to assess students' natural category and design individualized training paths. His Nen category is Enhancement, and he possesses deep mastery of the foundational techniques (Ten, Ren, Gyo, Shu, In). He teaches Gon, Killua, and Zushi the genuine Nen fundamentals, becoming a crucial figure in their arc-three development. His teaching license has faced multiple stakes and legal challenges from the fraudsters he exposed, yet he persists. He represents the world's conscience—a mentor figure whose impact extends far beyond his humble station. ARC VALIDITY: A3 central (Heavens Arena teacher); A4-A8 background presence as a respected elder in the Association; occasionally consulted for ethical questions or technical Nen advice by the main cast.",
+      "abilities": [
+        "Enhanced Perception: Wing's Gyo allows him to see aura in precise detail, identifying a Nen user's category, power level, and emotional state through their aura signature alone.",
+        "Water Divination Expertise: Wing has mastered the diagnostic technique that reveals a Nen user's natural category through controlled water exposure. His interpretations are infallibly accurate.",
+        "Ten Mastery: Wing can hold Ten perfectly for indefinite periods, granting him superior aura control and foundational technique that exceeds younger practitioners by orders of magnitude.",
+        "Ren Application: Wing's Ren projects his aura as a tangible presence that establishes authority in negotiations or confrontations. His aura presence commands respect from other practitioners.",
+        "Pedagogical Intuition: Wing possesses an uncanny ability to identify latent Nen talent in untrained individuals and design training regimens perfectly suited to their natural strengths.",
+        "\nfighting style: Wing rarely engages in direct combat—his role is teaching rather than fighting. When forced to defend himself, he employs fundamental Nen techniques applied with master-level precision. He uses Ren to establish psychological dominance and relies on superior control rather than raw power. Against younger Nen users, he teaches by example, demonstrating techniques and allowing students to experience defeat as a lesson. Against hostile Nen masters, he prioritizes escape or negotiation over combat engagement. His greatest strength is his knowledge and integrity; his weakness is his age and declining physical capacity—he is more vulnerable to young, strong opponents than he would have been in his prime."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 88,
+      "known": true,
+      "voiceTag": "male elderly wise"
+    },
+    "Zushi": {
+      "name": "Zushi",
+      "type": "Nen Initiate",
+      "currentLocation": "Heavens Arena",
+      "currentArea": "Lower Floors",
+      "gender": "male",
+      "basicInfo": "An earnest young martial artist and student of Wing, Zushi combines humble determination with surprising combat aptitude. He is slender and youthful with dark hair kept short, bright eager eyes, and a perpetually focused expression. He favors simple martial arts gi—white training tunic and dark pants—reflecting his dedication to his craft.",
+      "personality": [
+        "Earnest: approaches his training with absolute seriousness and genuine desire to improve",
+        "Respectful: shows proper deference to his teacher Wing and to stronger martial artists he encounters",
+        "Determined: perseveres through difficult training despite setbacks and repeated defeats",
+        "Honest: admits his limitations and asks for guidance rather than pretending confidence he doesn't possess"
+      ],
+      "hiddenInfo": "Zushi is a young martial artist taken under Wing's tutelage after showing promise in the Heavens Arena's lower floors. He begins the arc as a Nen Initiate—recently awakened to Nen but still struggling with foundational techniques. Through Wing's genuine teaching and intensive training, he develops rapidly, eventually achieving Practitioner-level capability by arc's end. His catchphrase 'Osu!' (a martial arts affirmation) reflects his earnest, traditional approach to the martial path. He befriends Gon and Killua during their time at Heavens Arena, and the three exchange matches and training insights. Despite his rapid development, Zushi never becomes a major player in later arcs—he represents the 'normal' path of a talented but unremarkable martial artist, in contrast to the protagonists' escalating power. His continued presence in later arcs (background) suggests he pursued a respectable Hunter career in arena fighting. ARC VALIDITY: A3 central (Heavens Arena student); A4-A8 background mentions as respectable arena fighter but not featured prominently.",
+      "abilities": [
+        "Nen Initiation: Zushi has recently awakened to Nen and can hold Ten in meditation, though his aura control remains imperfect and his total aura pool is limited.",
+        "Martial Arts Foundation: Zushi's formal martial training provides him with excellent footwork, body positioning, and basic striking technique. His fundamentals are sound though his power is limited.",
+        "Eager Learning Capacity: Zushi absorbs instruction rapidly, improving visibly from one day to the next under proper teaching. His growth rate exceeds most Nen initiates.",
+        "Hand-to-Hand Combat: Zushi can engage in unarmed fighting with decent effectiveness, combining basic Nen reinforcement with traditional martial strikes.",
+        "Respectful Bearing: Zushi's humility and willingness to learn grant him unusual access to instruction from stronger fighters who appreciate his attitude.",
+        "\nfighting style: Zushi fights with textbook martial arts form—good footwork, proper distance management, and combination striking. He is not yet strong enough to overcome serious opponents, but his technique is clean and efficient. Against much stronger opponents, he focuses on not getting hurt while learning from the experience. Against evenly-matched peers, he applies his fresh Nen knowledge and superior footwork for advantage. His greatest strength is his rapid learning and solid fundamentals; his weakness is his limited raw power and relatively shallow aura pool, which restricts his Nen applications. He represents the 'earnest' martial artist path—solid, reliable, but unlikely to ever reach elite status."
+      ],
+      "tier": "mythic",
+      "level": 5,
+      "hpMax": 60,
+      "known": true,
+      "voiceTag": "male young energetic"
+    },
+    "Kastro": {
+      "name": "Kastro",
+      "type": "Nen Professional",
+      "currentLocation": "Heavens Arena",
+      "currentArea": "Floor 200 Corridor",
+      "gender": "male",
+      "basicInfo": "A beautiful 200th-floor fighter whose exotic appearance and confident bearing mask a deeply troubled mind, Kastro combines exceptional martial capability with profound internal contradiction. He possesses an androgynous appearance with delicate features, long flowing blonde hair, fair skin, and eyes that shift between confidence and desperate concern. He favors elaborate martial clothing—embroidered gi and decorative bindings—suggesting both artistry and vanity.",
+      "personality": [
+        "Confident: presents absolute certainty in his abilities and overwhelming superiority to opponents",
+        "Vain: takes considerable pride in his appearance and martial skill; insults to either provoke intense reaction",
+        "Emotionally unstable: shifts between euphoria and despair without apparent middle ground",
+        "Obsessive: fixates on opponents who challenge him or wound his pride, pursuing rematches obsessively"
+      ],
+      "hiddenInfo": "Kastro is a exceptional fighter and master of the 'Tiger Bite Fist' technique—a powerful close-combat Hatsu that focuses aura into his hands for devastating strikes. His innovation, the 'Double,' was supposed to be his ultimate technique: a conjured duplicate of himself that could fight independently while retaining his consciousness in both bodies simultaneously. The Double was, in theory, a revolutionary technique that would grant him two fighting instances in a single engagement. However, the technique contains a fatal flaw that Kastro has never consciously acknowledged: the Double is actually a perfect memory copy that diverges from Kastro at the moment of creation. Each 'double' experiences itself as the real Kastro, and they share no consciousness—a nightmare of identity dissolution that only becomes apparent when the Double is defeated and Kastro realizes with horror that a part of himself was erased. This psychological wound drives much of his later behavior. During the Heavens Arena arc, Kastro is initially confident and dominant, but upon challenging Hisoka (a trap set deliberately to test the Double), the Double is defeated in a devastating fight against Bungee Gum. The trauma of experiencing the death of what feels like himself cracks Kastro's mind permanently. He becomes obsessed with obtaining a rematch with Hisoka to reclaim his honor—a rematch that never comes during the canon story. Arc 3 is Kastro's peak before his psychological collapse; he dies in the Heavens Arena era during a rematch attempt (off-screen, post-arc). ARC VALIDITY: A3 prominent (floor 200 fighter); dies in A3 late-stage (arena-era final months, before Yorknew); persistent memory/reference in A4+ as cautionary tale of psychological breakdown.",
+      "abilities": [
+        "Tiger Bite Fist Mastery: Kastro channels intense aura concentration into his hands, creating devastating striking force. The technique combines physical speed with aura-powered impact, delivering crushing blows that few opponents can withstand.",
+        "Enhanced Physique: Kastro's body is conditioned to perfection—his speed, strength, and reflexes all exceed typical human baseline through years of disciplined training.",
+        "The Double Technique: Kastro's signature and most traumatic ability—he creates a conjured duplicate of himself that can fight independently. The technique grants apparent battlefield advantage at the cost of severe psychological complexity.",
+        "Offensive Momentum: Kastro fights with aggressive commitment, launching overwhelming strikes in combination patterns designed to force opponents into defensive positions.",
+        "Aura Sensing: Kastro can detect other Nen users' aura signatures and estimate their relative power level, allowing him to assess threats accurately.",
+        "\nfighting style: Kastro fights with beautiful, aggressive athleticism—his movements are fluid and explosive, combining proper technique with overwhelming commitment. He closes distance rapidly using his speed and launches Tiger Bite Fist combinations designed to end fights decisively. The Double multiplies his tactical options, allowing simultaneous attacks from two angles. However, the Double's creation and defeat become increasingly devastating to his psychology—each activation deepens his unconscious realization that he is creating a person and destroying them. Against most opponents, his beauty, speed, and technique grant overwhelming advantage. Against Hisoka specifically, he encounters an opponent whose unpredictable chaos dismantles his tactical control, leading to the Double's defeat and his psychological spiral. His greatest strength is his aggressive momentum and technical skill; his greatest weakness is his fragile psychological state, which deteriorates catastrophically when his confidence is shattered."
+      ],
+      "tier": "mythic",
+      "level": 11,
+      "hpMax": 96,
+      "known": true,
+      "voiceTag": "male beautiful confident"
+    },
+    "Gido": {
+      "name": "Gido",
+      "type": "Nen Initiate",
+      "currentLocation": "Heavens Arena",
+      "currentArea": "Floor 200 Corridor",
+      "gender": "male",
+      "basicInfo": "A scarred top-spinning fighter who preys upon fresh 200th-floor rookies with calculated cruelty, Gido combines practiced technique with predatory instinct. He possesses a lean muscular frame bearing multiple scars, intense eyes, and dark hair slicked back from his face. He favors practical fighter clothing—sleeveless vest and combat pants—reflecting his utilitarian approach to the arena.",
+      "personality": [
+        "Predatory: hunts weaker opponents with professional efficiency, treating the arena as hunting ground",
+        "Calculating: measures opponents carefully before engaging, choosing battles he can win decisively",
+        "Dismissive: shows contempt for less experienced fighters and new arrivals to the 200th floor",
+        "Mechanistic: approaches combat as pure mechanics without emotional expression or investment"
+      ],
+      "hiddenInfo": "Gido is a professional floor-200 bully who has established a profitable niche hunting fresh arrivals to the Nen hazing line. He uses his signature spinning-top technique to create disorientation and control space, then exploits the resulting chaos with brutal precision. His strategy is sound: he never fights opponents stronger than himself, instead carefully selecting victimized newcomers who haven't yet adjusted to Nen combat. His Nen category is Transmutation (spinning aura), and his technique creates dizzying optical effects that confuse opponents unfamiliar with advanced Nen applications. He represents a moral problem in the arena system—he is technically competent but ethically vacant, profiting from the misery of vulnerable fighters. During the arc, he encounters Gon and Killua; the outcome of these matches establishes their relative capability and maturity in Nen combat. ARC VALIDITY: A3 featured (floor 200 bully); A4-A8 background presence suggesting continued arena presence but not featured prominently.",
+      "abilities": [
+        "Top-Spinning Technique: Gido creates a spinning Nen-infused disc or vortex that disorients opponents and controls battlefield space. The spinning motion creates visual disruption that taxes balance and perception.",
+        "Transmutation Mastery: Gido transforms his aura into a smooth, slippery substance that causes unprepared opponents to lose footing and positioning.",
+        "Predatory Timing: Gido possesses uncanny ability to identify the exact moment when an opponent is vulnerable and exploits that opening with surgical precision.",
+        "Durability Training: Through years of arena fighting, Gido has conditioned his body to absorb and endure strikes that would incapacitate untrained fighters.",
+        "Psychological Pressure: Gido projects an aura of casual menace that causes inexperienced fighters to doubt themselves and make hesitant decisions.",
+        "\nfighting style: Gido fights as a predator hunting wounded prey—he establishes space control through his spinning technique, forcing opponents into disoriented defensive positions, then exploits their confusion with precise strikes. Against stronger opponents, he avoids engagement entirely, choosing safer targets. Against weaker opponents, he drags out the fight, enjoying the psychological breakdown as much as the physical victory. His greatest strength is his ability to read opponents and choose battles he can win—he rarely overcommits. His greatest weakness is his dependence on psychological advantage; confident, strong opponents who ignore his disorienting technique and attack directly often overwhelm him quickly."
+      ],
+      "tier": "mythic",
+      "level": 8,
+      "hpMax": 80,
+      "known": true,
+      "voiceTag": "male calm predatory"
+    },
+    "Riehlvelt": {
+      "name": "Riehlvelt",
+      "type": "Nen Initiate",
+      "currentLocation": "Heavens Arena",
+      "currentArea": "Floor 200 Corridor",
+      "gender": "male",
+      "basicInfo": "A flamboyant whip-wielder and showman fighter who transforms arena combat into theatrical spectacle, Riehlvelt combines technical skill with extravagant personality. He possesses a lithe, graceful frame with meticulously maintained appearance, sharp features, and intense expressive eyes. He favors elaborate show-fighter costumes—colorful silks, decorative belts, and embroidered vests—reflecting his theatrical approach to combat.",
+      "personality": [
+        "Theatrical: treats every fight as a performance designed to entertain the crowd",
+        "Charismatic: draws energy from audience reaction and modulates his behavior to maximize crowd engagement",
+        "Vain: takes considerable pride in his appearance, technique, and crowd appeal",
+        "Emotionally volatile: shifts between euphoria and rage depending on crowd response and fight momentum"
+      ],
+      "hiddenInfo": "Riehlvelt is a floor-200 fighter who has turned arena combat into performance art. His whip technique employs Transmutation-enhanced Nen to create lightning-infused strikes, combining traditional whip skill with aura amplification for impressive visual and tactical effects. He fights primarily for crowd approval rather than pure victory; he has been known to prolong fights unnecessarily to maximize entertainment value. His lightning whip is genuinely dangerous and can incapacitate opponents through electrical shock, but his reliance on showmanship sometimes undermines tactical efficiency. He represents the arena's entertainment aspect—the fine line between legitimate competition and bloodsport spectacle. During the arc, he encounters the main cast; his reactions to them establish their power levels relative to established floor-200 fighters. ARC VALIDITY: A3 featured (floor 200 showman); A4-A8 background presence as continuing arena fighter but not prominently featured.",
+      "abilities": [
+        "Lightning Whip Mastery: Riehlvelt channels electrical aura through a conjured whip, creating devastating striking capability at range. The whip can entangle, strike, or deliver electrical shock.",
+        "Transmutation Electricity: Riehlvelt infuses his aura with electrical properties, granting his technique stunning and cumulative shock damage against organic targets.",
+        "Acrobatic Control: Riehlvelt moves with exceptional grace and precision—his footwork allows him to maintain balance while wielding his whip from any position.",
+        "Crowd Reading: Riehlvelt possesses uncanny ability to sense crowd reactions and adjust his performance to maximize applause and engagement.",
+        "Showmanship: Riehlvelt's theatrical presentation creates psychological pressure through dazzling displays and confidence-projecting movement.",
+        "\nfighting style: Riehlvelt fights as a performer, maintaining range with his whip while creating visually impressive techniques designed for crowd appreciation. He controls space through threat of his electrical strikes while positioning himself for dramatic positioning. Against opponents he respects, he becomes more serious and technical. Against lesser opponents, he prolongs fights for entertainment, sometimes sacrificing optimal tactical choices for crowd reaction. His greatest strength is his range control and electrical damage—opponents unfamiliar with electrical Nen find themselves progressively weakened. His greatest weakness is his reliance on showmanship; serious opponents who ignore the performance and commit to offense often overwhelm his entertainment-focused strategy."
+      ],
+      "tier": "mythic",
+      "level": 8,
+      "hpMax": 76,
+      "known": true,
+      "voiceTag": "male theatrical energetic"
+    },
+    "Sadaso": {
+      "name": "Sadaso",
+      "type": "Nen Initiate",
+      "currentLocation": "Heavens Arena",
+      "currentArea": "Floor 200 Corridor",
+      "gender": "male",
+      "basicInfo": "A one-armed extortionist prowling the 200th floor seeking to exploit vulnerable fighters, Sadaso combines obvious physical limitation with ruthless opportunism. He possesses a muscular frame bearing the obvious scar of an amputation at the right shoulder, scarred features, and cold calculating eyes. He favors simple practical clothing—dark pants and sleeveless shirt—reflecting his mercenary approach.",
+      "personality": [
+        "Predatory: exploits vulnerability and weakness whenever opportunity permits",
+        "Calculating: measures potential victims for extractable value and likelihood of resistance",
+        "Shameless: lacks moral constraint about his extortion tactics; views victims as resources",
+        "Opportunistic: abandons direct confrontation instantly if meaningful resistance appears"
+      ],
+      "hiddenInfo": "Sadaso is a floor-200 extortionist who has carved out a niche through intimidation and calculated violence. He has lost his arm in some prior conflict (details unknown), which initially seems like a disability until he demonstrates his combat capability—his Nen control is sufficient to compensate for his missing limb through aura-based combat techniques. His strategy is simple: identify vulnerable fighters fresh to the floor, extract valuables through intimidation and minor violence, then abandon victims if they prove more resistant than expected. He is not genuinely interested in serious combat; he is a predatory extortionist using the arena as hunting ground. His Nen category is Enhancement, and his techniques focus on creating pain and injury through focused aura strikes. He represents the arena's criminal underside—the systemic victimization that occurs in environments where violence is legal and reward structures encourage brutality. ARC VALIDITY: A3 featured (floor 200 extortionist); A4-A8 background presence as floor-200 fixture but not prominently featured.",
+      "abilities": [
+        "One-Armed Combat: Sadaso has developed exceptional single-arm technique to compensate for his amputation. His remaining arm strikes with concentrated power.",
+        "Aura-Reinforced Strikes: Sadaso channels Enhancement aura into focused, painful strikes designed to maximize injury and psychological impact without lethal force.",
+        "Pain Infliction Technique: Sadaso has studied nerve clusters and vulnerable body regions; his strikes exploit this knowledge to create maximum agony.",
+        "Intimidation Presence: Sadaso projects a threatening aura that causes unprepared opponents to second-guess themselves or flee rather than engage.",
+        "Tactical Withdrawal: Sadaso is accomplished at recognizing when he is outmatched and extracting himself from disadvantageous situations.",
+        "\nfighting style: Sadaso fights as a bully and extortionist—he uses intimidation and minor violence to extract submission without genuine risk. Against vulnerable opponents, he prolongs contact to maximize psychological breaking. Against strong opponents, he withdraws instantly, having no interest in actual combat. His missing arm is both disadvantage and psychological weapon; he uses it to make himself appear diminished, then strikes when opponents lower their guard. His greatest strength is his tactical assessment—he fights only when he is confident of victory. His greatest weakness is his complete reliance on psychological dominance; confident, strong opponents who refuse to be intimidated often cause him to panic and flee."
+      ],
+      "tier": "mythic",
+      "level": 7,
+      "hpMax": 72,
+      "known": true,
+      "voiceTag": "male gruff threatening"
+    },
+    "Melody": {
+      "name": "Melody",
+      "type": "Nen Professional",
+      "currentLocation": "Nostrade City Base",
+      "currentArea": "Operations Floor",
+      "gender": "female",
+      "faction": "Nostrade Family",
+      "basicInfo": "A tiny Music Hunter with an ethereal quality and gentle demeanor, Melody possesses the world's gentlest soul despite the darkness that has marked her path. She is extremely diminutive—appearing almost child-sized—with soft features, peaceful eyes, and long delicate hair. She wears simple flowing clothing that suggests both formality and comfort, and carries a musical instrument as constant companion.",
+      "personality": [
+        "Compassionate: feels genuine empathy for others' suffering and acts to alleviate it despite personal cost",
+        "Melancholic: carries sorrow from past trauma but channels it into purpose rather than despair",
+        "Intuitive: perceives emotional and spiritual resonance in others through her Emitter abilities",
+        "Determined: possesses gentle persistence that continues pursuing her goals despite setback"
+      ],
+      "hiddenInfo": "Melody is a Music Hunter—a specialist in locating and collecting rare musical instruments and recordings from across the world. Her true Nen category is Emission, and her signature ability allows her to hear heartbeats and emotional states through subtle aura vibrations, perceiving the emotional truth of others more clearly than any deception. She was deeply scarred by the 'Sonata of Darkness,' a dark musical composition whose exact nature remains mysterious; the score is lost or sealed, but fragments haunt her still. Her obsession with collecting complete musical recordings and instruments is driven by the desire to locate and understand/exorcise the Sonata's corruption. She serves Kurapika and the Nostrade family as a loyal bodyguard and advisor, bringing her emotional intelligence to bear on complex situations. Her presence grounds the Nostrade operation in genuine human feeling rather than pure mercenary calculation. ARC VALIDITY: A4 prominent (Yorknew arc bodyguard/operation member); A5-A8 background presence as respected Nostrade family fixture and Hunter Association member; her pursuit of the Sonata of Darkness persists across all arcs.",
+      "abilities": [
+        "Heartbeat Listening: Melody's Emitter technique allows her to hear and interpret heartbeats and emotional aura fluctuations in others, revealing emotional truth, lies, fear, and genuine intent with remarkable accuracy.",
+        "Aura Perception: Melody perceives the world partially through Nen aura detection, identifying power levels, categories, and emotional states in other Nen users.",
+        "Musical Instrument Expertise: Melody possesses encyclopedic knowledge of musical instruments, compositions, and their cultural significance across the world's regions.",
+        "Gentle Durability: Despite her tiny frame, Melody's aura reinforcement grants her surprising resilience and endurance beyond what her appearance suggests.",
+        "Sonataic Resonance Detection: Through years of pursuing the Sonata of Darkness, Melody has developed sensitivity to dark musical auras and corrupted compositions.",
+        "\nfighting style: Melody rarely engages in direct combat—her role is perception and emotional guidance rather than violence. When forced to defend herself, she employs defensive aura reinforcement and evasion rather than offensive techniques. Her true strength is her ability to perceive opponent emotional and spiritual states; this allows her to read intentions and predict behavior before it manifests. Against opponents with rigid emotional states (the emotionally controlled), she is less effective; against those with intense emotional volatility, her perception grants overwhelming advantage. Her greatest strength is her empathy and perception; her greatest weakness is her reluctance to harm others, which can limit her effectiveness in genuine combat."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 80,
+      "known": true,
+      "voiceTag": "female gentle contemplative"
+    },
+    "Basho": {
+      "name": "Basho",
+      "type": "Nen Professional",
+      "currentLocation": "Nostrade City Base",
+      "currentArea": "Operations Floor",
+      "gender": "male",
+      "faction": "Nostrade Family",
+      "basicInfo": "A haiku-conjuring bodyguard of the Nostrade family whose poetic nature belies his combat capability, Basho combines the sensitivity of an artist with the efficiency of a professional soldier. He possesses an average build with thoughtful features and intense observant eyes. He favors simple dark clothing reflecting his professional role, and carries himself with the composed bearing of someone comfortable with violence.",
+      "personality": [
+        "Poetic: views combat and life through an artistic lens, finding meaning in form and pattern",
+        "Professional: executes his duties with complete focus and reliability regardless of personal feeling",
+        "Observant: notices minute details about surroundings and human behavior",
+        "Quiet: speaks rarely, preferring to listen and observe rather than dominate conversation"
+      ],
+      "hiddenInfo": "Basho is a Conjurer whose signature Hatsu creates conjured poetry in the form of haiku—these haiku manifest as Nen constructs with specific combat or utility effects. The relationship between poetic meaning and combat application is complex and sometimes unclear even to Basho himself; his haiku operate on layers of metaphor and literal effect simultaneously. His name itself is a reference to the historical poet Matsuo Basho, reflecting his character's commitment to poetic principle. He serves as a loyal bodyguard to the Nostrade family, protecting Neon and executing the family's security operations with quiet competence. His haiku-based Conjuration is creative and flexible, allowing him to respond to varied combat situations through poetic interpretation. ARC VALIDITY: A4 featured (Nostrade bodyguard); A5-A8 background presence as Nostrade family security fixture but not prominently featured.",
+      "abilities": [
+        "Haiku Conjuration: Basho creates conjured constructs from poetic haiku, materializing combat or utility effects. The mechanism linking poetic meaning to Nen manifestation remains mysterious even to trained observers.",
+        "Great Haiku: Basho's signature technique creates conjured constructs of significant power and complexity through extended poetic composition.",
+        "Aura Reinforcement: Basho augments his physical capability through constant aura application, granting him above-average durability and striking power.",
+        "Professional Combat Training: Basho possesses formal training in armed and unarmed combat, executed with technical precision.",
+        "Tactical Positioning: Basho demonstrates exceptional awareness of spatial relationships and positioning, allowing him to maintain strategic advantage during engagement.",
+        "\nfighting style: Basho fights with composed efficiency, employing his haiku constructs to control space and impose conditions on opponents. He positions himself strategically while his conjured effects engage opponents. Against multiple enemies, his constructs allow him to manage several threats simultaneously. Against single powerful opponents, he combines constructing effects with personal combat engagement for overwhelming pressure. His greatest strength is his versatility and creative application of his conjured Nen; his greatest weakness is his reliance on Conjunction—if his concentration breaks or his aura depletes, his constructs vanish and he becomes vulnerable."
+      ],
+      "tier": "mythic",
+      "level": 10,
+      "hpMax": 88,
+      "known": true,
+      "voiceTag": "male calm thoughtful"
+    },
+    "Neon Nostrade": {
+      "name": "Neon Nostrade",
+      "type": "Civilian",
+      "currentLocation": "Nostrade City Base",
+      "currentArea": "Neon's Suite",
+      "gender": "female",
+      "faction": "Nostrade Family",
+      "basicInfo": "A spoiled prophetess princess and heiress to the Nostrade family fortune, Neon combines genuine prophetic power with profound immaturity and moral vacancy. She is slim and youthful with carefully maintained appearance, fashionable styling, and an expression of perpetual entitlement. She favors elaborate clothing reflecting her wealth—designer brands, jewelry, and accessories suggesting absolute privilege without character.",
+      "personality": [
+        "Entitled: expects absolute deference and accommodation as her natural right",
+        "Callous: views others as resources to be used rather than people with intrinsic value",
+        "Hedonistic: pursues pleasure and self-gratification as her primary motivation",
+        "Petulant: becomes vindictive when denied her desires or when others fail to meet her expectations"
+      ],
+      "hiddenInfo": "Neon Nostrade possesses genuine prophetic ability—her Hatsu 'Lovely Ghostwriter' allows her to produce prophecies of remarkable accuracy regarding future outcomes, decisions, and events. However, Neon herself is a Specialist with no offensive Nen capability; her power comes purely from prophecy, making her vulnerable to direct combat. The Nostrade family's wealth and influence are entirely dependent on her prophetic ability—her father Light Nostrade has built his entire empire on the accuracy of her predictions. This creates a perverse dynamic: Neon is simultaneously the family's greatest asset and a liability requiring constant protection. Her prophecies are valuable enough to attract major attention during Yorknew arc's auction season. During the arc, she is revealed to collect body parts from famous criminals—a psychopathic hobby reflecting her moral vacancy. Her power is stolen by Chrollo Lucilfer at the arc's end when he uses Skill Hunter to permanently extract her Hatsu, rendering her an ordinary Civilian with no abilities whatsoever. This event marks a crucial turning point in her character arc: losing her power forces her to confront who she is beyond prophecy. ARC VALIDITY: A4 central (Yorknew arc, loses power at arc's end); A5+ background presence as former prophet now powerless, occasionally referenced but no longer significant.",
+      "abilities": [
+        "Lovely Ghostwriter: Neon's Hatsu prophecy ability allows her to produce written predictions of future events with remarkable accuracy. The mechanism is mysterious; the predictions manifest as written text rather than verbal communication.",
+        "Aura Resistance: As a Specialist, Neon possesses unusual resistance to standard aura techniques, making her difficult to harm through conventional Nen attacks.",
+        "Collector's Knowledge: Neon possesses detailed knowledge of famous criminals' identities, appearances, and body parts—a disturbing expertise reflecting her dark hobby.",
+        "Social Authority: Neon's wealth and family position grant her significant social authority, allowing her to command resources and defer to her requests.",
+        "\nfighting style: Neon does not fight. She is a Civilian with no combat capability whatsoever. Her value lies entirely in her prophetic ability; without it, she becomes ordinary and vulnerable. She relies entirely on bodyguards for physical protection, making her presence in dangerous situations a liability requiring careful management. Her psychological fragility becomes apparent when her power is stolen; the identity she constructed around prophecy crumbles, leaving her uncertain and vulnerable."
+      ],
+      "tier": "mythic",
+      "level": 3,
+      "hpMax": 40,
+      "known": true,
+      "voiceTag": "female young spoiled"
+    },
+    "Light Nostrade": {
+      "name": "Light Nostrade",
+      "type": "Civilian",
+      "currentLocation": "Nostrade City Base",
+      "currentArea": "Operations Floor",
+      "gender": "male",
+      "faction": "Nostrade Family",
+      "basicInfo": "A ruthless mafia don and Nostrade family patriarch whose empire is built entirely upon his daughter's prophetic ability, Light Nostrade embodies the contradiction of power derived from another's talent. He possesses a lean, sharp-featured appearance with calculating eyes and meticulously groomed appearance suggesting meticulous attention to detail. He favors expensive formal clothing reflecting his status and wealth.",
+      "personality": [
+        "Calculating: approaches all decisions through cost-benefit analysis focused purely on profit and power",
+        "Controlling: maintains absolute authority over family operations through a combination of threat and privilege",
+        "Pragmatic: abandons moral constraints entirely when they conflict with practical advantage",
+        "Protective of assets: views his daughter Neon as valuable property requiring security and control"
+      ],
+      "hiddenInfo": "Light Nostrade is a mafia boss whose entire fortune and influence derive from his daughter Neon's prophetic ability. Unlike a traditional businessman, he has built his empire not on personal capability but on the ability to monetize his daughter's prophecies—selling predictive information to other mafia families, auction houses, and power brokers. This relationship is fundamentally parasitic: Neon exists to generate prophecies; Light exists to commercialize them. He maintains ruthless control over Neon through a combination of privilege and threat, ensuring she remains available for prophecy production. His vulnerability is complete dependence on her continued capability; her loss of power at the Yorknew arc's end devastates his position dramatically. He is not a personal Nen user, making him vulnerable in direct confrontation; his power is entirely institutional. ARC VALIDITY: A4 featured (Yorknew arc patriarch); A5+ diminished presence following Neon's power loss, his influence reduces dramatically as his asset becomes worthless.",
+      "abilities": [
+        "Institutional Authority: Light commands significant resources through his position as Nostrade family patriarch, allowing him to deploy bodyguards, intelligence operatives, and armed personnel.",
+        "Prophecy Monetization: Light possesses exceptional skill in identifying profitable applications for Neon's prophecies and brokering them to interested parties.",
+        "Business Acumen: Light demonstrates sophisticated understanding of mafia politics, negotiation, and power networks.",
+        "Emotional Manipulation: Light maintains control over Neon through a sophisticated combination of privilege and psychological pressure.",
+        "\nfighting style: Light Nostrade does not fight. He is a Civilian with no combat capability whatsoever. His power is entirely institutional and economic. He relies entirely on employed security forces for protection. When personal physical danger emerges, he becomes helpless and vulnerable, requiring rescue by his operatives."
+      ],
+      "tier": "mythic",
+      "level": 2,
+      "hpMax": 30,
+      "known": true,
+      "voiceTag": "male authoritative cold"
+    },
+    "Dalzollene": {
+      "name": "Dalzollene",
+      "type": "Trained Fighter",
+      "currentLocation": "Nostrade City Base",
+      "currentArea": "Operations Floor",
+      "gender": "male",
+      "faction": "Nostrade Family",
+      "basicInfo": "The stern chief bodyguard of the Nostrade family operations, Dalzollene embodies professional discipline and absolute loyalty to his mission. He possesses a muscular, imposing frame with stern features and eyes that miss nothing. He favors practical dark clothing and carries himself with military precision reflecting his professional role.",
+      "personality": [
+        "Disciplined: maintains absolute focus on his security mission regardless of distraction or personal feeling",
+        "Professional: executes his duties with competence and reliability without deviation",
+        "Stern: maintains rigid authority and emotional distance from those under his supervision",
+        "Loyal: demonstrates unwavering commitment to the Nostrade family and their operational security"
+      ],
+      "hiddenInfo": "Dalzollene is the chief bodyguard of Neon and the Nostrade family operations, responsible for coordinating security, managing other guards, and protecting against threats. He is a Trained Fighter with basic Nen capability—Enhancement-category reinforcement that augments his physical durability and striking power. He is competent but not elite; his value lies in his reliability and leadership of security personnel rather than personal combat prowess. During the Yorknew arc, he is confronted by Uvogin, a member of the Phantom Troupe, in a fight that reveals the gap between his capability and true Nen mastery. He is killed by Uvogin early in the arc—a death that establishes the Troupe's lethal capability and demonstrates that conventional security is inadequate against elite Nen users. ARC VALIDITY: A4 featured (Yorknew bodyguard); dies early in A4 (Uvogin confrontation); absent from A5+.",
+      "abilities": [
+        "Enhanced Durability: Dalzollene reinforces his body through constant aura application, granting him above-average resistance to physical trauma.",
+        "Trained Combat: Dalzollene possesses formal training in armed and unarmed combat, executed with technical precision and professional discipline.",
+        "Security Coordination: Dalzollene demonstrates exceptional capability in managing security operations, organizing personnel, and identifying vulnerabilities.",
+        "Tactical Assessment: Dalzollene possesses professional training in threat evaluation and operational planning.",
+        "Physical Conditioning: Dalzollene maintains excellent fitness through disciplined training regimen.",
+        "\nfighting style: Dalzollene fights with professional discipline—he employs efficient technique, maintains defensive positioning, and coordinates with other security personnel. Against stronger opponents, he prioritizes protecting his charges rather than personal victory. His competence is solid but unremarkable; he is a professional administrator and security manager rather than a combat specialist. His confrontation with Uvogin establishes his limitation—professional competence is inadequate against elite Nen masters, a lesson paid in blood."
+      ],
+      "tier": "mythic",
+      "level": 9,
+      "hpMax": 92,
+      "known": true,
+      "voiceTag": "male commanding stern"
+    },
+    "Squala": {
+      "name": "Squala",
+      "type": "Nen Initiate",
+      "currentLocation": "Nostrade City Base",
+      "currentArea": "Operations Floor",
+      "gender": "male",
+      "faction": "Nostrade Family",
+      "basicInfo": "A dog-loving bodyguard of the Nostrade family whose genuine affection for animals reveals depths of humanity beneath his professional role, Squala combines security competence with unexpected emotional vulnerability. He possesses a lean muscular frame, ordinary features, and kind eyes that seem at odds with his security role. He favors practical dark clothing reflecting his professional duty.",
+      "personality": [
+        "Loyal: demonstrates unwavering commitment to the Nostrade family and to those under his protection",
+        "Compassionate: shows genuine empathy for animals and vulnerability toward those he cares for",
+        "Professional: executes his security duties with competence and focus despite personal limitations",
+        "Conflicted: struggles between his professional role and his moral discomfort with mafia violence"
+      ],
+      "hiddenInfo": "Squala is a bodyguard for the Nostrade family with Manipulator-category Nen—his ability to control animals (particularly dogs) makes him valuable for security and reconnaissance operations. His genuine affection for the dogs under his command creates an emotional bond that makes him vulnerable; he would sacrifice operational advantage to protect an animal in danger. During the Yorknew arc, Squala is captured and interrogated by the Phantom Troupe in a horrific scene where his love for his dogs is exploited as leverage to extract information. He is killed during this interrogation—a death that demonstrates his vulnerability despite his professional capability and establishes the Troupe's willingness to torture for information. His death also exposes Squala's hidden emotional depth; despite his professional role, he was fundamentally a good person destroyed by circumstances beyond his control. ARC VALIDITY: A4 featured (Yorknew bodyguard); dies mid-arc (Troupe interrogation); absent from A5+.",
+      "abilities": [
+        "Nen-Enhanced Manipulation: Squala's Manipulator Hatsu allows him to control animals—particularly dogs—through aura-based commands. The animals remain under his influence while he maintains concentration.",
+        "Animal Training: Squala possesses exceptional skill in training dogs and other animals, establishing loyalty and responsiveness through ethical treatment and careful conditioning.",
+        "Aura Reinforcement: Squala augments his physical capability through constant aura application, granting him above-average durability and striking power.",
+        "Tactical Animal Deployment: Squala demonstrates skill in deploying animals strategically for reconnaissance, distraction, and security.",
+        "Emotional Connection: Squala's genuine affection for animals grants him unusual sensitivity to their welfare and needs, making him effective at animal handling despite emotional cost.",
+        "\nfighting style: Squala fights primarily through his controlled animals rather than direct personal combat. He positions himself defensively while his dogs engage opponents. Against multiple enemies, his animals allow him to manage several threats simultaneously. Against opponents with animal-attacking capability or fear of animals, his animals become vulnerable. His greatest strength is his animal-based force multiplication; his greatest weakness is his emotional vulnerability regarding his animals—he becomes compromised and ineffective if his animals are threatened."
+      ],
+      "tier": "mythic",
+      "level": 8,
+      "hpMax": 84,
+      "known": true,
+      "voiceTag": "male kind conflicted"
+    },
+    "Eliza": {
+      "name": "Eliza",
+      "type": "Civilian",
+      "currentLocation": "Nostrade City Base",
+      "currentArea": "Neon's Suite",
+      "gender": "female",
+      "faction": "Nostrade Family",
+      "basicInfo": "Neon Nostrade's personal attendant and secret romantic partner of Squala, Eliza exists in the liminal space between servant and confidante. She possesses an average appearance deliberately unmarked by distinctive features, dark practical hair, and intelligent observant eyes. She favors servant's clothing reflecting her formal role, designed to fade into the background while remaining accessible.",
+      "personality": [
+        "Devoted: demonstrates absolute loyalty to Neon and quiet dedication to Squala",
+        "Intelligent: observes situations carefully and understands complex social dynamics",
+        "Reserved: maintains emotional distance from all except those closest to her",
+        "Practical: focuses on immediate tasks and duties rather than larger philosophical questions"
+      ],
+      "hiddenInfo": "Eliza is Neon's personal attendant and close confidante, responsible for managing her immediate needs and attending to her personal welfare. She maintains a secret romantic relationship with Squala, who works as a bodyguard for the family—a relationship conducted carefully to avoid family interference. She is not a Nen user; her value lies in her intelligence and loyalty rather than combat capability. During the Yorknew arc, when Squala is captured and killed by the Phantom Troupe, Eliza grieves intensely, representing the human cost of the Troupe's violence. Her presence establishes that the Nostrade family is not merely an institutional structure but includes genuine human relationships and emotional bonds. ARC VALIDITY: A4 featured (Yorknew arc attendant); A5+ background presence as Nostrade family fixture; her relationship with Squala's death creates lasting trauma that shapes her character trajectory.",
+      "abilities": [
+        "Personal Attendant Skills: Eliza possesses expertise in managing a noble household—organizing schedules, managing staff, attending to sophisticated needs.",
+        "Discrete Observation: Eliza's role allows her to observe conversations and situations; she possesses sophisticated understanding of family dynamics and political undercurrents.",
+        "Organizational Skills: Eliza demonstrates skill in coordinating complex household operations and managing multiple concurrent tasks.",
+        "\nfighting style: Eliza does not fight. She is a Civilian with no combat capability whatsoever. She relies entirely on family security for protection. When confronted by direct threats, she becomes vulnerable and helpless, capable only of witness rather than resistance."
+      ],
+      "tier": "mythic",
+      "level": 1,
+      "hpMax": 20,
+      "known": true,
+      "voiceTag": "female calm devoted"
+    },
+    "Zepile": {
+      "name": "Zepile",
+      "type": "Civilian",
+      "currentLocation": "Yorknew City",
+      "currentArea": "Flea Market",
+      "gender": "male",
+      "basicInfo": "A good-hearted appraisal forger and black-market goods specialist operating in Yorknew's underworld, Zepile combines genuine helpfulness with entrepreneurial opportunism. He possesses an average build with weathered features, kind eyes, and practical appearance reflecting his professional role. He favors simple dark clothing appropriate to his underground work.",
+      "personality": [
+        "Helpful: genuinely wants to assist others and provides honest advice despite his criminal activities",
+        "Entrepreneurial: identifies business opportunities and exploits them for profit",
+        "Street-smart: understands underground economy and networks with ease and familiarity",
+        "Pragmatic: avoids unnecessary risk and operates with careful calculation"
+      ],
+      "hiddenInfo": "Zepile is a skilled appraiser and forger who operates in Yorknew's black market, specializing in appraisal and authentication of high-value goods. He is good-hearted despite his criminal activity—he genuinely helps people navigate the dangerous underground market and provides honest advice rather than deliberately misleading them. During the Yorknew arc, he becomes involved with the main cast, providing crucial information about the Phantom Troupe and the underground auction dynamics. He represents the moral gray zone of the hunter world—someone engaged in illegal activity not from malice but from practical necessity and the opportunity to help others navigate a dangerous system. His presence establishes that criminal networks are not monolithically evil but include individuals with genuine moral concern. ARC VALIDITY: A4 featured (Yorknew arc information broker); A5+ background references as underground information source but not prominently featured.",
+      "abilities": [
+        "Appraisal Expertise: Zepile possesses exceptional capability in identifying, authenticating, and valuing high-value goods. His appraisals are remarkably accurate.",
+        "Forgery Skill: Zepile can create convincing forged documents and authentication markers, allowing him to facilitate black-market transactions.",
+        "Underground Network Access: Zepile possesses connections throughout Yorknew's underground economy, allowing him to access information and resources unavailable to outsiders.",
+        "Negotiation Skill: Zepile demonstrates exceptional capability in negotiating transactions and building relationships with diverse parties.",
+        "\nfighting style: Zepile does not fight. He is a Civilian with no combat capability whatsoever. He avoids dangerous situations and relies on his connections and knowledge rather than personal capability. When confronted by direct threats, he attempts negotiation and withdrawal rather than resistance."
+      ],
+      "tier": "mythic",
+      "level": 2,
+      "hpMax": 25,
+      "known": true,
+      "voiceTag": "male friendly underground"
+    },
+    "Isaac Netero": {
+      "name": "Isaac Netero",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "Hunter Association",
+      "basicInfo": "The 12th Chairman of the Hunter Association and strongest Nen user of his era, Isaac Netero embodies the contradiction of a supremely powerful fighter who has transcended combat into playful spiritual mastery. He possesses an elderly frame with sparse white hair, lined weathered features, and eyes that gleam with ageless intelligence. He dresses in simple white meditation robes reflecting his spiritual pursuits rather than his official position.",
+      "personality": [
+        "Playful: treats existence as a game and a meditation, finding genuine joy in challenge and surprise",
+        "Detached: maintains emotional distance from worldly concerns despite his position of absolute power",
+        "Insightful: perceives underlying patterns and truths that escape others' understanding",
+        "Irreverent: treats tradition and protocol with casual disregard when they conflict with his interests"
+      ],
+      "hiddenInfo": "Isaac Netero is the 12th Chairman of the Hunter Association and the world's most powerful Nen user of his generation—a living legend whose capability exceeds virtually all other practitioners. His Hatsu 'One-Hundred Type Guanyin Bodhisattva' manifests as a massive aura construct of a seated deity whose hundred hands can execute techniques at blinding speed. His true power is incomprehensibly vast; he has trained using gratitude meditation—he thanks his opponents for the opportunity to fight them, channeling appreciation into aura amplification. Netero treats combat as spiritual practice rather than competition; he genuinely enjoys testing himself against strong opponents and considers fights where he must employ full power as gifts. His age has not diminished him; he remains formidable despite being in his 100s. During the Chimera Ant arc, his bout with Meruem (the King) becomes the arc's spiritual and philosophical climax—he fights knowing he will lose, treating the fight as gratitude practice and the opportunity to test himself against the world's most powerful being. He employs 'Zero Hand,' his most devastating technique, a suicide attack that kills him but demonstrates that even against Meruem, his gratitude-infused aura can inflict mortal damage (combined with 'Poor Man's Rose' poison). ARC VALIDITY: A1-A6 living, serving as Chairman, alive; dies in A6 (Chimera Ant arc); memory and reverence persist throughout A7-A8; absent in person but present as historical figure and spiritual reference.",
+      "abilities": [
+        "One-Hundred Type Guanyin Bodhisattva: Netero manifests a colossal aura construct of a seated deity whose hundred hands execute simultaneous techniques at impossible speed. The construct represents his mastery transcending individual technique.",
+        "Gratitude-Infused Aura: Netero's aura is transformed through meditation and gratitude practice—he channels appreciation for opponents into aura amplification, increasing his power when facing worthy challenges.",
+        "Zero Hand: Netero's ultimate technique—a concentrated aura explosion of such magnitude that it destroys his own body in the blast, making it a true suicide attack reserved for absolute necessity.",
+        "Aura Sensing Mastery: Netero perceives aura with unprecedented clarity, identifying even well-concealed opponents and assessing power levels with perfect accuracy.",
+        "Meditation Mastery: Netero's mental discipline grants him immunity to most psychological techniques and allows him to maintain perfect aura control indefinitely.",
+        "\nfighting style: Netero fights as a meditation practice—he seeks worthy opponents and tests himself against them for spiritual growth. Against lesser foes, he demonstrates their weakness without excessive force. Against powerful opponents, he employs increasingly sophisticated techniques, his Guanyin Bodhisattva manifesting hundred-hand combinations at escalating speed. His fighting style is fundamentally about gratitude and appreciation for the opportunity to engage—even against Meruem, he treats the fight as a spiritual privilege. His greatest strength is his incomparable aura control and combat experience—he has lived longer and trained deeper than virtually any practitioner alive. His weakness is his philosophical detachment; he sometimes holds back against dangerous opponents due to appreciation for their strength, a choice that creates tactical vulnerability. His death represents the transcendence of physical power through spiritual completion—he falls not in disgrace but in gratitude, his final act an affirmation of life and worthy struggle."
+      ],
+      "tier": "mythic",
+      "level": 18,
+      "hpMax": 144,
+      "known": true,
+      "voiceTag": "male elderly wise playful"
+    },
+    "Pariston Hill": {
+      "name": "Pariston Hill",
+      "type": "Nen Master",
+      "currentLocation": "Hunter Association HQ",
+      "currentArea": "Chairman's Office",
+      "gender": "male",
+      "faction": "The Zodiacs",
+      "basicInfo": "The Rat of the Zodiacs and vice-chairman of the Hunter Association, Pariston Hill combines an immaculate appearance and brilliant smile with a mind of profound complexity and callous amorality. He possesses refined handsome features, perfectly maintained light hair, and eyes that contain depthless calculation. He favors expensive elegant clothing reflecting his sophisticated aesthetic and elevated status.",
+      "personality": [
+        "Charming: projects warmth and friendliness that draws people toward him despite his nature",
+        "Amoral: pursues goals without moral constraint, viewing ethics as merely obstacles to overcome",
+        "Intelligent: possesses analytical capability approaching superhuman levels; he sees patterns others miss",
+        "Chaotic: thrives on disruption and complexity, preferring unpredictable situations to stability"
+      ],
+      "hiddenInfo": "Pariston Hill is the Rat of the Zodiacs—one of twelve elite Hunters bearing animal codenames who serve as senior advisors and operators of the Hunter Association. His title and position obscure his true nature: he is a magnificent bastard of the highest order, a manipulative operator whose primary joy is creating chaos and watching powerful people navigate the consequences. He is extraordinarily intelligent, politically sophisticated, and completely devoid of genuine moral constraint. His Nen category and specific Hatsu remain largely secret even to those close to him; he is known to be a Nen Master capable of extraordinary manipulation and deception. During the Election arc, Pariston orchestrates a series of games and challenges designed purely to create maximum entertainment and chaos—his interest is not the outcome but the process of watching powerful people navigate uncertain situations. He wins the election, then immediately resigns his position, having orchestrated the whole affair purely for personal amusement. His joining of Beyond Netero's Dark Continent expedition in later arcs confirms his true interest: he pursues novelty, power, and the thrill of navigating unknown risks. He represents the dark side of the world's most intelligent operators—individuals for whom intelligence becomes disconnected from any higher purpose and degenerates into pure amusement-seeking at others' expense. ARC VALIDITY: background presence in A1-A6 as Zodiac member; A7 central (election arc manipulator); A8 aboard Black Whale expedition with Beyond; influence extends across all arcs through his political machinations and chaos-generation.",
+      "abilities": [
+        "Aura Manipulation: Pariston's Nen control reaches apex levels—he can manipulate aura in sophisticated ways that extend beyond standard technique, creating effects that appear impossible to conventional practitioners.",
+        "Political Manipulation: Pariston demonstrates superhuman capability in understanding and manipulating political situations, organizations, and power structures. His ability to predict and exploit human nature is extraordinary.",
+        "Intellectual Processing: Pariston's mind operates at levels that approach superhuman—he sees patterns, predicts outcomes, and identifies opportunities that lesser minds cannot perceive.",
+        "Chaotic Orchestration: Pariston can create situations of maximum complexity and chaos, then navigate them with ease while others struggle and panic.",
+        "Information Control: Pariston possesses advanced skill in gathering, withholding, and distributing information to maximum effect.",
+        "\nfighting style: Pariston rarely fights directly—his combat approach is entirely political and psychological. He manipulates situations, controls information, and positions others into conflict while remaining personally at safe distance. When forced into direct combat, he is a Nen Master of significant capability, but his preference is always manipulation over direct engagement. His greatest strength is his intelligence and amorality—he views situations with perfect clarity unclouded by ethical constraint. His only weakness is that truly chaotic situations occasionally escape his control, creating genuine uncertainty that causes him rare moments of genuine engagement and concern. His defining characteristic is that he is utterly reliable at creating exactly the outcome he wishes—not necessarily victory, but maximum entertainment and disruption."
+      ],
+      "tier": "mythic",
+      "level": 16,
+      "hpMax": 128,
+      "known": true,
+      "voiceTag": "male sophisticated calculating"
     }
   },
   "premadeCharacters": [],
