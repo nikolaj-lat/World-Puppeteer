@@ -9,10 +9,346 @@
     "tipMinimumTurns": 1,
     "tipMaximumTurns": 50
   },
-  "nameFilterSettings": {},
+  "nameFilterSettings": {
+    "Elara": {
+      "replacements": [
+        "Rein",
+        "Neta",
+        "Leva",
+        "Ireth",
+        "Sella"
+      ]
+    },
+    "Lyra": {
+      "replacements": [
+        "Reth",
+        "Mira",
+        "Nira",
+        "Elara",
+        "Seia"
+      ]
+    },
+    "Kael": {
+      "replacements": [
+        "Retz",
+        "Kora",
+        "Deim",
+        "Vesa",
+        "Thel"
+      ]
+    },
+    "Aria": {
+      "replacements": [
+        "Aria",
+        "Iera",
+        "Sena",
+        "Valen",
+        "Orth"
+      ]
+    },
+    "Seraphina": {
+      "replacements": [
+        "Serena",
+        "Seraphen",
+        "Mena",
+        "Vel",
+        "Thera"
+      ]
+    },
+    "Thorne": {
+      "replacements": [
+        "Thorn",
+        "Reno",
+        "Saber",
+        "Korren",
+        "Vix"
+      ]
+    },
+    "Vex": {
+      "replacements": [
+        "Vex",
+        "Raze",
+        "Karn",
+        "Slex",
+        "Pex"
+      ]
+    },
+    "Zara": {
+      "replacements": [
+        "Zara",
+        "Zael",
+        "Kara",
+        "Ryn",
+        "Vex"
+      ]
+    },
+    "Silas": {
+      "replacements": [
+        "Sil",
+        "Loren",
+        "Keis",
+        "Reth",
+        "Morn"
+      ]
+    },
+    "Orion": {
+      "replacements": [
+        "Orin",
+        "Ori",
+        "Nyx",
+        "Rion",
+        "Zephyr"
+      ]
+    },
+    "Ezra": {
+      "replacements": [
+        "Zem",
+        "Ren",
+        "Keth",
+        "Seln",
+        "Irath"
+      ]
+    },
+    "Iris": {
+      "replacements": [
+        "Ire",
+        "Ine",
+        "Sira",
+        "Rhea",
+        "Teal"
+      ]
+    },
+    "Kai": {
+      "replacements": [
+        "Kai",
+        "Kei",
+        "Reo",
+        "Yen",
+        "Sai"
+      ]
+    },
+    "Rowan": {
+      "replacements": [
+        "Roan",
+        "Roen",
+        "Koen",
+        "Noel",
+        "Sor"
+      ]
+    },
+    "Sage": {
+      "replacements": [
+        "Sae",
+        "Sagi",
+        "Kage",
+        "Vern",
+        "Reis"
+      ]
+    },
+    "Ash": {
+      "replacements": [
+        "As",
+        "Ash",
+        "Rye",
+        "Shen",
+        "Kosh"
+      ]
+    },
+    "River": {
+      "replacements": [
+        "Rive",
+        "Riv",
+        "Ren",
+        "Vel",
+        "Shen"
+      ]
+    },
+    "Storm": {
+      "replacements": [
+        "Stor",
+        "Storm",
+        "Zeno",
+        "Kern",
+        "Reth"
+      ]
+    },
+    "Vale": {
+      "replacements": [
+        "Vae",
+        "Vale",
+        "Len",
+        "Sael",
+        "Torin"
+      ]
+    },
+    "Ember": {
+      "replacements": [
+        "Em",
+        "Embre",
+        "Ren",
+        "Shen",
+        "Kori"
+      ]
+    },
+    "Frost": {
+      "replacements": [
+        "Fros",
+        "Froe",
+        "Ren",
+        "Selyn",
+        "Keth"
+      ]
+    },
+    "Nova": {
+      "replacements": [
+        "No",
+        "Nora",
+        "Vel",
+        "Rein",
+        "Sai"
+      ]
+    },
+    "Atlas": {
+      "replacements": [
+        "Atla",
+        "Tal",
+        "Kels",
+        "Ren",
+        "Thel"
+      ]
+    },
+    "Cipher": {
+      "replacements": [
+        "Ciph",
+        "Cie",
+        "Ryn",
+        "Sael",
+        "Keth"
+      ]
+    },
+    "Echo": {
+      "replacements": [
+        "Eco",
+        "Ech",
+        "Reo",
+        "Senn",
+        "Kai"
+      ]
+    },
+    "Flux": {
+      "replacements": [
+        "Flu",
+        "Flue",
+        "Ren",
+        "Seil",
+        "Vex"
+      ]
+    },
+    "Nebula": {
+      "replacements": [
+        "Neb",
+        "Nebu",
+        "Lun",
+        "Sael",
+        "Ren"
+      ]
+    },
+    "Rune": {
+      "replacements": [
+        "Rune",
+        "Rue",
+        "Ryn",
+        "Sel",
+        "Keth"
+      ]
+    },
+    "Sable": {
+      "replacements": [
+        "Sab",
+        "Able",
+        "Ren",
+        "Vel",
+        "Sael"
+      ]
+    },
+    "The Gilded Tavern": {
+      "replacements": [
+        "The Nen Parlor",
+        "The Hunter's Rest",
+        "The Golden Chain",
+        "The Chimera's Haunt",
+        "Leorio's Lucky"
+      ]
+    },
+    "The Cozy Inn": {
+      "replacements": [
+        "The Worn Haven",
+        "The Traveler's Nook",
+        "The Safe House",
+        "The Quiet Refuge",
+        "The Hunter's Respite"
+      ]
+    },
+    "The Leaking Cauldron": {
+      "replacements": [
+        "The Broken Compass",
+        "The Rusty Kettle",
+        "The Dusty Cellar",
+        "The Hidden Corner",
+        "The Shadow's Refuge"
+      ]
+    },
+    "The Silver Dragon": {
+      "replacements": [
+        "The Chimera King",
+        "The Royal Beast",
+        "The Ancient One",
+        "The Phoenix Wing",
+        "The Dragon's Rest"
+      ]
+    },
+    "tavern": {
+      "replacements": [
+        "wayhouse",
+        "drinking hall",
+        "safe house",
+        "refuge",
+        "hideout"
+      ]
+    },
+    "inn": {
+      "replacements": [
+        "lodging",
+        "wayhouse",
+        "resting place",
+        "sanctuary",
+        "haven"
+      ]
+    },
+    "with practiced ease": {
+      "replacements": [
+        ""
+      ]
+    },
+    "with practiced efficiency": {
+      "replacements": [
+        ""
+      ]
+    },
+    "with deliberate precision": {
+      "replacements": [
+        ""
+      ]
+    }
+  },
   "randomNames": {
     "male": [],
     "female": []
   },
-  "mods": []
+  "mods": [
+    {
+      "shortId": "zSPtWkM96eXW",
+      "version": 9
+    }
+  ]
 }
