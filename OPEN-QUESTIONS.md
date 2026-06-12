@@ -1,6 +1,13 @@
 # OPEN-QUESTIONS.md — Hunter x Hunter World: Decision Log
 
 A running log of decisions made and questions still open. Updated every phase.
+**BUILD COMPLETE 2026-06-12** — see BUILD-REPORT.md. All questions resolved; remaining notes below.
+
+## CLOSING NOTES (2026-06-12)
+
+- **D-014: Portrait harvesting via MediaWiki API.** The fandom wiki blocks page scraping (Cloudflare), but its `api.php` `pageimages` endpoint serves freely. `stuff/harvest-portraits.js` harvested 128/128 image URLs (108 characters + 20 places); applied to all 91 premades, 108 NPCs, 20 locations, 12 regions. Link-rot risk accepted per D-006; re-run the harvester + apply scripts in `stuff/` if links rot.
+- **Known advisory state:** remote validator reports 0 errors / 0 warnings / ~137 recommendations (style-level suggestions, e.g. optional per-task AI instruction blocks left on engine defaults — intentional budget choices).
+- **Limits during build:** three background agents were killed by session/monthly usage limits mid-batch; all work was salvaged via incremental writes + continuation agents. No content lost.
 
 ---
 
