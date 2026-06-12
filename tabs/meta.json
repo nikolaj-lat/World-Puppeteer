@@ -3,11 +3,24 @@
   "heroesVersion": 33,
   "embeddings": {},
   "tipSettings": {
-    "tips": [],
-    "tipDisplayEnabled": false,
-    "tipTurnInterval": 5,
-    "tipMinimumTurns": 1,
-    "tipMaximumTurns": 50
+    "tips": [
+      "Ten costs nothing to maintain and shields you from Nen attacks. Drop it — fall into Zetsu or hit zero aura — and even an ordinary fist can gut you.",
+      "Aura is a finite bar. Ren, Hatsu, En, and Ko all spend it. Burn it to zero and you collapse into defenseless, exhausted Zetsu until you rest.",
+      "A vow buys power, but its condition is absolute. Break the condition and the ability simply does not fire — and the backlash can savage your aura.",
+      "Your Nen category decides what comes easily. Working against your nature on the hexagon is possible, but it costs more aura and delivers less.",
+      "Most people cannot see Nen and don't know it exists. To a civilian your aura is just an impossible feat — and impossible feats draw dangerous attention.",
+      "Not every conflict is a fight. This world settles things with wagers, games, and tests as often as fists. Winning without a blow is a real victory.",
+      "Money is Jenny, and the numbers run large: a meal costs thousands, a professional's work millions, an auction treasure hundreds of millions or more.",
+      "A Hunter License is among the most valuable things you can own — it opens doors, forgives sins, and makes powerful people listen. Earning one is brutal.",
+      "Death is never clean here. Survive a killing blow and you carry the cost: a scar, a crippling wound, a debt, or years of your life bargained away.",
+      "Water Divination reveals your Nen type. A leaf, a glass of water, and your aura — how the water changes names which of the six categories is yours.",
+      "Strength answers strength. An armed mob is lethal to the unawakened and background noise to a trained Nen user. Always read which you are facing.",
+      "Each story start is sealed to one era of the tale. The narrator will not spoil what comes later — and the world reacts only to what this era knows."
+    ],
+    "tipDisplayEnabled": true,
+    "tipTurnInterval": 10,
+    "tipMinimumTurns": 4,
+    "tipMaximumTurns": 40
   },
   "nameFilterSettings": {
     "Elara": {

@@ -7,7 +7,11 @@
       "x": 0,
       "y": 0,
       "known": true,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/0e/Whale_Island.png/revision/latest?cb=20190305174428"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/0e/Whale_Island.png/revision/latest?cb=20190305174428",
+      "npcLevelRange": {
+        "min": 1,
+        "max": 8
+      }
     },
     "The Exam Circuit": {
       "name": "The Exam Circuit",
@@ -16,7 +20,11 @@
       "x": 1,
       "y": 0,
       "known": true,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/cd/HxH2011_EP3_Zaban_City.png/revision/latest?cb=20230308062332"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/cd/HxH2011_EP3_Zaban_City.png/revision/latest?cb=20230308062332",
+      "npcLevelRange": {
+        "min": 3,
+        "max": 15
+      }
     },
     "Republic of Padokea": {
       "name": "Republic of Padokea",
@@ -25,7 +33,11 @@
       "x": 2,
       "y": 0,
       "known": true,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/76/World_Map.png/revision/latest?cb=20230608015819"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/76/World_Map.png/revision/latest?cb=20230608015819",
+      "npcLevelRange": {
+        "min": 5,
+        "max": 20
+      }
     },
     "Arena City": {
       "name": "Arena City",
@@ -34,7 +46,11 @@
       "x": 3,
       "y": 0,
       "known": true,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/c9/Heavens_Arena_Full.png/revision/latest?cb=20120423234044"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/c9/Heavens_Arena_Full.png/revision/latest?cb=20120423234044",
+      "npcLevelRange": {
+        "min": 8,
+        "max": 25
+      }
     },
     "Yorknew & Environs": {
       "name": "Yorknew & Environs",
@@ -43,7 +59,11 @@
       "x": 0,
       "y": 1,
       "known": true,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/5/53/Epis_45_%282011%29_-_Yorknew_City_-16.10-.png/revision/latest?cb=20181126015616"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/5/53/Epis_45_%282011%29_-_Yorknew_City_-16.10-.png/revision/latest?cb=20181126015616",
+      "npcLevelRange": {
+        "min": 10,
+        "max": 30
+      }
     },
     "Mitene Union": {
       "name": "Mitene Union",
@@ -52,7 +72,11 @@
       "x": 1,
       "y": 1,
       "known": true,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/16/NGLcountry.png/revision/latest?cb=20230530233209"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/16/NGLcountry.png/revision/latest?cb=20230530233209",
+      "npcLevelRange": {
+        "min": 20,
+        "max": 45
+      }
     },
     "Swardani City": {
       "name": "Swardani City",
@@ -61,7 +85,11 @@
       "x": 2,
       "y": 1,
       "known": true,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/05/Hunter_Association_logo.png/revision/latest?cb=20180405075402"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/05/Hunter_Association_logo.png/revision/latest?cb=20180405075402",
+      "npcLevelRange": {
+        "min": 15,
+        "max": 40
+      }
     },
     "Kakin Empire": {
       "name": "Kakin Empire",
@@ -70,7 +98,11 @@
       "x": 3,
       "y": 1,
       "known": true,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/89/Chap_346_-_Kakin.png/revision/latest?cb=20180814133803"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/89/Chap_346_-_Kakin.png/revision/latest?cb=20180814133803",
+      "npcLevelRange": {
+        "min": 18,
+        "max": 40
+      }
     },
     "Greed Island — Settled Lands": {
       "name": "Greed Island — Settled Lands",
@@ -79,7 +111,11 @@
       "x": 0,
       "y": 0,
       "known": true,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/05/GI_Map.png/revision/latest?cb=20120106130831"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/05/GI_Map.png/revision/latest?cb=20120106130831",
+      "npcLevelRange": {
+        "min": 12,
+        "max": 30
+      }
     },
     "Greed Island — Wilds": {
       "name": "Greed Island — Wilds",
@@ -88,7 +124,11 @@
       "x": 1,
       "y": 0,
       "known": true,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/05/GI_Map.png/revision/latest?cb=20120106130831"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/05/GI_Map.png/revision/latest?cb=20120106130831",
+      "npcLevelRange": {
+        "min": 15,
+        "max": 35
+      }
     },
     "Lake Mobius — The Voyage": {
       "name": "Lake Mobius — The Voyage",
@@ -97,7 +137,11 @@
       "x": 0,
       "y": 0,
       "known": false,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/9/9d/342_-_Black_Whale_Ship.png/revision/latest?cb=20210828043942"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/9/9d/342_-_Black_Whale_Ship.png/revision/latest?cb=20210828043942",
+      "npcLevelRange": {
+        "min": 20,
+        "max": 45
+      }
     },
     "The New Shore": {
       "name": "The New Shore",
@@ -106,7 +150,11 @@
       "x": 1,
       "y": 0,
       "known": false,
-      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/4/4c/Dark_Continent.png/revision/latest?cb=20140923204402"
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/4/4c/Dark_Continent.png/revision/latest?cb=20140923204402",
+      "npcLevelRange": {
+        "min": 30,
+        "max": 60
+      }
     }
   }
 }

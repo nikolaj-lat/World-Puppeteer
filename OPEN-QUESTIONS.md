@@ -15,6 +15,10 @@ A running log of decisions made and questions still open. Updated every phase.
 - **D-017: O1 randomNames clobber fixed.** Empty `randomNames` removed from meta.json so the
   archetypes.json 50+50 pool survives the alphabetical build merge. Config now ships 50/50.
   (Root cause: build.js Object.assign in readdir order; meta.json read after archetypes.json.)
+- **D-018: Local validator patched for `quests.questType` (creator-approved, 2026-06-12).** The
+  remote validator (authority) recommends and accepts `questType`; the local `validate.js` quest
+  allowed-keys set was stale and threw 16 false "unknown field" errors. Added `questType` to the set,
+  mirroring D-012's `newSkillGenerationEnabled` fix. Both validators now pass with 0 errors.
 
 ---
 

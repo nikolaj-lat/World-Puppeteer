@@ -1446,6 +1446,7 @@ function validateUnknownFields(config, errors) {
     quests: new Set([
       'name', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
       'questGiverNPC', 'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
+      'questType', // D-018: remote validator (authority) requires/recommends this; local schema was stale (mirrors D-012)
     ]),
     storyStarts: new Set([
       'name', 'description', 'storyStart', 'locations', 'locationAreas',

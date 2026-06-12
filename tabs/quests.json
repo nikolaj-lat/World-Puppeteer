@@ -9,7 +9,8 @@
       "questDesignBrief": "The foundational quest of the entire world. Players navigate multiple exam phases: the preliminary trick tower, the island badge hunt, and the final tournament. Each phase tests combat, strategy, and character. The quest culminates in the tournament where rivals clash and secrets emerge. Tonpa's sabotage, Hisoka's unsettling presence, and the revelation of Illumi's true identity thread through encounters.",
       "detailType": "detailed",
       "questLocation": "Trick Tower",
-      "questGiverNPC": "Satotz"
+      "questGiverNPC": "Satotz",
+      "questType": "main"
     },
     "A1-The Rookie Crusher": {
       "name": "A1-The Rookie Crusher",
@@ -19,7 +20,8 @@
       "completionCondition": "Player defeats Tonpa in combat or disables his sabotage network by helping fellow examinees recognize his schemes; Tonpa is disqualified or withdraws",
       "questDesignBrief": "A side-thread examining the social dynamics of the exam. Tonpa is a recurring antagonist who uses poisoned tea, theft, and rumor-spreading to undermine newcomers. His motivations are cowardly and petty—he sees the Exam as his domain and newcomers as threats. Players encounter his victims and can either help them directly or orchestrate his public humiliation. This quest explores how bullying operates within the competitive Hunter framework.",
       "detailType": "basic",
-      "spatialRelationship": "existingLocalArea"
+      "spatialRelationship": "existingLocalArea",
+      "questType": "side"
     },
     "A2-Reach the Zoldyck Estate": {
       "name": "A2-Reach the Zoldyck Estate",
@@ -30,7 +32,8 @@
       "questDesignBrief": "The rescue quest. Players begin at the Testing Gate with doors weighing progressively more (1st door: 4 tons). They must either train until they can open doors legitimately or find alternate paths (butlers' shortcuts, influence trades). Encounters with Gotoh, Canary, and other butlers reveal the family's strict code and Killua's internal conflict. The climax involves Silva offering a bargain: Killua may leave if he swears to return when his adventure is complete. This quest establishes the Zoldycks as a force in the world and Killua's deep family psychology.",
       "detailType": "detailed",
       "questLocation": "Zoldyck Estate",
-      "questGiverNPC": "Gon Freecss"
+      "questGiverNPC": "Gon Freecss",
+      "questType": "main"
     },
     "A2-The Butler's Dilemma": {
       "name": "A2-The Butler's Dilemma",
@@ -41,7 +44,8 @@
       "questDesignBrief": "An intimate character study of one of the Estate's youngest staff. Canary is bound by training but not hardened like the butlers or family members. Players encounter her multiple times—she may aid them secretly, confront them directly, or wrestle with her conscience. Her ultimate choice reflects the players' moral approach to the Estate. This side quest adds emotional depth by showing that even the Zoldyck system has fracture points.",
       "detailType": "detailed",
       "questLocation": "Zoldyck Estate",
-      "questGiverNPC": "Canary"
+      "questGiverNPC": "Canary",
+      "questType": "side"
     },
     "A3-Climb to the 200th Floor": {
       "name": "A3-Climb to the 200th Floor",
@@ -52,7 +56,8 @@
       "questDesignBrief": "The training quest. Players enter Heavens Arena as novices and climb through tournament brackets against increasingly skilled fighters. Lower floors introduce combat basics and arena culture. Floor 200 is the Nen initiation—an encounter with a master that reveals Nen exists (prior arcs conceal this). Hisoka serves as a floor 200 gatekeeper and potential mentor. Wing appears as the true teacher, offering honest Nen instruction. Victories must be earned through skill growth, not mere luck. This quest transforms players from unawakened to Nen-aware practitioners.",
       "detailType": "detailed",
       "questLocation": "Heavens Arena",
-      "questGiverNPC": "Heavens Arena Administrator"
+      "questGiverNPC": "Heavens Arena Administrator",
+      "questType": "progression"
     },
     "A3-The Teacher's Stake": {
       "name": "A3-The Teacher's Stake",
@@ -63,7 +68,8 @@
       "questDesignBrief": "A meditation on mentorship. Wing is rare—an honest teacher in a world of manipulation. His stakes are philosophical: he demands students approach Nen with respect and discipline, not hunger for power. Players who align with his values gain access to his deepest teachings; those who view Nen as mere weapon find him aloof. Zushi serves as a peer challenger and reflection of Wing's teaching philosophy. This quest is optional but rewards alignment with authentic mastery over shortcuts.",
       "detailType": "detailed",
       "questLocation": "Heavens Arena",
-      "questGiverNPC": "Wing"
+      "questGiverNPC": "Wing",
+      "questType": "side"
     },
     "A4-Auction Season": {
       "name": "A4-Auction Season",
@@ -74,7 +80,8 @@
       "questDesignBrief": "The political quest. Players may serve multiple roles: Zoldyck assassins hired for Ten Don protection, Hunters investigating black market crime, or mafia retainers securing goods. The Phantom Troupe's massacre happens mid-arc as a story event, forcing improvisation. Kurapika's vendetta thread weaves through; the chain sealing of Chrollo reshapes power dynamics. This quest teaches that Hunters are not heroes—they are tools wielded by powers above them, and moral choices are rarely clear.",
       "detailType": "detailed",
       "questLocation": "Yorknew City",
-      "questGiverNPC": "Dalzollene"
+      "questGiverNPC": "Dalzollene",
+      "questType": "main"
     },
     "A4-The Scarlet Market": {
       "name": "A4-The Scarlet Market",
@@ -85,7 +92,8 @@
       "questDesignBrief": "An investigation quest tied to the Kurta massacre. Scarlet Eyes are priceless artifacts—preserved in glass vials, hoarded by collectors, traded like art. Players who accept this quest become entangled in black market intrigue. They meet dealers, collectors, and Kurapika himself, learning the scope of the Troupe's crime. The quest offers moral complexity: the eyes represent both crime evidence and sacred relics. Finding them means supporting Kurapika's vengeance—a sympathetic but potentially bloody path.",
       "detailType": "detailed",
       "questLocation": "Yorknew City",
-      "questGiverNPC": "Kurapika"
+      "questGiverNPC": "Kurapika",
+      "questType": "investigation"
     },
     "A5-Clear Greed Island": {
       "name": "A5-Clear Greed Island",
@@ -96,7 +104,8 @@
       "questDesignBrief": "The training gauntlet. Greed Island is a curated challenge by Ging and other masters—players enter via ring and immediately face card-gathering tasks. The Bomber trio is the primary obstacle, farming players via Countdown bombs. Biscuit Krueger appears as a recruiter and secret powerhouse trainer. The game teaches Nen mastery through necessity: players gain spell cards, learn combat through alliance politics, and ultimately access resources that advance their capabilities. This quest is the longest single arc and culminates in meeting Kite, who bridges to the Chimera Ant crisis.",
       "detailType": "detailed",
       "questLocation": "Greed Island Gateway",
-      "questGiverNPC": "Biscuit Krueger"
+      "questGiverNPC": "Biscuit Krueger",
+      "questType": "main"
     },
     "A5-The Dodgeball King": {
       "name": "A5-The Dodgeball King",
@@ -107,7 +116,8 @@
       "questDesignBrief": "An optional but rewarding trial. Razor is a cheerful powerhouse who teaches through sport. His devils are Nen constructs born from his aura, each with distinct personalities and abilities. Defeating them requires genuine teamwork and creative Nen application. Hisoka may ally with players here, revealing his Bungee Gum properties in combat. Victory grants immense respect and potential alliance, while defeat is humbling but teaches valuable lessons. This quest rewards ingenuity and friendship over raw power.",
       "detailType": "detailed",
       "questLocation": "Greed Island Gateway",
-      "questGiverNPC": "Razor"
+      "questGiverNPC": "Razor",
+      "questType": "side"
     },
     "A6-The NGL Incursion": {
       "name": "A6-The NGL Incursion",
@@ -118,7 +128,8 @@
       "questDesignBrief": "The apocalypse quest. This arc contains the campaign's highest stakes and darkest content. Kite's death early on sets the tone—heroes die here. The Royal Guards and Meruem are Master-tier mythic NPCs whose power redefines the campaign baseline. The palace invasion is a coalition effort requiring political navigation. Players may befriend ants-who-remember-being-human, fight alongside Netero, or pursue personal vendettas. Gon's catastrophic transformation (spending his Nen permanently) is the arc's emotional climax. This quest teaches that victory demands sacrifice.",
       "detailType": "detailed",
       "questLocation": "East Gorteau Royal Palace",
-      "questGiverNPC": "Kite"
+      "questGiverNPC": "Kite",
+      "questType": "infiltration"
     },
     "A6-Hearts of the Colony": {
       "name": "A6-Hearts of the Colony",
@@ -128,7 +139,8 @@
       "completionCondition": "Player encounters at least three human-memory ants, learns their stories, and influences whether they survive, defect, or sacrifice themselves",
       "questDesignBrief": "An intimacy quest within the apocalypse. Colt is a squadron leader bound to the King by vow; Ikalgo struggles with his dual nature; Meleoron is a soldier who befriends Knuckle. These NPCs are living bridges between species. Players who engage with them gain allies, information, and moral complexity—these ants are not monsters; they are people. The quest rewards empathy without erasing tragedy. Some ants may ally with players; others must be fought. This side quest maintains the arc's thematic depth: not everyone is purely good or evil.",
       "detailType": "detailed",
-      "questLocation": "East Gorteau Royal Palace"
+      "questLocation": "East Gorteau Royal Palace",
+      "questType": "side"
     },
     "A7-The 13th Chairman Election": {
       "name": "A7-The 13th Chairman Election",
@@ -139,7 +151,8 @@
       "questDesignBrief": "The political endgame. The Zodiacs emerge from shadow—powerful, quirky, and self-interested. Pariston is a magnificent bastard orchestrating chaos for amusement. Ging appears as Zodiac Boar and Gon's father, a reunion filtered through confusion and anger. Kurapika and Leorio join as new Zodiacs, marking their rise. The quest teaches that institutional power is often comedy and farce. Pariston's games serve no purpose except his own enjoyment. The election is won through charisma, alliances, and spectacle, not merit. This quest is primarily political rather than combat-focused.",
       "detailType": "detailed",
       "questLocation": "Hunter Association HQ",
-      "questGiverNPC": "Beans"
+      "questGiverNPC": "Beans",
+      "questType": "main"
     },
     "A7-A Wish for a Life": {
       "name": "A7-A Wish for a Life",
@@ -149,7 +162,8 @@
       "completionCondition": "Party finds Alluka, Killua successfully negotiates Nanika's requirements, and Alluka's power heals Gon (at escalating cost)",
       "questDesignBrief": "A race against time and family. Killua is desperate—Gon is dying and only Alluka's impossible wish-granting power can save him. But Alluka is locked away by the Zoldyck family, and Illumi hunts Killua to control Alluka for his own purposes. The quest involves escaping Illumi's pursuit, deceiving or defeating the family, and managing Nanika's escalating wishes (which may require terrible prices: trading lifespan, physical transformation, or moral compromises). This quest is intimate—about friendship's limits and what Killua will sacrifice. It also introduces Nanika as a mystery: she is not explained even in canon. Players encounter her alien logic and otherworldly power without full understanding.",
       "detailType": "detailed",
-      "questLocation": "Harbview Hospital"
+      "questLocation": "Harbview Hospital",
+      "questType": "side"
     },
     "A8-The Voyage of the Black Whale": {
       "name": "A8-The Voyage of the Black Whale",
@@ -160,7 +174,8 @@
       "questDesignBrief": "The open-ended sandbox. The Black Whale is a floating nation with 14 princes, their soldiers, the Zodiacs, the Phantom Troupe hunting Hisoka, and Kurapika guarding young Woble. Every faction has goals; alliances shift constantly. Nen beasts—parasitic vow-guardians tied to each prince—are incomprehensible threats that defy tier. This quest offers maximum player agency: form alliances, pursue vendettas, or focus on survival. Outcomes of the Succession War are extrapolated (manga incomplete). This quest teaches that the world persists beyond players' control—they influence events, not determine them. The Dark Continent itself remains largely mysterious.",
       "detailType": "detailed",
       "questLocation": "The Black Whale",
-      "questGiverNPC": "Beyond Netero"
+      "questGiverNPC": "Beyond Netero",
+      "questType": "main"
     },
     "A8-Bodyguard to the Forgotten Queen": {
       "name": "A8-Bodyguard to the Forgotten Queen",
@@ -170,7 +185,8 @@
       "completionCondition": "Player keeps Woble alive through multiple assassination attempts, learns court intrigue secrets, and reaches the Dark Continent with Oito's faction intact",
       "questDesignBrief": "A protective escort quest with political teeth. Woble is nearly powerless—a young prince with no Nen beast (yet) and no faction of consequence. Oito is his mother, intelligent but isolated. Players hired as bodyguards must navigate other princes' assassination attempts, the Zodiacs' schemes, Tserriednich's terrifying Specialist powers, and the boat's paranoia. The quest offers protection challenges without direct combat solutions (assassination is subtle). Outcomes are EXTRAPOLATED per arc spec—manga ends before this subplot concludes. Success is measured by keeping both alive and maintaining some dignity and autonomy for the Queen.",
       "detailType": "basic",
-      "spatialRelationship": "existingLocationNewAreas"
+      "spatialRelationship": "existingLocationNewAreas",
+      "questType": "defense"
     }
   }
 }
