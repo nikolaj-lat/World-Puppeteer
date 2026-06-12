@@ -1010,7 +1010,7 @@
     "Vow: Conditional Arsenal": {
       "name": "Vow: Conditional Arsenal",
       "description": "You have sworn that your signature technique functions only under a specific condition—a time of day, a location, an emotional state, a phase of the moon. This binding constraint channels enormous power into that moment. Your aura capacity swells with the promise; your technique is unkillable when conditions are met. Outside them, it is inert.",
-      "quirk": "Aura +40 (stacking with other modifiers). Your signature Hatsu works ONLY under a creation-named condition (e.g., 'only at night,' 'only in water,' 'only when I am afraid,' 'only against my nemesis'). Outside that condition, your technique is completely non-functional. Breaking this vow (using the technique outside the condition) strips the trait and drains 50% of your aura immediately.",
+      "quirk": "Aura +40 (stacking with other modifiers). Your signature Hatsu works ONLY under a creation-named condition (e.g., 'only at night,' 'only in water,' 'only when I am afraid,' 'only against my nemesis'). Outside that condition, your technique is completely non-functional. Breaking this vow (using the technique outside the condition) strips the trait and drains 70% of your aura immediately.",
       "attributes": [],
       "skills": [],
       "resources": [

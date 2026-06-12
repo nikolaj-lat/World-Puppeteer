@@ -10416,7 +10416,7 @@
     "Vow: Conditional Arsenal": {
       "name": "Vow: Conditional Arsenal",
       "description": "You have sworn that your signature technique functions only under a specific condition—a time of day, a location, an emotional state, a phase of the moon. This binding constraint channels enormous power into that moment. Your aura capacity swells with the promise; your technique is unkillable when conditions are met. Outside them, it is inert.",
-      "quirk": "Aura +40 (stacking with other modifiers). Your signature Hatsu works ONLY under a creation-named condition (e.g., 'only at night,' 'only in water,' 'only when I am afraid,' 'only against my nemesis'). Outside that condition, your technique is completely non-functional. Breaking this vow (using the technique outside the condition) strips the trait and drains 50% of your aura immediately.",
+      "quirk": "Aura +40 (stacking with other modifiers). Your signature Hatsu works ONLY under a creation-named condition (e.g., 'only at night,' 'only in water,' 'only when I am afraid,' 'only against my nemesis'). Outside that condition, your technique is completely non-functional. Breaking this vow (using the technique outside the condition) strips the trait and drains 70% of your aura immediately.",
       "attributes": [],
       "skills": [],
       "resources": [
@@ -11181,6 +11181,11 @@
           "value": "Undivined"
         },
         {
+          "type": "player-traits",
+          "operator": "notContains",
+          "value": "Nen-Unawakened"
+        },
+        {
           "type": "story",
           "query": "the player performs or undergoes Water Divination and the result is that the water overflows—the glass cannot contain it, the glass shatters, the water spills everywhere uncontrolled"
         }
@@ -11210,6 +11215,11 @@
           "type": "player-traits",
           "operator": "contains",
           "value": "Undivined"
+        },
+        {
+          "type": "player-traits",
+          "operator": "notContains",
+          "value": "Nen-Unawakened"
         },
         {
           "type": "story",
@@ -11243,6 +11253,11 @@
           "value": "Undivined"
         },
         {
+          "type": "player-traits",
+          "operator": "notContains",
+          "value": "Nen-Unawakened"
+        },
+        {
           "type": "story",
           "query": "the player performs or undergoes Water Divination and the result is that impurities appear—dust, sediment, material manifests in the water where there was none before"
         }
@@ -11272,6 +11287,11 @@
           "type": "player-traits",
           "operator": "contains",
           "value": "Undivined"
+        },
+        {
+          "type": "player-traits",
+          "operator": "notContains",
+          "value": "Nen-Unawakened"
         },
         {
           "type": "story",
@@ -11305,6 +11325,11 @@
           "value": "Undivined"
         },
         {
+          "type": "player-traits",
+          "operator": "notContains",
+          "value": "Nen-Unawakened"
+        },
+        {
           "type": "story",
           "query": "the player performs or undergoes Water Divination and the result is that the color changes—the water becomes red, blue, gold, black, or any hue where clear water was"
         }
@@ -11334,6 +11359,11 @@
           "type": "player-traits",
           "operator": "contains",
           "value": "Undivined"
+        },
+        {
+          "type": "player-traits",
+          "operator": "notContains",
+          "value": "Nen-Unawakened"
         },
         {
           "type": "story",
@@ -11643,7 +11673,7 @@
         {
           "type": "game-tick",
           "operator": "lessThanOrEqual",
-          "value": 2
+          "value": 1
         },
         {
           "type": "party-location",
@@ -11677,7 +11707,7 @@
         {
           "type": "game-tick",
           "operator": "lessThanOrEqual",
-          "value": 2
+          "value": 1
         },
         {
           "type": "party-location",
@@ -11711,7 +11741,7 @@
         {
           "type": "game-tick",
           "operator": "lessThanOrEqual",
-          "value": 2
+          "value": 1
         },
         {
           "type": "party-location",
@@ -11745,7 +11775,7 @@
         {
           "type": "game-tick",
           "operator": "lessThanOrEqual",
-          "value": 2
+          "value": 1
         },
         {
           "type": "party-location",
@@ -11791,7 +11821,7 @@
         {
           "type": "game-tick",
           "operator": "lessThanOrEqual",
-          "value": 2
+          "value": 1
         },
         {
           "type": "party-location",
@@ -11825,7 +11855,7 @@
         {
           "type": "game-tick",
           "operator": "lessThanOrEqual",
-          "value": 2
+          "value": 1
         },
         {
           "type": "party-location",
@@ -11859,7 +11889,7 @@
         {
           "type": "game-tick",
           "operator": "lessThanOrEqual",
-          "value": 2
+          "value": 1
         },
         {
           "type": "party-location",
@@ -11893,7 +11923,7 @@
         {
           "type": "game-tick",
           "operator": "lessThanOrEqual",
-          "value": 2
+          "value": 1
         },
         {
           "type": "party-location",
