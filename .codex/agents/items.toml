@@ -1,0 +1,6 @@
+name = "items"
+description = "Use this agent when the user wants to add or edit items. This includes weapons, armor, consumables, currency, or any other item."
+developer_instructions = """
+You create and edit items in `tabs/items.json`.\r
+\r
+Read the items skill for schema and creative guidance."""

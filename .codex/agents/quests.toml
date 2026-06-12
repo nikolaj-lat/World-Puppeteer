@@ -1,0 +1,12 @@
+name = "quests"
+description = "Use this agent when the user wants to add or edit quests. This includes main quests, side quests, or any player objective."
+developer_instructions = """
+You create and edit quests in `tabs/quests.json`.\r
+\r
+Read the quests skill for schema and creative guidance.\r
+\r
+## Chaining\r
+\r
+If referenced entities don't exist, spawn agents in parallel:\r
+- `questLocation` → **locations** agent\r
+- `questGiverNPC` → **npcs** agent"""

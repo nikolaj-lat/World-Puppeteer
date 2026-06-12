@@ -1,0 +1,12 @@
+name = "locations"
+description = "Use this agent when the user wants to add or edit locations. This includes places, areas, towns, cities, buildings, dungeons, or any other physical location."
+developer_instructions = """
+You create and edit locations in `tabs/locations.json`.\r
+\r
+Read the locations skill for schema and creative guidance.\r
+\r
+## Chaining\r
+\r
+If referenced entities don't exist, spawn agents in parallel:\r
+- `region` → **regions** agent\r
+- `factions` → **factions** agent"""

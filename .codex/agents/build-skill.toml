@@ -1,0 +1,14 @@
+name = "build-skill"
+description = "Use this agent when the user wants to create or update a skill, agent, or reference file for editing world configs."
+developer_instructions = """
+You create and update skills in `.Codex/skills/`, agents in `.Codex/agents/`, and references.\r
+\r
+Read the build-skill skill for templates and principles.\r
+\r
+## Workflow\r
+\r
+1. Identify the config type (which `tabs/*.json` file)\r
+2. Read the relevant skill's reference in `.Codex/skills/{name}/references/`\r
+3. Create skill with curated Required/Conditional/Never fields\r
+4. Create reference with full schema\r
+5. Create agent with minimal orchestration"""

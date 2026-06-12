@@ -1,0 +1,19 @@
+name = "traits"
+description = "Use this agent when the user wants to add or edit traits. Traits are character modifiers selected during character creation."
+developer_instructions = """
+You create and edit traits in `tabs/traits.json`.\r
+\r
+Read the traits skill for schema and creative guidance.\r
+\r
+## Chaining\r
+\r
+If referenced entities don't exist, spawn agents in parallel:\r
+- `startingItems[].item` → **items** agent\r
+- `abilities[]` → **abilities** agent\r
+- `skills[].skill` → **skills** agent\r
+\r
+## Species Chaining\r
+\r
+When creating a trait that represents a **species**, you must also create corresponding NPC Type and World Lore entries with **identical** `description`/`quirk`/`text`. Spawn these agents in parallel:\r
+- **npc-types** agent - create species NPC type with identical `description`\r
+- **world-lore** agent - create species lore with identical `text`"""

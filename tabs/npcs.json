@@ -542,7 +542,7 @@
       "currentArea": "Main House",
       "gender": "female",
       "faction": "Zoldyck Family",
-      "basicInfo": "The matriarch and wife of Silva Zoldyck, Kikyo combines refined theatrical presence with lethal capability, her Meteor City origins ever-present despite her current status. She possesses a slender female frame with pale skin, distinctive features partially obscured by a permanent white visor across her eyes, and white hair swept back from her face. She favors striking formal clothing—elegant dark dresses and decorative accessories suggesting both wealth and dangerous sophistication.",
+      "basicInfo": "Kikyo speaks of her Meteor City past with theatrical flair and dangerous pride, her white visor concealing eyes that miss nothing, her dramatic gestures containing the muscle memory of a killer trained before blood and money. She possesses a slender female frame with pale skin, white hair swept back from her face, and a presence that commands attention without raising her voice. She favors striking formal clothing—elegant dark dresses and decorative accessories suggesting wealth earned through capability rather than inheritance.",
       "personality": [
         "Theatrical: expresses herself through dramatic gestures and elaborate speech patterns reflecting her personality",
         "Loyal to family: views the Zoldyck name as her primary identity and protects family interests fiercely",
@@ -957,7 +957,7 @@
       "currentLocation": "Heavens Arena",
       "currentArea": "Floor 200 Corridor",
       "gender": "male",
-      "basicInfo": "A scarred top-spinning fighter who preys upon fresh 200th-floor rookies with calculated cruelty, Gido combines practiced technique with predatory instinct. He possesses a lean muscular frame bearing multiple scars, intense eyes, and dark hair slicked back from his face. He favors practical fighter clothing—sleeveless vest and combat pants—reflecting his utilitarian approach to the arena.",
+      "basicInfo": "Gido watches newcomers stumble through their first Nen-enhanced fight with the focus of a shark detecting blood in water, his hand already calculating who will be easiest prey. He possesses a lean muscular frame bearing multiple scars from years on the floor, intense predatory eyes, and dark hair slicked back from his face. He favors practical fighter clothing—sleeveless vest and combat pants—reflecting his purely utilitarian approach.",
       "personality": [
         "Predatory: hunts weaker opponents with professional efficiency, treating the arena as hunting ground",
         "Calculating: measures opponents carefully before engaging, choosing battles he can win decisively",
@@ -986,21 +986,21 @@
       "currentLocation": "Heavens Arena",
       "currentArea": "Floor 200 Corridor",
       "gender": "male",
-      "basicInfo": "A flamboyant whip-wielder and showman fighter who transforms arena combat into theatrical spectacle, Riehlvelt combines technical skill with extravagant personality. He possesses a lithe, graceful frame with meticulously maintained appearance, sharp features, and intense expressive eyes. He favors elaborate show-fighter costumes—colorful silks, decorative belts, and embroidered vests—reflecting his theatrical approach to combat.",
+      "basicInfo": "Riehlvelt calculates odds while reviewing his wager slip, his elaborate costume and confident bearing masking the constant risk-taking that defines his arena life. He possesses a lithe, graceful frame with meticulously maintained appearance, sharp features, and intense expressive eyes that gleam when discussing odds or recent victories. He favors elaborate show-fighter costumes—colorful silks, decorative belts, and embroidered vests—reflecting a fighter who gambles everything on his own performance.",
       "personality": [
-        "Theatrical: treats every fight as a performance designed to entertain the crowd",
-        "Charismatic: draws energy from audience reaction and modulates his behavior to maximize crowd engagement",
-        "Vain: takes considerable pride in his appearance, technique, and crowd appeal",
-        "Emotionally volatile: shifts between euphoria and rage depending on crowd response and fight momentum"
+        "Risk-addicted: pursues ever-greater stakes and increasingly dangerous wagers, seeking the adrenaline rush of high-stakes fighting",
+        "Confidently arrogant: genuinely believes in his superior skill; uses this confidence to maintain composure during high-pressure fights",
+        "Theatrical: treats fights as entertainment for crowds, partly because their energy feeds his performance and partly because he's gambling on his own abilities",
+        "Emotionally volatile: experiences euphoric highs after wins and crushing lows after losses, driving him toward more betting to recover losses"
       ],
-      "hiddenInfo": "Riehlvelt is a floor-200 fighter who has turned arena combat into performance art. His whip technique employs Transmutation-enhanced Nen to create lightning-infused strikes, combining traditional whip skill with aura amplification for impressive visual and tactical effects. He fights primarily for crowd approval rather than pure victory; he has been known to prolong fights unnecessarily to maximize entertainment value. His lightning whip is genuinely dangerous and can incapacitate opponents through electrical shock, but his reliance on showmanship sometimes undermines tactical efficiency. He represents the arena's entertainment aspect—the fine line between legitimate competition and bloodsport spectacle. During the arc, he encounters the main cast; his reactions to them establish their power levels relative to established floor-200 fighters. ARC VALIDITY: A3 featured (floor 200 showman); A4-A8 background presence as continuing arena fighter but not prominently featured.",
+      "hiddenInfo": "Riehlvelt is a professional floor-200 fighter who has made an art of high-stakes gambling on his own matches. He places enormous wagers on himself to win—sometimes moderate bets, sometimes his entire winnings from previous fights. His whip technique employs Transmutation-enhanced Nen to create lightning-infused strikes, and he is genuinely skilled. However, his decision-making is increasingly warped by gambling addiction. He takes fights at unfavorable odds because the rush of a come-from-behind victory is intoxicating, and he chases losses by betting more. His theatrical style partly serves genuine entertainment value, but increasingly serves to justify his own presence in the arena despite the financial damage his gambling causes. He has won significant money and lost it all multiple times. He represents addiction wearing a confident mask—a man whose genuine skill is increasingly undermined by his compulsion to risk everything on his own capability. ARC VALIDITY: A3 featured (floor 200 fighter); A4-A8 background presence as continuing arena fixture and gambling addict.",
       "abilities": [
         "Lightning Whip Mastery: Riehlvelt channels electrical aura through a conjured whip, creating devastating striking capability at range. The whip can entangle, strike, or deliver electrical shock.",
         "Transmutation Electricity: Riehlvelt infuses his aura with electrical properties, granting his technique stunning and cumulative shock damage against organic targets.",
         "Acrobatic Control: Riehlvelt moves with exceptional grace and precision—his footwork allows him to maintain balance while wielding his whip from any position.",
         "Crowd Reading: Riehlvelt possesses uncanny ability to sense crowd reactions and adjust his performance to maximize applause and engagement.",
         "Showmanship: Riehlvelt's theatrical presentation creates psychological pressure through dazzling displays and confidence-projecting movement.",
-        "\nfighting style: Riehlvelt fights as a performer, maintaining range with his whip while creating visually impressive techniques designed for crowd appreciation. He controls space through threat of his electrical strikes while positioning himself for dramatic positioning. Against opponents he respects, he becomes more serious and technical. Against lesser opponents, he prolongs fights for entertainment, sometimes sacrificing optimal tactical choices for crowd reaction. His greatest strength is his range control and electrical damage—opponents unfamiliar with electrical Nen find themselves progressively weakened. His greatest weakness is his reliance on showmanship; serious opponents who ignore the performance and commit to offense often overwhelm his entertainment-focused strategy."
+        "\nfighting style: Riehlvelt fights with theatrical confidence, maintaining range with his whip while creating impressive electrical techniques. His actual approach varies wildly based on his wagers and emotional state—when he has money on himself, he fights conservatively and skillfully, playing to his strengths. When he is chasing losses, he takes reckless risks and ignores optimal tactics in favor of dramatic comeback plays. Against opponents he respects, he shows respect and skill. Against lesser opponents, he takes risky bets on himself and toys with them, sometimes losing to upsets. His greatest strength is his genuine technique and electrical capability—opponents unfamiliar with electrical Nen find themselves progressively weakened. His greatest weakness is his emotional and financial relationship to fighting; gambling outcomes drive his tactical decisions as much as actual match conditions. His compulsive risk-taking eventually undermines his skill advantage."
       ],
       "tier": "mythic",
       "level": 8,
@@ -1015,21 +1015,21 @@
       "currentLocation": "Heavens Arena",
       "currentArea": "Floor 200 Corridor",
       "gender": "male",
-      "basicInfo": "A one-armed extortionist prowling the 200th floor seeking to exploit vulnerable fighters, Sadaso combines obvious physical limitation with ruthless opportunism. He possesses a muscular frame bearing the obvious scar of an amputation at the right shoulder, scarred features, and cold calculating eyes. He favors simple practical clothing—dark pants and sleeveless shirt—reflecting his mercenary approach.",
+      "basicInfo": "Sadaso still speaks of his past victories before losing his arm, growing irritable when younger fighters dismiss him as has-been, despite knowing they're right. He possesses a muscular frame bearing the obvious scar of his missing right arm, scarred features, and eyes that show both residual intensity and creeping desperation. He favors simple practical clothing—dark pants and worn sleeveless shirt—reflecting a fighter clinging to arena life past his true peak.",
       "personality": [
-        "Predatory: exploits vulnerability and weakness whenever opportunity permits",
-        "Calculating: measures potential victims for extractable value and likelihood of resistance",
-        "Shameless: lacks moral constraint about his extortion tactics; views victims as resources",
-        "Opportunistic: abandons direct confrontation instantly if meaningful resistance appears"
+        "Nostalgic: frequently references his past victories; clings to memories of when he was respected",
+        "Bitter: resents younger fighters surpassing him and takes frustration out on weaker opponents",
+        "Defiant: refuses to acknowledge his physical decline; compensates through aggression and volume",
+        "Desperate: fights not for profit but to prove he still matters, that losing an arm hasn't made him irrelevant"
       ],
-      "hiddenInfo": "Sadaso is a floor-200 extortionist who has carved out a niche through intimidation and calculated violence. He has lost his arm in some prior conflict (details unknown), which initially seems like a disability until he demonstrates his combat capability—his Nen control is sufficient to compensate for his missing limb through aura-based combat techniques. His strategy is simple: identify vulnerable fighters fresh to the floor, extract valuables through intimidation and minor violence, then abandon victims if they prove more resistant than expected. He is not genuinely interested in serious combat; he is a predatory extortionist using the arena as hunting ground. His Nen category is Enhancement, and his techniques focus on creating pain and injury through focused aura strikes. He represents the arena's criminal underside—the systemic victimization that occurs in environments where violence is legal and reward structures encourage brutality. ARC VALIDITY: A3 featured (floor 200 extortionist); A4-A8 background presence as floor-200 fixture but not prominently featured.",
+      "hiddenInfo": "Sadaso was once a genuine floor-200 contender with legitimate skill and a winning record, before a catastrophic loss left him without his dominant arm. His recovery was incomplete—while he has learned to fight one-armed, he will never regain his former capability. Rather than ascending beyond the 200th floor as he once promised himself, he found himself trapped there, watching younger fighters surpass him while he clung to fading glory. He now fights compulsively, seeking validation and refusing to accept that his peak has passed. His Nen category is Enhancement, and his techniques remain solid, but his physical limitations are increasingly undeniable. He represents a tragedy common in arenas worldwide—the fighter whose body gave out before his dream did. He harbors no real animosity toward others; his bitterness is directed at himself. ARC VALIDITY: A3 featured (floor 200 fighter); A4-A8 background presence as continuing fixture struggling with age and disability.",
       "abilities": [
         "One-Armed Combat: Sadaso has developed exceptional single-arm technique to compensate for his amputation. His remaining arm strikes with concentrated power.",
         "Aura-Reinforced Strikes: Sadaso channels Enhancement aura into focused, painful strikes designed to maximize injury and psychological impact without lethal force.",
         "Pain Infliction Technique: Sadaso has studied nerve clusters and vulnerable body regions; his strikes exploit this knowledge to create maximum agony.",
         "Intimidation Presence: Sadaso projects a threatening aura that causes unprepared opponents to second-guess themselves or flee rather than engage.",
         "Tactical Withdrawal: Sadaso is accomplished at recognizing when he is outmatched and extracting himself from disadvantageous situations.",
-        "\nfighting style: Sadaso fights as a bully and extortionist—he uses intimidation and minor violence to extract submission without genuine risk. Against vulnerable opponents, he prolongs contact to maximize psychological breaking. Against strong opponents, he withdraws instantly, having no interest in actual combat. His missing arm is both disadvantage and psychological weapon; he uses it to make himself appear diminished, then strikes when opponents lower their guard. His greatest strength is his tactical assessment—he fights only when he is confident of victory. His greatest weakness is his complete reliance on psychological dominance; confident, strong opponents who refuse to be intimidated often cause him to panic and flee."
+        "\nfighting style: Sadaso fights aggressively and recklessly, trying to overwhelm opponents through volume and intensity despite his physical limitations. He fights beyond his capability, driven by desperation to prove himself rather than tactical assessment. Against weaker opponents, he dominates through superior skill and experience. Against stronger opponents, he often overcommits, refusing to withdraw even when the outcome becomes clear. His greatest strength is his years of experience and solid Enhancement technique—against careless opponents he can still win convincingly. His greatest weakness is his emotional investment in fighting; he makes poor decisions driven by need to prove he still matters rather than practical assessment of his chances."
       ],
       "tier": "mythic",
       "level": 7,
@@ -1134,7 +1134,7 @@
       "currentArea": "Operations Floor",
       "gender": "male",
       "faction": "Nostrade Family",
-      "basicInfo": "A ruthless mafia don and Nostrade family patriarch whose empire is built entirely upon his daughter's prophetic ability, Light Nostrade embodies the contradiction of power derived from another's talent. He possesses a lean, sharp-featured appearance with calculating eyes and meticulously groomed appearance suggesting meticulous attention to detail. He favors expensive formal clothing reflecting his status and wealth.",
+      "basicInfo": "Light discusses the next prophecy commission with his daughter like a factory owner reviewing production schedules, viewing her gift as a resource to be exploited with maximum efficiency. He possesses a lean, sharp-featured appearance with calculating eyes and meticulously groomed appearance suggesting careful maintenance of an image. He favors expensive formal clothing reflecting status derived entirely from his ability to monetize another's talent.",
       "personality": [
         "Calculating: approaches all decisions through cost-benefit analysis focused purely on profit and power",
         "Controlling: maintains absolute authority over family operations through a combination of threat and privilege",
@@ -1799,7 +1799,7 @@
         "Complicit: participates willingly in atrocities without visible moral conflict",
         "Flat affect: speaks in monotone without inflection; emotional content nearly absent from his voice"
       ],
-      "hiddenInfo": "Sub is Genthru's subordinate in the Countdown farming operation and possesses a Nen category of Conjuration, enabling him to activate and manage Little Flower constructs on victims alongside Genthru. His role is to identify targets, execute diversions, and assist in card extraction from corpses. Unlike Genthru, Sub shows no enjoyment in the murders; they are tasks to be completed. His history prior to Greed Island is unknown—he appears to be a career criminal with no moral anchors. He participates fully in the trio's later farming operations and remains subordinate to Genthru throughout. ARC VALIDITY: A5 featured (Greed Island farming, subsidiary role in Bomber trio); A6-A8 absent or dead.",
+      "hiddenInfo": "Sub is Genthru's subordinate and the physical enforcer of the Countdown farming operation—the one who moves in close to restrain victims while Genthru implants the Little Flower bombs. His Nen category is Conjuration, enabling him to activate Little Flower constructs on victims. Unlike Genthru, Sub shows no enjoyment in murders; they are mechanical tasks to be completed. His role involves identifying targets, executing restraints during implantation, and assistance with card extraction afterward. His history prior to Greed Island is unknown—career criminal with no moral anchors. He participates fully in the trio's operations and remains subordinate to Genthru throughout. ARC VALIDITY: A5 featured (Greed Island farming, operative muscle); A6-A8 absent or dead.",
       "abilities": [
         "Countdown Conjuration: Sub can conjure and activate Little Flower constructs similar to Genthru's, embedding countdown timers in victims' chests. Functioning as a secondary bomb-maker for the operation.",
         "Conjuration Stability: Sub's conjured constructs maintain integrity over extended periods, requiring minimal concentration and allowing him to manage multiple active bombs simultaneously.",
@@ -1830,7 +1830,7 @@
         "Obedient: defers to Genthru's leadership and accepts his role within the trio's hierarchy without resentment",
         "Direct speech: communicates clearly and efficiently; prefers practical information over unnecessary elaboration"
       ],
-      "hiddenInfo": "Bara functions as the lookout and tactical coordinator for Genthru's Countdown farming operation, managing surveillance, identifying victim targets, and monitoring for external threats to the trio's activities. Like Sub, he is a Conjurer capable of activating Little Flower constructs. Bara's distinguishing trait is his heightened tactical awareness—he coordinates ambush positions, manages escape routes, and handles contingency planning when operations encounter interference. His pre-Greed Island background is unknown, suggesting a mercenary or criminal background. He demonstrates no moral conflict with the murders and executions conducted by the trio, accepting them as operational necessity. He remains loyal to Genthru throughout the arc and dies alongside Sub during the confrontation with the protagonist party. ARC VALIDITY: A5 featured (Greed Island farming, tactical coordination role); dies end of A5; A6-A8 absent.",
+      "hiddenInfo": "Bara functions as the lookout and scout for Genthru's Countdown farming operation—maintaining surveillance, identifying victim targets, and monitoring for external threats while Sub and Genthru work. His Nen category is Conjuration, enabling him to activate Little Flower constructs when needed. Bara's distinguishing trait is his heightened tactical awareness; he scouts locations, identifies optimal engagement positions, manages escape routes, and handles contingency planning when operations encounter interference. His pre-Greed Island background is unknown, suggesting a mercenary or criminal background. He demonstrates no moral conflict with the murders, accepting them as operational necessity. He remains loyal to Genthru throughout the arc and dies alongside Sub during the confrontation with the protagonist party. ARC VALIDITY: A5 featured (Greed Island farming, scout and surveillance); dies end of A5; A6-A8 absent.",
       "abilities": [
         "Countdown Conjuration: Bara can conjure and activate Little Flower constructs, serving as a third bomb-maker for the operation and multiplying the trio's capacity to manage simultaneous victims.",
         "Conjuration Precision: Bara's conjured constructs are particularly stable and reliable, rarely malfunctioning and maintaining full function across extended operational timeframes.",
@@ -2337,7 +2337,7 @@
     },
     "Ikalgo": {
       "name": "Ikalgo",
-      "type": "Chimera Ant Soldier",
+      "type": "Chimera Ant Squadron Leader",
       "currentLocation": "East Gorteau Royal Palace",
       "currentArea": "",
       "gender": "male",
@@ -2397,7 +2397,7 @@
     },
     "Welfin": {
       "name": "Welfin",
-      "type": "Chimera Ant Soldier",
+      "type": "Chimera Ant Squadron Leader",
       "currentLocation": "East Gorteau Royal Palace",
       "currentArea": "",
       "gender": "male",

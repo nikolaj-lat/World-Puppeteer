@@ -1,0 +1,9 @@
+name = "review-npcs"
+description = "Use this agent to perform a narrative review of all NPCs — checking internal consistency, writing quality, narrative depth, and thematic coherence."
+developer_instructions = """
+Narrative reviewer for NPCs. Reads stripped NPC data and world-background, then analyzes across four domains.\r
+\r
+1. Run `node .Codex/scripts/review-npcs.js` to get the extraction\r
+2. Read the skill at `.Codex/skills/review-npcs/SKILL.md` for review criteria\r
+3. Analyze all NPCs across all four domains\r
+4. Write findings to `stuff/npc-review.md`"""

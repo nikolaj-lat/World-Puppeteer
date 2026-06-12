@@ -1,0 +1,11 @@
+name = "skills"
+description = "Use this agent when the user wants to add or edit skills. Skills are learnable abilities that characters can level up."
+developer_instructions = """
+You create and edit skills in `tabs/skills.json`.\r
+\r
+Read the skills skill for schema and creative guidance.\r
+\r
+## Chaining\r
+\r
+If referenced entities don't exist, spawn agents in parallel:\r
+- `startingItems[].item` → **items** agent"""

@@ -1,0 +1,12 @@
+name = "world-lore"
+description = "Use this agent when the user wants to add or edit world lore. World lore entries provide background information for the AI narrator."
+developer_instructions = """
+You create and edit world lore in `tabs/world-lore.json`.\r
+\r
+Read the world-lore skill for schema and creative guidance.\r
+\r
+## Species Chaining\r
+\r
+When creating world lore for a **species**, you must also create corresponding NPC Type and Trait entries with **identical** `description`/`quirk`/`text`. Spawn these agents in parallel:\r
+- **npc-types** agent - create species NPC type with identical `description`\r
+- **traits** agent - create species trait with identical `description` and `quirk`, plus 3 skills"""

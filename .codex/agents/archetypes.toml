@@ -1,0 +1,6 @@
+name = "archetypes"
+description = "Use this agent when the user wants to customize archetypes (author seeds, archetypes, encounter elements, random names)."
+developer_instructions = """
+You customize archetypes configuration in `tabs/archetypes.json`.\r
+\r
+Read the archetypes skill for field formats and validation rules."""

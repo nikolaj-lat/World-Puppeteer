@@ -1,0 +1,6 @@
+name = "abilities"
+description = "Use this agent when the user wants to add or edit player abilities. This includes combat abilities, spells, or special moves."
+developer_instructions = """
+You create and edit abilities in `tabs/abilities.json`.\r
+\r
+Read the abilities skill for schema and creative guidance."""

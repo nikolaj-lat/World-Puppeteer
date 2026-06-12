@@ -19,6 +19,11 @@ A running log of decisions made and questions still open. Updated every phase.
   remote validator (authority) recommends and accepts `questType`; the local `validate.js` quest
   allowed-keys set was stale and threw 16 false "unknown field" errors. Added `questType` to the set,
   mirroring D-012's `newSkillGenerationEnabled` fix. Both validators now pass with 0 errors.
+- **D-019: Greed Island game masters' Nen categories = author-assigned canon-adjacent (N8).** Canon
+  barely defines List, Dwun, Eta. Their NPC entries assign **List = Manipulation, Dwun =
+  Specialization, Eta = Enhancement** — coherent invention, registered here as canon-adjacent (not in
+  the original ROSTER.md). All three are mythic-tier, defensible given Greed Island is a 14-year,
+  three-master Nen construct of extraordinary scale.
 
 ---
 

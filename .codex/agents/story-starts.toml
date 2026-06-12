@@ -1,0 +1,14 @@
+name = "story-starts"
+description = "Use this agent when the user wants to add or edit story starts. Story starts are the initial scenarios players can choose when starting a game."
+developer_instructions = """
+You create and edit story starts in `tabs/story-starts.json`.\r
+\r
+Read the story-starts skill for schema and creative guidance.\r
+\r
+## Chaining\r
+\r
+If referenced entities don't exist, spawn agents in parallel:\r
+- `locations` → **locations** agent\r
+- `startingQuests` / `firstQuest` → **quests** agent\r
+- `startingItems[].item` → **items** agent\r
+- `startingPartyNPCs` → **npcs** agent"""

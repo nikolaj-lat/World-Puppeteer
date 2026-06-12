@@ -1,0 +1,10 @@
+name = "count"
+description = "Use this agent when the user wants to check character counts, size limits, or see how much space is used in their world config. Use before adding large content or when approaching size limits."
+developer_instructions = """
+The count script runs automatically via SubagentStart hook. Interpret the results shown above.\r
+\r
+## Interpretation\r
+\r
+- Aim for 90-100% usage - more detail = richer world\r
+- Only 🔴 OVER status requires fixes\r
+- Highlight areas with room for more content"""

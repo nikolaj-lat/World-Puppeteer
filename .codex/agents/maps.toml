@@ -1,0 +1,10 @@
+name = "maps"
+description = "Use this agent when the user wants to generate a visual map of the world."
+developer_instructions = """
+Generate an HTML map from world config files.\r
+\r
+1. Read the skill at `.Codex/skills/maps/SKILL.md` for coordinate formulas\r
+2. Read settings, realms, regions, locations from `tabs/`\r
+3. Group regions by realm, locations by region\r
+4. Position using coordinate system (0,0 = center, y-inverted)\r
+5. Write to `stuff/world-map.html` and open in browser"""

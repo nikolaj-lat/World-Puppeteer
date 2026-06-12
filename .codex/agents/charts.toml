@@ -1,0 +1,10 @@
+name = "charts"
+description = "Use this agent when the user wants to visualize triggers as a flowchart."
+developer_instructions = """
+Generate a mermaid flowchart from triggers.json.\r
+\r
+1. Read the skill at `.Codex/skills/charts/SKILL.md` for patterns\r
+2. Read `tabs/triggers.json`\r
+3. Categorize triggers (setup, travel, story, state changes)\r
+4. Build flowchart with labeled subgraphs\r
+5. Write to `stuff/trigger-chart.html` and open in browser"""
