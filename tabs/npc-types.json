@@ -2,7 +2,7 @@
   "npcTypes": {
     "Civilian": {
       "name": "Civilian",
-      "description": "Ordinary people untouched by combat training or Nen mastery—merchants, servants, office workers, civilians caught in the world's violence. They possess no aura training and no understanding of the hidden forces that move the world. They are vulnerable to all forms of harm and possess no resistances whatsoever.",
+      "description": "Ordinary people untouched by combat training or Nen mastery—merchants, servants, office workers, civilians caught in the world's violence. They possess no aura training and no understanding of the hidden forces that move the world. They are vulnerable to all forms of harm and possess no resistances whatsoever, yet rare among their number are those whose minds or talents shine with extraordinary brilliance—a prodigy strategist, a once-in-a-generation intellect, a master of some mundane craft—whose gifts exist utterly apart from aura or durability.",
       "vulnerabilities": [
         "physical",
         "nen",
@@ -17,7 +17,7 @@
     },
     "Trained Fighter": {
       "name": "Trained Fighter",
-      "description": "Skilled martial artists, soldiers, and combatants who lack Nen training but possess exceptional physical discipline and technique. Years of practice have hardened their bodies and honed their reflexes to near-superhuman levels. They can weather blows that would fell ordinary people, yet remain defenseless against the supernatural forces of Nen.",
+      "description": "Skilled martial artists, soldiers, and combatants who lack Nen training but possess exceptional physical discipline and technique. Years of practice have hardened their bodies and honed their reflexes to near-superhuman levels, their movements deliberate and economical. They can weather blows that would fell ordinary people, yet remain defenseless against the supernatural forces of Nen.",
       "vulnerabilities": [
         "nen",
         "fire",
@@ -33,23 +33,23 @@
     },
     "Nen Initiate": {
       "name": "Nen Initiate",
-      "description": "Newly baptized Nen users, their aura nodes freshly opened and their understanding of their life force still in infancy. They have learned the fundamental technique of Ten and can maintain a protective aura envelope around their bodies. This aura shield grants them meaningful defense against mundane weapons and strikes, yet they remain vulnerable to the full spectrum of Nen techniques and supernatural forces.",
+      "description": "Newly baptized Nen users, their aura nodes freshly opened and their understanding of their life force still in infancy. They have learned the fundamental technique of Ten and can maintain a protective aura envelope around their bodies, carrying themselves with a faint luminescence of wonder and discovery. This aura shield grants them meaningful defense against mundane weapons and strikes, whilst their nascent aura circulation begins to blunt toxins; yet they remain vulnerable to the full spectrum of Nen techniques and elemental Hatsu.",
       "vulnerabilities": [
         "nen",
         "fire",
         "lightning",
         "ice",
-        "poison",
         "psychic"
       ],
       "resistances": [
-        "physical"
+        "physical",
+        "poison"
       ],
       "immunities": []
     },
     "Nen Professional": {
       "name": "Nen Professional",
-      "description": "Seasoned Nen practitioners and adepts who have mastered the foundational techniques and begun developing their personal Hatsu. Their aura is a tangible force visible to those with aura-sight, and their Ten is maintained as effortlessly as breathing. Their aura defense hardens them against physical assault and grants them resistance to elemental forces, though Nen-based damage and psychic attacks find no defense in simple aura maintenance.",
+      "description": "Seasoned Nen practitioners and adepts who have mastered the foundational techniques and begun developing their personal Hatsu, carrying themselves with the quiet confidence of those who have learned to command their own aura. Their aura is a tangible force visible to those with aura-sight, and their Ten is maintained as effortlessly as breathing. Their aura defense hardens them against physical assault and grants them resistance to elemental forces, though Nen-based damage and psychic attacks find no defense in simple aura maintenance.",
       "vulnerabilities": [
         "nen",
         "psychic"
@@ -132,7 +132,7 @@
     },
     "Chimera Ant King": {
       "name": "Chimera Ant King",
-      "description": "Meruem, the apex of chimera ant biology and Nen mastery—a living calamity that stands above all other creatures the world has ever produced. His body is a flawless instrument of destruction whose durability approaches the incomprehensible; conventional weapons and toxins are meaningless against his chitin-armored flesh. Even his ice resistance is nearly absolute. He resists all elemental forces and psychic intrusions through sheer aura superiority, and only Nen damage from a truly overwhelming source can register as harm.",
+      "description": "The singular apex of chimera ant biology and Nen mastery—a living calamity that stands above every creature the world has ever produced. Its body is a flawless instrument of destruction whose durability approaches the incomprehensible; conventional weapons and toxins are meaningless against its chitin-armored flesh. Even its ice resistance is nearly absolute. It resists all elemental forces and psychic intrusions through sheer aura superiority, and only Nen damage from a truly overwhelming source can register as harm.",
       "vulnerabilities": [
         "nen"
       ],

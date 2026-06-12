@@ -3213,7 +3213,7 @@
   "npcTypes": {
     "Civilian": {
       "name": "Civilian",
-      "description": "Ordinary people untouched by combat training or Nen mastery—merchants, servants, office workers, civilians caught in the world's violence. They possess no aura training and no understanding of the hidden forces that move the world. They are vulnerable to all forms of harm and possess no resistances whatsoever.",
+      "description": "Ordinary people untouched by combat training or Nen mastery—merchants, servants, office workers, civilians caught in the world's violence. They possess no aura training and no understanding of the hidden forces that move the world. They are vulnerable to all forms of harm and possess no resistances whatsoever, yet rare among their number are those whose minds or talents shine with extraordinary brilliance—a prodigy strategist, a once-in-a-generation intellect, a master of some mundane craft—whose gifts exist utterly apart from aura or durability.",
       "vulnerabilities": [
         "physical",
         "nen",
@@ -3228,7 +3228,7 @@
     },
     "Trained Fighter": {
       "name": "Trained Fighter",
-      "description": "Skilled martial artists, soldiers, and combatants who lack Nen training but possess exceptional physical discipline and technique. Years of practice have hardened their bodies and honed their reflexes to near-superhuman levels. They can weather blows that would fell ordinary people, yet remain defenseless against the supernatural forces of Nen.",
+      "description": "Skilled martial artists, soldiers, and combatants who lack Nen training but possess exceptional physical discipline and technique. Years of practice have hardened their bodies and honed their reflexes to near-superhuman levels, their movements deliberate and economical. They can weather blows that would fell ordinary people, yet remain defenseless against the supernatural forces of Nen.",
       "vulnerabilities": [
         "nen",
         "fire",
@@ -3244,23 +3244,23 @@
     },
     "Nen Initiate": {
       "name": "Nen Initiate",
-      "description": "Newly baptized Nen users, their aura nodes freshly opened and their understanding of their life force still in infancy. They have learned the fundamental technique of Ten and can maintain a protective aura envelope around their bodies. This aura shield grants them meaningful defense against mundane weapons and strikes, yet they remain vulnerable to the full spectrum of Nen techniques and supernatural forces.",
+      "description": "Newly baptized Nen users, their aura nodes freshly opened and their understanding of their life force still in infancy. They have learned the fundamental technique of Ten and can maintain a protective aura envelope around their bodies, carrying themselves with a faint luminescence of wonder and discovery. This aura shield grants them meaningful defense against mundane weapons and strikes, whilst their nascent aura circulation begins to blunt toxins; yet they remain vulnerable to the full spectrum of Nen techniques and elemental Hatsu.",
       "vulnerabilities": [
         "nen",
         "fire",
         "lightning",
         "ice",
-        "poison",
         "psychic"
       ],
       "resistances": [
-        "physical"
+        "physical",
+        "poison"
       ],
       "immunities": []
     },
     "Nen Professional": {
       "name": "Nen Professional",
-      "description": "Seasoned Nen practitioners and adepts who have mastered the foundational techniques and begun developing their personal Hatsu. Their aura is a tangible force visible to those with aura-sight, and their Ten is maintained as effortlessly as breathing. Their aura defense hardens them against physical assault and grants them resistance to elemental forces, though Nen-based damage and psychic attacks find no defense in simple aura maintenance.",
+      "description": "Seasoned Nen practitioners and adepts who have mastered the foundational techniques and begun developing their personal Hatsu, carrying themselves with the quiet confidence of those who have learned to command their own aura. Their aura is a tangible force visible to those with aura-sight, and their Ten is maintained as effortlessly as breathing. Their aura defense hardens them against physical assault and grants them resistance to elemental forces, though Nen-based damage and psychic attacks find no defense in simple aura maintenance.",
       "vulnerabilities": [
         "nen",
         "psychic"
@@ -3343,7 +3343,7 @@
     },
     "Chimera Ant King": {
       "name": "Chimera Ant King",
-      "description": "Meruem, the apex of chimera ant biology and Nen mastery—a living calamity that stands above all other creatures the world has ever produced. His body is a flawless instrument of destruction whose durability approaches the incomprehensible; conventional weapons and toxins are meaningless against his chitin-armored flesh. Even his ice resistance is nearly absolute. He resists all elemental forces and psychic intrusions through sheer aura superiority, and only Nen damage from a truly overwhelming source can register as harm.",
+      "description": "The singular apex of chimera ant biology and Nen mastery—a living calamity that stands above every creature the world has ever produced. Its body is a flawless instrument of destruction whose durability approaches the incomprehensible; conventional weapons and toxins are meaningless against its chitin-armored flesh. Even its ice resistance is nearly absolute. It resists all elemental forces and psychic intrusions through sheer aura superiority, and only Nen damage from a truly overwhelming source can register as harm.",
       "vulnerabilities": [
         "nen"
       ],
@@ -4717,7 +4717,7 @@
       "currentArea": "Chairman's Office",
       "gender": "male",
       "faction": "The Zodiacs",
-      "basicInfo": "The Rat of the Zodiacs and vice-chairman of the Hunter Association, Pariston Hill combines an immaculate appearance and brilliant smile with a mind of profound complexity and callous amorality. He possesses refined handsome features, perfectly maintained light hair, and eyes that contain depthless calculation. He favors expensive elegant clothing reflecting his sophisticated aesthetic and elevated status.",
+      "basicInfo": "Pariston orchestrates chaos the way a conductor shapes music, watching with flawless composure as powerful people panic over circumstances he quietly arranged for pure entertainment value. He possesses refined handsome features, perfectly maintained light hair, and eyes that contain depthless calculation without the slightest trace of empathy. He favors expensive elegant clothing reflecting his sophisticated aesthetic and elevated status.",
       "personality": [
         "Charming: projects warmth and friendliness that draws people toward him despite his nature",
         "Amoral: pursues goals without moral constraint, viewing ethics as merely obstacles to overcome",
@@ -4807,7 +4807,7 @@
       "currentArea": "",
       "gender": "male",
       "faction": "Phantom Troupe",
-      "basicInfo": "A small, reserved figure whose quiet demeanor masks the Troupe's most sadistic member, Feitan is an expert torturer and Transmuter of exceptional power. He is a diminutive man of slight build with sallow pale skin, sharp rat-like features, black hair, and dark unreadable eyes. He wears dark gloves perpetually, precise dark formal clothing, and a red or purple coat, presenting an almost prissy appearance that contradicts his vicious capabilities.",
+      "basicInfo": "Feitan methodically applies pressure to a joint while conversing in broken syntax about optimal pain vectors, his hands encased in dark gloves and his expression containing no reaction to his victim's screams. He is a diminutive man of slight build with sallow pale skin, sharp rat-like features, black hair, and dark unreadable eyes suggesting inhuman detachment. He wears dark gloves perpetually, precise dark formal clothing, and a red or purple coat, presenting an almost prissy appearance that masks his role as the Troupe's primary torturer.",
       "personality": [
         "Methodical: approaches torture and violence with scientific precision, treating suffering as a craft to be perfected",
         "Reserved: speaks minimally and often in broken syntax, yet his words carry significant weight when he does communicate",
@@ -4927,7 +4927,7 @@
       "currentArea": "",
       "gender": "male",
       "faction": "Phantom Troupe",
-      "basicInfo": "A cheerful, tech-savvy blond whose disarmingly friendly demeanor contradicts his deadly efficiency, Shalnark is a young man with pale skin, shoulder-length blonde hair, bright cheerful eyes, and an easy smile. He typically wears casual modern clothing—a tank top, baggy pants, and sneakers—alongside technological gadgets and antennae-like appendages on his head suggesting cybernetic enhancement.",
+      "basicInfo": "Shalnark fiddles with his conjured antennae while cheerfully discussing the Troupe's latest contract kills, his bright eyes gleaming with genuine enthusiasm for the work ahead. He is a young man with pale skin, shoulder-length blonde hair, and an easy smile that never wavers even during discussions of murder. He typically wears casual modern clothing—a tank top, baggy pants, and sneakers—alongside technological gadgets and cybernetic-looking antennae appendages.",
       "personality": [
         "Cheerful: genuinely enjoys social interaction and expresses enthusiasm for most activities, making him approachable compared to darker Troupe members",
         "Technically minded: passionate about technology and innovation; often tinkers with devices or conceptualizes improvements to existing tools",
@@ -5169,7 +5169,7 @@
       "currentArea": "",
       "gender": "male",
       "faction": "",
-      "basicInfo": "The Bomber, an affable blond murderer whose sunny demeanor masks a psychopath farming Greed Island players for card collections, Genthru presents a deceptively trustworthy appearance that belies his nature. He possesses a lean athletic frame with pale skin, distinctive bleached blonde hair, and regular features arranged in a perpetually friendly smile. He favors casual contemporary clothing—modern shirts and pants suggesting a harmless young man rather than a predatory killer.",
+      "basicInfo": "Genthru smiles while describing murder with the casual tone of discussing weather, his bleached hair and boyish charm masking absolute indifference to others' suffering. He possesses a lean athletic frame with pale skin, regular features, and eyes that contain no recognizable emotion despite his perpetual friendly expression. He favors casual contemporary clothing—modern shirts and pants suggesting a harmless young man rather than a predatory killer.",
       "personality": [
         "Sociable: presents himself as friendly and trustworthy, engaging in pleasant conversation with apparent sincerity",
         "Ruthless: views other players as resources to exploit rather than as fellow human beings deserving consideration",
@@ -6439,7 +6439,7 @@
       "currentArea": "",
       "gender": "male",
       "faction": "Kakin Royal Court",
-      "basicInfo": "The Fourth Prince of Kakin and a brilliant collector of human specimens, Tserriednich embodies precarious genius coupled with terrifying psychopathy. He possesses an androgynous slender build, beautiful delicate features suggesting aristocratic refinement, and wears elaborate formal clothing adorned with precious accents. He carries himself with casual arrogance suggesting supreme confidence.",
+      "basicInfo": "Tserriednich examines human specimens with the focus of a jeweler appraising gems, his beautiful delicate features arranged in an expression of scientific fascination while discussing preservation techniques with serene detachment. He possesses an androgynous slender build suggesting aristocratic refinement, and wears elaborate formal clothing adorned with precious accents that cost more than nations' treasuries. He carries himself with the casual arrogance of a prince whose depravities face no consequence.",
       "personality": [
         "Intellectually prodigious: demonstrates genius-level intelligence and exceptional analytical capability",
         "Pathologically sadistic: derives genuine satisfaction from inflicting suffering; views torture as an art form",
@@ -6499,7 +6499,7 @@
       "currentArea": "",
       "gender": "female",
       "faction": "Kakin Royal Court",
-      "basicInfo": "The Second Princess of Kakin and imperious counter-queen of succession ambition, Camilla projects crystalline aristocratic superiority masked beneath sophisticated beauty and calculated charm. She possesses an elegant refined build, striking aristocratic features, and wears elaborate formal gowns adorned with precious materials. She carries herself with visible arrogance.",
+      "basicInfo": "Camilla dismisses a servant's transgression with exquisite politeness while arranging fatal retaliation through her network, her elegant features arranged in a smile that contains no warmth. She possesses a refined build, striking aristocratic features, and wears elaborate formal gowns adorned with precious materials reflecting bloodline entitlement. She carries herself with the certainty of a woman for whom murder is logistics, not moral choice.",
       "personality": [
         "Imperiously aristocratic: views herself as inherently superior to all others; her class position is natural law rather than circumstance",
         "Calculatingly strategic: combines charm with ruthlessness; she manipulates through sophistication rather than direct force",
