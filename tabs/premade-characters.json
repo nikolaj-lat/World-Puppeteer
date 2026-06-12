@@ -18,7 +18,8 @@
         "willpower": 12,
         "presence": 12
       },
-      "replacesNpc": "Gon Freecss"
+      "replacesNpc": "Gon Freecss",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/3/3e/HxH2011_EP147_Gon_Portrait.png/revision/latest?cb=20230904181801"
     },
     {
       "name": "Gon Freecss (Chimera Ant)",
@@ -39,7 +40,8 @@
         "willpower": 12,
         "presence": 5
       },
-      "replacesNpc": "Gon Freecss"
+      "replacesNpc": "Gon Freecss",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/3/3e/HxH2011_EP147_Gon_Portrait.png/revision/latest?cb=20230904181801"
     },
     {
       "name": "Killua Zoldyck (Hunter Exam)",
@@ -59,7 +61,8 @@
         "willpower": 11,
         "presence": 8
       },
-      "replacesNpc": "Killua Zoldyck"
+      "replacesNpc": "Killua Zoldyck",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/b/bd/HxH2011_EP147_Killua_Portrait.png/revision/latest?cb=20230904181904"
     },
     {
       "name": "Killua Zoldyck (Chimera Ant)",
@@ -79,7 +82,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Killua Zoldyck"
+      "replacesNpc": "Killua Zoldyck",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/b/bd/HxH2011_EP147_Killua_Portrait.png/revision/latest?cb=20230904181904"
     },
     {
       "name": "Kurapika",
@@ -100,7 +104,8 @@
         "willpower": 15,
         "presence": 5
       },
-      "replacesNpc": "Kurapika"
+      "replacesNpc": "Kurapika",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/d/d9/Kurapika_HCE_Portrait.png/revision/latest?cb=20170704123336"
     },
     {
       "name": "Leorio Paladiknight",
@@ -120,7 +125,8 @@
         "willpower": 10,
         "presence": 11
       },
-      "replacesNpc": "Leorio Paladiknight"
+      "replacesNpc": "Leorio Paladiknight",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/73/HxH2011_EP145_Leorio_Portrait.png/revision/latest?cb=20230902193715"
     },
     {
       "name": "Hisoka Morow",
@@ -140,7 +146,8 @@
         "willpower": 10,
         "presence": 5
       },
-      "replacesNpc": "Hisoka Morow"
+      "replacesNpc": "Hisoka Morow",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/2/29/Hisoka_Morow_YC_Portrait.png/revision/latest?cb=20190123172039"
     },
     {
       "name": "Illumi Zoldyck",
@@ -160,7 +167,8 @@
         "willpower": 12,
         "presence": 5
       },
-      "replacesNpc": "Illumi Zoldyck"
+      "replacesNpc": "Illumi Zoldyck",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/72/Illumi_Zoldyck_HCE_Portrait.png/revision/latest?cb=20181227022223"
     },
     {
       "name": "Isaac Netero",
@@ -181,7 +189,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Isaac Netero"
+      "replacesNpc": "Isaac Netero",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/88/Isaac_Netero_HE_Portrait.png/revision/latest?cb=20230314041500"
     },
     {
       "name": "Satotz",
@@ -201,7 +210,8 @@
         "willpower": 11,
         "presence": 9
       },
-      "replacesNpc": "Satotz"
+      "replacesNpc": "Satotz",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/83/Satotz_HxH_11.PNG/revision/latest?cb=20120321071228"
     },
     {
       "name": "Menchi",
@@ -221,7 +231,8 @@
         "willpower": 10,
         "presence": 12
       },
-      "replacesNpc": "Menchi"
+      "replacesNpc": "Menchi",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/f/f7/Menchi_%28HxH%29.png/revision/latest?cb=20210415111358"
     },
     {
       "name": "Buhara",
@@ -241,7 +252,8 @@
         "willpower": 10,
         "presence": 8
       },
-      "replacesNpc": "Buhara"
+      "replacesNpc": "Buhara",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/f/f2/HxH2011_EP6_Buhara_Portrait.png/revision/latest?cb=20230309030834"
     },
     {
       "name": "Lippo",
@@ -261,7 +273,8 @@
         "willpower": 11,
         "presence": 11
       },
-      "replacesNpc": "Lippo"
+      "replacesNpc": "Lippo",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/b/be/Lippo_%282011%29.PNG/revision/latest?cb=20120108064856"
     },
     {
       "name": "Hanzo",
@@ -281,7 +294,8 @@
         "willpower": 12,
         "presence": 7
       },
-      "replacesNpc": "Hanzo"
+      "replacesNpc": "Hanzo",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/a/aa/HxH2011_EP3_Hanzo_Portrait.png/revision/latest?cb=20221007164354"
     },
     {
       "name": "Pokkle",
@@ -301,7 +315,8 @@
         "willpower": 10,
         "presence": 15
       },
-      "replacesNpc": "Pokkle"
+      "replacesNpc": "Pokkle",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/0a/Pokkle_HxH_11.PNG/revision/latest?cb=20120323055002"
     },
     {
       "name": "Ponzu",
@@ -321,7 +336,8 @@
         "willpower": 10,
         "presence": 15
       },
-      "replacesNpc": "Ponzu"
+      "replacesNpc": "Ponzu",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/13/Ponzu_CA_Portrait.png/revision/latest?cb=20130506101012"
     },
     {
       "name": "Tonpa",
@@ -341,7 +357,8 @@
         "willpower": 8,
         "presence": 15
       },
-      "replacesNpc": "Tonpa"
+      "replacesNpc": "Tonpa",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/9/9f/Tonpa_HE_Portrait.png/revision/latest?cb=20130503200318"
     },
     {
       "name": "Wing",
@@ -361,7 +378,8 @@
         "willpower": 12,
         "presence": 5
       },
-      "replacesNpc": "Wing"
+      "replacesNpc": "Wing",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/1a/Wing_HxH_2011.PNG/revision/latest?cb=20230407170040"
     },
     {
       "name": "Zushi",
@@ -381,7 +399,8 @@
         "willpower": 11,
         "presence": 13
       },
-      "replacesNpc": "Zushi"
+      "replacesNpc": "Zushi",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/8b/Zushi_HA_Portrait.png/revision/latest?cb=20190530161818"
     },
     {
       "name": "Kastro",
@@ -402,7 +421,8 @@
         "willpower": 10,
         "presence": 7
       },
-      "replacesNpc": "Kastro"
+      "replacesNpc": "Kastro",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/3/35/Kastro-2011.png/revision/latest?cb=20230410000810"
     },
     {
       "name": "Chrollo Lucilfer",
@@ -422,7 +442,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Chrollo Lucilfer"
+      "replacesNpc": "Chrollo Lucilfer",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/78/Chrollo_Lucilfer_GI_Portrait.png/revision/latest?cb=20130502190618"
     },
     {
       "name": "Nobunaga Hazama",
@@ -442,7 +463,8 @@
         "willpower": 10,
         "presence": 5
       },
-      "replacesNpc": "Nobunaga Hazama"
+      "replacesNpc": "Nobunaga Hazama",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/4/46/HxH2011_EP50_Nobunaga_Portrait.png/revision/latest?cb=20230122183803"
     },
     {
       "name": "Feitan Portor",
@@ -463,7 +485,8 @@
         "willpower": 12,
         "presence": 5
       },
-      "replacesNpc": "Feitan Portor"
+      "replacesNpc": "Feitan Portor",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/86/HxH2011_EP50_Feitan_Portrait.png/revision/latest?cb=20230121061055"
     },
     {
       "name": "Machi Komacine",
@@ -483,7 +506,8 @@
         "willpower": 11,
         "presence": 7
       },
-      "replacesNpc": "Machi Komacine"
+      "replacesNpc": "Machi Komacine",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/4/4c/Machi_Komacine_HA_Portrait.png/revision/latest?cb=20131116122706"
     },
     {
       "name": "Phinks Magcub",
@@ -503,7 +527,8 @@
         "willpower": 10,
         "presence": 5
       },
-      "replacesNpc": "Phinks Magcub"
+      "replacesNpc": "Phinks Magcub",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/88/HxH2011_EP41_Phinks_Portrait.png/revision/latest?cb=20221008055432"
     },
     {
       "name": "Franklin Bordeau",
@@ -524,7 +549,8 @@
         "willpower": 10,
         "presence": 5
       },
-      "replacesNpc": "Franklin Bordeau"
+      "replacesNpc": "Franklin Bordeau",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/6/62/HxH2011_EP58_Franklin_Portrait.png/revision/latest?cb=20230122063251"
     },
     {
       "name": "Shalnark",
@@ -544,7 +570,8 @@
         "willpower": 10,
         "presence": 5
       },
-      "replacesNpc": "Shalnark"
+      "replacesNpc": "Shalnark",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/c3/HxH2011_EP53_Shalnark_Portrait.png/revision/latest?cb=20221008053250"
     },
     {
       "name": "Shizuku Murasaki",
@@ -564,7 +591,8 @@
         "willpower": 11,
         "presence": 13
       },
-      "replacesNpc": "Shizuku Murasaki"
+      "replacesNpc": "Shizuku Murasaki",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/9/9e/HxH2011_EP53_Shizuku_Portrait.png/revision/latest?cb=20230122061315"
     },
     {
       "name": "Pakunoda",
@@ -584,7 +612,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Pakunoda"
+      "replacesNpc": "Pakunoda",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/d/da/Pakunoda_YC_Portrait.png/revision/latest?cb=20190124184929"
     },
     {
       "name": "Uvogin",
@@ -605,7 +634,8 @@
         "willpower": 10,
         "presence": 5
       },
-      "replacesNpc": "Uvogin"
+      "replacesNpc": "Uvogin",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/6/60/HxH2011_EP41_Uvogin_Portrait.png/revision/latest?cb=20230122192913"
     },
     {
       "name": "Bonolenov Ndongo",
@@ -625,7 +655,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Bonolenov Ndongo"
+      "replacesNpc": "Bonolenov Ndongo",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/f/fc/HxH2011_EP96_Bonolenov_Portrait.png/revision/latest?cb=20230123153232"
     },
     {
       "name": "Kortopi",
@@ -645,7 +676,8 @@
         "willpower": 10,
         "presence": 10
       },
-      "replacesNpc": "Kortopi"
+      "replacesNpc": "Kortopi",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/8c/HxH2011_EP56_Kortopi_Portrait.png/revision/latest?cb=20230123004840"
     },
     {
       "name": "Kalluto Zoldyck",
@@ -665,7 +697,8 @@
         "willpower": 11,
         "presence": 7
       },
-      "replacesNpc": "Kalluto Zoldyck"
+      "replacesNpc": "Kalluto Zoldyck",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/b/bb/HxH2011_EP97_Kalluto_Close_Up.png/revision/latest?cb=20221123201432"
     },
     {
       "name": "Silva Zoldyck",
@@ -685,7 +718,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Silva Zoldyck"
+      "replacesNpc": "Silva Zoldyck",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/0a/HxH2011_EP117_Silva_Portrait.png/revision/latest?cb=20230215181043"
     },
     {
       "name": "Zeno Zoldyck",
@@ -705,7 +739,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Zeno Zoldyck"
+      "replacesNpc": "Zeno Zoldyck",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/4/4f/Zeno_Zoldyck_YC_Portrait.png/revision/latest?cb=20190123184544"
     },
     {
       "name": "Kikyo Zoldyck",
@@ -725,7 +760,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Kikyo Zoldyck"
+      "replacesNpc": "Kikyo Zoldyck",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/80/Kikyo_Zoldyck_HE_Portrait.png/revision/latest?cb=20190630232207"
     },
     {
       "name": "Milluki Zoldyck",
@@ -745,7 +781,8 @@
         "willpower": 11,
         "presence": 12
       },
-      "replacesNpc": "Milluki Zoldyck"
+      "replacesNpc": "Milluki Zoldyck",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/1a/Milluki_Zoldyck_2011.png/revision/latest?cb=20150111053829"
     },
     {
       "name": "Alluka Zoldyck",
@@ -765,7 +802,8 @@
         "willpower": 15,
         "presence": 15
       },
-      "replacesNpc": "Alluka Zoldyck"
+      "replacesNpc": "Alluka Zoldyck",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/07/147_-_Alluka_face.png/revision/latest?cb=20170804080459"
     },
     {
       "name": "Canary",
@@ -785,7 +823,8 @@
         "willpower": 10,
         "presence": 13
       },
-      "replacesNpc": "Canary"
+      "replacesNpc": "Canary",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/f/f3/2011_canary.png/revision/latest?cb=20120319045502"
     },
     {
       "name": "Gotoh",
@@ -805,7 +844,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Gotoh"
+      "replacesNpc": "Gotoh",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/8e/Gotoh_HxH_2011.PNG/revision/latest?cb=20230321201151"
     },
     {
       "name": "Tsubone",
@@ -825,7 +865,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Tsubone"
+      "replacesNpc": "Tsubone",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/9/9e/Tsubone_2011_Full_Body_Design.png/revision/latest?cb=20230418015629"
     },
     {
       "name": "Cheadle Yorkshire",
@@ -844,7 +885,8 @@
         "willpower": 12,
         "presence": 7
       },
-      "replacesNpc": "Cheadle Yorkshire"
+      "replacesNpc": "Cheadle Yorkshire",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/01/Cheadle_Yorkshire_HCE_Portrait.png/revision/latest?cb=20181224123712"
     },
     {
       "name": "Mizaistom Nana",
@@ -864,7 +906,8 @@
         "willpower": 11,
         "presence": 6
       },
-      "replacesNpc": "Mizaistom Nana"
+      "replacesNpc": "Mizaistom Nana",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/e/e1/Mizaistom_Nana_HCE_Portrait.png/revision/latest?cb=20181211010802"
     },
     {
       "name": "Kanzai",
@@ -884,7 +927,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Kanzai"
+      "replacesNpc": "Kanzai",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/71/Kanzai_HCE_Portrait.png/revision/latest?cb=20150722203324"
     },
     {
       "name": "Pyon",
@@ -904,7 +948,8 @@
         "willpower": 10,
         "presence": 8
       },
-      "replacesNpc": "Pyon"
+      "replacesNpc": "Pyon",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/3/3b/Pyon_HCE_Portrait.png/revision/latest?cb=20181225154252"
     },
     {
       "name": "Botobai Gigante",
@@ -924,7 +969,8 @@
         "willpower": 12,
         "presence": 5
       },
-      "replacesNpc": "Botobai Gigante"
+      "replacesNpc": "Botobai Gigante",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/9/9c/Botobai_Gigante_HCE_Portrait.png/revision/latest?cb=20181225161429"
     },
     {
       "name": "Gel",
@@ -944,7 +990,8 @@
         "willpower": 11,
         "presence": 6
       },
-      "replacesNpc": "Gel"
+      "replacesNpc": "Gel",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/e/e6/HxH2011_EP137_-_Gel_Portrait.png/revision/latest?cb=20230509185744"
     },
     {
       "name": "Saccho Kobayakawa",
@@ -964,7 +1011,8 @@
         "willpower": 11,
         "presence": 6
       },
-      "replacesNpc": "Saccho Kobayakawa"
+      "replacesNpc": "Saccho Kobayakawa",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/75/Saccho_Portrait_-_Episode_143.png/revision/latest?cb=20230608202802"
     },
     {
       "name": "Ginta",
@@ -984,7 +1032,8 @@
         "willpower": 11,
         "presence": 7
       },
-      "replacesNpc": "Ginta"
+      "replacesNpc": "Ginta",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/3/3e/Ginta_HCE_Portrait.png/revision/latest?cb=20150722202806"
     },
     {
       "name": "Saiyu",
@@ -1004,7 +1053,8 @@
         "willpower": 11,
         "presence": 6
       },
-      "replacesNpc": "Saiyu"
+      "replacesNpc": "Saiyu",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/cf/HxH2011_EP137_Saiyu_Portrait.png/revision/latest?cb=20220805024815"
     },
     {
       "name": "Cluck",
@@ -1024,7 +1074,8 @@
         "willpower": 11,
         "presence": 7
       },
-      "replacesNpc": "Cluck"
+      "replacesNpc": "Cluck",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/ca/Cluck_HCE_Portrait.png/revision/latest?cb=20181225080029"
     },
     {
       "name": "Ging Freecss",
@@ -1044,7 +1095,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Ging Freecss"
+      "replacesNpc": "Ging Freecss",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/3/3d/GingAv.png/revision/latest?cb=20181125230438"
     },
     {
       "name": "Pariston Hill",
@@ -1064,7 +1116,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Pariston Hill"
+      "replacesNpc": "Pariston Hill",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/15/Pariston_Hill_HCE_Portrait.png/revision/latest?cb=20150816022835"
     },
     {
       "name": "Melody",
@@ -1085,7 +1138,8 @@
         "willpower": 14,
         "presence": 9
       },
-      "replacesNpc": "Melody"
+      "replacesNpc": "Melody",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/c6/Melody-11.png/revision/latest?cb=20230511035813"
     },
     {
       "name": "Basho",
@@ -1105,7 +1159,8 @@
         "willpower": 11,
         "presence": 7
       },
-      "replacesNpc": "Basho"
+      "replacesNpc": "Basho",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/2/2c/Basho_YC_Portrait.png/revision/latest?cb=20181210233824"
     },
     {
       "name": "Neon Nostrade",
@@ -1125,7 +1180,8 @@
         "willpower": 9,
         "presence": 15
       },
-      "replacesNpc": "Neon Nostrade"
+      "replacesNpc": "Neon Nostrade",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/d/de/Neon_Nostrade_main.png/revision/latest?cb=20131101182811"
     },
     {
       "name": "Zepile",
@@ -1145,7 +1201,8 @@
         "willpower": 9,
         "presence": 15
       },
-      "replacesNpc": "Zepile"
+      "replacesNpc": "Zepile",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/2/27/You_can_count_on_Zepile.png/revision/latest?cb=20240307184508"
     },
     {
       "name": "Biscuit Krueger",
@@ -1165,7 +1222,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Biscuit Krueger"
+      "replacesNpc": "Biscuit Krueger",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/cd/Biscuit_Krueger_CA_Portrait.png/revision/latest?cb=20190630140152"
     },
     {
       "name": "Razor",
@@ -1185,7 +1243,8 @@
         "willpower": 10,
         "presence": 5
       },
-      "replacesNpc": "Razor"
+      "replacesNpc": "Razor",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/2/27/RazorFullbody.png/revision/latest?cb=20170724201543"
     },
     {
       "name": "Genthru",
@@ -1206,7 +1265,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Genthru"
+      "replacesNpc": "Genthru",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/0f/Genthru_Portrait_2011.png/revision/latest?cb=20230521235202"
     },
     {
       "name": "Tsezguerra",
@@ -1226,7 +1286,8 @@
         "willpower": 11,
         "presence": 6
       },
-      "replacesNpc": "Tsezguerra"
+      "replacesNpc": "Tsezguerra",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/00/2011_EP59_Tsezguerra_Portrait.png/revision/latest?cb=20240324165921"
     },
     {
       "name": "Goreinu",
@@ -1246,7 +1307,8 @@
         "willpower": 10,
         "presence": 11
       },
-      "replacesNpc": "Goreinu"
+      "replacesNpc": "Goreinu",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/7e/Goreinu_GI_Portrait.png/revision/latest?cb=20190123171404"
     },
     {
       "name": "Abengane",
@@ -1266,7 +1328,8 @@
         "willpower": 10,
         "presence": 9
       },
-      "replacesNpc": "Abengane"
+      "replacesNpc": "Abengane",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/86/Abengane2011.png/revision/latest?cb=20121223051318"
     },
     {
       "name": "Kite",
@@ -1286,7 +1349,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Kite"
+      "replacesNpc": "Kite",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/1d/Kite_CA_Portrait.png/revision/latest?cb=20190127155247"
     },
     {
       "name": "Morel Mackernasey",
@@ -1307,7 +1371,8 @@
         "willpower": 12,
         "presence": 5
       },
-      "replacesNpc": "Morel Mackernasey"
+      "replacesNpc": "Morel Mackernasey",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/5/5c/Morel_Mackernasey_CA_Portrait.png/revision/latest?cb=20190127155510"
     },
     {
       "name": "Knov",
@@ -1327,7 +1392,8 @@
         "willpower": 11,
         "presence": 6
       },
-      "replacesNpc": "Knov"
+      "replacesNpc": "Knov",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/f/ff/Knov148.png/revision/latest?cb=20240307181052"
     },
     {
       "name": "Knuckle Bine",
@@ -1348,7 +1414,8 @@
         "willpower": 13,
         "presence": 5
       },
-      "replacesNpc": "Knuckle Bine"
+      "replacesNpc": "Knuckle Bine",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/6/6f/Knuckle_Bine_CA_Portrait.png/revision/latest?cb=20230613232331"
     },
     {
       "name": "Shoot McMahon",
@@ -1369,7 +1436,8 @@
         "willpower": 11,
         "presence": 7
       },
-      "replacesNpc": "Shoot McMahon"
+      "replacesNpc": "Shoot McMahon",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/17/2011_EP90_Shoot_McMahon_Portrait.png/revision/latest?cb=20230616231327"
     },
     {
       "name": "Palm Siberia",
@@ -1389,7 +1457,8 @@
         "willpower": 11,
         "presence": 6
       },
-      "replacesNpc": "Palm Siberia"
+      "replacesNpc": "Palm Siberia",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/75/Palm_Siberia_%28Ant%29_CA_Portrait.png/revision/latest?cb=20140620234253"
     },
     {
       "name": "Komugi",
@@ -1409,7 +1478,8 @@
         "willpower": 15,
         "presence": 12
       },
-      "replacesNpc": "Komugi"
+      "replacesNpc": "Komugi",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/f/f1/Komugi_CA_Portrait.png/revision/latest?cb=20131121184842"
     },
     {
       "name": "Meruem",
@@ -1428,7 +1498,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Meruem"
+      "replacesNpc": "Meruem",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/5/58/Meruem_CA_Portrait.png/revision/latest?cb=20190419124312"
     },
     {
       "name": "Neferpitou",
@@ -1447,7 +1518,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Neferpitou"
+      "replacesNpc": "Neferpitou",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/2/20/109_-_Neferpitou_portrait.png/revision/latest?cb=20131218034405"
     },
     {
       "name": "Shaiapouf",
@@ -1466,7 +1538,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Shaiapouf"
+      "replacesNpc": "Shaiapouf",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/a/a2/109_-_Shaiapouf_portrait.png/revision/latest?cb=20150902224149"
     },
     {
       "name": "Menthuthuyoupi",
@@ -1485,7 +1558,8 @@
         "willpower": 10,
         "presence": 5
       },
-      "replacesNpc": "Menthuthuyoupi"
+      "replacesNpc": "Menthuthuyoupi",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/79/109_-_Menthuthuyoupi_portrait.png/revision/latest?cb=20131218033843"
     },
     {
       "name": "Colt",
@@ -1504,7 +1578,8 @@
         "willpower": 11,
         "presence": 7
       },
-      "replacesNpc": "Colt"
+      "replacesNpc": "Colt",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/4/4d/Colt_main.png/revision/latest?cb=20130424054211"
     },
     {
       "name": "Zazan",
@@ -1523,7 +1598,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Zazan"
+      "replacesNpc": "Zazan",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/a/a5/Zazan.png/revision/latest?cb=20130418040230"
     },
     {
       "name": "Cheetu",
@@ -1542,7 +1618,8 @@
         "willpower": 10,
         "presence": 6
       },
-      "replacesNpc": "Cheetu"
+      "replacesNpc": "Cheetu",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/a/a4/Cheetu_CA_Portrait.png/revision/latest?cb=20181219190314"
     },
     {
       "name": "Leol",
@@ -1561,7 +1638,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Leol"
+      "replacesNpc": "Leol",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/4/47/Leol_anime.png/revision/latest?cb=20130519034558"
     },
     {
       "name": "Ikalgo",
@@ -1580,7 +1658,8 @@
         "willpower": 11,
         "presence": 7
       },
-      "replacesNpc": "Ikalgo"
+      "replacesNpc": "Ikalgo",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/9/9c/HxH2011_EP119_Ikalgo_IMG.png/revision/latest?cb=20220810174247"
     },
     {
       "name": "Meleoron",
@@ -1599,7 +1678,8 @@
         "willpower": 12,
         "presence": 5
       },
-      "replacesNpc": "Meleoron"
+      "replacesNpc": "Meleoron",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/7f/EP127_Meleoron_Portrait.png/revision/latest?cb=20230701134947"
     },
     {
       "name": "Welfin",
@@ -1618,7 +1698,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Welfin"
+      "replacesNpc": "Welfin",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/a/a6/HxH2011_EP136_Welfin_Portrait.png/revision/latest?cb=20230215222130"
     },
     {
       "name": "Beyond Netero",
@@ -1637,7 +1718,8 @@
         "willpower": 11,
         "presence": 5
       },
-      "replacesNpc": "Beyond Netero"
+      "replacesNpc": "Beyond Netero",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/b/bf/Chap_341_-_Beyond.png/revision/latest?cb=20241009205936"
     },
     {
       "name": "Tserriednich Hui Guo Rou",
@@ -1657,7 +1739,8 @@
         "willpower": 12,
         "presence": 5
       },
-      "replacesNpc": "Tserriednich Hui Guo Rou"
+      "replacesNpc": "Tserriednich Hui Guo Rou",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/e/e6/Chap_362_-_Tserriednich.png/revision/latest?cb=20260513045952"
     },
     {
       "name": "Benjamin Hui Guo Rou",
@@ -1676,7 +1759,8 @@
         "willpower": 12,
         "presence": 5
       },
-      "replacesNpc": "Benjamin Hui Guo Rou"
+      "replacesNpc": "Benjamin Hui Guo Rou",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/f/fe/Chap_410_-_Benjamin.png/revision/latest?cb=20260507201921"
     },
     {
       "name": "Camilla Hui Guo Rou",
@@ -1695,7 +1779,8 @@
         "willpower": 13,
         "presence": 5
       },
-      "replacesNpc": "Camilla Hui Guo Rou"
+      "replacesNpc": "Camilla Hui Guo Rou",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/3/39/Camilla_Hui_Guo_Rou.png/revision/latest?cb=20260507182051"
     },
     {
       "name": "Zhang Lei Hui Guo Rou",
@@ -1714,7 +1799,8 @@
         "willpower": 13,
         "presence": 5
       },
-      "replacesNpc": "Zhang Lei Hui Guo Rou"
+      "replacesNpc": "Zhang Lei Hui Guo Rou",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/12/Chap_390_-_Zhang_Lei.png/revision/latest?cb=20260507220020"
     },
     {
       "name": "Halkenburg Hui Guo Rou",
@@ -1733,7 +1819,8 @@
         "willpower": 13,
         "presence": 5
       },
-      "replacesNpc": "Halkenburg Hui Guo Rou"
+      "replacesNpc": "Halkenburg Hui Guo Rou",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/4/4e/Halkenburg_Hui_Guo_Rou_SC_Portrait.png/revision/latest?cb=20250903123849"
     },
     {
       "name": "Queen Oito",
@@ -1752,7 +1839,8 @@
         "willpower": 13,
         "presence": 15
       },
-      "replacesNpc": "Queen Oito"
+      "replacesNpc": "Queen Oito",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/6/6b/Oito_Hui_Guo_Rou_SC_Portrait.png/revision/latest?cb=20241222204549"
     },
     {
       "name": "Theta",
@@ -1771,7 +1859,8 @@
         "willpower": 11,
         "presence": 7
       },
-      "replacesNpc": "Theta"
+      "replacesNpc": "Theta",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/c8/Chap_362_-_Theta_close_up.png/revision/latest?cb=20231002213842"
     },
     {
       "name": "Bill",
@@ -1790,7 +1879,8 @@
         "willpower": 11,
         "presence": 7
       },
-      "replacesNpc": "Bill"
+      "replacesNpc": "Bill",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/e/ec/Bill_Manga.png/revision/latest?cb=20181121002854"
     },
     {
       "name": "Nasubi Hui Guo Rou",
@@ -1809,7 +1899,8 @@
         "willpower": 12,
         "presence": 11
       },
-      "replacesNpc": "Nasubi Hui Guo Rou"
+      "replacesNpc": "Nasubi Hui Guo Rou",
+      "portraitUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/17/Chap_363_-_Nasubi.png/revision/latest?cb=20240103221907"
     }
   ]
 }

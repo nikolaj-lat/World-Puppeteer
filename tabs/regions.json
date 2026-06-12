@@ -7,7 +7,7 @@
       "x": 0,
       "y": 0,
       "known": true,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/0e/Whale_Island.png/revision/latest?cb=20190305174428"
     },
     "The Exam Circuit": {
       "name": "The Exam Circuit",
@@ -16,7 +16,7 @@
       "x": 1,
       "y": 0,
       "known": true,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/cd/HxH2011_EP3_Zaban_City.png/revision/latest?cb=20230308062332"
     },
     "Republic of Padokea": {
       "name": "Republic of Padokea",
@@ -25,7 +25,7 @@
       "x": 2,
       "y": 0,
       "known": true,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/7/76/World_Map.png/revision/latest?cb=20230608015819"
     },
     "Arena City": {
       "name": "Arena City",
@@ -34,7 +34,7 @@
       "x": 3,
       "y": 0,
       "known": true,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/c/c9/Heavens_Arena_Full.png/revision/latest?cb=20120423234044"
     },
     "Yorknew & Environs": {
       "name": "Yorknew & Environs",
@@ -43,7 +43,7 @@
       "x": 0,
       "y": 1,
       "known": true,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/5/53/Epis_45_%282011%29_-_Yorknew_City_-16.10-.png/revision/latest?cb=20181126015616"
     },
     "Mitene Union": {
       "name": "Mitene Union",
@@ -52,7 +52,7 @@
       "x": 1,
       "y": 1,
       "known": true,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/1/16/NGLcountry.png/revision/latest?cb=20230530233209"
     },
     "Swardani City": {
       "name": "Swardani City",
@@ -61,7 +61,7 @@
       "x": 2,
       "y": 1,
       "known": true,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/05/Hunter_Association_logo.png/revision/latest?cb=20180405075402"
     },
     "Kakin Empire": {
       "name": "Kakin Empire",
@@ -70,7 +70,7 @@
       "x": 3,
       "y": 1,
       "known": true,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/8/89/Chap_346_-_Kakin.png/revision/latest?cb=20180814133803"
     },
     "Greed Island — Settled Lands": {
       "name": "Greed Island — Settled Lands",
@@ -79,7 +79,7 @@
       "x": 0,
       "y": 0,
       "known": true,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/05/GI_Map.png/revision/latest?cb=20120106130831"
     },
     "Greed Island — Wilds": {
       "name": "Greed Island — Wilds",
@@ -88,7 +88,7 @@
       "x": 1,
       "y": 0,
       "known": true,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/0/05/GI_Map.png/revision/latest?cb=20120106130831"
     },
     "Lake Mobius — The Voyage": {
       "name": "Lake Mobius — The Voyage",
@@ -97,7 +97,7 @@
       "x": 0,
       "y": 0,
       "known": false,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/9/9d/342_-_Black_Whale_Ship.png/revision/latest?cb=20210828043942"
     },
     "The New Shore": {
       "name": "The New Shore",
@@ -106,7 +106,7 @@
       "x": 1,
       "y": 0,
       "known": false,
-      "imageUrl": ""
+      "imageUrl": "https://static.wikia.nocookie.net/hunterxhunter/images/4/4c/Dark_Continent.png/revision/latest?cb=20140923204402"
     }
   }
 }
