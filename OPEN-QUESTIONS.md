@@ -2,6 +2,21 @@
 
 A running log of decisions made and questions still open. Updated every phase.
 **BUILD COMPLETE 2026-06-12** — see BUILD-REPORT.md. All questions resolved; remaining notes below.
+**REVIEW PASS IN PROGRESS 2026-06-12** — see REVIEW-FINDINGS.md. Decisions D-015+ below.
+
+## REVIEW PASS DECISIONS (2026-06-12)
+
+- **D-015: Remediation scope = all six tiers (creator).** Full Phase-2 remediation authorized
+  (Tiers 0–5 of REVIEW-FINDINGS.md): bugs/canon, AI-tab tasks, Other-tab + metadata, Zodiac
+  de-templating + voice, structural/type fixes, and optional depth polish.
+- **D-016: Game modes = four (creator).** Build `gameModes`: **Canon-Faithful** (diff medium),
+  **What-If Divergence** (diff medium), **Story-Focused** (diff easy), **Dark/Mature-tone** (tonal,
+  leans into D-007 mature content + source cruelty). Hardcore Nen-Crunch declined.
+- **D-017: O1 randomNames clobber fixed.** Empty `randomNames` removed from meta.json so the
+  archetypes.json 50+50 pool survives the alphabetical build merge. Config now ships 50/50.
+  (Root cause: build.js Object.assign in readdir order; meta.json read after archetypes.json.)
+
+---
 
 ## CLOSING NOTES (2026-06-12)
 
