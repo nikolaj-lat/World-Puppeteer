@@ -127,8 +127,8 @@
       "mainObjective": "Navigate the paths of Chimera Ants caught between two worlds and shape their fates",
       "completionCondition": "Player encounters at least three human-memory ants, learns their stories, and influences whether they survive, defect, or sacrifice themselves",
       "questDesignBrief": "An intimacy quest within the apocalypse. Colt is a squadron leader bound to the King by vow; Ikalgo struggles with his dual nature; Meleoron is a soldier who befriends Knuckle. These NPCs are living bridges between species. Players who engage with them gain allies, information, and moral complexity—these ants are not monsters; they are people. The quest rewards empathy without erasing tragedy. Some ants may ally with players; others must be fought. This side quest maintains the arc's thematic depth: not everyone is purely good or evil.",
-      "detailType": "basic",
-      "spatialRelationship": "distantNewLocation"
+      "detailType": "detailed",
+      "questLocation": "East Gorteau Royal Palace"
     },
     "A7-The 13th Chairman Election": {
       "name": "A7-The 13th Chairman Election",
@@ -148,8 +148,8 @@
       "mainObjective": "Help Killua locate and retrieve Alluka, then navigate her wish-granting rules to save Gon",
       "completionCondition": "Party finds Alluka, Killua successfully negotiates Nanika's requirements, and Alluka's power heals Gon (at escalating cost)",
       "questDesignBrief": "A race against time and family. Killua is desperate—Gon is dying and only Alluka's impossible wish-granting power can save him. But Alluka is locked away by the Zoldyck family, and Illumi hunts Killua to control Alluka for his own purposes. The quest involves escaping Illumi's pursuit, deceiving or defeating the family, and managing Nanika's escalating wishes (which may require terrible prices: trading lifespan, physical transformation, or moral compromises). This quest is intimate—about friendship's limits and what Killua will sacrifice. It also introduces Nanika as a mystery: she is not explained even in canon. Players encounter her alien logic and otherworldly power without full understanding.",
-      "detailType": "basic",
-      "spatialRelationship": "distantNewLocation"
+      "detailType": "detailed",
+      "questLocation": "Harbview Hospital"
     },
     "A8-The Voyage of the Black Whale": {
       "name": "A8-The Voyage of the Black Whale",
