@@ -241,8 +241,10 @@ const LIMITS = {
     items: 100_000,
     factions: 100_000,
     regions: 500_000,
+    realms: 100_000,
     traitCategories: 100_000,
     itemSettings: 5_000,
+    nameFilterSettings: 50_000,
   },
   counts: {
     storyStarts: 100,
@@ -253,6 +255,11 @@ const LIMITS = {
     triggerEffects: 5,
     abilityRequirements: 10,
     triggerSize: 10_000,
+    premadeCharacters: 100,
+    itemCategories: 40,
+    itemSlots: 60,
+    damageTypes: 40,
+    attributeNames: 30,
   },
   fields: {
     worldBackground: 5_000,
@@ -280,6 +287,17 @@ const LIMITS = {
     triggerConditionValue: 100,
     triggerEffectInstruction: 1_000,
     triggerEffectValue: 100,
+    currencyName: 64,
+  },
+  // Per-element character limits for settings arrays
+  settingsEntries: {
+    itemCategory: 60,
+    itemSlotName: 64,
+    itemSlotCategory: 60,
+    damageType: 60,
+    attributeName: 64,
+    nameFilterReplacement: 64,
+    premadeCharacter: 20_000,
   },
 };
 
@@ -1022,6 +1040,56 @@ function validateCharacterLimits(config, errors, warnings) {
       errors.push(createError('abilities', `Too many abilities: ${count} (max: ${LIMITS.counts.abilities})`));
     }
   }
+
+  // Settings array count limits
+  const checkArrayCount = (arr, path, limit) => {
+    if (Array.isArray(arr) && arr.length > limit) {
+      errors.push(createError(path, `Too many entries: ${arr.length} (max: ${limit})`));
+    }
+  };
+  checkArrayCount(config.premadeCharacters, 'premadeCharacters', LIMITS.counts.premadeCharacters);
+  checkArrayCount(config.itemSettings?.itemCategories, 'itemSettings.itemCategories', LIMITS.counts.itemCategories);
+  checkArrayCount(config.itemSettings?.itemSlots, 'itemSettings.itemSlots', LIMITS.counts.itemSlots);
+  checkArrayCount(config.combatSettings?.damageTypes, 'combatSettings.damageTypes', LIMITS.counts.damageTypes);
+  checkArrayCount(config.attributeSettings?.attributeNames, 'attributeSettings.attributeNames', LIMITS.counts.attributeNames);
+
+  // currencyName field limit
+  if (typeof config.itemSettings?.currencyName === 'string' && config.itemSettings.currencyName.length > LIMITS.fields.currencyName) {
+    errors.push(createError('itemSettings.currencyName', `Too long: ${config.itemSettings.currencyName.length} chars (max: ${LIMITS.fields.currencyName})`));
+  }
+
+  // Settings array per-entry character limits
+  const checkEntryLength = (path, value, limit) => {
+    if (typeof value === 'string' && value.length > limit) {
+      errors.push(createError(path, `Too long: ${value.length} chars (max: ${limit})`));
+    }
+  };
+  (config.itemSettings?.itemCategories ?? []).forEach((cat, i) =>
+    checkEntryLength(`itemSettings.itemCategories[${i}]`, cat, LIMITS.settingsEntries.itemCategory));
+  (config.itemSettings?.itemSlots ?? []).forEach((slot, i) => {
+    if (slot && typeof slot === 'object') {
+      checkEntryLength(`itemSettings.itemSlots[${i}].slot`, slot.slot, LIMITS.settingsEntries.itemSlotName);
+      checkEntryLength(`itemSettings.itemSlots[${i}].category`, slot.category, LIMITS.settingsEntries.itemSlotCategory);
+    }
+  });
+  (config.combatSettings?.damageTypes ?? []).forEach((dt, i) =>
+    checkEntryLength(`combatSettings.damageTypes[${i}]`, dt, LIMITS.settingsEntries.damageType));
+  (config.attributeSettings?.attributeNames ?? []).forEach((an, i) =>
+    checkEntryLength(`attributeSettings.attributeNames[${i}]`, an, LIMITS.settingsEntries.attributeName));
+  if (config.nameFilterSettings && typeof config.nameFilterSettings === 'object') {
+    for (const [key, entry] of Object.entries(config.nameFilterSettings)) {
+      if (Array.isArray(entry?.replacements)) {
+        entry.replacements.forEach((rep, i) =>
+          checkEntryLength(`nameFilterSettings.${key}.replacements[${i}]`, rep, LIMITS.settingsEntries.nameFilterReplacement));
+      }
+    }
+  }
+  (config.premadeCharacters ?? []).forEach((pc, i) => {
+    const len = getJsonLength(pc);
+    if (len > LIMITS.settingsEntries.premadeCharacter) {
+      errors.push(createError(`premadeCharacters[${i}]`, `Too long: ${len} chars (max: ${LIMITS.settingsEntries.premadeCharacter})`));
+    }
+  });
 
   // Field limits
   if (config.storySettings?.worldBackground?.length > LIMITS.fields.worldBackground) {

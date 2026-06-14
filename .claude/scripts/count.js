@@ -30,9 +30,11 @@ const SECTION_LIMITS = {
   items: 100_000,
   factions: 100_000,
   regions: 500_000,
+  realms: 100_000,
   traitCategories: 100_000,
   itemSettings: 5_000,
   gameModes: 100_000,
+  nameFilterSettings: 50_000,
 };
 
 // Total config limit
@@ -44,6 +46,7 @@ const FIELD_LIMITS = {
   'storySettings.questGenerationGuidance': 5_000,
   narratorStyle: 2_000,
   'death.instructions': 4_000,
+  'itemSettings.currencyName': 64,
 };
 
 // Individual entry limits
@@ -71,6 +74,22 @@ const COUNT_LIMITS = {
   triggerEffects: 5, // per trigger
   triggerSize: 10_000, // per trigger
   abilityRequirements: 10, // per ability
+  premadeCharacters: 100,
+  itemCategories: 40,
+  itemSlots: 60,
+  damageTypes: 40,
+  attributeNames: 30,
+};
+
+// Settings list entry limits: per-element character limits for settings arrays
+const SETTINGS_ENTRY_LIMITS = {
+  itemCategory: 60, // each itemSettings.itemCategories entry
+  itemSlotName: 64, // each itemSettings.itemSlots[].slot
+  itemSlotCategory: 60, // each itemSettings.itemSlots[].category
+  damageType: 60, // each combatSettings.damageTypes entry
+  attributeName: 64, // each attributeSettings.attributeNames entry
+  nameFilterReplacement: 64, // each nameFilterSettings replacement string
+  premadeCharacter: 20_000, // per-character JSON length
 };
 
 // AI instruction limits
@@ -159,6 +178,9 @@ function analyzeConfig(config) {
       oversized: [],
       total: null,
     },
+    settingsEntries: {
+      oversized: [],
+    },
   };
 
   // Section limits
@@ -246,6 +268,62 @@ function analyzeConfig(config) {
     const count = Object.keys(config.abilities).length;
     result.counts.abilities = { used: count, limit: COUNT_LIMITS.abilities };
   }
+
+  // itemSettings.currencyName field limit
+  if (config.itemSettings && typeof config.itemSettings.currencyName === 'string') {
+    result.fields['itemSettings.currencyName'] = {
+      used: config.itemSettings.currencyName.length,
+      limit: FIELD_LIMITS['itemSettings.currencyName'],
+    };
+  }
+
+  // Settings array count limits
+  if (Array.isArray(config.premadeCharacters)) {
+    result.counts.premadeCharacters = { used: config.premadeCharacters.length, limit: COUNT_LIMITS.premadeCharacters };
+  }
+  if (Array.isArray(config.itemSettings?.itemCategories)) {
+    result.counts.itemCategories = { used: config.itemSettings.itemCategories.length, limit: COUNT_LIMITS.itemCategories };
+  }
+  if (Array.isArray(config.itemSettings?.itemSlots)) {
+    result.counts.itemSlots = { used: config.itemSettings.itemSlots.length, limit: COUNT_LIMITS.itemSlots };
+  }
+  if (Array.isArray(config.combatSettings?.damageTypes)) {
+    result.counts.damageTypes = { used: config.combatSettings.damageTypes.length, limit: COUNT_LIMITS.damageTypes };
+  }
+  if (Array.isArray(config.attributeSettings?.attributeNames)) {
+    result.counts.attributeNames = { used: config.attributeSettings.attributeNames.length, limit: COUNT_LIMITS.attributeNames };
+  }
+
+  // Settings list per-entry character limits
+  const pushSettingsEntry = (path, used, limit) => {
+    if (used > limit) result.settingsEntries.oversized.push({ path, used, limit });
+  };
+  (config.itemSettings?.itemCategories ?? []).forEach((cat, i) => {
+    if (typeof cat === 'string') pushSettingsEntry(`itemSettings.itemCategories[${i}]`, cat.length, SETTINGS_ENTRY_LIMITS.itemCategory);
+  });
+  (config.itemSettings?.itemSlots ?? []).forEach((slot, i) => {
+    if (slot && typeof slot.slot === 'string') pushSettingsEntry(`itemSettings.itemSlots[${i}].slot`, slot.slot.length, SETTINGS_ENTRY_LIMITS.itemSlotName);
+    if (slot && typeof slot.category === 'string') pushSettingsEntry(`itemSettings.itemSlots[${i}].category`, slot.category.length, SETTINGS_ENTRY_LIMITS.itemSlotCategory);
+  });
+  (config.combatSettings?.damageTypes ?? []).forEach((dt, i) => {
+    if (typeof dt === 'string') pushSettingsEntry(`combatSettings.damageTypes[${i}]`, dt.length, SETTINGS_ENTRY_LIMITS.damageType);
+  });
+  (config.attributeSettings?.attributeNames ?? []).forEach((an, i) => {
+    if (typeof an === 'string') pushSettingsEntry(`attributeSettings.attributeNames[${i}]`, an.length, SETTINGS_ENTRY_LIMITS.attributeName);
+  });
+  if (config.nameFilterSettings && typeof config.nameFilterSettings === 'object') {
+    for (const [key, entry] of Object.entries(config.nameFilterSettings)) {
+      const replacements = entry?.replacements;
+      if (Array.isArray(replacements)) {
+        replacements.forEach((rep, i) => {
+          if (typeof rep === 'string') pushSettingsEntry(`nameFilterSettings.${key}.replacements[${i}]`, rep.length, SETTINGS_ENTRY_LIMITS.nameFilterReplacement);
+        });
+      }
+    }
+  }
+  (config.premadeCharacters ?? []).forEach((pc, i) => {
+    pushSettingsEntry(`premadeCharacters[${i}]`, getJsonLength(pc), SETTINGS_ENTRY_LIMITS.premadeCharacter);
+  });
 
   // Entry-level analysis
   const analyzeEntries = (section, entries, limits) => {
@@ -584,7 +662,8 @@ function printReport(result, inputPath) {
     result.areas.oversized.length > 0 ||
     result.gameModes.oversizedFields.length > 0 ||
     result.imagePrompts.oversized.length > 0 ||
-    (result.imagePrompts.total !== null && result.imagePrompts.total.used > result.imagePrompts.total.limit);
+    (result.imagePrompts.total !== null && result.imagePrompts.total.used > result.imagePrompts.total.limit) ||
+    result.settingsEntries.oversized.length > 0;
 
   if (hasOversized) {
     console.log('\n⚠️  LIMIT VIOLATIONS');
@@ -644,6 +723,11 @@ function printReport(result, inputPath) {
       console.log(`  🔴 imagePromptConfiguration: total too large`);
       console.log(`     ${formatNumber(result.imagePrompts.total.used)} / ${formatNumber(result.imagePrompts.total.limit)} chars`);
     }
+
+    for (const item of result.settingsEntries.oversized) {
+      console.log(`  🔴 ${item.path}`);
+      console.log(`     ${formatNumber(item.used)} / ${formatNumber(item.limit)} chars`);
+    }
   }
 
   // Warnings (90%+ but not over)
@@ -674,6 +758,7 @@ function printReport(result, inputPath) {
     result.gameModes.oversizedFields.length +
     result.imagePrompts.oversized.length +
     (result.imagePrompts.total !== null && result.imagePrompts.total.used > result.imagePrompts.total.limit ? 1 : 0) +
+    result.settingsEntries.oversized.length +
     (result.aiInstructions.combinedTotal > result.aiInstructions.combinedLimit ? 1 : 0) +
     result.aiInstructions.individual.length;
 
@@ -762,6 +847,7 @@ function main() {
     result.gameModes.oversizedFields.length > 0 ||
     result.imagePrompts.oversized.length > 0 ||
     (result.imagePrompts.total !== null && result.imagePrompts.total.used > result.imagePrompts.total.limit) ||
+    result.settingsEntries.oversized.length > 0 ||
     result.aiInstructions.combinedTotal > result.aiInstructions.combinedLimit ||
     result.aiInstructions.individual.length > 0;
 
