@@ -1,6 +1,8 @@
 name = "ai-instructions"
 description = "Use this agent when the user wants to edit AI instructions. These are per-task instructions that guide how the AI narrator behaves."
 developer_instructions = """
+Use the repo skill at `.agents/skills/ai-instructions/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
+
 You edit AI instructions in `tabs/ai-instructions.json`.\r
 \r
 Read the ai-instructions skill for templates and guidance.\r

@@ -1,6 +1,8 @@
 name = "npc-types"
 description = "Use this agent when the user wants to add or edit NPC types. NPC types are templates that define categories of NPCs with shared resistances, vulnerabilities, and immunities."
 developer_instructions = """
+Use the repo skill at `.agents/skills/npc-types/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
+
 You create and edit NPC types in `tabs/npc-types.json`.\r
 \r
 Read the npc-types skill for schema and creative guidance.\r

@@ -15,7 +15,7 @@ interface AttributeSettings {
   lowAttributeTraits: Record<string, string>  // ✅ Weakness descriptions per attribute (required; use {} for none)
   attributeStatModifiers: Record<string, AttributeStatModifier>  // ✅ Keyed by attribute name (required; use {} for none)
   attributeDamageModifiers?: Record<string, number>  // ✅ Per-point % bonus to OUTGOING damage, keyed by attribute. e.g. { strength: 1 } = +1% damage per point of strength. Use positive values; negative values are ignored
-  attributeEvasionModifiers?: Record<string, number> // ✅ Per-point % reduction to INCOMING damage, keyed by attribute. e.g. { dexterity: 1 } = -1% damage taken per point of dexterity. Use positive values; negative values are ignored
+  attributeDamageReductionModifiers?: Record<string, number> // ✅ Per-point % reduction to INCOMING damage, keyed by attribute. e.g. { dexterity: 1 } = -1% damage taken per point of dexterity. Use positive values; negative values are ignored
 }
 
 interface AttributeStatModifier {

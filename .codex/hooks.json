@@ -2,57 +2,37 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Edit|Write",
+        "matcher": "Edit|Write|apply_patch",
         "hooks": [
           {
             "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/post-edit-validate.js"
-          }
-        ]
-      },
-      {
-        "matcher": "Task",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/agent-completed.js"
+            "command": "node \"$(git rev-parse --show-toplevel)/.codex/scripts/post-edit-validate.cjs\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$root = git rev-parse --show-toplevel; node (Join-Path $root '.codex/scripts/post-edit-validate.cjs')\"",
+            "statusMessage": "Validating world tabs"
           }
         ]
       }
     ],
     "SessionStart": [
       {
+        "matcher": "startup|resume|clear",
         "hooks": [
           {
             "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/create-tabs.js"
+            "command": "node \"$(git rev-parse --show-toplevel)/.claude/scripts/create-tabs.js\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$root = git rev-parse --show-toplevel; node (Join-Path $root '.claude/scripts/create-tabs.js')\"",
+            "statusMessage": "Checking world tabs"
           }
         ]
       },
       {
+        "matcher": "startup|resume|clear",
         "hooks": [
           {
             "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/create-checklist.js"
-          }
-        ]
-      },
-      {
-        "matcher": "compact",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/post-compact.js"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/check-background-agents.js"
+            "command": "node \"$(git rev-parse --show-toplevel)/.claude/scripts/create-checklist.js\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$root = git rev-parse --show-toplevel; node (Join-Path $root '.claude/scripts/create-checklist.js')\"",
+            "statusMessage": "Checking world checklist"
           }
         ]
       }
@@ -63,7 +43,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/count.js"
+            "command": "node \"$(git rev-parse --show-toplevel)/.claude/scripts/count.js\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$root = git rev-parse --show-toplevel; node (Join-Path $root '.claude/scripts/count.js')\"",
+            "statusMessage": "Counting world config"
           }
         ]
       }

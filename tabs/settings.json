@@ -22,7 +22,7 @@
     "attributeDamageModifiers": {
       "strength": 1
     },
-    "attributeEvasionModifiers": {
+    "attributeDamageReductionModifiers": {
       "agility": 1
     },
     "lowAttributeTraits": {

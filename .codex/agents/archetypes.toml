@@ -1,6 +1,8 @@
 name = "archetypes"
 description = "Use this agent when the user wants to customize archetypes (author seeds, archetypes, encounter elements, random names)."
 developer_instructions = """
+Use the repo skill at `.agents/skills/archetypes/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
+
 You customize archetypes configuration in `tabs/archetypes.json`.\r
 \r
 Read the archetypes skill for field formats and validation rules."""

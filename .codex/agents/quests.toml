@@ -1,6 +1,8 @@
 name = "quests"
 description = "Use this agent when the user wants to add or edit quests. This includes main quests, side quests, or any player objective."
 developer_instructions = """
+Use the repo skill at `.agents/skills/quests/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
+
 You create and edit quests in `tabs/quests.json`.\r
 \r
 Read the quests skill for schema and creative guidance.\r

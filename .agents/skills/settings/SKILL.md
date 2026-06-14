@@ -110,7 +110,7 @@ These must be configured per-world:
 | `attributeSettings.lowAttributeTraits` | See lowAttributeTraits format below |
 | `attributeSettings.attributeStatModifiers` | Only where narratively sensible (e.g., Constitution to Health) |
 | `attributeSettings.attributeDamageModifiers` | Optional. Per-point % bonus to outgoing damage, keyed by attribute (e.g. `{ strength: 1 }` = +1% damage per point). Positive values only |
-| `attributeSettings.attributeEvasionModifiers` | Optional. Per-point % reduction to incoming damage, keyed by attribute (e.g. `{ dexterity: 1 }` = -1% damage taken per point). Positive values only |
+| `attributeSettings.attributeDamageReductionModifiers` | Optional. Per-point % reduction to incoming damage, keyed by attribute (e.g. `{ dexterity: 1 }` = -1% damage taken per point). Positive values only |
 | `skillSettings.skillTypeDifficultyBonus` | Always include `"none": 0`, others creative |
 | `itemSettings.currencyName` | Thematic currency name |
 | `itemSettings.itemCategories` | Always include `"Armor"`, `"Consumable"`, plus world-specific |

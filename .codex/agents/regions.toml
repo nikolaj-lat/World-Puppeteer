@@ -1,6 +1,8 @@
 name = "regions"
 description = "Use this agent when the user wants to add or edit regions. Regions are geographic areas that contain multiple locations."
 developer_instructions = """
+Use the repo skill at `.agents/skills/regions/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
+
 You create and edit regions in `tabs/regions.json`.\r
 \r
 Read the regions skill for schema and creative guidance.\r
