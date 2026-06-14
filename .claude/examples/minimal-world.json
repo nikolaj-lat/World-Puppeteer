@@ -88,7 +88,7 @@
     "startingAttributePoints": 0,
     "attributeStatModifiers": {},
     "attributeDamageModifiers": {},
-    "attributeEvasionModifiers": {},
+    "attributeDamageReductionModifiers": {},
     "maxStartingAttribute": 0,
     "lowAttributeThreshold": 8,
     "lowAttributeTraits": {},
@@ -108,7 +108,8 @@
     "startingXPToLevelUpSkill": 50,
     "baseChanceToLearnNewSkill": 1,
     "skillLearningBonusModifier": 1,
-    "skillTypeDifficultyBonus": {}
+    "skillTypeDifficultyBonus": {},
+    "newSkillGenerationEnabled": true
   },
 
   "locationSettings": {
@@ -120,7 +121,8 @@
     "avgTravelDistance": 40,
     "minTravelDistance": 20,
     "newRegionGenerationEnabled": false,
-    "encountersEnabled": false
+    "encountersEnabled": false,
+    "regionMapBorderFeatheringEnabled": true
   },
 
   "itemSettings": {

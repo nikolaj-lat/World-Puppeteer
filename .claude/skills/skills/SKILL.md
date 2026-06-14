@@ -15,7 +15,7 @@ Edit `tabs/skills.json`.
 |-------|-------------|
 | `name` | Must match object key exactly |
 | `attribute` | Must reference a valid attribute from attributeSettings |
-| `type` | Skill category - must match a key in `skillTypeDifficultyBonus` from settings |
+| `type` | Skill category - must match a key in `skillTypeDifficultyBonus` from settings. Use `"combat"` for attack skills that should deal attribute-scaled damage (see type Categories) |
 | `description` | 3 sentences explaining what the skill does |
 | `startingItems`| Always set to `[]` |
 
@@ -39,6 +39,8 @@ Skill descriptions should be **3 sentences, effect-focused**.
 Skill types are defined per-world in `skillTypeDifficultyBonus` in `tabs/settings.json`. Each type can grant different difficulty bonuses to skill checks.
 
 `"none": 0` is the default type. Other types are world-specific.
+
+`"combat"` is special: attacks using a `type: "combat"` skill gain a flat damage bonus that scales with the skill's `attribute` (+1 damage per 2 attribute points above 6). Use it for attack skills you want to deal attribute-scaled damage.
 
 ## attribute Selection
 

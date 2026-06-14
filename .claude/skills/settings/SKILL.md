@@ -49,6 +49,7 @@ The balanced values below support this progression curve.
 | `baseChanceToLearnNewSkill` | `1` | Use 1 if world allows learning new skills, 0 if fixed |
 | `skillLearningBonusModifier` | `1` | Use 1 if world allows learning new skills, 0 if fixed |
 | `xpFromNewSkill` | `200` | Character XP when learning a new skill |
+| `newSkillGenerationEnabled` | `true` | Allow the AI to invent skills not in the config; `false` restricts characters to predefined skills |
 
 ### Skill XP Rewards
 
@@ -71,6 +72,7 @@ The balanced values below support this progression curve.
 | `regionLocationCount` | `0` | Designer defines per world |
 | `regionFactionCount` | `0` | Designer defines per world |
 | `encountersEnabled` | `false` | Enable random wilderness encounters during travel |
+| `regionMapBorderFeatheringEnabled` | `true` | Feathered border / rounded frame treatment on region map images |
 
 ### Item Settings
 
@@ -110,7 +112,7 @@ These must be configured per-world:
 | `attributeSettings.lowAttributeTraits` | See lowAttributeTraits format below |
 | `attributeSettings.attributeStatModifiers` | Only where narratively sensible (e.g., Constitution to Health) |
 | `attributeSettings.attributeDamageModifiers` | Optional. Per-point % bonus to outgoing damage, keyed by attribute (e.g. `{ strength: 1 }` = +1% damage per point). Positive values only |
-| `attributeSettings.attributeEvasionModifiers` | Optional. Per-point % reduction to incoming damage, keyed by attribute (e.g. `{ dexterity: 1 }` = -1% damage taken per point). Positive values only |
+| `attributeSettings.attributeDamageReductionModifiers` | Optional. Per-point % reduction to incoming damage, keyed by attribute (e.g. `{ dexterity: 1 }` = -1% damage taken per point). Positive values only |
 | `skillSettings.skillTypeDifficultyBonus` | Always include `"none": 0`, others creative |
 | `itemSettings.currencyName` | Thematic currency name |
 | `itemSettings.itemCategories` | Always include `"Armor"`, `"Consumable"`, plus world-specific |

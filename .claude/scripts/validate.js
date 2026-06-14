@@ -490,12 +490,27 @@ function validateReferenceIntegrity(config, errors) {
     }
   }
 
+  // npcLevelRange invariants: min/max must be positive whole numbers and min <= max
+  const isPositiveWholeNumber = (v) => typeof v === 'number' && Number.isInteger(v) && v > 0;
+  const validateNpcLevelRange = (entityType, entityId, levelRange) => {
+    if (!levelRange || typeof levelRange !== 'object' || Array.isArray(levelRange)) return;
+    const { min, max } = levelRange;
+    if (!isPositiveWholeNumber(min) || !isPositiveWholeNumber(max)) {
+      errors.push(createError(`${entityType}.${entityId}.npcLevelRange`, `npcLevelRange must use positive whole numbers for min and max`));
+      return;
+    }
+    if (min > max) {
+      errors.push(createError(`${entityType}.${entityId}.npcLevelRange`, `npcLevelRange min (${min}) must be less than or equal to max (${max})`));
+    }
+  };
+
   // Location references
   if (config.locations) {
     for (const [locId, location] of Object.entries(config.locations)) {
       if (location.region && !regionKeys.has(location.region)) {
         errors.push(createError(`locations.${locId}.region`, `References non-existent region: ${location.region}`));
       }
+      validateNpcLevelRange('locations', locId, location.npcLevelRange);
     }
   }
 
@@ -505,6 +520,7 @@ function validateReferenceIntegrity(config, errors) {
       if (region.realm && !realmKeys.has(region.realm)) {
         errors.push(createError(`regions.${regionId}.realm`, `References non-existent realm: ${region.realm}`));
       }
+      validateNpcLevelRange('regions', regionId, region.npcLevelRange);
     }
   }
 
@@ -1467,7 +1483,7 @@ function validateUnknownFields(config, errors) {
       'attributeNames', 'startingAttributeValue', 'startingAttributePoints',
       'maxStartingAttribute', 'attributeBonusModifier', 'lowAttributeThreshold',
       'lowAttributeTraits', 'attributeStatModifiers',
-      'attributeDamageModifiers', 'attributeEvasionModifiers',
+      'attributeDamageModifiers', 'attributeDamageReductionModifiers',
     ]),
     skillSettings: new Set([
       'trainingCooldown', 'skillBonusModifier', 'maxSkillLevel', 'maxSkillSuccessLevel',
@@ -1479,6 +1495,7 @@ function validateUnknownFields(config, errors) {
     locationSettings: new Set([
       'regionSize', 'simpleRadius', 'complexRadius', 'regionLocationCount',
       'regionFactionCount', 'avgTravelDistance', 'minTravelDistance', 'newRegionGenerationEnabled', 'encountersEnabled',
+      'regionMapBorderFeatheringEnabled',
     ]),
     itemSettings: new Set([
       'currencyName', 'startingItems', 'itemCategories', 'itemSlots',
@@ -1694,6 +1711,10 @@ function validateUnknownFields(config, errors) {
   // Game modes
   if (config.gameModes && typeof config.gameModes === 'object') {
     const VALID_GAME_MODE_DIFFICULTIES = ['very easy', 'easy', 'medium', 'hard', 'very hard'];
+    const gameModesJson = JSON.stringify(config.gameModes, null, 2);
+    if (gameModesJson.length > 100000) {
+      errors.push(createError('gameModes', `Game modes exceed 100,000 characters: ${gameModesJson.length}`));
+    }
     for (const [modeKey, mode] of Object.entries(config.gameModes)) {
       if (!mode || typeof mode !== 'object') continue;
       checkNested(`gameModes.${modeKey}`, mode, KNOWN_NESTED.gameMode);

@@ -32,6 +32,7 @@ const SECTION_LIMITS = {
   regions: 500_000,
   traitCategories: 100_000,
   itemSettings: 5_000,
+  gameModes: 100_000,
 };
 
 // Total config limit

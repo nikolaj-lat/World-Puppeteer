@@ -18,8 +18,8 @@ interface NPC {
   visualTags?: string[]           // ✅ Only used for image caching
   personality?: string[]          // ✅ Prose descriptions of personality traits
   abilities?: string[]            // ✅ Prose descriptions of abilities
-  aliases?: string[]              // ✅ Alternate names/titles matched during dialogue speaker attribution (e.g. "the captain", "Reed")
-  level?: number                  // ⚠️ Set explicitly for any NPC that should be stronger; an explicit level is used as-is. If omitted, the engine rolls a level near the party average, then clamps it into the npcLevelRange of the NPC's location (or, if the location has none, its region). Each NPC level adds +2 to base damage
+  aliases?: string[]              // ✅ Alternate names/titles (e.g. "the captain", "Reed") used only to match input/dialogue to this NPC; never sent to the AI
+  level?: number                  // ⚠️ Set explicitly for any NPC that should be stronger; an explicit level is used as-is. If omitted, the engine rolls a level near the party average when the NPC first becomes visible (so it reflects the party's level at that moment), then clamps it into the npcLevelRange of the NPC's location (or, if the location has none, its region). Each NPC level adds +2 to base damage
   hpMax?: number                  // ⚠️ Calculated from level + tier if undefined
   hpCurrent?: number              // ⚠️ Defaults to hpMax if undefined
   healthMultiplier?: number       // ✅ Scales calculated max HP. 1 is normal, 10 is ten times normal, 0.5 is half. Clamped to 0.1–100. Ignored when hpMax is set explicitly
@@ -123,6 +123,17 @@ NPCs with tier `elite`, `boss`, or `mythic` (and party member NPCs) use a 3-turn
 | 3 | `dead` | Permanently dead, cannot be revived |
 
 Standard-tier NPCs (`trivial`, `weak`, `average`, `strong`) die instantly at 0 HP.
+
+### Party-Member Promotion
+
+A party-member NPC below `elite` is promoted to `elite` when it levels up alongside the party, so long-term companions become major NPCs (gaining the death countdown and higher HP/damage modifiers).
+
+## What the AI Sees About an NPC
+
+`basicInfo`, `hiddenInfo`, and `abilities` are exposed to the AI only when the NPC is `detailType: 'detailed'`.
+
+- `hiddenInfo` is sent to the combat-intent task, the story narration, and the NPC's own dialogue.
+- `abilities` are sent to the combat-intent and detail-generation tasks, but not to the story narration. When generating combat intents, about 3 of an NPC's abilities are sampled at random each turn, re-sampled every turn.
 
 ## generateNPCDetails
 

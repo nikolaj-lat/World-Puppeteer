@@ -114,6 +114,10 @@ skillTypeDifficultyBonus: {
 
 These values are added to all checks of that skill type.
 
+### The `combat` type
+
+The type value `"combat"` is special: when a character attacks using a skill whose `type` is exactly `"combat"`, the attack gains a flat damage bonus based on that skill's linked `attribute` — `+1 damage per 2 attribute points above 6` (e.g. an attribute of 14 adds +4). Skills of any other type do not add this bonus. Give an attack skill `type: "combat"` if you want it to scale damage with its attribute.
+
 ## Cross-References
 
 | Field | References |

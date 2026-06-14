@@ -40,7 +40,9 @@ NPCs with `type: ""` use only their own damage arrays (no inheritance).
 | resistance | 0.5x | -50% damage taken |
 | immunity | 0x | No damage taken |
 
-Stacking: Static resistances and buff resistances multiply. 0.5x (static) x 0.5x (buff) = 0.25x (75% reduction).
+Stacking: Static resistances and buff resistances multiply. 0.5x (static) x 0.5x (buff) = 0.25x (75% reduction). Vulnerabilities stack the same way — a static + buff vulnerability becomes 2x.
+
+**Damage type strings must match exactly, and matching is case-sensitive.** `"Fire"` and `"fire"` are different types — a vulnerability listed as `"Fire"` will not trigger against a `"fire"` attack, and the mismatch fails silently (full damage, no warning). Use the exact lowercase ASCII strings from `combatSettings.damageTypes` everywhere (vulnerabilities, resistances, immunities). Avoid accented characters or non-ASCII in damage type names — diacritic/encoding mismatches break matching the same silent way.
 
 ## Type vs NPC Decision Matrix
 

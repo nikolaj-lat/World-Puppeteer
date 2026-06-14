@@ -17,6 +17,7 @@ Complete character and count limits for world configs.
 | traitCategories | 100,000 chars |
 | realms.[id].basicInfo | 100,000 chars |
 | itemSettings | 5,000 chars |
+| gameModes | 100,000 chars |
 
 ## Field Limits
 

@@ -15,7 +15,7 @@ interface AttributeSettings {
   lowAttributeTraits: Record<string, string>  // ✅ Weakness descriptions per attribute (required; use {} for none)
   attributeStatModifiers: Record<string, AttributeStatModifier>  // ✅ Keyed by attribute name (required; use {} for none)
   attributeDamageModifiers?: Record<string, number>  // ✅ Per-point % bonus to OUTGOING damage, keyed by attribute. e.g. { strength: 1 } = +1% damage per point of strength. Use positive values; negative values are ignored
-  attributeEvasionModifiers?: Record<string, number> // ✅ Per-point % reduction to INCOMING damage, keyed by attribute. e.g. { dexterity: 1 } = -1% damage taken per point of dexterity. Use positive values; negative values are ignored
+  attributeDamageReductionModifiers?: Record<string, number> // ✅ Per-point % reduction to INCOMING damage, keyed by attribute. e.g. { dexterity: 1 } = -1% damage taken per point of dexterity. Use positive values; negative values are ignored
 }
 
 interface AttributeStatModifier {
@@ -45,6 +45,7 @@ interface SkillSettings {
   xpFromNewSkill: number                     // ✅ Character XP awarded when learning a new skill (balanced: 200)
   skillTypeDifficultyBonus: Record<string, number>  // ✅ Bonus by skill type, always include "none": 0
   skillXPRewards: SkillXPRewards              // ✅ XP amounts by impact size
+  newSkillGenerationEnabled: boolean          // ✅ Allow AI to invent skills beyond the config (default: true)
 }
 
 interface SkillXPRewards {
@@ -68,6 +69,7 @@ interface LocationSettings {
   minTravelDistance: number                   // ✅ Minimum distance between locations (balanced: 20)
   newRegionGenerationEnabled: boolean         // ✅ Whether the engine pre-generates adjacent regions as players approach boundaries (default: true). Set false to keep the world bounded to predefined regions only.
   encountersEnabled: boolean                  // ✅ Whether random wilderness encounters can interrupt travel between locations (default: false)
+  regionMapBorderFeatheringEnabled?: boolean  // ✅ Whether region map images use the feathered border and rounded frame treatment (default: true)
 }
 ```
 
@@ -102,7 +104,7 @@ interface CombatSettings {
   abilityCooldown: number                     // ✅ Default ability cooldown in ticks (balanced: 0)
   abilityBonus: number                        // ✅ Bonus for ability checks (balanced: 10)
   npcDailyHealingAmount: number               // ✅ NPC healing per day (balanced: 999)
-  damageTypes: string[]                       // ✅ Available damage types (world-specific)
+  damageTypes: string[]                       // ✅ Available damage types (world-specific). Use lowercase ASCII — matching against vulnerabilities/resistances/immunities is case-sensitive and unnormalized, so "Fire" ≠ "fire" and mismatches fail silently
 }
 ```
 
@@ -166,6 +168,8 @@ Player DPR = 16.4 + (2.5 × level) + milestoneDamageBonus
 
 Where `milestoneDamageBonus = floor(level / 5) × 2`
 
+NPC damage scales more simply: **+2.0 per level** with no milestone bonuses. So a high-level player out-scales an equal-level NPC slightly (2.5/level + milestones vs. a flat 2.0/level).
+
 These are engine constants, not configurable. They determine how fast players deal damage at each level.
 
 ### NPC HP Formula
@@ -195,7 +199,7 @@ Each tier also scales NPC damage output (engine constants, not configurable):
 | average | 1.0 |
 | strong | 1.12 |
 | elite | 1.25 |
-| boss | 1.35 |
+| boss | 1.4 |
 | mythic | 1.55 |
 
 ### Milestone Bonuses
@@ -219,6 +223,53 @@ NPC stats scale by encounter difficulty (engine constants, not configurable):
 | medium | 1.0× | 1.0× |
 | hard | 1.15× | 1.25× |
 | very hard | 1.3× | 1.5× |
+
+### Level-Differential Damage Reduction
+
+When an attacker hits a target that is a **higher level than themselves**, outgoing damage is reduced. Each level of difference adds less than the last (5% for the first, diminishing by 10% per step), and the total plateaus at 27.5% once the gap reaches 10 levels.
+
+| Levels target is above attacker | Damage reduction |
+|---|---|
+| 1 | 5.0% |
+| 2 | 9.5% |
+| 3 | 13.5% |
+| 4 | 17.0% |
+| 5 | 20.0% |
+| 6 | 22.5% |
+| 7 | 24.5% |
+| 8 | 26.0% |
+| 9 | 27.0% |
+| 10+ | 27.5% (max) |
+
+Hitting a target at the same or lower level applies no reduction.
+
+### Impact
+
+Every attack carries an **impact** value from **50 to 200** (100 = normal) that the AI assigns per-attack based on how the action is described. It multiplies damage by `impact / 100`, and applies to both player and NPC attacks.
+
+| Impact | Multiplier |
+|---|---|
+| 50 | 0.5× |
+| 100 | 1.0× |
+| 150 | 1.5× |
+| 200 | 2.0× |
+
+### Evasion
+
+A character that takes a **defend / evade action on a turn** reduces the incoming damage of attacks against them that turn. The reduction scales with how well the defend roll succeeded; a reduction of 1.0 or higher fully nullifies the hit (it lands but deals 0). This is an active, per-turn choice driven by the defend roll, not a passive stat.
+
+### NPC Success Rolls
+
+An NPC attack's success level is fixed RNG each turn (NPCs have no skills or attributes to roll):
+
+| Outcome | Chance |
+|---|---|
+| critical success | 10% |
+| great success | 20% |
+| success | 40% |
+| basic success | 30% |
+
+The only way an NPC attack drops below "basic success" is **combat conflict**: when a player's defend action succeeds, it degrades the attacking NPC's outcome (a strong defense turns the NPC's attack into a failure).
 
 ### Encounter Health Budget
 
