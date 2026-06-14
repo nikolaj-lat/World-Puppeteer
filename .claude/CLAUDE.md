@@ -182,8 +182,9 @@ Agents running in the background cannot receive answers to their questions—suc
 ## The Stage (Project Structure)
 
 ```
-tabs/                    # The scripts (JSON content files)
-config.json              # The compiled production (auto-generated)
+tabs/                    # Local world scripts (JSON content files; ignored by Git)
+config.json              # Local compiled production (auto-generated; ignored by Git)
+templates/               # Tracked minimal Voyage world starter and tab structure
 .claude/skills/          # Knowledge of the crafts
 .claude/agents/          # Your troupe's specializations
 ```

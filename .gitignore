@@ -2,9 +2,22 @@
 .DS_Store
 
 # World specific files
+/config.json
+/tabs/
+BUILD-PLAN.md
+BUILD-REPORT.md
+GEOGRAPHY.md
+NEN-DESIGN.md
+OPEN-QUESTIONS.md
+REVIEW-FINDINGS.md
+ROSTER.md
+WORLD-BIBLE.md
 config-backups/
 images/
 stuff/
+dashboard.html
+memory/
+hxh_hunter_exam_campaign_rebuild/
 
 # Internal-only or unpolished reference docs
 .claude/skills/ai-instructions/references/intents-reference.md

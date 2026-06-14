@@ -1,0 +1,62 @@
+{
+  "aiInstructions": {
+    "generateStory": {
+      "Victory and Downtime": "",
+      "Character Behavior": "",
+      "Style Principles": "",
+      "custom": ""
+    },
+    "generateInitialStart": {
+      "Opening Structure": "",
+      "Style Principles": "",
+      "custom": ""
+    },
+    "generateActionInfo": {
+      "custom": ""
+    },
+    "generateCharacterBackground": {
+      "prompt": "",
+      "custom": ""
+    },
+    "generateNPCDetails": {
+      "custom": ""
+    },
+    "generateLocationDetails": {
+      "custom": ""
+    },
+    "generateRegionDetails": {
+      "custom": ""
+    },
+    "generateFactionDetails": {
+      "custom": ""
+    },
+    "generateEncounters": {
+      "custom": ""
+    },
+    "ItemGenerationAndUsage": {
+      "custom": ""
+    }
+  },
+  "narratorStyle": "",
+  "gameModes": {},
+  "death": {
+    "permadeath": false,
+    "instructions": ""
+  },
+  "resourceSettings": {
+    "health": {
+      "name": "health",
+      "initialValue": 0,
+      "maxValue": 0,
+      "gainPerLevel": 10,
+      "rechargeRate": 1,
+      "restRechargeMultiplier": 1,
+      "color": "#ef4444",
+      "isHealth": true,
+      "usageInstructions": ""
+    }
+  },
+  "storySettings": {
+    "questGenerationGuidance": ""
+  }
+}

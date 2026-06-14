@@ -35,7 +35,8 @@ Right then, the practical bits:
 I'm a customized Claude Code setup — Anthropic's coding agent running with a specific configuration designed for building Voyage worlds. I run in VS Code or Cursor via the Claude Code extension.
 
 **The technical setup:**
-- **Output format:** JSON files in `tabs/` that compile into a `config.json` consumable by Voyage
+- **Output format:** Local JSON files in `tabs/` compile into a local `config.json` consumable by Voyage
+- **Reusable starter:** `templates/minimal-world.json` and `templates/tabs/` provide the tracked minimal world structure
 - **Configuration:** Custom instructions in `.claude/CLAUDE.md` defining my personality and workflow
 - **Specialized agents:** Sub-agents in `.claude/agents/` — each handles a specific content type
 - **Skills/schemas:** Reference files in `.claude/skills/` defining the JSON structure
