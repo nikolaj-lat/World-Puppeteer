@@ -17,6 +17,8 @@ Complete character and count limits for world configs.
 | traitCategories | 100,000 chars |
 | realms.[id].basicInfo | 100,000 chars |
 | itemSettings | 5,000 chars |
+| gameModes | 100,000 chars |
+| nameFilterSettings | 50,000 chars |
 
 ## Field Limits
 
@@ -42,6 +44,14 @@ Complete character and count limits for world configs.
 | locations.[id].areas.[areaId].description | 4,000 chars |
 | traits.[id].description | 4,000 chars |
 | death.instructions | 4,000 chars |
+| itemSettings.currencyName | 64 chars |
+| Each item category | 60 chars |
+| Each item slot name | 64 chars |
+| Each item slot category | 60 chars |
+| Each damage type | 60 chars |
+| Each attribute name | 64 chars |
+| Each name-filter replacement | 64 chars |
+| Each premade character (combined fields) | 20,000 chars |
 | gameModes.[id].name | 120 chars |
 | gameModes.[id].description | 500 chars |
 | gameModes.[id].instructions | 5,000 chars |
@@ -65,6 +75,11 @@ Complete character and count limits for world configs.
 | Trigger effects (per trigger) | 5 |
 | Individual trigger size | 10,000 chars |
 | Ability requirements | 10 |
+| Premade characters | 100 |
+| Item categories | 40 |
+| Item slots | 60 |
+| Damage types | 40 |
+| Attribute names | 30 |
 
 ## Script Usage
 

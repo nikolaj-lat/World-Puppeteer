@@ -7,14 +7,14 @@ agent: count
 
 # Count
 
-Run `node .Codex/scripts/count.js` to check character counts and limits.
+Run `node .claude/scripts/count.js` to check character counts and limits.
 
 ## Usage
 
 ```bash
-node .Codex/scripts/count.js              # defaults to tabs/
-node .Codex/scripts/count.js ./tabs/      # explicit path
-node .Codex/scripts/count.js --json       # JSON output for programmatic use
+node .claude/scripts/count.js              # defaults to tabs/
+node .claude/scripts/count.js ./tabs/      # explicit path
+node .claude/scripts/count.js --json       # JSON output for programmatic use
 ```
 
 ## Output
