@@ -4,69 +4,60 @@
   "name": "Meteion Story Instructions",
   "version": "1.0.0",
   "description": "Reference instruction-set material for story style, narrator voice, naming filters, and mod metadata.",
-  "compatibleFormats": [
-    "voyage-v33"
-  ],
-  "domains": [
-    "ai-instructions",
-    "mod-metadata",
-    "name-filter-settings",
-    "narrator-style"
-  ],
-  "supportedModes": [
-    "reference"
-  ],
+  "compatibleFormats": ["voyage-v33"],
+  "domains": ["ai-instructions", "mod-metadata", "name-filter-settings", "narrator-style"],
+  "supportedModes": ["reference"],
   "defaultMode": "reference",
   "applicationProfile": "reference-only",
   "conflictPolicy": "stop",
   "dependencies": [],
   "optionalDependencies": [],
   "files": [
+    "Cliche-Filter-Plus.json",
+    "Sonnet-Plus-Story-Instruction-Set.json"
+  ],
+  "payloadMappings": [
     {
-      "path": "Cliche-Filter-Plus.json",
-      "targets": [
-        {
-          "sourcePath": "mods",
-          "targetPath": "mods",
-          "preferredTargetFile": "meta.json",
-          "domain": "mod-metadata"
-        },
-        {
-          "sourcePath": "aiInstructions",
-          "targetPath": "aiInstructions",
-          "preferredTargetFile": "ai-instructions.json",
-          "domain": "ai-instructions"
-        },
-        {
-          "sourcePath": "nameFilterSettings",
-          "targetPath": "nameFilterSettings",
-          "preferredTargetFile": "meta.json",
-          "domain": "name-filter-settings"
-        }
-      ]
+      "file": "Cliche-Filter-Plus.json",
+      "sourcePath": "mods",
+      "targetPath": "mods",
+      "preferredTargetFile": "meta.json",
+      "domain": "mod-metadata"
     },
     {
-      "path": "Sonnet-Plus-Story-Instruction-Set.json",
-      "targets": [
-        {
-          "sourcePath": "mods",
-          "targetPath": "mods",
-          "preferredTargetFile": "meta.json",
-          "domain": "mod-metadata"
-        },
-        {
-          "sourcePath": "aiInstructions",
-          "targetPath": "aiInstructions",
-          "preferredTargetFile": "ai-instructions.json",
-          "domain": "ai-instructions"
-        },
-        {
-          "sourcePath": "narratorStyle",
-          "targetPath": "narratorStyle",
-          "preferredTargetFile": "meta.json",
-          "domain": "narrator-style"
-        }
-      ]
+      "file": "Cliche-Filter-Plus.json",
+      "sourcePath": "aiInstructions",
+      "targetPath": "aiInstructions",
+      "preferredTargetFile": "ai-instructions.json",
+      "domain": "ai-instructions"
+    },
+    {
+      "file": "Cliche-Filter-Plus.json",
+      "sourcePath": "nameFilterSettings",
+      "targetPath": "nameFilterSettings",
+      "preferredTargetFile": "meta.json",
+      "domain": "name-filter-settings"
+    },
+    {
+      "file": "Sonnet-Plus-Story-Instruction-Set.json",
+      "sourcePath": "mods",
+      "targetPath": "mods",
+      "preferredTargetFile": "meta.json",
+      "domain": "mod-metadata"
+    },
+    {
+      "file": "Sonnet-Plus-Story-Instruction-Set.json",
+      "sourcePath": "aiInstructions",
+      "targetPath": "aiInstructions",
+      "preferredTargetFile": "ai-instructions.json",
+      "domain": "ai-instructions"
+    },
+    {
+      "file": "Sonnet-Plus-Story-Instruction-Set.json",
+      "sourcePath": "narratorStyle",
+      "targetPath": "narratorStyle",
+      "preferredTargetFile": "meta.json",
+      "domain": "narrator-style"
     }
   ]
 }
