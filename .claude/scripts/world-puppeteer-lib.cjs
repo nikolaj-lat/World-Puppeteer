@@ -11,12 +11,14 @@ const TOOLCHAIN = {
 
 function findRepoRoot(startDir = process.cwd()) {
   let dir = path.resolve(startDir);
+  let markerFallback = null;
   while (true) {
-    if (fs.existsSync(path.join(dir, '.git')) || fs.existsSync(path.join(dir, '.world-puppeteer.json'))) {
+    if (fs.existsSync(path.join(dir, '.git'))) {
       return dir;
     }
+    if (!markerFallback && fs.existsSync(path.join(dir, MARKER_FILE))) markerFallback = dir;
     const parent = path.dirname(dir);
-    if (parent === dir) return path.resolve(startDir);
+    if (parent === dir) return markerFallback || path.resolve(startDir);
     dir = parent;
   }
 }
@@ -142,17 +144,28 @@ function validateProfileShape(profile, worldRoot) {
 }
 
 function resolveWorld(options = {}) {
-  const repoRoot = findRepoRoot(options.repoRoot || process.cwd());
-  const explicit = options.worldRoot ? path.resolve(options.worldRoot) : null;
+  const cwd = path.resolve(options.cwd || process.cwd());
+  const repoRoot = findRepoRoot(options.repoRoot || cwd);
+  const explicit = options.worldRoot
+    ? path.resolve(options.cwd || process.cwd(), options.worldRoot)
+    : null;
   let selected = null;
 
-  if (options.preferNearest !== false) {
-    selected = findNearestMarker(options.cwd || process.cwd());
-  }
-  if (!selected && explicit) {
+  if (explicit) {
     const markerPath = path.join(explicit, MARKER_FILE);
     if (!fs.existsSync(markerPath)) throw new Error(`No world marker at ${markerPath}`);
     selected = { root: explicit, markerPath, marker: readJson(markerPath) };
+  }
+  if (!selected) {
+    const nearest = options.preferNearest !== false ? findNearestMarker(cwd) : null;
+    if (
+      nearest &&
+      path.resolve(nearest.root) !== path.resolve(repoRoot) &&
+      isInside(cwd, nearest.root) &&
+      isInside(nearest.root, repoRoot)
+    ) {
+      selected = nearest;
+    }
   }
   if (!selected) {
     const markers = findMarkers(repoRoot);
