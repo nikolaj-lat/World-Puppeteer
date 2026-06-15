@@ -4,13 +4,11 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const {
-  validateAgainstSchemaFile,
-} = require('./mod-architecture.cjs');
-const {
   createDryRunPlan,
+  validateAgainstSchemaFile,
   validateAppliedMods,
   validateModRegistry,
-} = require('./mod-architecture-v2.cjs');
+} = require('./mod-architecture.cjs');
 const { findRepoRoot } = require('./world-puppeteer-lib.cjs');
 
 const repoRoot = findRepoRoot(__dirname);
@@ -131,6 +129,19 @@ assert(referencePlan.proposedOperations.every((operation) => operation.type === 
 const planSchema = path.join(validRoot, '.world-puppeteer', 'schemas', 'mod-integration-plan.schema.json');
 assert(validateAgainstSchemaFile(referencePlan, planSchema).length === 0, 'generated plan must validate against actual plan schema');
 assert(validateAgainstSchemaFile({ ...referencePlan, unexpected: true }, planSchema).some((error) => error.includes('additional property')), 'actual plan schema must reject unknown properties');
+const unsupportedSchemaPath = path.join(validRoot, '.world-puppeteer', 'schemas', 'unsupported.schema.json');
+writeJson(unsupportedSchemaPath, { type: 'object', oneOf: [{ required: ['id'] }] });
+assert(validateAgainstSchemaFile({}, unsupportedSchemaPath).some((error) => error.includes('unsupported schema keyword oneOf')), 'schema validator must fail closed on unsupported oneOf');
+
+const unknownPropertyRoot = fixtureRoot();
+writeMod(unknownPropertyRoot, 'one', { ...manifest('one'), unexpected: true });
+writeRegistry(unknownPropertyRoot, ['one']);
+assert(validateModRegistry(unknownPropertyRoot).errors.some((error) => error.includes('additional property')), 'mod schema must reject unknown manifest properties');
+
+const unsupportedPolicyRoot = fixtureRoot();
+writeMod(unsupportedPolicyRoot, 'one', manifest('one', { conflictPolicy: 'merge' }));
+writeRegistry(unsupportedPolicyRoot, ['one']);
+assert(validateModRegistry(unsupportedPolicyRoot).errors.some((error) => error.includes('unsupported conflictPolicy merge')), 'unsupported conflictPolicy merge must fail');
 
 const malformedRoot = fixtureRoot();
 const malformedDir = path.join(malformedRoot, '.world-puppeteer', 'mods', 'broken');

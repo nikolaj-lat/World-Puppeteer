@@ -154,10 +154,10 @@ function pathCategoryForWorld(candidate, world) {
 
 function isRepoToolingPath(candidate) {
   const repoToolingDirs = [
-    '.claude/scripts',
+    '.agents',
+    '.claude',
     '.codex',
-    '.world-puppeteer/mods',
-    '.world-puppeteer/schemas',
+    '.world-puppeteer',
   ].map((relative) => path.join(projectDir, relative));
   if (repoToolingDirs.some((dir) => isInside(candidate, dir))) return true;
   return ['AGENTS.md', '.world-puppeteer.json'].some((relative) => isSamePath(candidate, path.join(projectDir, relative)));
@@ -331,8 +331,16 @@ function main() {
     return;
   }
 
-  if (routes.repositoryTooling && !validateRepositoryTooling()) return;
-  if (routes.targets.some((entry) => entry.categories.has('metadata')) && !validateWorldPuppeteerMetadata()) return;
+  let metadataValidated = false;
+  if (routes.repositoryTooling) {
+    if (!validateRepositoryTooling()) return;
+    metadataValidated = true;
+  }
+  if (
+    !metadataValidated &&
+    routes.targets.some((entry) => entry.categories.has('metadata')) &&
+    !validateWorldPuppeteerMetadata()
+  ) return;
 
   for (const entry of routes.targets) {
     if (entry.categories.has('tabs') && !formatBuildValidateWorld(entry.world)) {

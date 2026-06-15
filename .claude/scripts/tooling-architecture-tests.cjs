@@ -11,8 +11,8 @@ const {
   runFormatProfile,
   runValidationProfile,
   resolveWorld,
-  validateModRegistry,
 } = require('./world-puppeteer-lib.cjs');
+const { validateModRegistry } = require('./mod-architecture.cjs');
 
 const repoRoot = findRepoRoot(process.cwd());
 const failures = [];
@@ -79,15 +79,28 @@ function modManifest(id, overrides = {}) {
     supportedModes: ['reference'],
     defaultMode: 'reference',
     applicationProfile: 'reference-only',
-    conflictPolicy: 'dry-run only',
+    conflictPolicy: 'stop',
     dependencies: [],
     optionalDependencies: [],
     files: ['payload.json'],
+    payloadMappings: [{
+      file: 'payload.json',
+      sourcePath: 'payload',
+      targetPath: 'payload',
+      preferredTargetFile: 'ai-instructions.json',
+      domain: 'ai-instructions',
+    }],
     ...overrides,
   };
 }
 
 function writeMod(root, dirName, manifest, payloads = { 'payload.json': { payload: true } }) {
+  const schemaSource = path.join(repoRoot, '.world-puppeteer', 'schemas', 'mod.schema.json');
+  const schemaTarget = path.join(root, '.world-puppeteer', 'schemas', 'mod.schema.json');
+  if (!fs.existsSync(schemaTarget)) {
+    fs.mkdirSync(path.dirname(schemaTarget), { recursive: true });
+    fs.copyFileSync(schemaSource, schemaTarget);
+  }
   const modDir = path.join(root, '.world-puppeteer', 'mods', dirName);
   fs.mkdirSync(modDir, { recursive: true });
   writeJson(path.join(modDir, 'mod.json'), manifest);
@@ -390,6 +403,21 @@ const rootToolingEdit = runHookDryRun({
 });
 assert(rootToolingEdit.repositoryTooling === true, 'repository tooling edits must route to architecture validation');
 
+for (const filePath of [
+  '.agents/skills/locations/SKILL.md',
+  '.claude/scripts/world-puppeteer-lib.cjs',
+  '.codex/agents/abilities.toml',
+  '.world-puppeteer/schemas/mod.schema.json',
+]) {
+  const routing = runHookDryRun({
+    hook_event_name: 'PostToolUse',
+    tool_name: 'Write',
+    tool_input: { file_path: filePath },
+  });
+  assert(routing.repositoryTooling === true, `${filePath} must route to repository tooling validation`);
+  assert(routing.validatedEditableWorlds.length === 0, `${filePath} must not trigger editable-world content validation`);
+}
+
 const nonWorldEdit = runHookDryRun({
   hook_event_name: 'PostToolUse',
   tool_name: 'Write',
@@ -440,6 +468,9 @@ assert(exitCodeForSpawnResult({ error: new Error('spawn failed'), status: null }
 const hxhTimelineSkill = read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', '.agents', 'skills', 'hxh-timeline', 'SKILL.md'));
 const hxhTimelineProfile = JSON.parse(read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', '.world-puppeteer', 'profiles', 'hxh-timeline.json')));
 const hxhOverride = read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', 'AGENTS.override.md'));
+const hxhCanonSkill = read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', '.agents', 'skills', 'hxh-canon', 'SKILL.md'));
+assert(hxhCanonSkill.includes('initial entry point'), 'HxH canon skill must preserve initial entry point wording');
+assert(hxhCanonSkill.includes('not a permanent visibility boundary'), 'HxH canon skill must preserve visibility boundary wording');
 for (const [label, text] of [['timeline skill', hxhTimelineSkill], ['HxH override', hxhOverride]]) {
   assert(text.includes('initial') && text.includes('current campaign phase') && text.includes('canon divergence'), `${label} must distinguish initial anchor, current campaign phase, and canon divergence`);
   assert(!text.includes('campaign present is Year 0'), `${label} must not freeze the campaign present at Year 0`);
