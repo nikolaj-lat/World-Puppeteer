@@ -1,13 +1,15 @@
 ---
 name: world-charts
-description: Generate a read-only Mermaid flowchart for trigger relationships in a resolved World-Puppeteer world.
+description: Generate a bounded output HTML Mermaid flowchart for trigger relationships in a resolved World-Puppeteer world.
 context: fork
 agent: world-charts
 ---
 
 # World Charts
 
-Generate a mermaid flowchart from triggers.json. Output to `stuff/trigger-chart.html`.
+Generate a mermaid flowchart from triggers.json. Output only to `<resolved-world>/stuff/trigger-chart.html`.
+
+This skill may create the resolved world's ignored `stuff/` directory if absent. It must not edit `tabs/`, markers, profiles, instructions, generated world JSON, other reports, or other worlds. After writing, run a diff/status check and fail if any unexpected path changed.
 
 ## Design Principles
 

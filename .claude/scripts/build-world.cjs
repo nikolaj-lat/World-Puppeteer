@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
 const path = require('path');
-const { resolveWorld } = require('./world-puppeteer-lib.cjs');
+const {
+  buildWorldSource,
+  resolveWorld,
+  runConfiguredBuild,
+} = require('./world-puppeteer-lib.cjs');
 
 function parseArgs(argv) {
   const args = {};
@@ -16,31 +19,9 @@ function parseArgs(argv) {
 
 function buildWorld(args = {}) {
   const resolved = resolveWorld({ worldRoot: args.worldRoot, cwd: args.worldRoot || process.cwd(), preferNearest: true });
-  if (!fs.existsSync(resolved.tabsPath)) throw new Error(`Tabs directory not found: ${resolved.tabsPath}`);
-
-  if (fs.existsSync(resolved.compiledOutputPath) && !args.noBackup) {
-    const backupDir = path.join(resolved.worldRoot, 'config-backups');
-    fs.mkdirSync(backupDir, { recursive: true });
-    const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const parsed = path.parse(resolved.compiledOutputPath);
-    fs.copyFileSync(resolved.compiledOutputPath, path.join(backupDir, `${parsed.name}-${stamp}${parsed.ext}`));
-  }
-
-  const result = {};
-  for (const file of fs.readdirSync(resolved.tabsPath).sort()) {
-    if (!file.endsWith('.json')) continue;
-    const data = JSON.parse(fs.readFileSync(path.join(resolved.tabsPath, file), 'utf8'));
-    const worldBackground = data.worldBackground;
-    delete data.worldBackground;
-    Object.assign(result, data);
-    if (worldBackground !== undefined) {
-      result.storySettings = result.storySettings || {};
-      result.storySettings.worldBackground = worldBackground;
-    }
-  }
-
-  fs.writeFileSync(resolved.compiledOutputPath, JSON.stringify(result, null, 2) + '\n');
-  return { resolved, topLevelKeys: Object.keys(result).length };
+  const build = runConfiguredBuild(resolved, { noBackup: args.noBackup });
+  if (build.status !== 0 || build.error) throw build.error || new Error(build.stderr || 'Build failed');
+  return { resolved, topLevelKeys: build.output.topLevelKeys };
 }
 
 try {
@@ -53,4 +34,4 @@ try {
   process.exit(1);
 }
 
-module.exports = { buildWorld };
+module.exports = { buildWorld, buildWorldSource };

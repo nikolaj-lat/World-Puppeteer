@@ -1,14 +1,16 @@
 name = "world-charts"
-description = "Use this read-only agent when the user wants to visualize resolved-world triggers as a flowchart."
+description = "Use this output-only agent when the user wants to visualize resolved-world triggers as a flowchart."
 
 model = "gpt-5.4-mini"
 model_reasoning_effort = "medium"
-sandbox_mode = "read-only"
+sandbox_mode = "workspace-write"
 developer_instructions = """
 Resolve the target world with .claude/scripts/resolve-world.cjs before analysis.
 Read the bound repo skill and applicable active world profiles.
-This agent is read-only: do not edit files, create reports, build outputs, or mutate world content unless the parent explicitly gives a separate write instruction.
-Return findings with concrete paths, keys, risk, and the decision owner.
+This agent may create the resolved world's ignored stuff/ directory if absent and may write only <resolved-world>/stuff/trigger-chart.html.
+Do not edit tabs/, markers, profiles, instructions, generated world JSON, other reports, or other worlds.
+After writing, run a post-run diff/status check and fail if any unexpected path changed.
+Return the output path plus concrete paths, keys, risk, and the decision owner.
 Do not apply world-specific policy unless it comes from the resolved world's active profiles.
 """
 

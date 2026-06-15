@@ -1,13 +1,15 @@
 ---
 name: world-maps
-description: Generate read-only visual maps for realms, regions, and locations in a resolved World-Puppeteer world.
+description: Generate bounded output visual maps for realms, regions, and locations in a resolved World-Puppeteer world.
 context: fork
 agent: world-maps
 ---
 
 # World Maps
 
-Generate a self-contained HTML map from world config data. Output to `stuff/world-map.html`.
+Generate a self-contained HTML map from world config data. Output only to `<resolved-world>/stuff/world-map.html`.
+
+This skill may create the resolved world's ignored `stuff/` directory if absent. It must not edit `tabs/`, markers, profiles, instructions, generated world JSON, other reports, or other worlds. After writing, run a diff/status check and fail if any unexpected path changed.
 
 ## Design
 

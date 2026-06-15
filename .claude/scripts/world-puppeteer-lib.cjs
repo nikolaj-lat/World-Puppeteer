@@ -1,12 +1,33 @@
 const fs = require('fs');
 const path = require('path');
+const { spawnSync } = require('child_process');
 
 const MARKER_FILE = '.world-puppeteer.json';
 const KNOWN_FORMATS = new Set(['voyage-v33']);
-const TOOLCHAIN = {
-  formatProfiles: new Set(['voyage-json-tabs']),
-  buildProfiles: new Set(['world-build-cjs']),
-  validationProfiles: new Set(['voyage-local-validator']),
+const TIMEOUT_MS = 120000;
+
+const FORMAT_PROFILES = {
+  'voyage-json-tabs': {
+    kind: 'node-script',
+    script: '.claude/scripts/pretty-print.js',
+    args: ({ world }) => [world.tabsPath],
+  },
+};
+
+const BUILD_PROFILES = {
+  'world-build-cjs': {
+    kind: 'internal-build',
+    args: ({ world }) => [world.worldRoot],
+  },
+};
+
+const VALIDATION_PROFILES = {
+  'voyage-local-validator': {
+    kind: 'node-script',
+    script: '.claude/scripts/validate.js',
+    args: ({ world }) => [world.tabsPath, '--json'],
+    output: 'json',
+  },
 };
 
 function findRepoRoot(startDir = process.cwd()) {
@@ -39,6 +60,18 @@ function isSafeRelativePath(value) {
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function registryIds(registry) {
+  return new Set(Object.keys(registry));
+}
+
+function knownToolchain() {
+  return {
+    formatProfiles: registryIds(FORMAT_PROFILES),
+    buildProfiles: registryIds(BUILD_PROFILES),
+    validationProfiles: registryIds(VALIDATION_PROFILES),
+  };
 }
 
 function findMarkers(rootDir) {
@@ -100,23 +133,141 @@ function validateMarkerShape(marker, worldRoot) {
   }
 
   const toolchain = marker.toolchain || {};
-  if (!TOOLCHAIN.formatProfiles.has(toolchain.formatProfile)) {
+  const toolchainIds = knownToolchain();
+  if (!toolchainIds.formatProfiles.has(toolchain.formatProfile)) {
     errors.push(`unknown formatProfile: ${toolchain.formatProfile}`);
   }
-  if (!TOOLCHAIN.buildProfiles.has(toolchain.buildProfile)) {
+  if (!toolchainIds.buildProfiles.has(toolchain.buildProfile)) {
     errors.push(`unknown buildProfile: ${toolchain.buildProfile}`);
   }
   if (!Array.isArray(toolchain.validationProfiles) || toolchain.validationProfiles.length === 0) {
     errors.push('toolchain.validationProfiles must be a non-empty array');
   } else {
     for (const profile of toolchain.validationProfiles) {
-      if (!TOOLCHAIN.validationProfiles.has(profile)) errors.push(`unknown validationProfile: ${profile}`);
+      if (!toolchainIds.validationProfiles.has(profile)) errors.push(`unknown validationProfile: ${profile}`);
     }
   }
   if (!Array.isArray(marker.activeProfiles)) errors.push('activeProfiles must be an array');
   if (!Array.isArray(marker.appliedMods)) errors.push('appliedMods must be an array');
 
   return { errors, warnings };
+}
+
+function normalizeSpawnResult(result) {
+  return {
+    status: result.status ?? (result.error ? 1 : 0),
+    stdout: result.stdout || '',
+    stderr: result.stderr || '',
+    error: result.error || null,
+  };
+}
+
+function defaultRunner(command, args, options = {}) {
+  return normalizeSpawnResult(spawnSync(command, args, {
+    cwd: options.cwd,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+    shell: false,
+    timeout: options.timeout || TIMEOUT_MS,
+  }));
+}
+
+function runNodeScript(repoRoot, scriptRelativePath, args = [], options = {}) {
+  return (options.runner || defaultRunner)(
+    process.execPath,
+    [path.resolve(repoRoot, scriptRelativePath), ...args],
+    { cwd: repoRoot, timeout: options.timeout || TIMEOUT_MS }
+  );
+}
+
+function buildWorldSource(world, options = {}) {
+  if (!fs.existsSync(world.tabsPath)) throw new Error(`Tabs directory not found: ${world.tabsPath}`);
+
+  if (fs.existsSync(world.compiledOutputPath) && !options.noBackup) {
+    const backupDir = path.join(world.worldRoot, 'config-backups');
+    fs.mkdirSync(backupDir, { recursive: true });
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const parsed = path.parse(world.compiledOutputPath);
+    fs.copyFileSync(world.compiledOutputPath, path.join(backupDir, `${parsed.name}-${stamp}${parsed.ext}`));
+  }
+
+  const result = {};
+  for (const file of fs.readdirSync(world.tabsPath).sort()) {
+    if (!file.endsWith('.json')) continue;
+    const data = JSON.parse(fs.readFileSync(path.join(world.tabsPath, file), 'utf8'));
+    const worldBackground = data.worldBackground;
+    delete data.worldBackground;
+    Object.assign(result, data);
+    if (worldBackground !== undefined) {
+      result.storySettings = result.storySettings || {};
+      result.storySettings.worldBackground = worldBackground;
+    }
+  }
+
+  fs.writeFileSync(world.compiledOutputPath, JSON.stringify(result, null, 2) + '\n');
+  return { topLevelKeys: Object.keys(result).length };
+}
+
+function runFormatProfile(profileId, world, options = {}) {
+  const profile = FORMAT_PROFILES[profileId];
+  if (!profile) throw new Error(`unknown formatProfile: ${profileId}`);
+  return runNodeScript(world.repoRoot, profile.script, profile.args({ world }), options);
+}
+
+function runBuildProfile(profileId, world, options = {}) {
+  const profile = BUILD_PROFILES[profileId];
+  if (!profile) throw new Error(`unknown buildProfile: ${profileId}`);
+  if (profile.kind !== 'internal-build') throw new Error(`unsupported build profile kind: ${profile.kind}`);
+  try {
+    const output = buildWorldSource(world, options);
+    return { status: 0, stdout: '', stderr: '', error: null, output };
+  } catch (error) {
+    return { status: 1, stdout: '', stderr: error.message, error };
+  }
+}
+
+function parseValidationOutput(profile, run) {
+  if (run.error || run.status !== 0) {
+    return {
+      ok: false,
+      errors: [{ path: 'validator', message: run.stderr || run.stdout || run.error?.message || 'validator failed' }],
+      warnings: [],
+      raw: run,
+    };
+  }
+  if (profile.output !== 'json') return { ok: true, errors: [], warnings: [], raw: run };
+  try {
+    const parsed = JSON.parse(run.stdout || '{}');
+    const errors = Array.isArray(parsed.errors) ? parsed.errors : [];
+    const warnings = Array.isArray(parsed.warnings) ? parsed.warnings : [];
+    return { ok: errors.length === 0, errors, warnings, raw: run, parsed };
+  } catch {
+    return {
+      ok: false,
+      errors: [{ path: 'validator', message: `validator did not return JSON: ${run.stdout}${run.stderr ? `\n${run.stderr}` : ''}` }],
+      warnings: [],
+      raw: run,
+    };
+  }
+}
+
+function runValidationProfile(profileId, world, options = {}) {
+  const profile = VALIDATION_PROFILES[profileId];
+  if (!profile) throw new Error(`unknown validationProfile: ${profileId}`);
+  const run = runNodeScript(world.repoRoot, profile.script, profile.args({ world }), options);
+  return { profileId, ...parseValidationOutput(profile, run) };
+}
+
+function runConfiguredFormat(world, options = {}) {
+  return runFormatProfile(world.marker.toolchain.formatProfile, world, options);
+}
+
+function runConfiguredBuild(world, options = {}) {
+  return runBuildProfile(world.marker.toolchain.buildProfile, world, options);
+}
+
+function runConfiguredValidations(world, options = {}) {
+  return world.marker.toolchain.validationProfiles.map((profileId) => runValidationProfile(profileId, world, options));
 }
 
 function readProfile(worldRoot, profileId) {
@@ -208,15 +359,26 @@ function resolveWorld(options = {}) {
 }
 
 module.exports = {
+  BUILD_PROFILES,
+  FORMAT_PROFILES,
+  VALIDATION_PROFILES,
   MARKER_FILE,
+  buildWorldSource,
   findRepoRoot,
   findMarkers,
   findNearestMarker,
   isInside,
   isSafeRelativePath,
+  knownToolchain,
   readJson,
   readProfile,
   resolveWorld,
+  runBuildProfile,
+  runConfiguredBuild,
+  runConfiguredFormat,
+  runConfiguredValidations,
+  runFormatProfile,
+  runValidationProfile,
   validateMarkerShape,
   validateProfileShape,
 };

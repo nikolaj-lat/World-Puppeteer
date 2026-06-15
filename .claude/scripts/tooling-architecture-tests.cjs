@@ -7,6 +7,9 @@ const { spawnSync } = require('child_process');
 const {
   findMarkers,
   findRepoRoot,
+  knownToolchain,
+  runFormatProfile,
+  runValidationProfile,
   resolveWorld,
 } = require('./world-puppeteer-lib.cjs');
 
@@ -147,9 +150,19 @@ assert(markers.some((m) => m.marker.role === 'editable'), 'expected one editable
 assert(markers.filter((m) => m.marker.role === 'editable').length === 1, 'expected exactly one editable world');
 
 const rootMarker = JSON.parse(read(path.join(repoRoot, '.world-puppeteer.json')));
+const rootAgents = read(path.join(repoRoot, 'AGENTS.md'));
 assert(rootMarker.paths.instructions === 'AGENTS.md', 'root marker must load AGENTS.md instructions');
 assert(!fs.existsSync(path.join(repoRoot, 'AGENTS.override.md')), 'root AGENTS.override.md must not mask AGENTS.md');
-assert(read(path.join(repoRoot, 'AGENTS.md')).includes('repository-root world is a reference world'), 'AGENTS.md must contain root reference-world protection');
+assert(rootAgents.includes('repository-root world is a reference world'), 'AGENTS.md must contain root reference-world protection');
+assert(rootAgents.includes('Discovery') && rootAgents.includes('Execution') && rootAgents.includes('Review'), 'AGENTS.md must document Discovery, Execution, and Review modes');
+assert(rootAgents.includes('Execution and Review must not reopen approved creative decisions'), 'AGENTS.md must prevent Execution/Review from reopening approved decisions');
+assert(rootAgents.includes('Before any tooling or world-content task is reported complete'), 'AGENTS.md must document mandatory completion validation');
+assert(rootAgents.includes('Arbitrary shell writes are not guaranteed to be detected by hooks'), 'AGENTS.md must document shell-write hook limitations');
+for (const forbidden of ['interview is perpetual', 'The Interview Never Ends', 'ALWAYS', 'Never stop interviewing']) {
+  assert(!rootAgents.includes(forbidden), `AGENTS.md must not contain perpetual-interview directive: ${forbidden}`);
+}
+const worldDirectorSkill = read(path.join(repoRoot, '.agents', 'skills', 'world-director', 'SKILL.md'));
+assert(worldDirectorSkill.includes('Interview Depth') && worldDirectorSkill.includes('Discovery only'), 'world-director must own detailed interview doctrine');
 
 const hxh = resolveWorld({ worldRoot: path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild'), preferNearest: false });
 assert(hxh.marker.paths.compiledOutput === 'HxH.json', 'HxH compiled output must be HxH.json');
@@ -228,10 +241,11 @@ const expected = {
   'mod-integrator': [highModel, 'high', 'workspace-write'],
   'world-director': ['gpt-5.5', 'high', 'workspace-write'],
   'world-capacity': [routineModel, 'medium', 'read-only'],
-  'world-charts': [routineModel, 'medium', 'read-only'],
-  'world-maps': [routineModel, 'medium', 'read-only'],
+  'world-charts': [routineModel, 'medium', 'workspace-write'],
+  'world-maps': [routineModel, 'medium', 'workspace-write'],
 };
-for (const agent of parseCodexAgentsWithToml()) {
+const parsedAgents = parseCodexAgentsWithToml();
+for (const agent of parsedAgents) {
   const name = agent.name;
   const exp = expected[name] || [routineModel, 'medium', 'workspace-write'];
   assert(agent.model === exp[0], `${agent.file}: expected model ${exp[0]}, got ${agent.model}`);
@@ -242,6 +256,16 @@ for (const agent of parseCodexAgentsWithToml()) {
     assert(typeof skillPath === 'string' && fs.existsSync(path.join(repoRoot, skillPath)), `${agent.file}: bound skill does not exist: ${skillPath}`);
   }
 }
+for (const utility of [
+  ['world-charts.toml', 'stuff/trigger-chart.html'],
+  ['world-maps.toml', 'stuff/world-map.html'],
+]) {
+  const text = read(path.join(repoRoot, '.codex', 'agents', utility[0]));
+  assert(text.includes(utility[1]), `${utility[0]} must name exact permitted output path`);
+  assert(text.includes('Do not edit tabs/'), `${utility[0]} must prohibit normal world-content writes`);
+  assert(text.includes('post-run diff/status check'), `${utility[0]} must require post-run status inspection`);
+}
+assert(parsedAgents.find((agent) => agent.name === 'world-capacity')?.sandbox_mode === 'read-only', 'world-capacity must remain read-only');
 
 const directWrite = runHookDryRun({
   hook_event_name: 'PostToolUse',
@@ -249,6 +273,14 @@ const directWrite = runHookDryRun({
   tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/tabs/npcs.json' },
 });
 assert(directWrite.validatedEditableWorlds.length === 1 && directWrite.validatedEditableWorlds[0] === 'hxh_hunter_exam_campaign_rebuild', 'direct write must validate only HxH');
+
+const nestedDirectWrite = runHookDryRun({
+  cwd: path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild'),
+  hook_event_name: 'PostToolUse',
+  tool_name: 'Write',
+  tool_input: { file_path: 'tabs/npcs.json' },
+});
+assert(nestedDirectWrite.validatedEditableWorlds.length === 1 && nestedDirectWrite.validatedEditableWorlds[0] === 'hxh_hunter_exam_campaign_rebuild', 'direct file_path must resolve relative to nested world cwd');
 
 const patchWrite = runHookDryRun({
   hook_event_name: 'PostToolUse',
@@ -267,6 +299,58 @@ assert(patchWrite.affectedWorlds.includes('hxh_hunter_exam_campaign_rebuild'), '
 assert(patchWrite.affectedWorlds.includes('templates'), 'apply_patch must detect template path');
 assert(patchWrite.validatedEditableWorlds.length === 1 && patchWrite.validatedEditableWorlds[0] === 'hxh_hunter_exam_campaign_rebuild', 'apply_patch must validate only affected editable worlds');
 
+const nestedPatchWrite = runHookDryRun({
+  cwd: path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild'),
+  hook_event_name: 'PostToolUse',
+  tool_name: 'apply_patch',
+  tool_input: {
+    command: [
+      '*** Begin Patch',
+      '*** Update File: tabs/npcs.json',
+      '*** End Patch',
+    ].join('\n'),
+  },
+});
+assert(nestedPatchWrite.affectedWorlds.length === 1 && nestedPatchWrite.affectedWorlds[0] === 'hxh_hunter_exam_campaign_rebuild', 'nested cwd apply_patch must validate only HxH');
+
+const absoluteSafeWrite = runHookDryRun({
+  hook_event_name: 'PostToolUse',
+  tool_name: 'Write',
+  tool_input: { file_path: path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', 'tabs', 'npcs.json') },
+});
+assert(absoluteSafeWrite.validatedEditableWorlds.length === 1 && absoluteSafeWrite.validatedEditableWorlds[0] === 'hxh_hunter_exam_campaign_rebuild', 'absolute in-repo path must be accepted');
+
+const outsideWrite = runHookDryRun({
+  hook_event_name: 'PostToolUse',
+  tool_name: 'Write',
+  tool_input: { file_path: path.join(os.tmpdir(), 'outside-world-puppeteer.json') },
+});
+assert(outsideWrite.affectedWorlds.length === 0 && outsideWrite.warnings.some((message) => message.includes('outside repository')), 'out-of-repository paths must be ignored with warning');
+
+const malformedCwdWrite = runHookDryRun({
+  cwd: path.join(os.tmpdir(), 'not-inside-world-puppeteer'),
+  hook_event_name: 'PostToolUse',
+  tool_name: 'Write',
+  tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/tabs/npcs.json' },
+});
+assert(malformedCwdWrite.validatedEditableWorlds.includes('hxh_hunter_exam_campaign_rebuild'), 'malformed cwd must fall back to repo root for repo-relative paths');
+assert(malformedCwdWrite.warnings.some((message) => message.includes('unsafe hook cwd')), 'malformed cwd must warn');
+
+const metadataEdit = runHookDryRun({
+  hook_event_name: 'PostToolUse',
+  tool_name: 'Write',
+  tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/.world-puppeteer/profiles/hxh-canon.json' },
+});
+assert(metadataEdit.metadataWorlds.includes('hxh_hunter_exam_campaign_rebuild'), 'world profile edits must route as metadata');
+assert(metadataEdit.validatedEditableWorlds.length === 0, 'metadata-only edits must not be reported as tabs validation');
+
+const rootToolingEdit = runHookDryRun({
+  hook_event_name: 'PostToolUse',
+  tool_name: 'Write',
+  tool_input: { file_path: '.claude/scripts/world-puppeteer-lib.cjs' },
+});
+assert(rootToolingEdit.repositoryTooling === true, 'repository tooling edits must route to architecture validation');
+
 const nonWorldEdit = runHookDryRun({
   hook_event_name: 'PostToolUse',
   tool_name: 'Write',
@@ -280,6 +364,39 @@ const unknownPaths = runHookDryRun({
   tool_input: { command: 'patch text without file headers' },
 });
 assert(unknownPaths.warnings.some((message) => message.includes('final world validation manually')), 'unknown hook paths must warn about final validation');
+
+const toolchain = knownToolchain();
+assert(toolchain.formatProfiles.has('voyage-json-tabs'), 'format registry must include voyage-json-tabs');
+assert(toolchain.buildProfiles.has('world-build-cjs'), 'build registry must include world-build-cjs');
+assert(toolchain.validationProfiles.has('voyage-local-validator'), 'validation registry must include voyage-local-validator');
+
+const mockFormatRuns = [];
+const formatRun = runFormatProfile('voyage-json-tabs', hxh, {
+  runner: (command, args) => {
+    mockFormatRuns.push({ command, args });
+    return { status: 0, stdout: '', stderr: '' };
+  },
+});
+assert(formatRun.status === 0, 'mock format dispatch must succeed');
+assert(mockFormatRuns[0].args.some((arg) => arg.endsWith(path.join('.claude', 'scripts', 'pretty-print.js'))), 'format dispatch must call pretty-print.js');
+assert(mockFormatRuns[0].args.includes(hxh.tabsPath), 'format dispatch must pass resolved tabs path');
+
+const mockValidationRuns = [];
+const validationRun = runValidationProfile('voyage-local-validator', hxh, {
+  runner: (command, args) => {
+    mockValidationRuns.push({ command, args });
+    return { status: 0, stdout: '{"errors":[],"warnings":[]}', stderr: '' };
+  },
+});
+assert(validationRun.ok === true, 'mock validation dispatch must parse success JSON');
+assert(mockValidationRuns[0].args.some((arg) => arg.endsWith(path.join('.claude', 'scripts', 'validate.js'))), 'validation dispatch must call validate.js');
+assert(mockValidationRuns[0].args.includes(hxh.tabsPath) && mockValidationRuns[0].args.includes('--json'), 'validation dispatch must pass resolved tabs path and --json');
+
+const { exitCodeForSpawnResult } = require(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', 'build.cjs'));
+assert(exitCodeForSpawnResult({ status: 0 }) === 0, 'build wrapper must preserve zero exit');
+assert(exitCodeForSpawnResult({ status: 7 }) === 7, 'build wrapper must preserve non-zero exit');
+assert(exitCodeForSpawnResult({ status: null }) === 1, 'build wrapper must treat null status as failure');
+assert(exitCodeForSpawnResult({ error: new Error('spawn failed'), status: null }) === 1, 'build wrapper must treat spawn error as failure');
 
 const hxhTimelineSkill = read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', '.agents', 'skills', 'hxh-timeline', 'SKILL.md'));
 const hxhTimelineProfile = JSON.parse(read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', '.world-puppeteer', 'profiles', 'hxh-timeline.json')));

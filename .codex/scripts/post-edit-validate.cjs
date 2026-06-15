@@ -14,6 +14,9 @@ const {
   findMarkers,
   isInside,
   resolveWorld,
+  runConfiguredBuild,
+  runConfiguredFormat,
+  runConfiguredValidations,
 } = require('../../.claude/scripts/world-puppeteer-lib.cjs');
 
 const projectDir = path.join(__dirname, '..', '..');
@@ -97,11 +100,29 @@ function collectReliablePathValues(hookData) {
   return { paths: unique, reliable: unique.length > 0 };
 }
 
-function absoluteCandidate(candidate) {
+function hookWorkingDirectory(hookData, warnings) {
+  if (!isPlainObject(hookData)) return projectDir;
+  for (const key of ['cwd', 'workingDirectory', 'working_directory', 'currentWorkingDirectory']) {
+    if (typeof hookData[key] !== 'string' || hookData[key].trim() === '') continue;
+    const candidate = path.isAbsolute(hookData[key])
+      ? path.resolve(hookData[key])
+      : path.resolve(projectDir, hookData[key]);
+    if (isInside(candidate, projectDir) && fs.existsSync(candidate)) return candidate;
+    warning(`Ignoring unsafe hook cwd: ${hookData[key]}`, warnings);
+  }
+  return projectDir;
+}
+
+function absoluteCandidate(candidate, cwd, warnings) {
   if (!candidate || typeof candidate !== 'string') return false;
-  return path.isAbsolute(candidate)
+  const resolved = path.isAbsolute(candidate)
     ? path.resolve(candidate)
-    : path.resolve(projectDir, candidate);
+    : path.resolve(cwd, candidate);
+  if (!isInside(resolved, projectDir)) {
+    warning(`Ignoring changed path outside repository: ${candidate}`, warnings);
+    return false;
+  }
+  return resolved;
 }
 
 function warning(message, warnings) {
@@ -109,31 +130,84 @@ function warning(message, warnings) {
   console.error(`WARNING: ${message}`);
 }
 
-function affectedWorldsForPaths(pathCandidates, worlds) {
+function isSamePath(a, b) {
+  return path.resolve(a) === path.resolve(b);
+}
+
+function pathCategoryForWorld(candidate, world) {
+  if (isInside(candidate, world.tabsPath)) return 'tabs';
+  if (isSamePath(candidate, world.markerPath)) return 'metadata';
+  const worldMetadataDirs = [
+    path.join(world.worldRoot, '.world-puppeteer', 'profiles'),
+    path.join(world.worldRoot, '.world-puppeteer', 'schemas'),
+    path.join(world.worldRoot, '.world-puppeteer', 'tooling'),
+    path.join(world.worldRoot, '.agents', 'skills'),
+    path.join(world.worldRoot, '.claude', 'skills'),
+  ];
+  if (worldMetadataDirs.some((dir) => isInside(candidate, dir))) return 'metadata';
+  for (const instructionFile of ['AGENTS.override.md', 'CLAUDE.override.md']) {
+    if (isSamePath(candidate, path.join(world.worldRoot, instructionFile))) return 'metadata';
+  }
+  if (isSamePath(candidate, world.instructionsPath)) return 'metadata';
+  return null;
+}
+
+function isRepoToolingPath(candidate) {
+  const repoToolingDirs = [
+    '.claude/scripts',
+    '.codex',
+    '.world-puppeteer/mods',
+    '.world-puppeteer/schemas',
+  ].map((relative) => path.join(projectDir, relative));
+  if (repoToolingDirs.some((dir) => isInside(candidate, dir))) return true;
+  return ['AGENTS.md', '.world-puppeteer.json'].some((relative) => isSamePath(candidate, path.join(projectDir, relative)));
+}
+
+function affectedRoutesForPaths(pathCandidates, worlds) {
   const affected = new Map();
+  let repositoryTooling = false;
 
   for (const world of worlds) {
     const resolved = resolveWorld({ worldRoot: world.root, cwd: world.root, preferNearest: false });
     for (const candidate of pathCandidates) {
-      if (isInside(candidate, resolved.tabsPath)) {
-        affected.set(resolved.worldRoot, resolved);
+      const category = pathCategoryForWorld(candidate, resolved);
+      if (category) {
+        const existing = affected.get(resolved.worldRoot) || { world: resolved, categories: new Set() };
+        existing.categories.add(category);
+        affected.set(resolved.worldRoot, existing);
       }
     }
   }
 
-  return Array.from(affected.values());
+  for (const candidate of pathCandidates) {
+    if (isRepoToolingPath(candidate)) repositoryTooling = true;
+  }
+
+  return {
+    targets: Array.from(affected.values()),
+    repositoryTooling,
+  };
+}
+
+function affectedWorldsForPaths(pathCandidates, worlds) {
+  return affectedRoutesForPaths(pathCandidates, worlds).targets.map((entry) => entry.world);
 }
 
 function relativeWorld(world) {
   return path.relative(projectDir, world.worldRoot) || '.';
 }
 
-function dryRunOutput(targets, warnings) {
+function dryRunOutput(routes, warnings) {
+  const targets = routes.targets || [];
   console.log(JSON.stringify({
-    affectedWorlds: targets.map((world) => relativeWorld(world)),
+    affectedWorlds: targets.map((entry) => relativeWorld(entry.world)),
     validatedEditableWorlds: targets
-      .filter((world) => world.marker.role === 'editable')
-      .map((world) => relativeWorld(world)),
+      .filter((entry) => entry.world.marker.role === 'editable' && entry.categories.has('tabs'))
+      .map((entry) => relativeWorld(entry.world)),
+    metadataWorlds: targets
+      .filter((entry) => entry.categories.has('metadata'))
+      .map((entry) => relativeWorld(entry.world)),
+    repositoryTooling: !!routes.repositoryTooling,
     warnings,
   }, null, 2));
 }
@@ -159,47 +233,33 @@ function runNodeScript(scriptRelativePath, args = [], cwd = projectDir) {
   };
 }
 
-function validateWorld(world) {
+function formatBuildValidateWorld(world) {
   const relative = relativeWorld(world);
   if (world.marker.role !== 'editable') {
     block(`WORLD WRITE BLOCKED - ${relative} is role=${world.marker.role}. Ordinary content edits are not allowed.`);
     return false;
   }
 
-  const pretty = runNodeScript('.claude/scripts/pretty-print.js', [world.tabsPath]);
+  const pretty = runConfiguredFormat(world);
   if (pretty.status !== 0 || pretty.error) {
     const detail = pretty.stdout || pretty.stderr || pretty.error?.message || 'Unknown pretty-print failure';
     block(`JSON PARSE ERROR in ${relative}:\n${detail}\n\nCheck for missing commas, brackets, or quotes.`);
     return false;
   }
 
-  const build = runNodeScript('.claude/scripts/build-world.cjs', ['--world', world.worldRoot]);
+  const build = runConfiguredBuild(world);
   if (build.status !== 0 || build.error) {
     const detail = build.stdout || build.stderr || build.error?.message || 'Unknown build failure';
     block(`BUILD ERROR in ${relative}:\n${detail}`);
     return false;
   }
 
-  const validationRun = runNodeScript('.claude/scripts/validate.js', [world.tabsPath, '--json']);
-  if (validationRun.status !== 0 || validationRun.error) {
-    const detail = validationRun.stdout || validationRun.stderr || validationRun.error?.message || 'Unknown validator failure';
-    block(`VALIDATION TOOL ERROR in ${relative}:\n${detail}`);
-    return false;
-  }
-
-  let validation;
-  try {
-    validation = JSON.parse(validationRun.stdout || '{}');
-  } catch {
-    block(`VALIDATION TOOL ERROR in ${relative} - validate.js did not return JSON:\n${validationRun.stdout}\n${validationRun.stderr}`);
-    return false;
-  }
-
-  const errors = Array.isArray(validation.errors) ? validation.errors : [];
-  if (errors.length > 0) {
+  const validationRuns = runConfiguredValidations(world);
+  const errors = validationRuns.flatMap((run) => run.errors.map((error) => ({ ...error, profileId: run.profileId })));
+  if (validationRuns.some((run) => !run.ok) || errors.length > 0) {
     const errorMessages = errors
       .map((error) => {
-        let message = `${error.path || 'unknown'}: ${error.message || 'Unknown validation error'}`;
+        let message = `[${error.profileId}] ${error.path || 'unknown'}: ${error.message || 'Unknown validation error'}`;
         if (error.expected) message += ` (valid: ${error.expected})`;
         if (error.actual) message += ` (got: ${error.actual})`;
         return message;
@@ -213,38 +273,69 @@ function validateWorld(world) {
   return true;
 }
 
+function validateWorldPuppeteerMetadata() {
+  const validation = runNodeScript('.claude/scripts/validate-world-puppeteer.cjs');
+  if (validation.status !== 0 || validation.error) {
+    const detail = validation.stdout || validation.stderr || validation.error?.message || 'Unknown World-Puppeteer validation failure';
+    block(`WORLD-PUPPETEER METADATA ERROR:\n${detail}`);
+    return false;
+  }
+  return true;
+}
+
+function validateRepositoryTooling() {
+  const tests = runNodeScript('.claude/scripts/tooling-architecture-tests.cjs');
+  if (tests.status !== 0 || tests.error) {
+    const detail = tests.stdout || tests.stderr || tests.error?.message || 'Unknown tooling architecture test failure';
+    block(`TOOLING ARCHITECTURE ERROR:\n${detail}`);
+    return false;
+  }
+  return validateWorldPuppeteerMetadata();
+}
+
 function main() {
   const warnings = [];
   const { data: hookData, parseError } = readHookInput();
   if (parseError) {
     warning('Post-edit hook could not parse Codex hook payload; run final world validation manually.', warnings);
-    if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') dryRunOutput([], warnings);
+    if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') dryRunOutput({ targets: [], repositoryTooling: false }, warnings);
     return;
   }
 
   const collected = collectReliablePathValues(hookData);
   if (!collected.reliable) {
     warning('Post-edit hook could not recover reliable changed paths; run final world validation manually.', warnings);
-    if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') dryRunOutput([], warnings);
+    if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') dryRunOutput({ targets: [], repositoryTooling: false }, warnings);
     return;
   }
 
-  const pathCandidates = collected.paths.map(absoluteCandidate).filter(Boolean);
+  const safeCwd = hookWorkingDirectory(hookData, warnings);
+  const seenPaths = new Set();
+  const pathCandidates = [];
+  for (const value of collected.paths) {
+    const candidate = absoluteCandidate(value, safeCwd, warnings);
+    if (!candidate || seenPaths.has(candidate)) continue;
+    seenPaths.add(candidate);
+    pathCandidates.push(candidate);
+  }
   const worlds = findMarkers(projectDir);
-  const targets = affectedWorldsForPaths(pathCandidates, worlds);
+  const routes = affectedRoutesForPaths(pathCandidates, worlds);
 
-  if (targets.length === 0) {
-    if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') dryRunOutput([], warnings);
+  if (routes.targets.length === 0 && !routes.repositoryTooling) {
+    if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') dryRunOutput(routes, warnings);
     return;
   }
 
   if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') {
-    dryRunOutput(targets, warnings);
+    dryRunOutput(routes, warnings);
     return;
   }
 
-  for (const world of targets) {
-    if (!validateWorld(world)) {
+  if (routes.repositoryTooling && !validateRepositoryTooling()) return;
+  if (routes.targets.some((entry) => entry.categories.has('metadata')) && !validateWorldPuppeteerMetadata()) return;
+
+  for (const entry of routes.targets) {
+    if (entry.categories.has('tabs') && !formatBuildValidateWorld(entry.world)) {
       return;
     }
   }
@@ -254,6 +345,9 @@ if (require.main === module) main();
 
 module.exports = {
   affectedWorldsForPaths,
+  affectedRoutesForPaths,
+  absoluteCandidate,
   collectReliablePathValues,
+  hookWorkingDirectory,
   parseApplyPatchPaths,
 };
