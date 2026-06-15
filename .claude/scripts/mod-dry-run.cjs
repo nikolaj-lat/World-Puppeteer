@@ -8,11 +8,9 @@ const {
   resolveWorld,
 } = require('./world-puppeteer-lib.cjs');
 const {
+  createDryRunPlan,
   validateAgainstSchemaFile,
 } = require('./mod-architecture.cjs');
-const {
-  createDryRunPlan,
-} = require('./mod-architecture-v2.cjs');
 
 function parseArgs(argv) {
   const args = { mode: null };
