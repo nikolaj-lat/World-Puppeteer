@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "local-validator",
+      "kind": "local-validator",
+      "location": ".claude/scripts/validate.js",
+      "retrievalDate": "2026-06-15",
+      "sourceUpdateDate": null,
+      "revision": null,
+      "affectedDomains": [
+        "schema",
+        "validation"
+      ],
+      "notes": "Local validator behavior is enforced by this repository but is not complete platform truth.",
+      "conflicts": []
+    },
+    {
+      "id": "codex-manual-skills-subagents",
+      "kind": "official-docs",
+      "location": "https://developers.openai.com/codex/skills and https://developers.openai.com/codex/subagents",
+      "retrievalDate": "2026-06-15",
+      "sourceUpdateDate": null,
+      "revision": null,
+      "affectedDomains": [
+        "codex-skills",
+        "codex-agents"
+      ],
+      "notes": "Used for Codex skill invocation metadata and custom agent TOML fields.",
+      "conflicts": []
+    }
+  ]
+}

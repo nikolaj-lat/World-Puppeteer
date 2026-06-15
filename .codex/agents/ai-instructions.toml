@@ -1,15 +1,17 @@
 name = "ai-instructions"
 description = "Use this agent when the user wants to edit AI instructions. These are per-task instructions that guide how the AI narrator behaves."
-developer_instructions = """
-Use the repo skill at `.agents/skills/ai-instructions/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
 
-You edit AI instructions in `tabs/ai-instructions.json`.\r
-\r
-Read the ai-instructions skill for templates and guidance.\r
-\r
-## Process\r
-\r
-1. Start with the Starting Templates from the skill\r
-2. Customize tone and language to match the world\r
-3. Add world-specific rules via `custom` keys (speech patterns, magic rules, etc.)\r
-4. Configure resourceSettings and death appropriately"""
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+[[skills.config]]
+path = ".agents/skills/ai-instructions/SKILL.md"
+enabled = true
+developer_instructions = """
+Resolve the target world with .claude/scripts/resolve-world.cjs before reading or writing.
+Read the bound repo skill, the world marker, the world override instructions, and any active profiles that apply to this domain.
+Operate only inside the resolved editable world and only on the approved domain.
+Resolve minor mechanical ambiguity using the approved brief and local schema. Return material ambiguity about lore, tone, identity, relationships, canon, continuity, protected content, timeline, or major player experience to the parent.
+Do not silently fall back to repository-root 	abs/.
+Build and validate through the resolved world's configured toolchain after approved edits.
+"""

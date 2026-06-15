@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-puppeteer.local/schemas/world-marker.schema.json",
+  "title": "World Puppeteer Marker",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "role",
+    "format",
+    "paths",
+    "toolchain",
+    "activeProfiles",
+    "appliedMods"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "role": { "enum": ["editable", "reference", "template"] },
+    "format": { "type": "string", "minLength": 1 },
+    "paths": {
+      "type": "object",
+      "required": ["tabs", "compiledOutput", "instructions"],
+      "additionalProperties": false,
+      "properties": {
+        "tabs": { "type": "string", "minLength": 1 },
+        "compiledOutput": { "type": "string", "pattern": "\\.json$" },
+        "instructions": { "type": "string", "minLength": 1 }
+      }
+    },
+    "toolchain": {
+      "type": "object",
+      "required": ["formatProfile", "buildProfile", "validationProfiles"],
+      "additionalProperties": false,
+      "properties": {
+        "formatProfile": { "type": "string", "minLength": 1 },
+        "buildProfile": { "type": "string", "minLength": 1 },
+        "validationProfiles": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    },
+    "activeProfiles": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+      "uniqueItems": true
+    },
+    "appliedMods": {
+      "type": "array",
+      "items": { "type": "object" }
+    }
+  }
+}

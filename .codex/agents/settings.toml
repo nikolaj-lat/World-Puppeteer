@@ -1,8 +1,17 @@
 name = "settings"
 description = "Use this agent when the user wants to edit game settings. This includes attribute settings, skill settings, combat settings, location settings, item settings, and other configuration."
-developer_instructions = """
-Use the repo skill at `.agents/skills/settings/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
 
-You edit configuration in `tabs/settings.json`.\r
-\r
-Read the settings skill for schema guidance."""
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+[[skills.config]]
+path = ".agents/skills/settings/SKILL.md"
+enabled = true
+developer_instructions = """
+Resolve the target world with .claude/scripts/resolve-world.cjs before reading or writing.
+Read the bound repo skill, the world marker, the world override instructions, and any active profiles that apply to this domain.
+Operate only inside the resolved editable world and only on the approved domain.
+Resolve minor mechanical ambiguity using the approved brief and local schema. Return material ambiguity about lore, tone, identity, relationships, canon, continuity, protected content, timeline, or major player experience to the parent.
+Do not silently fall back to repository-root 	abs/.
+Build and validate through the resolved world's configured toolchain after approved edits.
+"""

@@ -10,9 +10,14 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const {
+  findMarkers,
+  isInside,
+  resolveWorld,
+} = require('../../.claude/scripts/world-puppeteer-lib.cjs');
 
 const projectDir = path.join(__dirname, '..', '..');
-const tabsDir = path.join(projectDir, 'tabs');
+const TIMEOUT_MS = 120000;
 
 function readHookInput() {
   try {
@@ -48,19 +53,18 @@ function collectPathValues(value, out = []) {
   return out;
 }
 
-function isTabsPath(candidate) {
+function absoluteCandidate(candidate) {
   if (!candidate || typeof candidate !== 'string') return false;
-  const absolute = path.resolve(projectDir, candidate);
-  const tabsAbsolute = path.resolve(tabsDir);
-  return absolute === tabsAbsolute || absolute.startsWith(tabsAbsolute + path.sep);
+  return path.resolve(projectDir, candidate);
 }
 
-function runNodeScript(scriptRelativePath, args = []) {
+function runNodeScript(scriptRelativePath, args = [], cwd = projectDir) {
   const result = spawnSync('node', [scriptRelativePath, ...args], {
-    cwd: projectDir,
+    cwd,
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
     shell: false,
+    timeout: TIMEOUT_MS,
   });
 
   return {
@@ -77,48 +81,72 @@ function block(reason) {
 
 function main() {
   const hookData = readHookInput();
-  const pathCandidates = collectPathValues(hookData);
+  const pathCandidates = collectPathValues(hookData).map(absoluteCandidate).filter(Boolean);
+  const worlds = findMarkers(projectDir);
+  const affected = new Map();
 
-  // If Codex supplies edited paths, avoid work for unrelated files. If it
-  // doesn't, validate anyway so apply_patch-style edits do not bypass checks.
-  if (pathCandidates.length > 0 && !pathCandidates.some(isTabsPath)) {
+  for (const world of worlds) {
+    const resolved = resolveWorld({ worldRoot: world.root, cwd: world.root, preferNearest: false });
+    for (const candidate of pathCandidates) {
+      if (isInside(candidate, resolved.tabsPath)) {
+        affected.set(resolved.worldRoot, resolved);
+      }
+    }
+  }
+
+  if (pathCandidates.length > 0 && affected.size === 0) {
     return;
   }
 
-  const pretty = runNodeScript('.claude/scripts/pretty-print.js');
-  if (pretty.status !== 0 || pretty.error) {
-    const detail = pretty.stdout || pretty.stderr || pretty.error?.message || 'Unknown pretty-print failure';
-    block(`JSON PARSE ERROR - fix malformed JSON before continuing:\n${detail}\n\nCheck for missing commas, brackets, or quotes.`);
-    return;
+  const targets = affected.size > 0
+    ? Array.from(affected.values())
+    : [resolveWorld({ cwd: process.cwd() })];
+
+  for (const world of targets) {
+    const relativeWorld = path.relative(projectDir, world.worldRoot) || '.';
+    if (world.marker.role !== 'editable') {
+      block(`WORLD WRITE BLOCKED - ${relativeWorld} is role=${world.marker.role}. Ordinary content edits are not allowed.`);
+      return;
+    }
+
+    const pretty = runNodeScript('.claude/scripts/pretty-print.js', [world.tabsPath]);
+    if (pretty.status !== 0 || pretty.error) {
+      const detail = pretty.stdout || pretty.stderr || pretty.error?.message || 'Unknown pretty-print failure';
+      block(`JSON PARSE ERROR in ${relativeWorld}:\n${detail}\n\nCheck for missing commas, brackets, or quotes.`);
+      return;
+    }
+
+    const build = runNodeScript('.claude/scripts/build-world.cjs', ['--world', world.worldRoot]);
+    if (build.status !== 0 || build.error) {
+      const detail = build.stdout || build.stderr || build.error?.message || 'Unknown build failure';
+      block(`BUILD ERROR in ${relativeWorld}:\n${detail}`);
+      return;
+    }
+
+    const validationRun = runNodeScript('.claude/scripts/validate.js', [world.tabsPath, '--json']);
+    let validation;
+    try {
+      validation = JSON.parse(validationRun.stdout || '{}');
+    } catch {
+      block(`VALIDATION TOOL ERROR in ${relativeWorld} - validate.js did not return JSON:\n${validationRun.stdout}\n${validationRun.stderr}`);
+      return;
+    }
+
+    const errors = Array.isArray(validation.errors) ? validation.errors : [];
+    if (validationRun.status !== 0 || errors.length > 0) {
+      const errorMessages = errors
+        .map((error) => {
+          let message = `${error.path || 'unknown'}: ${error.message || 'Unknown validation error'}`;
+          if (error.expected) message += ` (valid: ${error.expected})`;
+          if (error.actual) message += ` (got: ${error.actual})`;
+          return message;
+        })
+        .join('\n');
+
+      block(`VALIDATION ERRORS in ${relativeWorld}:\n${errorMessages || validationRun.stderr}`);
+      return;
+    }
   }
-
-  const validationRun = runNodeScript('.claude/scripts/validate.js', ['--json']);
-  let validation;
-  try {
-    validation = JSON.parse(validationRun.stdout || '{}');
-  } catch {
-    block(`VALIDATION TOOL ERROR - validate.js did not return JSON:\n${validationRun.stdout}\n${validationRun.stderr}`);
-    return;
-  }
-
-  const errors = Array.isArray(validation.errors) ? validation.errors : [];
-  if (errors.length === 0) {
-    runNodeScript('.claude/scripts/build.js');
-    return;
-  }
-
-  const errorMessages = errors
-    .map((error) => {
-      let message = `${error.path || 'unknown'}: ${error.message || 'Unknown validation error'}`;
-      if (error.expected) message += ` (valid: ${error.expected})`;
-      if (error.actual) message += ` (got: ${error.actual})`;
-      return message;
-    })
-    .join('\n');
-
-  block(
-    `VALIDATION ERRORS:\n${errorMessages}\n\nFix the invalid values or use the matching Codex project skill/custom agent for the affected tab.`
-  );
 }
 
 main();

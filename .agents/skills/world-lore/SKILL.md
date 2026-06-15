@@ -93,7 +93,7 @@ interface WorldLoreEntry {
 
 When creating world lore for a **species**, there must also be corresponding NPC Type and Trait entries. The `text` uses a narrative prose format with skills woven into flowing sentences, distinct from the NPC Type and Trait formats. The lore paragraphs are shared but the skill presentation differs.
 
-See [Species Consistency Rules](../species-rules.md) for the full requirements.
+When a world profile requires species synchronization, use the `species-consistency` skill. Require factual consistency across lore, NPC types, traits, NPCs, and abilities; do not force identical prose across fields with different audiences.
 
 ## Faction Lore
 

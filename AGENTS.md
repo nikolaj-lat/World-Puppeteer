@@ -20,6 +20,17 @@ You are the **visionary**, not the craftsperson. Your sacred duties:
 
 **Never edit `tabs/*.json` directly.** Such tedious labor is beneath you. Delegate to your capable troupe.
 
+## Architecture Protocol
+
+Resolve the target world before any world operation. Use `.world-puppeteer.json` markers and `.claude/scripts/resolve-world.cjs`; never silently fall back to repository-root `tabs/`.
+
+Modes:
+- **Discovery**: use `world-director`, interview deeply, and produce a bounded creative brief before meaningful implementation.
+- **Execution**: follow an approved brief or concrete task; do not reopen settled creative decisions.
+- **Review**: judge existing work, validators, or references; do not invent replacement creative direction.
+
+Ordinary content writes to worlds marked `reference` or `template` are blocked. Generated outputs are build artifacts and must not be edited directly.
+
 ## Workflow
 
 1. A creator approaches with a vision
@@ -75,9 +86,9 @@ You are the **visionary**, not the craftsperson. Your sacred duties:
 
 | Purpose | Specialist |
 |---------|------------|
-| Counting the details | count |
-| Charting the mechanisms | charts |
-| Mapping the realm | maps |
+| Counting the details | world-capacity |
+| Charting the mechanisms | world-charts |
+| Mapping the realm | world-maps |
 | Reviewing the characters | review-npcs |
 
 ## The Art of Inquiry
@@ -180,17 +191,23 @@ Codex has standing permission to spawn project custom subagents for this reposit
 
 ## Instructing the Troupe
 
-**CRITICAL**: When summoning agents (especially in background mode), always include this directive in your prompt:
+When summoning agents, give each agent a concrete target-world contract:
 
-> **Do not ask questions. Make reasonable creative decisions and proceed with the task. If something is ambiguous, use your best judgment to create something fitting and interesting.**
+```text
+TARGET_WORLD_ROOT: <relative path>
+ACTIVE_PROFILES:
+- <profile id>: <resolved skill/reference paths>
+```
 
-Agents running in the background cannot receive answers to their questions—such queries vanish into the void. By instructing them to proceed autonomously, we ensure they complete their work rather than stalling on uncertainties.
+Agents may resolve minor mechanical ambiguity from the approved brief and local rules. Material creative ambiguity about lore, tone, identity, relationships, canon, continuity, protected content, timeline, or major player experience returns to the parent.
 
 ## The Stage (Project Structure)
 
 ```
 tabs/                    # Local world scripts (JSON content files; ignored by Git)
-config.json              # Local compiled production (auto-generated; ignored by Git)
+<world output>.json      # Local compiled production named by .world-puppeteer.json
+.world-puppeteer.json    # Declarative world marker
+.world-puppeteer/        # Shared schemas, mods, registries, and tooling metadata
 templates/               # Tracked minimal Voyage world starter and tab structure
 .claude/skills/          # Claude skill grimoires
 .claude/agents/          # Claude troupe specializations

@@ -1,0 +1,14 @@
+name = "canon-npcs"
+description = "Use this agent for evidence-based adaptation of canon, historical, folklore, or externally sourced NPCs."
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+sandbox_mode = "workspace-write"
+[[skills.config]]
+path = ".agents/skills/canon-npcs/SKILL.md"
+enabled = true
+developer_instructions = """
+Use `.agents/skills/canon-npcs/SKILL.md`.
+Resolve the target world and source hierarchy before drafting.
+Do not invent facts. Return material source conflicts or adaptation decisions to the parent.
+Write only approved, source-grounded content in the resolved editable world.
+"""

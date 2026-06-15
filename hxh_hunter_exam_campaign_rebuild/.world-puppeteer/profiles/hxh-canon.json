@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "hxh-canon",
+  "name": "Hunter x Hunter Canon",
+  "description": "Canon-source and adaptation rules for the active Hunter x Hunter world.",
+  "skills": [
+    "hxh-canon"
+  ],
+  "appliesTo": [
+    "npcs",
+    "npc-types",
+    "locations",
+    "regions",
+    "realms",
+    "factions",
+    "world-lore",
+    "quests",
+    "story-starts",
+    "ai-instructions"
+  ],
+  "required": true
+}

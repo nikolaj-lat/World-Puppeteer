@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "meteion-story-instructions",
+  "name": "Meteion Story Instructions",
+  "version": "1.0.0",
+  "description": "Reference instruction-set material for story style and cliche filtering.",
+  "compatibleFormats": [
+    "voyage-v33"
+  ],
+  "domains": [
+    "ai-instructions"
+  ],
+  "supportedModes": [
+    "reference"
+  ],
+  "defaultMode": "reference",
+  "applicationProfile": "reference-only",
+  "conflictPolicy": "dry-run must report any overlapping instruction section before application",
+  "dependencies": [],
+  "optionalDependencies": []
+}

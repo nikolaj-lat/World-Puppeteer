@@ -1,98 +1,22 @@
 ---
 name: npc-type-review
-description: Guidelines for reviewing and refining NPC type definitions
+description: Read-only review of NPC type definitions for schema correctness, mechanical arrays, narrative role, and cross-entry consistency.
 context: fork
 agent: npc-type-review
 ---
 
 # NPC Type Review
 
-Review and refine NPC type definitions in `tabs/npc-types.json`.
+Review only. Do not edit reviewed content directly.
 
-## Review Process
+## Check
 
-Work through NPC types systematically, one at a time:
+- Required fields and valid local schema values.
+- `vulnerabilities`, `resistances`, and `immunities` as intentional mechanical arrays, including empty arrays when appropriate.
+- Damage type validity against current settings.
+- Whether description text gives useful narrator guidance without overfitting to one encounter.
+- Consistency with NPCs, traits, abilities, and world lore where applicable.
 
-1. **Read the current definition** - Understand what exists
-2. **Assess quality** - Identify strengths and gaps
-3. **Propose refinements** - Suggest specific improvements
-4. **Collaborate with user** - Discuss and iterate together
-5. **Update when approved** - Apply changes to the config
+Use `species-consistency` only when the type represents a species/lineage and the target world or task requires cross-entry synchronization.
 
-## Key Review Questions
-
-### Description Clarity
-
-- Is the physical appearance vivid and specific?
-- Can you visualize this archetype immediately?
-- Does it avoid generic fantasy tropes?
-
-### Thematic Consistency
-
-- Does this fit the world's tone and setting?
-- Is it unique compared to other types?
-- Does it surprise in interesting ways?
-
-### Missing Details
-
-- What sensory details are absent (smell, sound, texture)?
-- What behaviors or mannerisms define this type?
-- What emotions or atmosphere do they evoke?
-
-### Cultural/Spiritual Depth
-
-For yokai and supernatural types:
-- How do they relate to kegare (spiritual pollution)?
-- What is their relationship to the natural/spirit world?
-- What makes them alien vs humanlike?
-
-For human types:
-- What moral framework guides them?
-- What motivations drive their archetype?
-- What contradictions make them complex?
-
-## Important Notes
-
-**Resistances/Vulnerabilities/Immunities**: These fields exist on the schema but should typically be empty `[]`. Focus on narrative descriptions rather than mechanical attributes when reviewing NPC types.
-
-**Avoid Combat-Focused Language**: Emphasize personality, appearance, role in society, and narrative potential over combat capabilities.
-
-## Refinement Guidelines
-
-### Strong Descriptions
-
-- Concrete sensory details (not abstract qualities)
-- Specific behaviors or speech patterns
-- Contradictions that create depth
-- Cultural context that grounds them in the world
-- Emotional resonance or thematic weight
-
-### Weak Descriptions
-
-- Generic traits ("strong warrior", "wise elder")
-- Lists of abilities without personality
-- No distinctive appearance details
-- Interchangeable with similar archetypes
-- Purely mechanical focus
-
-## Review Format
-
-When reviewing each type:
-
-```markdown
-## [NPC Type Name]
-
-**Current Description**: [quote it]
-
-**Strengths**: What works well
-
-**Gaps**: What's missing or unclear
-
-**Proposed Refinements**: Specific suggestions
-
-**Questions for Creator**: Clarifications needed
-```
-
-## Reference
-
-For best practices and examples, see [npc-type-review-reference.md](references/npc-type-review-reference.md).
+Do not apply yokai, kegare, or Japanese folklore criteria unless an active world profile explicitly requires them.

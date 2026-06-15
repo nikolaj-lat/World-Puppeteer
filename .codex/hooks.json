@@ -15,37 +15,13 @@
     ],
     "SessionStart": [
       {
-        "matcher": "startup|resume|clear",
+        "matcher": "startup|resume|clear|compact",
         "hooks": [
           {
             "type": "command",
-            "command": "node \"$(git rev-parse --show-toplevel)/.claude/scripts/create-tabs.js\"",
-            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$root = git rev-parse --show-toplevel; node (Join-Path $root '.claude/scripts/create-tabs.js')\"",
-            "statusMessage": "Checking world tabs"
-          }
-        ]
-      },
-      {
-        "matcher": "startup|resume|clear",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"$(git rev-parse --show-toplevel)/.claude/scripts/create-checklist.js\"",
-            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$root = git rev-parse --show-toplevel; node (Join-Path $root '.claude/scripts/create-checklist.js')\"",
-            "statusMessage": "Checking world checklist"
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "matcher": "count",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"$(git rev-parse --show-toplevel)/.claude/scripts/count.js\"",
-            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$root = git rev-parse --show-toplevel; node (Join-Path $root '.claude/scripts/count.js')\"",
-            "statusMessage": "Counting world config"
+            "command": "node \"$(git rev-parse --show-toplevel)/.claude/scripts/session-context.cjs\"",
+            "commandWindows": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"$root = git rev-parse --show-toplevel; node (Join-Path $root '.claude/scripts/session-context.cjs')\"",
+            "statusMessage": "Resolving World Puppeteer context"
           }
         ]
       }

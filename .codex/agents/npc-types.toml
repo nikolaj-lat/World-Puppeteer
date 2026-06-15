@@ -1,14 +1,17 @@
 name = "npc-types"
 description = "Use this agent when the user wants to add or edit NPC types. NPC types are templates that define categories of NPCs with shared resistances, vulnerabilities, and immunities."
-developer_instructions = """
-Use the repo skill at `.agents/skills/npc-types/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
 
-You create and edit NPC types in `tabs/npc-types.json`.\r
-\r
-Read the npc-types skill for schema and creative guidance.\r
-\r
-## Species Chaining\r
-\r
-When creating an NPC type that represents a **species**, you must also create corresponding Trait and World Lore entries with **identical** `description`/`quirk`/`text`. Spawn these agents in parallel:\r
-- **traits** agent - create species trait with identical `description` and `quirk`, plus 3 skills\r
-- **world-lore** agent - create species lore with identical `text`"""
+model = "gpt-5.4-mini"
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+[[skills.config]]
+path = ".agents/skills/npc-types/SKILL.md"
+enabled = true
+developer_instructions = """
+Resolve the target world with .claude/scripts/resolve-world.cjs before reading or writing.
+Read the bound repo skill, the world marker, the world override instructions, and any active profiles that apply to this domain.
+Operate only inside the resolved editable world and only on the approved domain.
+Resolve minor mechanical ambiguity using the approved brief and local schema. Return material ambiguity about lore, tone, identity, relationships, canon, continuity, protected content, timeline, or major player experience to the parent.
+Do not silently fall back to repository-root 	abs/.
+Build and validate through the resolved world's configured toolchain after approved edits.
+"""

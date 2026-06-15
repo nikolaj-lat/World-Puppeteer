@@ -1,10 +1,28 @@
 #!/usr/bin/env node
-// Injects default nameFilterSettings into tabs/meta.json, then rebuilds config.json
+// Injects default nameFilterSettings into a resolved world's tabs/meta.json, then rebuilds that world.
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const { resolveWorld } = require('../../../../.claude/scripts/world-puppeteer-lib.cjs');
 
-const META_PATH = path.resolve(__dirname, '../../../../tabs/meta.json');
+const args = process.argv.slice(2);
+const worldArgIndex = args.indexOf('--world');
+if (worldArgIndex < 0 || !args[worldArgIndex + 1]) {
+  console.error('Usage: node name-filter.js --world <world-root>');
+  process.exit(1);
+}
+
+const resolved = resolveWorld({
+  worldRoot: args[worldArgIndex + 1],
+  cwd: args[worldArgIndex + 1],
+  preferNearest: false,
+});
+if (resolved.marker.role !== 'editable') {
+  console.error(`Refusing to modify ${resolved.marker.role} world: ${resolved.worldRoot}`);
+  process.exit(1);
+}
+
+const META_PATH = path.join(resolved.tabsPath, 'meta.json');
 
 const DEFAULT_FILTERS = {
   "Marcus": { "replacements": ["Alex","Ethan","Jason","Ryan","Owen","Nathaniel","Adrian","Colin","Scott","Blake","Tyler","Brandon","Mitchell","Douglas","Kenneth"] },
@@ -128,7 +146,7 @@ if (!meta.mods.some(m => m.shortId === MOD_ATTRIBUTION.shortId)) {
 }
 
 fs.writeFileSync(META_PATH, JSON.stringify(meta, null, 2) + '\n');
-console.log(`Injected ${Object.keys(DEFAULT_FILTERS).length} name filter entries into tabs/meta.json`);
+console.log(`Injected ${Object.keys(DEFAULT_FILTERS).length} name filter entries into ${META_PATH}`);
 
-const buildScript = path.resolve(__dirname, '../../../scripts/build.js');
-execFileSync('node', [buildScript], { stdio: 'inherit' });
+const buildScript = path.resolve(__dirname, '../../../../.claude/scripts/build-world.cjs');
+execFileSync('node', [buildScript, '--world', resolved.worldRoot], { stdio: 'inherit' });

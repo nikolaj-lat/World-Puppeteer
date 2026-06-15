@@ -59,7 +59,7 @@ interface NPCType {
 
 When creating an NPC type that represents a **species** (playable race or sentient creature type), you must also create corresponding Trait and World Lore entries. The `description` contains lore paragraphs + skill blocks separated by `\n`. The lore paragraphs are shared identically with the Trait `description` and Trait `quirk`; the skill block format differs per field.
 
-See [Species Consistency Rules](../species-rules.md) for the full requirements.
+When a world profile requires species synchronization, use the `species-consistency` skill. Require factual consistency across NPC types, traits, world lore, NPCs, and abilities; do not force identical prose across fields with different audiences.
 
 ## Reference
 

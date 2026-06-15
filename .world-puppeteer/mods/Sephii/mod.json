@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "sephii-instruction-pack",
+  "name": "Sephii Instruction Pack",
+  "version": "1.0.0",
+  "description": "Reference instruction material for intent, quest generation, and NPC detail guidance.",
+  "compatibleFormats": [
+    "voyage-v33"
+  ],
+  "domains": [
+    "ai-instructions",
+    "quests",
+    "npcs"
+  ],
+  "supportedModes": [
+    "reference"
+  ],
+  "defaultMode": "reference",
+  "applicationProfile": "reference-only",
+  "conflictPolicy": "dry-run must report any overlapping instruction section before application",
+  "dependencies": [],
+  "optionalDependencies": []
+}

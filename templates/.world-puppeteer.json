@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "minimal-template",
+  "name": "Minimal Voyage Template",
+  "role": "template",
+  "format": "voyage-v33",
+  "paths": {
+    "tabs": "tabs",
+    "compiledOutput": "minimal-world.json",
+    "instructions": "AGENTS.override.md"
+  },
+  "toolchain": {
+    "formatProfile": "voyage-json-tabs",
+    "buildProfile": "world-build-cjs",
+    "validationProfiles": [
+      "voyage-local-validator"
+    ]
+  },
+  "activeProfiles": [],
+  "appliedMods": []
+}

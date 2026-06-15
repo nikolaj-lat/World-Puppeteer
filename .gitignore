@@ -3,6 +3,7 @@
 
 # World specific files
 /config.json
+/HxH-Full-Canon-Reference.json
 /tabs/
 BUILD-PLAN.md
 BUILD-REPORT.md
@@ -19,7 +20,18 @@ images/
 stuff/
 dashboard.html
 memory/
-hxh_hunter_exam_campaign_rebuild/
+hxh_hunter_exam_campaign_rebuild/*
+!hxh_hunter_exam_campaign_rebuild/.world-puppeteer.json
+!hxh_hunter_exam_campaign_rebuild/AGENTS.override.md
+!hxh_hunter_exam_campaign_rebuild/build.cjs
+!hxh_hunter_exam_campaign_rebuild/.world-puppeteer/
+!hxh_hunter_exam_campaign_rebuild/.world-puppeteer/**
+!hxh_hunter_exam_campaign_rebuild/.agents/
+!hxh_hunter_exam_campaign_rebuild/.agents/skills/
+!hxh_hunter_exam_campaign_rebuild/.agents/skills/**
+!hxh_hunter_exam_campaign_rebuild/.claude/
+!hxh_hunter_exam_campaign_rebuild/.claude/skills/
+!hxh_hunter_exam_campaign_rebuild/.claude/skills/**
 
 # Internal-only or unpolished reference docs
 .claude/skills/ai-instructions/references/intents-reference.md

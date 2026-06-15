@@ -20,6 +20,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { resolveWorld } = require('./world-puppeteer-lib.cjs');
 
 // Section character limits (from validation.md)
 const SECTION_LIMITS = {
@@ -773,13 +774,24 @@ function printReport(result, inputPath) {
 function main() {
   const args = process.argv.slice(2);
   const jsonOutput = args.includes('--json');
-  const inputPath = args.find((a) => !a.startsWith('--')) || path.join(__dirname, '../../tabs');
+  const worldArgIndex = args.indexOf('--world');
+  const worldRoot = worldArgIndex >= 0 ? args[worldArgIndex + 1] : null;
+  const inputPath = worldRoot || args.find((a) => !a.startsWith('--')) || path.join(__dirname, '../../tabs');
 
-  const fullPath = path.resolve(inputPath);
+  let fullPath = path.resolve(inputPath);
 
   if (!fs.existsSync(fullPath)) {
     console.error(`Error: Path not found: ${inputPath}`);
     process.exit(1);
+  }
+
+  if (worldRoot || fs.existsSync(path.join(fullPath, '.world-puppeteer.json'))) {
+    try {
+      fullPath = resolveWorld({ worldRoot: fullPath, cwd: fullPath, preferNearest: false }).tabsPath;
+    } catch (err) {
+      console.error(`Error resolving world root ${inputPath}: ${err.message}`);
+      process.exit(1);
+    }
   }
 
   // Check if input is a directory

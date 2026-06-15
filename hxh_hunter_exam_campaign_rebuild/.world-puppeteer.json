@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "hxh-hunter-exam",
+  "name": "Hunter x Hunter: Hunter Exam",
+  "role": "editable",
+  "format": "voyage-v33",
+  "paths": {
+    "tabs": "tabs",
+    "compiledOutput": "HxH.json",
+    "instructions": "AGENTS.override.md"
+  },
+  "toolchain": {
+    "formatProfile": "voyage-json-tabs",
+    "buildProfile": "world-build-cjs",
+    "validationProfiles": [
+      "voyage-local-validator"
+    ]
+  },
+  "activeProfiles": [
+    "hxh-canon",
+    "hxh-timeline"
+  ],
+  "appliedMods": []
+}

@@ -150,7 +150,7 @@ When creating an NPC with a species `type`, the NPC should **inherit the 3 speci
 3. Add additional unique abilities specific to that individual
 4. Add the `\nfighting style:` summary
 
-See [Species Consistency Rules](../species-rules.md) for the full requirements.
+When a world profile requires species synchronization, use the `species-consistency` skill. Require factual consistency across NPCs, NPC types, traits, world lore, and abilities; do not force identical prose across fields with different audiences.
 
 ## Reference
 

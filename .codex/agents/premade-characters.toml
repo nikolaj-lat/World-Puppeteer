@@ -1,15 +1,17 @@
 name = "premade-characters"
 description = "Use this agent when the user wants to add or edit premade characters. Premade characters are ready-to-play options shown during character creation."
-developer_instructions = """
-Use the repo skill at `.agents/skills/premade-characters/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
 
-You create and edit premade characters in `tabs/premade-characters.json`.\r
-\r
-Read the premade-characters skill for schema and creative guidance.\r
-\r
-## Chaining\r
-\r
-If referenced entities don't exist, spawn agents in parallel:\r
-- `traits` → **traits** agent\r
-- `attributes` keys → **settings** agent (attributeSettings)\r
-- `replacesNpc` → **npcs** agent"""
+model = "gpt-5.4-mini"
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+[[skills.config]]
+path = ".agents/skills/premade-characters/SKILL.md"
+enabled = true
+developer_instructions = """
+Resolve the target world with .claude/scripts/resolve-world.cjs before reading or writing.
+Read the bound repo skill, the world marker, the world override instructions, and any active profiles that apply to this domain.
+Operate only inside the resolved editable world and only on the approved domain.
+Resolve minor mechanical ambiguity using the approved brief and local schema. Return material ambiguity about lore, tone, identity, relationships, canon, continuity, protected content, timeline, or major player experience to the parent.
+Do not silently fall back to repository-root 	abs/.
+Build and validate through the resolved world's configured toolchain after approved edits.
+"""

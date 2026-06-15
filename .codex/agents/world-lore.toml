@@ -1,14 +1,17 @@
 name = "world-lore"
 description = "Use this agent when the user wants to add or edit world lore. World lore entries provide background information for the AI narrator."
-developer_instructions = """
-Use the repo skill at `.agents/skills/world-lore/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
 
-You create and edit world lore in `tabs/world-lore.json`.\r
-\r
-Read the world-lore skill for schema and creative guidance.\r
-\r
-## Species Chaining\r
-\r
-When creating world lore for a **species**, you must also create corresponding NPC Type and Trait entries with **identical** `description`/`quirk`/`text`. Spawn these agents in parallel:\r
-- **npc-types** agent - create species NPC type with identical `description`\r
-- **traits** agent - create species trait with identical `description` and `quirk`, plus 3 skills"""
+model = "gpt-5.4-mini"
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+[[skills.config]]
+path = ".agents/skills/world-lore/SKILL.md"
+enabled = true
+developer_instructions = """
+Resolve the target world with .claude/scripts/resolve-world.cjs before reading or writing.
+Read the bound repo skill, the world marker, the world override instructions, and any active profiles that apply to this domain.
+Operate only inside the resolved editable world and only on the approved domain.
+Resolve minor mechanical ambiguity using the approved brief and local schema. Return material ambiguity about lore, tone, identity, relationships, canon, continuity, protected content, timeline, or major player experience to the parent.
+Do not silently fall back to repository-root 	abs/.
+Build and validate through the resolved world's configured toolchain after approved edits.
+"""

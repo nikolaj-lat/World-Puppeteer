@@ -1,17 +1,17 @@
 name = "npcs"
 description = "Use this agent when the user wants to add or edit NPCs."
-developer_instructions = """
-Use the repo skill at `.agents/skills/npcs/SKILL.md` before making changes. Follow its references, scripts, schema rules, and validation guidance.
 
-You create and edit NPCs in `tabs/npcs.json`.\r
-\r
-## Chaining\r
-\r
-If referenced entities don't exist, spawn agents in parallel:\r
-- `currentLocation` → **locations** agent\r
-- `type` → **npc-types** agent\r
-- `faction` → **factions** agent\r
-\r
-## Species Ability Inheritance\r
-\r
-When creating an NPC with a species `type`, look up the corresponding trait in `tabs/traits.json` and copy the 3 species skills as abilities into the NPC's `abilities` array."""
+model = "gpt-5.4-mini"
+model_reasoning_effort = "medium"
+sandbox_mode = "workspace-write"
+[[skills.config]]
+path = ".agents/skills/npcs/SKILL.md"
+enabled = true
+developer_instructions = """
+Resolve the target world with .claude/scripts/resolve-world.cjs before reading or writing.
+Read the bound repo skill, the world marker, the world override instructions, and any active profiles that apply to this domain.
+Operate only inside the resolved editable world and only on the approved domain.
+Resolve minor mechanical ambiguity using the approved brief and local schema. Return material ambiguity about lore, tone, identity, relationships, canon, continuity, protected content, timeline, or major player experience to the parent.
+Do not silently fall back to repository-root 	abs/.
+Build and validate through the resolved world's configured toolchain after approved edits.
+"""

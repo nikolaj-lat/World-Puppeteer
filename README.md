@@ -32,20 +32,20 @@ So! What dreams shall we summon into being? What world lurks in your imagination
 Right then, the practical bits:
 
 **What I actually am:**
-I'm a customized Claude Code setup — Anthropic's coding agent running with a specific configuration designed for building Voyage worlds. I run in VS Code or Cursor via the Claude Code extension.
+I'm a World-Puppeteer tooling setup for Voyage worlds. The original Claude workflow is preserved, and Codex-native agents, skills, hooks, world markers, and validation scripts now provide a parallel tooling path.
 
 **The technical setup:**
-- **Output format:** Local JSON files in `tabs/` compile into a local `config.json` consumable by Voyage
+- **Output format:** Local JSON files in a resolved world `tabs/` directory compile into that world's marker-declared output, such as `HxH-Full-Canon-Reference.json`, `hxh_hunter_exam_campaign_rebuild/HxH.json`, or `templates/minimal-world.json`
 - **Reusable starter:** `templates/minimal-world.json` and `templates/tabs/` provide the tracked minimal world structure
-- **Configuration:** Custom instructions in `.claude/CLAUDE.md` defining my personality and workflow
-- **Specialized agents:** Sub-agents in `.claude/agents/` — each handles a specific content type
-- **Skills/schemas:** Reference files in `.claude/skills/` defining the JSON structure
-- **Validation hooks:** Scripts that catch malformed content before it reaches the build
+- **Configuration:** Project instructions, world markers, world-local overrides, and active profiles define the workflow
+- **Specialized agents:** Claude agents and Codex TOML agents each handle specific content or review domains
+- **Skills/schemas:** Reference files and repo skills define the JSON structure and craft workflow
+- **Validation hooks:** Marker-aware scripts catch malformed content before it reaches the build
 
 **How it works:**
 1. You describe what you want to create
-2. I interview you to nail down specifics (using the AskUserQuestion tool)
-3. I spawn background agents via the Task tool to write the actual JSON
+2. I interview you to nail down specifics and produce a bounded brief when needed
+3. I delegate to focused agents to write or review the actual JSON
 4. Those agents follow schemas defined in the skill files
 5. The result: structured game content ready for the Voyage engine to consume
 
@@ -59,7 +59,7 @@ I'm a customized Claude Code setup — Anthropic's coding agent running with a s
 npcs, npc-types, locations, regions, realms, items, abilities, triggers, quests, factions, traits, skills, story-starts, world-lore, world-background, settings, ai-instructions, archetypes, name-filter-settings, premade-characters
 
 **Plus utilities:**
-count (size tracking), charts (trigger flowcharts), maps (visual geography), review-npcs / npc-type-review (narrative passes), image-gen (portraits via Gemini), build-skill (extend the troupe yourself)
+world-capacity (size tracking), world-charts (trigger flowcharts), world-maps (visual geography), review-npcs / npc-type-review (read-only narrative passes), platform-evidence, mod-integrator, image-gen (explicit portraits), build-skill (explicit tooling extension)
 
 **Prerequisites:**
 - VS Code or Cursor, with the Claude Code extension installed

@@ -1,0 +1,13 @@
+name = "species-coordinator"
+description = "Use this read-only agent to check species or lineage facts across NPC types, traits, world lore, NPCs, and abilities."
+model = "gpt-5.4"
+model_reasoning_effort = "high"
+sandbox_mode = "read-only"
+[[skills.config]]
+path = ".agents/skills/species-consistency/SKILL.md"
+enabled = true
+developer_instructions = """
+Use `.agents/skills/species-consistency/SKILL.md`.
+Resolve the target world and read active profiles.
+Return factual consistency findings only; do not edit files.
+"""

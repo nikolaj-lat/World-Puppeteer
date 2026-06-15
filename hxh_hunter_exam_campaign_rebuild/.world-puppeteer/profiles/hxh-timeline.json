@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "hxh-timeline",
+  "name": "Hunter x Hunter Timeline",
+  "description": "Timeline anchoring and spoiler-gating rules for the 287th Hunter Exam entry point.",
+  "skills": [
+    "hxh-timeline"
+  ],
+  "appliesTo": [
+    "npcs",
+    "locations",
+    "quests",
+    "story-starts",
+    "world-lore",
+    "ai-instructions"
+  ],
+  "required": true
+}
