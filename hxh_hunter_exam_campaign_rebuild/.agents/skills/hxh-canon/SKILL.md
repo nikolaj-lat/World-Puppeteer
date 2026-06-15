@@ -11,5 +11,5 @@ Use this profile only for the active Hunter x Hunter world.
 - Use the 2011 anime only for visual and tonal reference when it does not conflict with manga canon.
 - Do not invent unrevealed Nen categories, fates, powers, institutional facts, or relationships.
 - Preserve uncertainty plainly with `unrevealed` or equivalent narrator-facing uncertainty.
-- Keep player-visible text appropriate to the 287th Hunter Exam entry point.
+- Keep player-visible text appropriate to the current campaign phase, established canon divergence, and current spoiler visibility. The 287th Hunter Exam is the initial entry point, not a permanent visibility boundary.
 - Escalate any canon conflict or source ambiguity to the parent instead of resolving by memory.
