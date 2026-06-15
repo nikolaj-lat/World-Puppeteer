@@ -9,12 +9,15 @@
     "modVersion",
     "targetWorldId",
     "mode",
+    "applicationProfile",
+    "conflictPolicy",
     "affectedDomains",
     "sourcePayloads",
     "proposedOperations",
     "conflicts",
     "warnings",
-    "approvalRequired"
+    "approvalRequired",
+    "blocked"
   ],
   "additionalProperties": false,
   "properties": {
@@ -23,6 +26,8 @@
     "modVersion": { "type": "string", "minLength": 1 },
     "targetWorldId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
     "mode": { "enum": ["reference", "apply"] },
+    "applicationProfile": { "enum": ["reference-only", "additive", "structured-merge", "template-copy", "manual"] },
+    "conflictPolicy": { "enum": ["stop"] },
     "affectedDomains": {
       "type": "array",
       "items": { "type": "string", "minLength": 1 },
@@ -31,17 +36,31 @@
     },
     "sourcePayloads": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["path", "kind", "topLevelKeys"],
+        "required": ["path", "kind", "topLevelKeys", "targets"],
         "additionalProperties": false,
         "properties": {
           "path": { "type": "string", "minLength": 1 },
           "kind": { "enum": ["json", "file"] },
-          "topLevelKeys": {
+          "topLevelKeys": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "targets": {
             "type": "array",
-            "items": { "type": "string" },
-            "uniqueItems": true
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["sourcePath", "targetPath", "preferredTargetFile", "domain", "resolvedTargetFile", "collisionKeys"],
+              "additionalProperties": false,
+              "properties": {
+                "sourcePath": { "type": "string", "minLength": 1 },
+                "targetPath": { "type": "string", "minLength": 1 },
+                "preferredTargetFile": { "type": "string", "minLength": 1 },
+                "domain": { "type": "string", "minLength": 1 },
+                "resolvedTargetFile": { "type": "string", "minLength": 1 },
+                "collisionKeys": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+              }
+            }
           }
         }
       }
@@ -50,12 +69,15 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["type", "source", "target", "requiresApproval", "reason"],
+        "required": ["type", "source", "sourcePath", "targetFile", "targetPath", "domain", "requiresApproval", "reason"],
         "additionalProperties": false,
         "properties": {
           "type": { "enum": ["reference", "add", "adapt"] },
           "source": { "type": "string", "minLength": 1 },
-          "target": { "type": "string", "minLength": 1 },
+          "sourcePath": { "type": "string", "minLength": 1 },
+          "targetFile": { "type": "string", "minLength": 1 },
+          "targetPath": { "type": "string", "minLength": 1 },
+          "domain": { "type": "string", "minLength": 1 },
           "requiresApproval": { "type": "boolean" },
           "reason": { "type": "string", "minLength": 1 }
         }
@@ -65,23 +87,21 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["source", "target", "keys"],
+        "required": ["source", "sourcePath", "targetFile", "targetPath", "keys", "policy", "reason"],
         "additionalProperties": false,
         "properties": {
           "source": { "type": "string", "minLength": 1 },
-          "target": { "type": "string", "minLength": 1 },
-          "keys": {
-            "type": "array",
-            "items": { "type": "string" },
-            "uniqueItems": true
-          }
+          "sourcePath": { "type": "string", "minLength": 1 },
+          "targetFile": { "type": "string", "minLength": 1 },
+          "targetPath": { "type": "string", "minLength": 1 },
+          "keys": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+          "policy": { "enum": ["stop"] },
+          "reason": { "type": "string", "minLength": 1 }
         }
       }
     },
-    "warnings": {
-      "type": "array",
-      "items": { "type": "string" }
-    },
-    "approvalRequired": { "type": "boolean" }
+    "warnings": { "type": "array", "items": { "type": "string" } },
+    "approvalRequired": { "const": true },
+    "blocked": { "type": "boolean" }
   }
 }
