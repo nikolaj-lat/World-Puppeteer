@@ -1,11 +1,11 @@
 ---
-name: charts
+name: world-charts
 description: Generate a mermaid flowchart showing trigger relationships and flows. Use when the user wants to visualize triggers.
 context: fork
-agent: charts
+agent: world-charts
 ---
 
-# Charts
+# World Charts
 
 Generate a mermaid flowchart from triggers.json. Output to `stuff/trigger-chart.html`.
 
@@ -123,11 +123,11 @@ end
 
 ## Steps
 
-1. Read triggers file (default: `tabs/triggers.json`)
+1. Resolve the target world and read its triggers file
 2. Categorize triggers by purpose (setup, selection, gameplay, context)
 3. Identify decision points and branching conditions
 4. Extract reference data (characters, locations, items) for sidebars
 5. Build flowchart with labeled subgraphs
 6. Connect sections with meaningful flow
-7. Write to `stuff/trigger-chart.html`
-8. Open in browser
+7. Write only to the resolved world's ignored `stuff/trigger-chart.html`
+8. Inspect the diff/status and report any unexpected changed path

@@ -1,11 +1,11 @@
 ---
-name: maps
+name: world-maps
 description: Generate visual maps of the world showing realms, regions, and locations. Use when the user wants to see a map or visualize the world layout.
 context: fork
-agent: maps
+agent: world-maps
 ---
 
-# Maps
+# World Maps
 
 Generate a self-contained HTML map from world config data. Output to `stuff/world-map.html`.
 
@@ -17,10 +17,10 @@ Generate a self-contained HTML map from world config data. Output to `stuff/worl
 ## Data Sources
 
 ```javascript
-const settings = JSON.parse(fs.readFileSync('tabs/settings.json'))
-const realms = JSON.parse(fs.readFileSync('tabs/realms.json'))
-const regions = JSON.parse(fs.readFileSync('tabs/regions.json'))
-const locations = JSON.parse(fs.readFileSync('tabs/locations.json'))
+const settings = JSON.parse(fs.readFileSync(path.join(world.tabsPath, 'settings.json')))
+const realms = JSON.parse(fs.readFileSync(path.join(world.tabsPath, 'realms.json')))
+const regions = JSON.parse(fs.readFileSync(path.join(world.tabsPath, 'regions.json')))
+const locations = JSON.parse(fs.readFileSync(path.join(world.tabsPath, 'locations.json')))
 
 const regionSize = settings.locationSettings.regionSize // e.g., 100
 const coordRange = regionSize / 2 // e.g., 50
@@ -88,10 +88,11 @@ const top = centerY - (loc.y * scale) - scaledDiameter / 2; // NEGATIVE for y in
 
 ## Steps
 
-1. Read config files (settings, realms, regions, locations)
+1. Resolve the target world and read its config files (settings, realms, regions, locations)
 2. Group regions by realm, locations by region
 3. For each realm, determine grid bounds from region coordinates
 4. Render realm as CSS grid, place regions at their x,y positions
 5. Within each region cell, plot locations using the positioning formula
 6. Add hover tooltips for regions (name, description) and locations (name, x, y, radius, description)
-7. Write to `stuff/world-map.html`, open in browser
+7. Write only to the resolved world's ignored `stuff/world-map.html`
+8. Inspect the diff/status and report any unexpected changed path

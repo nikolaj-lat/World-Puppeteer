@@ -42,7 +42,7 @@ Execution and Review must not reopen approved creative decisions. Material ambig
 Before any tooling or world-content task is reported complete:
 
 - Run tooling architecture tests when tooling changed.
-- Run World-Puppeteer marker/profile/mod validation when metadata changed.
+- Run World-Puppeteer marker/profile/reference-pack validation when metadata changed.
 - Run formatting, build, and every configured validation profile for each affected editable world.
 - Inspect the diff and confirm only intended paths changed.
 - Report generated or ignored outputs separately from tracked changes.
@@ -102,7 +102,7 @@ Agents may resolve minor mechanical ambiguity from the approved brief and local 
 tabs/                    # Local world source JSON; ignored by Git in local worlds
 <world output>.json      # Compiled production named by .world-puppeteer.json
 .world-puppeteer.json    # Declarative world marker
-.world-puppeteer/        # Shared schemas, mods, registries, and tooling metadata
+.world-puppeteer/        # Shared schemas, reference packs, registries, and tooling metadata
 templates/               # Tracked minimal Voyage world starter and tab structure
 .claude/skills/          # Claude skill instructions
 .claude/agents/          # Claude agent specializations

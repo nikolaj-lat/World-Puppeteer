@@ -10,9 +10,10 @@ const {
 const {
   readJsonResult,
   validateAgainstSchemaFile,
-  validateAppliedMods,
-  validateModRegistry,
-} = require('./mod-architecture.cjs');
+} = require('./schema-utils.cjs');
+const {
+  validateReferencePackRegistry,
+} = require('./reference-pack-architecture.cjs');
 
 const MARKER_FILE = '.world-puppeteer.json';
 const IGNORED_DIRS = new Set(['.git', 'node_modules', 'config-backups', 'images', 'stuff']);
@@ -47,6 +48,7 @@ function main() {
   const warnings = [];
   const repoSkillIds = collectSkillIds(repoRoot);
   const markerSchemaPath = path.join(repoRoot, '.world-puppeteer', 'schemas', 'world-marker.schema.json');
+  const profileSchemaPath = path.join(repoRoot, '.world-puppeteer', 'schemas', 'profile.schema.json');
   const markerEntries = [];
 
   for (const markerPath of findMarkerPaths(repoRoot)) {
@@ -64,30 +66,56 @@ function main() {
     errors.push(...markerResult.errors.map((message) => `${markerPath}: ${message}`));
     warnings.push(...markerResult.warnings.map((message) => `${markerPath}: ${message}`));
 
-    for (const profileId of marker.activeProfiles || []) {
-      const profilePath = path.join(worldRoot, '.world-puppeteer', 'profiles', `${profileId}.json`);
-      if (!fs.existsSync(profilePath)) {
-        errors.push(`${markerPath}: active profile not found: ${profileId}`);
-        continue;
+    const profileRoot = path.join(worldRoot, '.world-puppeteer', 'profiles');
+    const activeProfileIds = new Set(marker.activeProfiles || []);
+    const localProfileIds = new Set();
+
+    if (fs.existsSync(profileRoot)) {
+      const profileFiles = fs.readdirSync(profileRoot, { withFileTypes: true })
+        .filter((entry) => entry.isFile() && entry.name.endsWith('.json'))
+        .map((entry) => entry.name)
+        .sort((a, b) => a.localeCompare(b));
+
+      for (const profileFile of profileFiles) {
+        const profileIdFromFilename = path.basename(profileFile, '.json');
+        const profilePath = path.join(profileRoot, profileFile);
+        localProfileIds.add(profileIdFromFilename);
+
+        const profileLoaded = readJsonResult(profilePath);
+        if (profileLoaded.error) {
+          errors.push(profileLoaded.error);
+          continue;
+        }
+
+        const profile = profileLoaded.value;
+        errors.push(
+          ...validateAgainstSchemaFile(profile, profileSchemaPath)
+            .map((message) => `${profilePath}: ${message}`)
+        );
+
+        if (profile.id !== profileIdFromFilename) {
+          errors.push(`${profilePath}: profile id must match filename`);
+        }
+
+        const profileResult = validateProfileShape(profile, worldRoot);
+        errors.push(...profileResult.errors.map((message) => `${profilePath}: ${message}`));
+
+        if (profile.required === true && !activeProfileIds.has(profile.id)) {
+          errors.push(`${profilePath}: required profile must be listed in activeProfiles`);
+        }
       }
-      const profileLoaded = readJsonResult(profilePath);
-      if (profileLoaded.error) {
-        errors.push(profileLoaded.error);
-        continue;
+    }
+
+    for (const activeProfileId of activeProfileIds) {
+      if (!localProfileIds.has(activeProfileId)) {
+        errors.push(`${markerPath}: active profile not found locally: ${activeProfileId}`);
       }
-      const profile = profileLoaded.value;
-      if (profile.id !== profileId) errors.push(`${profilePath}: profile id must match filename`);
-      const profileResult = validateProfileShape(profile, worldRoot);
-      errors.push(...profileResult.errors.map((message) => `${profilePath}: ${message}`));
     }
   }
 
-  const modResult = validateModRegistry(repoRoot);
-  errors.push(...modResult.errors);
-  warnings.push(...modResult.warnings);
-  for (const entry of markerEntries) {
-    errors.push(...validateAppliedMods(entry.marker, modResult, entry.markerPath));
-  }
+  const referencePackResult = validateReferencePackRegistry(repoRoot);
+  errors.push(...referencePackResult.errors);
+  warnings.push(...referencePackResult.warnings);
 
   for (const skillId of ['japanese-romanization', 'orchestrator', 'charts', 'count', 'maps', 'reflect']) {
     if (repoSkillIds.has(skillId)) errors.push(`obsolete generic skill remains: ${skillId}`);

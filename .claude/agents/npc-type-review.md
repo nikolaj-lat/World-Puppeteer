@@ -3,7 +3,6 @@ name: npc-type-review
 description: |
   Use this agent when the user wants to review and refine existing NPC type definitions for quality, consistency, and thematic depth.
 model: sonnet
-permissionMode: bypassPermissions
 skills:
   - npc-type-review
   - npc-types

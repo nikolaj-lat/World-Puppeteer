@@ -5,6 +5,7 @@ const { spawnSync } = require('child_process');
 const MARKER_FILE = '.world-puppeteer.json';
 const KNOWN_FORMATS = new Set(['voyage-v33']);
 const TIMEOUT_MS = 120000;
+const BUILD_TEMP_PREFIX = '.world-puppeteer-build-';
 
 const FORMAT_PROFILES = {
   'voyage-json-tabs': {
@@ -13,8 +14,6 @@ const FORMAT_PROFILES = {
     args: ({ world }) => [world.tabsPath],
   },
 };
-
-const MARKER_MOD_MODES = new Set(['reference', 'apply']);
 
 const BUILD_PROFILES = {
   'world-build-cjs': {
@@ -62,6 +61,180 @@ function isSafeRelativePath(value) {
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function listJsonFiles(dir) {
+  return fs.readdirSync(dir)
+    .filter((file) => file.endsWith('.json'))
+    .sort((a, b) => a.localeCompare(b));
+}
+
+function isPlainObject(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function jsonValueKind(value) {
+  if (Array.isArray(value)) return 'array';
+  if (isPlainObject(value)) return 'object';
+  return 'scalar';
+}
+
+function appendJsonPath(basePath, key) {
+  const simpleKey = /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(key);
+  if (!basePath) return simpleKey ? key : `[${JSON.stringify(key)}]`;
+  return simpleKey ? `${basePath}.${key}` : `${basePath}[${JSON.stringify(key)}]`;
+}
+
+function addPathOwner(owners, pathName, sourceFile) {
+  const current = owners.get(pathName) || new Set();
+  current.add(sourceFile);
+  owners.set(pathName, current);
+}
+
+function firstPathOwner(owners, pathName) {
+  const current = owners.get(pathName);
+  return current ? current.values().next().value : null;
+}
+
+function cloneJsonValue(value) {
+  if (Array.isArray(value)) return value.map(cloneJsonValue);
+  if (isPlainObject(value)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, child]) => [key, cloneJsonValue(child)])
+    );
+  }
+  return value;
+}
+
+function cloneAndRecord(value, pathName, sourceFile, owners) {
+  addPathOwner(owners, pathName, sourceFile);
+
+  if (isPlainObject(value)) {
+    const entries = Object.entries(value);
+    const cloned = {};
+    for (const [key, child] of entries) {
+      const childPath = appendJsonPath(pathName, key);
+      cloned[key] = cloneAndRecord(child, childPath, sourceFile, owners);
+    }
+    return cloned;
+  }
+
+  return cloneJsonValue(value);
+}
+
+function mergeTabValue(existing, incoming, pathName, sourceFile, owners) {
+  const existingKind = jsonValueKind(existing);
+  const incomingKind = jsonValueKind(incoming);
+  const firstOwner = firstPathOwner(owners, pathName) || '<unknown source>';
+
+  if (existingKind === 'object' && incomingKind === 'object') {
+    const existingEntries = Object.entries(existing);
+    const incomingEntries = Object.entries(incoming);
+
+    if (existingEntries.length === 0 || incomingEntries.length === 0) {
+      throw new Error(
+        `Tab merge collision at "${pathName}" (object vs object): ${firstOwner} and ${sourceFile}`
+      );
+    }
+
+    addPathOwner(owners, pathName, sourceFile);
+    for (const [key, child] of incomingEntries) {
+      const childPath = appendJsonPath(pathName, key);
+      if (Object.prototype.hasOwnProperty.call(existing, key)) {
+        existing[key] = mergeTabValue(existing[key], child, childPath, sourceFile, owners);
+      } else {
+        existing[key] = cloneAndRecord(child, childPath, sourceFile, owners);
+      }
+    }
+    return existing;
+  }
+
+  throw new Error(
+    `Tab merge collision at "${pathName}" (${existingKind} vs ${incomingKind}): ${firstOwner} and ${sourceFile}`
+  );
+}
+
+function normalizeTabDocument(data, sourceFile) {
+  if (!isPlainObject(data)) {
+    throw new Error(`${sourceFile}: tab file must contain a JSON object`);
+  }
+
+  const normalized = { ...data };
+  const worldBackground = normalized.worldBackground;
+  delete normalized.worldBackground;
+
+  if (worldBackground !== undefined) {
+    if (
+      normalized.storySettings !== undefined &&
+      !isPlainObject(normalized.storySettings)
+    ) {
+      throw new Error(
+        `${sourceFile}: worldBackground hoist requires storySettings to be an object`
+      );
+    }
+    if (
+      normalized.storySettings &&
+      Object.prototype.hasOwnProperty.call(
+        normalized.storySettings,
+        'worldBackground'
+      )
+    ) {
+      throw new Error(
+        `${sourceFile}: worldBackground hoist conflicts with storySettings.worldBackground in the same file`
+      );
+    }
+    normalized.storySettings = {
+      ...(normalized.storySettings || {}),
+      worldBackground,
+    };
+  }
+
+  return normalized;
+}
+
+function loadAndMergeTabs(tabsPath) {
+  if (!fs.existsSync(tabsPath)) {
+    throw new Error(`Tabs directory not found: ${tabsPath}`);
+  }
+
+  const result = {};
+  const owners = new Map();
+  const files = [];
+
+  for (const file of listJsonFiles(tabsPath)) {
+    const filePath = path.join(tabsPath, file);
+    let parsed;
+    try {
+      parsed = readJson(filePath);
+    } catch (error) {
+      throw new Error(`${filePath}: invalid JSON: ${error.message}`);
+    }
+
+    const normalized = normalizeTabDocument(parsed, filePath);
+    files.push(filePath);
+
+    for (const [key, value] of Object.entries(normalized)) {
+      const keyPath = appendJsonPath('', key);
+      if (Object.prototype.hasOwnProperty.call(result, key)) {
+        result[key] = mergeTabValue(
+          result[key],
+          value,
+          keyPath,
+          filePath,
+          owners
+        );
+      } else {
+        result[key] = cloneAndRecord(
+          value,
+          keyPath,
+          filePath,
+          owners
+        );
+      }
+    }
+  }
+
+  return { config: result, owners, files };
 }
 
 function registryIds(registry) {
@@ -150,20 +323,6 @@ function validateMarkerShape(marker, worldRoot) {
     }
   }
   if (!Array.isArray(marker.activeProfiles)) errors.push('activeProfiles must be an array');
-  if (!Array.isArray(marker.appliedMods)) errors.push('appliedMods must be an array');
-  for (const [index, record] of (marker.appliedMods || []).entries()) {
-    if (!record || typeof record !== 'object' || Array.isArray(record)) {
-      errors.push(`appliedMods[${index}] must be an object`);
-      continue;
-    }
-    for (const key of ['modId', 'version', 'mode', 'appliedAt', 'sourceFiles', 'operations']) {
-      if (!(key in record)) errors.push(`appliedMods[${index}].${key} is required`);
-    }
-    if (record.modId && !/^[a-z0-9][a-z0-9-]*$/.test(record.modId)) errors.push(`appliedMods[${index}].modId must be kebab-case`);
-    if (record.mode && !MARKER_MOD_MODES.has(record.mode)) errors.push(`appliedMods[${index}].mode is invalid`);
-    if ('sourceFiles' in record && !Array.isArray(record.sourceFiles)) errors.push(`appliedMods[${index}].sourceFiles must be an array`);
-    if ('operations' in record && !Array.isArray(record.operations)) errors.push(`appliedMods[${index}].operations must be an array`);
-  }
 
   return { errors, warnings };
 }
@@ -195,32 +354,61 @@ function runNodeScript(repoRoot, scriptRelativePath, args = [], options = {}) {
   );
 }
 
-function buildWorldSource(world, options = {}) {
-  if (!fs.existsSync(world.tabsPath)) throw new Error(`Tabs directory not found: ${world.tabsPath}`);
+function uniqueBuildTempPath(destinationPath) {
+  const dir = path.dirname(destinationPath);
+  const parsed = path.parse(destinationPath);
+  const suffix = `${process.pid}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  return path.join(dir, `${BUILD_TEMP_PREFIX}${parsed.name}-${suffix}${parsed.ext}`);
+}
 
-  if (fs.existsSync(world.compiledOutputPath) && !options.noBackup) {
-    const backupDir = path.join(world.worldRoot, 'config-backups');
-    fs.mkdirSync(backupDir, { recursive: true });
-    const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const parsed = path.parse(world.compiledOutputPath);
-    fs.copyFileSync(world.compiledOutputPath, path.join(backupDir, `${parsed.name}-${stamp}${parsed.ext}`));
-  }
+function atomicReplaceFile(sourcePath, destinationPath) {
+  fs.renameSync(sourcePath, destinationPath);
+}
 
-  const result = {};
-  for (const file of fs.readdirSync(world.tabsPath).sort()) {
-    if (!file.endsWith('.json')) continue;
-    const data = JSON.parse(fs.readFileSync(path.join(world.tabsPath, file), 'utf8'));
-    const worldBackground = data.worldBackground;
-    delete data.worldBackground;
-    Object.assign(result, data);
-    if (worldBackground !== undefined) {
-      result.storySettings = result.storySettings || {};
-      result.storySettings.worldBackground = worldBackground;
+function createBuildBackup(destinationPath) {
+  if (!fs.existsSync(destinationPath)) return null;
+  const backupDir = path.join(path.dirname(destinationPath), 'config-backups');
+  fs.mkdirSync(backupDir, { recursive: true });
+  const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const unique = `${process.pid}-${Math.random().toString(16).slice(2)}`;
+  const parsed = path.parse(destinationPath);
+  const backupPath = path.join(backupDir, `${parsed.name}-${stamp}-${unique}${parsed.ext}`);
+  fs.copyFileSync(destinationPath, backupPath);
+  return backupPath;
+}
+
+function validateCompiledCandidate(world, candidatePath, options = {}) {
+  for (const profileId of world.marker.toolchain.validationProfiles) {
+    const profile = VALIDATION_PROFILES[profileId];
+    if (!profile) throw new Error(`unknown validationProfile: ${profileId}`);
+    const run = runNodeScript(world.repoRoot, profile.script, [candidatePath, '--json'], options);
+    const parsed = parseValidationOutput(profile, run);
+    if (!parsed.ok) {
+      const detail = parsed.errors.map((error) => `${error.path || 'unknown'}: ${error.message || error}`).join('\n');
+      throw new Error(`Compiled candidate failed ${profileId} validation:\n${detail || run.stderr || run.stdout}`);
     }
   }
+}
 
-  fs.writeFileSync(world.compiledOutputPath, JSON.stringify(result, null, 2) + '\n');
-  return { topLevelKeys: Object.keys(result).length };
+function buildWorldSource(world, options = {}) {
+  const merged = loadAndMergeTabs(world.tabsPath);
+  fs.mkdirSync(path.dirname(world.compiledOutputPath), { recursive: true });
+  const tempPath = options.tempPath || uniqueBuildTempPath(world.compiledOutputPath);
+  let backupPath = null;
+  try {
+    fs.writeFileSync(tempPath, JSON.stringify(merged.config, null, 2) + '\n');
+    validateCompiledCandidate(world, tempPath, options);
+    if (!options.noBackup) backupPath = createBuildBackup(world.compiledOutputPath);
+    atomicReplaceFile(tempPath, world.compiledOutputPath);
+    return {
+      topLevelKeys: Object.keys(merged.config).length,
+      sourceFiles: merged.files,
+      tempPath,
+      backupPath,
+    };
+  } finally {
+    if (fs.existsSync(tempPath)) fs.rmSync(tempPath, { force: true });
+  }
 }
 
 function runFormatProfile(profileId, world, options = {}) {
@@ -353,13 +541,32 @@ function resolveWorld(options = {}) {
   }
 
   const activeProfiles = [];
+  const profileRoot = path.join(selected.root, '.world-puppeteer', 'profiles');
+  const allProfiles = [];
+  if (fs.existsSync(profileRoot)) {
+    for (const file of fs.readdirSync(profileRoot).filter((name) => name.endsWith('.json')).sort()) {
+      const profilePath = path.join(profileRoot, file);
+      const profile = readJson(profilePath);
+      const expectedId = path.basename(file, '.json');
+      if (profile.id !== expectedId) throw new Error(`Invalid profile ${profilePath}:\nprofile id must match filename`);
+      const profileResult = validateProfileShape(profile, selected.root);
+      if (profileResult.errors.length > 0) {
+        throw new Error(`Invalid profile ${profilePath}:\n${profileResult.errors.join('\n')}`);
+      }
+      allProfiles.push({ profilePath, profile });
+    }
+  }
+  const profilesById = new Map(allProfiles.map((entry) => [entry.profile.id, entry]));
+  const activeIds = new Set(selected.marker.activeProfiles || []);
+  for (const profileEntry of allProfiles) {
+    if (profileEntry.profile.required && !activeIds.has(profileEntry.profile.id)) {
+      throw new Error(`Required profile is not active in ${selected.markerPath}: ${profileEntry.profile.id}`);
+    }
+  }
   for (const profileId of selected.marker.activeProfiles || []) {
+    if (!profilesById.has(profileId)) throw new Error(`Active profile not found locally: ${profileId}`);
     const loaded = readProfile(selected.root, profileId);
     if (!loaded) throw new Error(`Required profile not found: ${profileId}`);
-    const profileResult = validateProfileShape(loaded.profile, selected.root);
-    if (profileResult.errors.length > 0) {
-      throw new Error(`Invalid profile ${loaded.profilePath}:\n${profileResult.errors.join('\n')}`);
-    }
     activeProfiles.push(loaded);
   }
 
@@ -381,6 +588,7 @@ module.exports = {
   VALIDATION_PROFILES,
   MARKER_FILE,
   buildWorldSource,
+  loadAndMergeTabs,
   findRepoRoot,
   findMarkers,
   findNearestMarker,

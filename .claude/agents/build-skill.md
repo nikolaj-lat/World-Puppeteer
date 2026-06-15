@@ -3,7 +3,6 @@ name: build-skill
 description: |
   Use this agent when the user wants to create or update a skill, agent, or reference file for editing world configs.
 model: inherit
-permissionMode: bypassPermissions
 skills:
   - build-skill
 ---

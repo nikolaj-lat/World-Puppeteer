@@ -3,7 +3,6 @@ name: skills
 description: |
   Use this agent when the user wants to add or edit skills. Skills are learnable abilities that characters can level up.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - skills
 ---

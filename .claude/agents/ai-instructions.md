@@ -3,7 +3,6 @@ name: ai-instructions
 description: |
   Use this agent when the user wants to edit AI instructions. These are per-task instructions that guide how the AI narrator behaves.
 model: inherit
-permissionMode: bypassPermissions
 skills:
   - ai-instructions
 ---

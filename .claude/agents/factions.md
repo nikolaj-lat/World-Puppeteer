@@ -3,7 +3,6 @@ name: factions
 description: |
   Use this agent when the user wants to add or edit factions. Factions are groups, organizations, or allegiances in the world.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - factions
 ---

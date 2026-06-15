@@ -1,0 +1,27 @@
+{
+  "name": "world-puppeteer",
+  "version": "1.0.0",
+  "description": "World-Puppeteer tooling, validation, hook, and reference-pack architecture.",
+  "private": true,
+  "scripts": {
+    "test": "node .claude/scripts/tooling-architecture-tests.cjs && node .claude/scripts/ai-instruction-limit-tests.cjs",
+    "test:reference-packs": "node .claude/scripts/reference-pack-architecture-tests.cjs",
+    "validate:metadata": "node .claude/scripts/validate-world-puppeteer.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NobodyIsUgly/World-Puppeteer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/NobodyIsUgly/World-Puppeteer/issues"
+  },
+  "homepage": "https://github.com/NobodyIsUgly/World-Puppeteer#readme",
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "smol-toml": "1.6.1"
+  }
+}

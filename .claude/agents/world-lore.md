@@ -3,7 +3,6 @@ name: world-lore
 description: |
   Use this agent when the user wants to add or edit world lore. World lore entries provide background information for the AI narrator.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - world-lore
 ---

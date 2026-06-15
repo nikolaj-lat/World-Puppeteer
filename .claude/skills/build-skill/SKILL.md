@@ -7,7 +7,14 @@ agent: build-skill
 
 # Build Skill
 
-Create skills for editing `tabs/*.json` config files.
+Create skills for editing files under a resolved target world's tab directory.
+
+Every generated agent and skill must:
+
+1. require a resolved `TARGET_WORLD_ROOT`;
+2. interpret `tabs/...` as `<TARGET_WORLD_ROOT>/tabs/...`;
+3. never assume repository-root `tabs`;
+4. preserve marker role restrictions and shared build/validation routing.
 
 ## File Structure
 
@@ -32,7 +39,7 @@ agent: {name}
 
 # {Title}
 
-Edit `tabs/{name}.json`.
+Edit `<TARGET_WORLD_ROOT>/tabs/{name}.json`.
 
 ## Required Fields
 
@@ -78,16 +85,18 @@ name: {name}
 description: |
   Use this agent when the user wants to add or edit {plural}.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - {name}
 ---
 
-You create and edit {plural} in `tabs/{name}.json`.
+Require `TARGET_WORLD_ROOT` from the parent orchestration context.
+
+You create and edit {plural} in
+`<TARGET_WORLD_ROOT>/tabs/{name}.json`.
 
 ## Chaining
 
-If `{cross-reference}` doesn't exist in `tabs/{other}.json`, spawn **{other}** agent in parallel.
+If `{cross-reference}` does not exist in `<TARGET_WORLD_ROOT>/tabs/{other}.json`, spawn **{other}** agent with the same `TARGET_WORLD_ROOT`.
 ```
 
 ## Reference Template
@@ -95,7 +104,7 @@ If `{cross-reference}` doesn't exist in `tabs/{other}.json`, spawn **{other}** a
 ```markdown
 # {Title} Reference
 
-Complete documentation for `tabs/{name}.json`.
+Complete documentation for `<TARGET_WORLD_ROOT>/tabs/{name}.json`.
 
 ## Schema
 
@@ -142,7 +151,7 @@ Reads `inputField` and generates: outputField1, outputField2, outputField3. Sets
 
 | Field | References |
 |-------|------------|
-| `field` | `tabs/{other}.json` |
+| `field` | `<TARGET_WORLD_ROOT>/tabs/{other}.json` |
 ```
 
 ## Principles
@@ -168,4 +177,4 @@ Reads `inputField` and generates: outputField1, outputField2, outputField3. Sets
 
 - Skill name = agent name = folder name
 - Use kebab-case for multi-word names
-- Match the tabs/*.json filename when possible
+- Match the filename under `<TARGET_WORLD_ROOT>/tabs/` when possible

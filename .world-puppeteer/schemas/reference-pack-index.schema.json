@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-puppeteer.local/schemas/reference-pack-index.schema.json",
+  "title": "World Puppeteer Reference Pack Index",
+  "type": "object",
+  "required": ["schemaVersion", "packs"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "packs": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+      "uniqueItems": true
+    }
+  }
+}

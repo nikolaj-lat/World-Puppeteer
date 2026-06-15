@@ -3,7 +3,6 @@ name: regions
 description: |
   Use this agent when the user wants to add or edit regions. Regions are geographic areas that contain multiple locations.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - regions
 ---

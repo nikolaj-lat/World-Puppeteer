@@ -3,7 +3,6 @@ name: abilities
 description: |
   Use this agent when the user wants to add or edit player abilities. This includes combat abilities, spells, or special moves.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - abilities
 ---

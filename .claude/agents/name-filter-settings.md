@@ -3,7 +3,6 @@ name: name-filter-settings
 description: |
   Use this agent when the user wants to add, remove, or manage name filters. Name filters replace overused AI-generated names and phrases with better alternatives.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - name-filter-settings
 ---

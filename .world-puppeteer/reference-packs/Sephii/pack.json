@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "id": "sephii-instruction-pack",
+  "name": "Sephii Instruction Pack",
+  "source": "Sephii",
+  "sourceVersion": "1.0.0",
+  "description": "Read-only reference instruction material for NPC detail generation, intent generation, quest guidance, and source metadata.",
+  "compatibleFormats": ["voyage-v33"],
+  "domains": ["ai-instructions", "source-metadata", "quest-generation-guidance"],
+  "licenseNotes": "Legacy local reference material; preserve upstream/source attribution when adapting manually.",
+  "files": [
+    "Enhanced-NPC-Details.json",
+    "Enhanced-Quest-Generation Guidance-Instructions.json",
+    "Intent-Brain.json"
+  ],
+  "sourceSections": [
+    {
+      "file": "Enhanced-NPC-Details.json",
+      "sourcePath": "mods",
+      "candidateTargetPath": "sourceMetadata",
+      "candidateTargetFile": "meta.json",
+      "domain": "source-metadata"
+    },
+    {
+      "file": "Enhanced-NPC-Details.json",
+      "sourcePath": "aiInstructions",
+      "candidateTargetPath": "aiInstructions",
+      "candidateTargetFile": "ai-instructions.json",
+      "domain": "ai-instructions"
+    },
+    {
+      "file": "Enhanced-Quest-Generation Guidance-Instructions.json",
+      "sourcePath": "mods",
+      "candidateTargetPath": "sourceMetadata",
+      "candidateTargetFile": "meta.json",
+      "domain": "source-metadata"
+    },
+    {
+      "file": "Enhanced-Quest-Generation Guidance-Instructions.json",
+      "sourcePath": "storySettings",
+      "candidateTargetPath": "storySettings",
+      "candidateTargetFile": "settings.json",
+      "domain": "quest-generation-guidance"
+    },
+    {
+      "file": "Intent-Brain.json",
+      "sourcePath": "mods",
+      "candidateTargetPath": "sourceMetadata",
+      "candidateTargetFile": "meta.json",
+      "domain": "source-metadata"
+    },
+    {
+      "file": "Intent-Brain.json",
+      "sourcePath": "aiInstructions",
+      "candidateTargetPath": "aiInstructions",
+      "candidateTargetFile": "ai-instructions.json",
+      "domain": "ai-instructions"
+    }
+  ]
+}

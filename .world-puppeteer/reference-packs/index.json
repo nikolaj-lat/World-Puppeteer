@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "mods": [
+  "packs": [
     "meteion-story-instructions",
     "sephii-instruction-pack"
   ]

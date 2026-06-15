@@ -7,15 +7,21 @@ agent: name-filter-settings
 
 # Name Filter Settings
 
-Inject default `nameFilterSettings` into `tabs/meta.json`.
+Inject default `nameFilterSettings` into the resolved target world's
+`tabs/meta.json`.
 
-## Usage
+Resolve the target world first. Prefer an explicit world root:
 
 ```bash
-node .claude/skills/name-filter-settings/scripts/name-filter.js
+node .claude/skills/name-filter-settings/scripts/name-filter.js --world <world-root>
 ```
 
-Skips if `nameFilterSettings` already exists. Run once per new world.
+The flag may be omitted only when the current working directory resolves to an
+editable world. Reference and template worlds are rejected. The script builds
+through the world's configured build profile and restores `meta.json` if that
+build fails.
+
+Skips if `nameFilterSettings` already exists. Run once per new editable world.
 
 ## What Name Filters Do
 

@@ -10,7 +10,9 @@ Use this skill to coordinate World-Puppeteer work through the appropriate specia
 ## Core Laws
 
 1. Resolve the target world before any world operation.
-2. Do not edit `tabs/*.json` directly during ordinary content work.
+2. Treat every `tabs/...` path in specialist instructions as relative to the
+   resolved `TARGET_WORLD_ROOT`; never default to repository-root `tabs`.
+3. Do not edit `tabs/*.json` directly during ordinary content work.
 3. Delegate to named specialists when implementation benefits from focused craft work.
 4. Review specialist output before presenting it as complete.
 5. Run the required build and validation steps before reporting completion.
@@ -61,9 +63,9 @@ Material ambiguity about lore, tone, identity, relationships, canon, continuity,
 
 Utility agents:
 
-- `count`
-- `charts`
-- `maps`
+- `world-capacity`
+- `world-charts`
+- `world-maps`
 
 ## Voice
 

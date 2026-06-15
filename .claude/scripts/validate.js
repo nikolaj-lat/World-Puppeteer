@@ -22,6 +22,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { loadAndMergeTabs } = require('./world-puppeteer-lib.cjs');
 
 // ============================================================================
 // ENUMS AND VALID VALUES
@@ -319,6 +320,29 @@ function buildResourceKeySet(config) {
 
 function createError(path, message, severity = 'error') {
   return { path, message, severity };
+}
+
+function codePointLength(value) {
+  return Array.from(value).length;
+}
+
+function collectAiInstructionTexts(value, pathName) {
+  if (typeof value === 'string') return [{ path: pathName, text: value }];
+  if (Array.isArray(value)) {
+    return value.flatMap((item, index) =>
+      collectAiInstructionTexts(item, `${pathName}[${index}]`)
+    );
+  }
+  if (value && typeof value === 'object') {
+    return Object.entries(value).flatMap(([key, child]) =>
+      collectAiInstructionTexts(child, `${pathName}.${key}`)
+    );
+  }
+  return [{
+    path: pathName,
+    invalidType: true,
+    actual: value === null ? 'null' : typeof value,
+  }];
 }
 
 function getJsonLength(obj) {
@@ -1108,24 +1132,41 @@ function validateCharacterLimits(config, errors, warnings) {
     errors.push(createError('death.instructions', `Too long: ${config.death.instructions.length} chars (max: ${LIMITS.fields.deathInstructions})`));
   }
 
-  // AI instruction limits
-  if (config.aiInstructions) {
-    let combinedTotal = 0;
-    for (const [taskId, instructions] of Object.entries(config.aiInstructions)) {
-      if (Array.isArray(instructions)) {
-        instructions.forEach((instr, idx) => {
-          const text = typeof instr === 'string' ? instr : instr?.instruction;
-          if (text) {
-            combinedTotal += text.length;
-            if (text.length > LIMITS.fields.aiInstructionIndividual) {
-              errors.push(createError(`aiInstructions.${taskId}[${idx}]`, `Instruction too long: ${text.length} chars (max: ${LIMITS.fields.aiInstructionIndividual})`));
-            }
-          }
-        });
+  // AI instruction limits:
+  // - 5,000 Unicode codepoints per string leaf
+  // - 20,000 Unicode codepoints per top-level task value, measured from
+  //   JSON.stringify(taskValue, null, 2)
+  if (config.aiInstructions && typeof config.aiInstructions === 'object') {
+    for (const [taskId, taskValue] of Object.entries(config.aiInstructions)) {
+      const taskPath = `aiInstructions.${taskId}`;
+      const taskUsed = codePointLength(JSON.stringify(taskValue, null, 2));
+
+      if (taskUsed > LIMITS.fields.aiInstructionCombined) {
+        errors.push(createError(
+          taskPath,
+          `AI instruction task too long: ${taskUsed} codepoints ` +
+          `(max: ${LIMITS.fields.aiInstructionCombined})`
+        ));
       }
-    }
-    if (combinedTotal > LIMITS.fields.aiInstructionCombined) {
-      errors.push(createError('aiInstructions', `Combined AI instructions too long: ${combinedTotal} chars (max: ${LIMITS.fields.aiInstructionCombined})`));
+
+      for (const entry of collectAiInstructionTexts(taskValue, taskPath)) {
+        if (entry.invalidType) {
+          errors.push(createError(
+            entry.path,
+            `Invalid AI instruction value type: ${entry.actual}`
+          ));
+          continue;
+        }
+
+        const used = codePointLength(entry.text);
+        if (used > LIMITS.fields.aiInstructionIndividual) {
+          errors.push(createError(
+            entry.path,
+            `Instruction too long: ${used} codepoints ` +
+            `(max: ${LIMITS.fields.aiInstructionIndividual})`
+          ));
+        }
+      }
     }
   }
 
@@ -2119,34 +2160,41 @@ function printReport(result, inputPath, verbose) {
 }
 
 function main() {
-  const args = process.argv.slice(2);
-  const jsonOutput = args.includes('--json');
-  const verbose = args.includes('--verbose') || args.includes('-v');
-  const inputPath = args.find((a) => !a.startsWith('-')) || path.join(__dirname, '../../tabs');
+  let jsonOutput = false;
+  let verbose = false;
+  let help = false;
+  let inputPath = null;
+  const seen = new Set();
+  for (const arg of process.argv.slice(2)) {
+    if (arg === '--help' || arg === '-h') help = true;
+    else if (arg === '--json') {
+      if (seen.has('--json')) throw new Error('--json may be provided only once');
+      seen.add('--json');
+      jsonOutput = true;
+    } else if (arg === '--verbose' || arg === '-v') {
+      if (seen.has('--verbose')) throw new Error('--verbose may be provided only once');
+      seen.add('--verbose');
+      verbose = true;
+    } else if (arg.startsWith('-')) {
+      throw new Error(`Unknown option: ${arg}`);
+    } else if (inputPath) {
+      throw new Error(`Unexpected positional argument: ${arg}`);
+    } else {
+      inputPath = arg;
+    }
+  }
+  inputPath = inputPath || path.join(__dirname, '../../tabs');
 
-  if (args.includes('--help') || args.includes('-h')) {
-    console.error('Usage: node validate.js [world.json | directory] [--json] [--verbose]');
-    console.error('');
-    console.error('Validates a Voyage world config JSON file or directory of JSON files.');
-    console.error('');
-    console.error('Options:');
-    console.error('  --json     Output as JSON (for programmatic use)');
-    console.error('  --verbose  Show detailed error messages');
-    console.error('');
-    console.error('Checks:');
-    console.error('  - Required top-level fields');
-    console.error('  - Required settings subfields');
-    console.error('  - Entity reference integrity (NPC → location, etc.)');
-    console.error('  - Enum values (trigger types, NPC tiers, damage types)');
-    console.error('  - Basic type checks');
-    console.error('  - Character and count limits');
-    console.error('  - Name-key matching');
-    console.error('');
-    console.error('Example:');
-    console.error('  node validate.js my-world.json');
-    console.error('  node validate.js my-world.json --verbose');
-    console.error('  node validate.js ./tabs/');
-    process.exit(1);
+  if (help) {
+    console.log('Usage: node validate.js [world.json | directory] [--json] [--verbose]');
+    console.log('');
+    console.log('Validates a Voyage world config JSON file or directory of JSON files.');
+    console.log('');
+    console.log('Options:');
+    console.log('  --json     Output as JSON (for programmatic use)');
+    console.log('  --verbose  Show detailed error messages');
+    console.log('  --help     Show this help');
+    process.exit(0);
   }
 
   const fullPath = path.resolve(inputPath);
@@ -2162,34 +2210,18 @@ function main() {
   let displayPath = inputPath;
 
   if (stats.isDirectory()) {
-    // Merge all JSON files in directory
-    const jsonFiles = fs.readdirSync(fullPath)
-      .filter(f => f.endsWith('.json'))
-      .sort()
-      .map(f => path.join(fullPath, f));
-
-    if (jsonFiles.length === 0) {
-      console.error(`Error: No JSON files found in ${inputPath}`);
-      process.exit(1);
-    }
-
-    config = {};
-    for (const file of jsonFiles) {
-      try {
-        const content = fs.readFileSync(file, 'utf-8');
-        const parsed = JSON.parse(content);
-        Object.assign(config, parsed);
-      } catch (err) {
-        if (err instanceof SyntaxError) {
-          console.error(`Error: Invalid JSON in ${path.basename(file)}`);
-          console.error(`  ${err.message}`);
-        } else {
-          console.error(`Error reading ${path.basename(file)}: ${err.message}`);
-        }
+    try {
+      const merged = loadAndMergeTabs(fullPath);
+      if (merged.files.length === 0) {
+        console.error(`Error: No JSON files found in ${inputPath}`);
         process.exit(1);
       }
+      config = merged.config;
+      displayPath = `${inputPath} (${merged.files.length} files)`;
+    } catch (err) {
+      console.error(`Error: ${err.message}`);
+      process.exit(1);
     }
-    displayPath = `${inputPath} (${jsonFiles.length} files)`;
   } else {
     // Single file
     try {
@@ -2217,4 +2249,9 @@ function main() {
   process.exit(result.errors.length > 0 ? 1 : 0);
 }
 
-main();
+try {
+  main();
+} catch (error) {
+  console.error(`Error: ${error.message}`);
+  process.exit(1);
+}

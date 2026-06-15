@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "meteion-story-instructions",
+  "name": "Meteion Story Instructions",
+  "source": "Meteion",
+  "sourceVersion": "1.0.0",
+  "description": "Read-only reference instruction-set material for story style, narrator voice, naming filters, and source metadata.",
+  "compatibleFormats": ["voyage-v33"],
+  "domains": ["ai-instructions", "source-metadata", "name-filter-settings", "narrator-style"],
+  "licenseNotes": "Legacy local reference material; preserve upstream/source attribution when adapting manually.",
+  "files": [
+    "Cliche-Filter-Plus.json",
+    "Sonnet-Plus-Story-Instruction-Set.json"
+  ],
+  "sourceSections": [
+    {
+      "file": "Cliche-Filter-Plus.json",
+      "sourcePath": "mods",
+      "candidateTargetPath": "sourceMetadata",
+      "candidateTargetFile": "meta.json",
+      "domain": "source-metadata"
+    },
+    {
+      "file": "Cliche-Filter-Plus.json",
+      "sourcePath": "aiInstructions",
+      "candidateTargetPath": "aiInstructions",
+      "candidateTargetFile": "ai-instructions.json",
+      "domain": "ai-instructions"
+    },
+    {
+      "file": "Cliche-Filter-Plus.json",
+      "sourcePath": "nameFilterSettings",
+      "candidateTargetPath": "nameFilterSettings",
+      "candidateTargetFile": "meta.json",
+      "domain": "name-filter-settings"
+    },
+    {
+      "file": "Sonnet-Plus-Story-Instruction-Set.json",
+      "sourcePath": "mods",
+      "candidateTargetPath": "sourceMetadata",
+      "candidateTargetFile": "meta.json",
+      "domain": "source-metadata"
+    },
+    {
+      "file": "Sonnet-Plus-Story-Instruction-Set.json",
+      "sourcePath": "aiInstructions",
+      "candidateTargetPath": "aiInstructions",
+      "candidateTargetFile": "ai-instructions.json",
+      "domain": "ai-instructions"
+    },
+    {
+      "file": "Sonnet-Plus-Story-Instruction-Set.json",
+      "sourcePath": "narratorStyle",
+      "candidateTargetPath": "narratorStyle",
+      "candidateTargetFile": "meta.json",
+      "domain": "narrator-style"
+    }
+  ]
+}

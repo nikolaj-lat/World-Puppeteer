@@ -20,7 +20,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { resolveWorld } = require('./world-puppeteer-lib.cjs');
+const { loadAndMergeTabs, resolveWorld } = require('./world-puppeteer-lib.cjs');
 
 // Section character limits (from validation.md)
 const SECTION_LIMITS = {
@@ -97,6 +97,25 @@ const SETTINGS_ENTRY_LIMITS = {
 const AI_INSTRUCTION_INDIVIDUAL_LIMIT = 5_000;
 const AI_INSTRUCTION_COMBINED_LIMIT = 20_000;
 
+function codePointLength(value) {
+  return Array.from(value).length;
+}
+
+function collectAiInstructionTexts(value, pathName) {
+  if (typeof value === 'string') return [{ path: pathName, text: value }];
+  if (Array.isArray(value)) {
+    return value.flatMap((item, index) =>
+      collectAiInstructionTexts(item, `${pathName}[${index}]`)
+    );
+  }
+  if (value && typeof value === 'object') {
+    return Object.entries(value).flatMap(([key, child]) =>
+      collectAiInstructionTexts(child, `${pathName}.${key}`)
+    );
+  }
+  return [];
+}
+
 // Game mode field limits (per mode)
 const GAME_MODE_FIELD_LIMITS = {
   name: 120,
@@ -157,7 +176,8 @@ function analyzeConfig(config) {
     counts: {},
     aiInstructions: {
       individual: [],
-      combinedTotal: 0,
+      tasks: [],
+      taskLimit: AI_INSTRUCTION_COMBINED_LIMIT,
     },
     triggers: {
       oversizedConditions: [],
@@ -392,39 +412,32 @@ function analyzeConfig(config) {
     }
   }
 
-  // AI Instructions analysis
-  if (config.aiInstructions) {
-    let combinedTotal = 0;
-    for (const [taskId, taskInstructions] of Object.entries(config.aiInstructions)) {
-      if (Array.isArray(taskInstructions)) {
-        for (let i = 0; i < taskInstructions.length; i++) {
-          const instr = taskInstructions[i];
-          if (typeof instr === 'string') {
-            const len = instr.length;
-            combinedTotal += len;
-            if (len > AI_INSTRUCTION_INDIVIDUAL_LIMIT) {
-              result.aiInstructions.individual.push({
-                path: `aiInstructions.${taskId}[${i}]`,
-                used: len,
-                limit: AI_INSTRUCTION_INDIVIDUAL_LIMIT,
-              });
-            }
-          } else if (instr && typeof instr === 'object' && instr.instruction) {
-            const len = instr.instruction.length;
-            combinedTotal += len;
-            if (len > AI_INSTRUCTION_INDIVIDUAL_LIMIT) {
-              result.aiInstructions.individual.push({
-                path: `aiInstructions.${taskId}[${i}].instruction`,
-                used: len,
-                limit: AI_INSTRUCTION_INDIVIDUAL_LIMIT,
-              });
-            }
-          }
+  // AI instruction limits:
+  // - 5,000 Unicode codepoints per string leaf
+  // - 20,000 Unicode codepoints per top-level task value, measured from
+  //   JSON.stringify(taskValue, null, 2)
+  if (config.aiInstructions && typeof config.aiInstructions === 'object') {
+    for (const [taskId, taskValue] of Object.entries(config.aiInstructions)) {
+      const taskPath = `aiInstructions.${taskId}`;
+      const taskUsed = codePointLength(JSON.stringify(taskValue, null, 2));
+
+      result.aiInstructions.tasks.push({
+        path: taskPath,
+        used: taskUsed,
+        limit: AI_INSTRUCTION_COMBINED_LIMIT,
+      });
+
+      for (const entry of collectAiInstructionTexts(taskValue, taskPath)) {
+        const used = codePointLength(entry.text);
+        if (used > AI_INSTRUCTION_INDIVIDUAL_LIMIT) {
+          result.aiInstructions.individual.push({
+            path: entry.path,
+            used,
+            limit: AI_INSTRUCTION_INDIVIDUAL_LIMIT,
+          });
         }
       }
     }
-    result.aiInstructions.combinedTotal = combinedTotal;
-    result.aiInstructions.combinedLimit = AI_INSTRUCTION_COMBINED_LIMIT;
   }
 
   // Game mode field analysis
@@ -638,15 +651,25 @@ function printReport(result, inputPath) {
   }
 
   // AI Instructions
-  if (result.aiInstructions.combinedTotal > 0) {
+  if (result.aiInstructions.tasks.length > 0) {
     console.log('\n🤖 AI INSTRUCTIONS');
     console.log('─'.repeat(50));
-    const status = getStatus(result.aiInstructions.combinedTotal, result.aiInstructions.combinedLimit);
-    console.log(`  Combined total: ${formatNumber(result.aiInstructions.combinedTotal)} / ${formatNumber(result.aiInstructions.combinedLimit)}  ${status}`);
+
+    for (const task of result.aiInstructions.tasks) {
+      const status = getStatus(task.used, task.limit);
+      console.log(
+        `  ${task.path}: ${formatNumber(task.used)} / ` +
+        `${formatNumber(task.limit)}  ${status}`
+      );
+    }
+
     if (result.aiInstructions.individual.length > 0) {
-      console.log('\n  Individual instructions over limit:');
+      console.log('\n  String leaves over limit:');
       for (const item of result.aiInstructions.individual) {
-        console.log(`    🔴 ${item.path}: ${formatNumber(item.used)} / ${formatNumber(item.limit)}`);
+        console.log(
+          `    🔴 ${item.path}: ${formatNumber(item.used)} / ` +
+          `${formatNumber(item.limit)}`
+        );
       }
     }
   }
@@ -760,7 +783,7 @@ function printReport(result, inputPath) {
     result.imagePrompts.oversized.length +
     (result.imagePrompts.total !== null && result.imagePrompts.total.used > result.imagePrompts.total.limit ? 1 : 0) +
     result.settingsEntries.oversized.length +
-    (result.aiInstructions.combinedTotal > result.aiInstructions.combinedLimit ? 1 : 0) +
+    result.aiInstructions.tasks.filter((task) => task.used > task.limit).length +
     result.aiInstructions.individual.length;
 
   if (totalIssues === 0) {
@@ -800,29 +823,18 @@ function main() {
   let displayPath = inputPath;
 
   if (stats.isDirectory()) {
-    // Merge all JSON files in directory
-    const jsonFiles = fs.readdirSync(fullPath)
-      .filter(f => f.endsWith('.json'))
-      .sort()
-      .map(f => path.join(fullPath, f));
-
-    if (jsonFiles.length === 0) {
-      console.error(`Error: No JSON files found in ${inputPath}`);
-      process.exit(1);
-    }
-
-    config = {};
-    for (const file of jsonFiles) {
-      try {
-        const content = fs.readFileSync(file, 'utf-8');
-        const parsed = JSON.parse(content);
-        Object.assign(config, parsed);
-      } catch (err) {
-        console.error(`Error reading ${path.basename(file)}: ${err.message}`);
+    try {
+      const merged = loadAndMergeTabs(fullPath);
+      if (merged.files.length === 0) {
+        console.error(`Error: No JSON files found in ${inputPath}`);
         process.exit(1);
       }
+      config = merged.config;
+      displayPath = `${inputPath} (${merged.files.length} files)`;
+    } catch (err) {
+      console.error(`Error: ${err.message}`);
+      process.exit(1);
     }
-    displayPath = `${inputPath} (${jsonFiles.length} files)`;
   } else {
     // Single file
     try {
@@ -860,7 +872,7 @@ function main() {
     result.imagePrompts.oversized.length > 0 ||
     (result.imagePrompts.total !== null && result.imagePrompts.total.used > result.imagePrompts.total.limit) ||
     result.settingsEntries.oversized.length > 0 ||
-    result.aiInstructions.combinedTotal > result.aiInstructions.combinedLimit ||
+    result.aiInstructions.tasks.some((task) => task.used > task.limit) ||
     result.aiInstructions.individual.length > 0;
 
   process.exit(hasViolations ? 1 : 0);

@@ -3,7 +3,6 @@ name: npcs
 description: |
   Use this agent when the user wants to add or edit NPCs.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - npcs
 ---

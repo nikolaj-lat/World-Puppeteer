@@ -1,6 +1,9 @@
 # macOS
 .DS_Store
 
+# Node tooling dependencies
+node_modules/
+
 # World specific files
 /config.json
 /HxH-Full-Canon-Reference.json
@@ -18,6 +21,7 @@ TASKS.md
 config-backups/
 images/
 stuff/
+.world-puppeteer/reports/
 dashboard.html
 memory/
 hxh_hunter_exam_campaign_rebuild/*

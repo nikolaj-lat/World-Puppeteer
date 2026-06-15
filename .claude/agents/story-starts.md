@@ -3,7 +3,6 @@ name: story-starts
 description: |
   Use this agent when the user wants to add or edit story starts. Story starts are the initial scenarios players can choose when starting a game.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - story-starts
 ---

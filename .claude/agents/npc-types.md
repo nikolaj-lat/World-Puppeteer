@@ -3,7 +3,6 @@ name: npc-types
 description: |
   Use this agent when the user wants to add or edit NPC types. NPC types are templates that define categories of NPCs with shared resistances, vulnerabilities, and immunities.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - npc-types
 ---

@@ -3,7 +3,6 @@ name: review-npcs
 description: |
   Use this agent to perform a narrative review of all NPCs — checking internal consistency, writing quality, narrative depth, and thematic coherence.
 model: inherit
-permissionMode: bypassPermissions
 skills:
   - review-npcs
 ---

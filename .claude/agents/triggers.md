@@ -3,7 +3,6 @@ name: triggers
 description: |
   Use this agent when the user wants to add or edit triggers. Triggers are event-driven rules that fire when conditions are met.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - triggers
 ---

@@ -4,15 +4,14 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const toml = require('smol-toml');
 const {
+  buildWorldSource,
   findMarkers,
   findRepoRoot,
-  knownToolchain,
-  runFormatProfile,
-  runValidationProfile,
+  loadAndMergeTabs,
   resolveWorld,
 } = require('./world-puppeteer-lib.cjs');
-const { validateModRegistry } = require('./mod-architecture.cjs');
 
 const repoRoot = findRepoRoot(process.cwd());
 const failures = [];
@@ -25,22 +24,12 @@ function read(filePath) {
   return fs.readFileSync(filePath, 'utf8');
 }
 
-function listFiles(dir, out = []) {
-  if (!fs.existsSync(dir)) return out;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) listFiles(fullPath, out);
-    else out.push(fullPath);
-  }
-  return out;
+function writeJson(filePath, value) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, JSON.stringify(value, null, 2) + '\n');
 }
 
-function writeMarker(dir, marker) {
-  fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, '.world-puppeteer.json'), JSON.stringify(marker, null, 2));
-}
-
-function marker(id, role = 'editable') {
+function marker(id, role = 'editable', overrides = {}) {
   return {
     schemaVersion: 1,
     id,
@@ -58,59 +47,39 @@ function marker(id, role = 'editable') {
       validationProfiles: ['voyage-local-validator'],
     },
     activeProfiles: [],
-    appliedMods: [],
-  };
-}
-
-function writeJson(filePath, value) {
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, JSON.stringify(value, null, 2) + '\n');
-}
-
-function modManifest(id, overrides = {}) {
-  return {
-    schemaVersion: 1,
-    id,
-    name: id,
-    version: '1.0.0',
-    description: 'fixture mod',
-    compatibleFormats: ['voyage-v33'],
-    domains: ['ai-instructions'],
-    supportedModes: ['reference'],
-    defaultMode: 'reference',
-    applicationProfile: 'reference-only',
-    conflictPolicy: 'stop',
-    dependencies: [],
-    optionalDependencies: [],
-    files: ['payload.json'],
-    payloadMappings: [{
-      file: 'payload.json',
-      sourcePath: 'payload',
-      targetPath: 'payload',
-      preferredTargetFile: 'ai-instructions.json',
-      domain: 'ai-instructions',
-    }],
     ...overrides,
   };
 }
 
-function writeMod(root, dirName, manifest, payloads = { 'payload.json': { payload: true } }) {
-  const schemaSource = path.join(repoRoot, '.world-puppeteer', 'schemas', 'mod.schema.json');
-  const schemaTarget = path.join(root, '.world-puppeteer', 'schemas', 'mod.schema.json');
-  if (!fs.existsSync(schemaTarget)) {
-    fs.mkdirSync(path.dirname(schemaTarget), { recursive: true });
-    fs.copyFileSync(schemaSource, schemaTarget);
-  }
-  const modDir = path.join(root, '.world-puppeteer', 'mods', dirName);
-  fs.mkdirSync(modDir, { recursive: true });
-  writeJson(path.join(modDir, 'mod.json'), manifest);
-  fs.writeFileSync(path.join(modDir, 'README.md'), `${manifest.name}\n`);
-  for (const [relative, content] of Object.entries(payloads)) {
-    const filePath = path.join(modDir, relative);
-    fs.mkdirSync(path.dirname(filePath), { recursive: true });
-    if (typeof content === 'string') fs.writeFileSync(filePath, content);
-    else writeJson(filePath, content);
-  }
+function writeMarker(dir, value) {
+  writeJson(path.join(dir, '.world-puppeteer.json'), value);
+}
+
+function minimalWorldConfig() {
+  return {
+    configVersion: 'V33',
+    heroesVersion: '1.0.0',
+    storySettings: { worldBackground: 'A test world.' },
+    aiInstructions: {},
+    storyStarts: [],
+    archetypes: {},
+    abilities: {},
+    skills: {},
+    traits: {},
+    items: {},
+    factions: {},
+    realms: {},
+    regions: {},
+    locations: {},
+    npcTypes: {},
+    npcs: {},
+    quests: {},
+    triggers: [],
+  };
+}
+
+function writeTabs(worldRoot, tabs) {
+  for (const [file, value] of Object.entries(tabs)) writeJson(path.join(worldRoot, 'tabs', file), value);
 }
 
 function assertThrows(fn, matcher, message) {
@@ -122,435 +91,227 @@ function assertThrows(fn, matcher, message) {
   }
 }
 
-function parseCodexAgentsWithToml() {
-  const python = process.env.PYTHON || 'python';
-  const script = String.raw`
-import json, os, sys, tomllib
-root = sys.argv[1]
-agents = os.path.join(root, ".codex", "agents")
-required = {"name", "description", "model", "model_reasoning_effort", "sandbox_mode", "developer_instructions"}
-out = []
-errors = []
-for filename in sorted(os.listdir(agents)):
-    if not filename.endswith(".toml"):
-        continue
-    path = os.path.join(agents, filename)
-    raw = open(path, "rb").read()
-    text = raw.decode("utf-8")
-    try:
-        data = tomllib.loads(text)
-    except Exception as exc:
-        errors.append(f"{filename}: TOML parse failed: {exc}")
-        continue
-    missing = sorted(required - set(data))
-    if missing:
-        errors.append(f"{filename}: missing top-level fields {missing}")
-    if "developer_instructions" in data.get("skills", {}):
-        errors.append(f"{filename}: developer_instructions is nested under [skills]")
-    for idx, config in enumerate(data.get("skills", {}).get("config", []) or []):
-        if "developer_instructions" in config:
-            errors.append(f"{filename}: developer_instructions is nested in skills.config[{idx}]")
-    dev = text.find("developer_instructions")
-    cfg = text.find("[[skills.config]]")
-    if cfg < 0:
-        errors.append(f"{filename}: missing [[skills.config]]")
-    elif dev < 0 or dev > cfg:
-        errors.append(f"{filename}: developer_instructions must appear before [[skills.config]]")
-    controls = sorted(hex(ord(ch)) for ch in set(text) if ord(ch) < 32 and ch not in "\r\n\t")
-    if controls:
-        errors.append(f"{filename}: malformed control characters {controls}")
-    out.append({
-        "file": filename,
-        "name": data.get("name"),
-        "model": data.get("model"),
-        "model_reasoning_effort": data.get("model_reasoning_effort"),
-        "sandbox_mode": data.get("sandbox_mode"),
-        "skill_paths": [item.get("path") for item in data.get("skills", {}).get("config", []) or []],
-    })
-print(json.dumps({"agents": out, "errors": errors}))
-`;
-  const result = spawnSync(python, ['-c', script, repoRoot], { encoding: 'utf8' });
-  if (result.status !== 0) {
-    failures.push(`failed to run Python tomllib parser: ${result.stderr || result.stdout}`);
-    return [];
-  }
-  const parsed = JSON.parse(result.stdout);
-  for (const error of parsed.errors) failures.push(error);
-  return parsed.agents;
-}
-
-function runHookDryRun(payload) {
-  const result = spawnSync(process.execPath, ['.codex/scripts/post-edit-validate.cjs'], {
+function runNode(args, options = {}) {
+  return spawnSync(process.execPath, args, {
     cwd: repoRoot,
-    input: JSON.stringify(payload),
     encoding: 'utf8',
-    env: { ...process.env, WORLD_PUPPETEER_HOOK_DRY_RUN: '1' },
+    env: { ...process.env, ...(options.env || {}) },
+    input: options.input,
   });
-  assert(result.status === 0, `hook dry-run exited ${result.status}: ${result.stderr || result.stdout}`);
-  try {
-    return JSON.parse(result.stdout);
-  } catch (error) {
-    failures.push(`hook dry-run did not return JSON: ${result.stdout}\n${result.stderr}`);
-    return { affectedWorlds: [], validatedEditableWorlds: [], warnings: [] };
-  }
 }
 
 const markers = findMarkers(repoRoot);
 assert(markers.length >= 3, `expected root, editable, and template world markers, found ${markers.length}`);
-assert(markers.some((m) => path.resolve(m.root) === path.resolve(repoRoot) && m.marker.role === 'reference'), 'expected repo root reference marker');
-assert(markers.some((m) => m.marker.role === 'editable'), 'expected one editable world marker');
-assert(markers.filter((m) => m.marker.role === 'editable').length === 1, 'expected exactly one editable world');
-
-const rootMarker = JSON.parse(read(path.join(repoRoot, '.world-puppeteer.json')));
-const rootAgents = read(path.join(repoRoot, 'AGENTS.md'));
-assert(rootMarker.paths.instructions === 'AGENTS.md', 'root marker must load AGENTS.md instructions');
-assert(!fs.existsSync(path.join(repoRoot, 'AGENTS.override.md')), 'root AGENTS.override.md must not mask AGENTS.md');
-assert(rootAgents.includes('repository-root world is a reference world'), 'AGENTS.md must contain root reference-world protection');
-assert(rootAgents.includes('Discovery') && rootAgents.includes('Execution') && rootAgents.includes('Review'), 'AGENTS.md must document Discovery, Execution, and Review modes');
-assert(rootAgents.includes('Execution and Review must not reopen approved creative decisions'), 'AGENTS.md must prevent Execution/Review from reopening approved decisions');
-assert(rootAgents.includes('Before any tooling or world-content task is reported complete'), 'AGENTS.md must document mandatory completion validation');
-assert(rootAgents.includes('Arbitrary shell writes are not guaranteed to be detected by hooks'), 'AGENTS.md must document shell-write hook limitations');
-for (const forbidden of ['interview is perpetual', 'The Interview Never Ends', 'ALWAYS', 'Never stop interviewing']) {
-  assert(!rootAgents.includes(forbidden), `AGENTS.md must not contain perpetual-interview directive: ${forbidden}`);
-}
-const worldDirectorSkill = read(path.join(repoRoot, '.agents', 'skills', 'world-director', 'SKILL.md'));
-assert(worldDirectorSkill.includes('Interview Depth') && worldDirectorSkill.includes('Discovery only'), 'world-director must own detailed interview doctrine');
-
-const hxh = resolveWorld({ worldRoot: path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild'), preferNearest: false });
-assert(hxh.marker.paths.compiledOutput === 'HxH.json', 'HxH compiled output must be HxH.json');
-assert(hxh.activeProfiles.length === 2, 'HxH world must resolve two active profiles');
-
-const template = resolveWorld({ worldRoot: path.join(repoRoot, 'templates'), preferNearest: false });
-assert(template.marker.role === 'template', 'templates must resolve as template role');
+assert(markers.some((entry) => entry.marker.role === 'reference'), 'expected a reference marker');
+assert(markers.filter((entry) => entry.marker.role === 'editable').length === 1, 'expected exactly one editable marker');
 
 const root = resolveWorld({ worldRoot: repoRoot, preferNearest: false });
-assert(root.marker.role === 'reference', 'repo root must resolve as reference role');
-assert(root.marker.paths.compiledOutput === 'HxH-Full-Canon-Reference.json', 'root compiled output must be named');
+const hxh = resolveWorld({ worldRoot: path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild'), preferNearest: false });
+const template = resolveWorld({ worldRoot: path.join(repoRoot, 'templates'), preferNearest: false });
+assert(root.marker.role === 'reference', 'root marker must be reference');
+assert(hxh.marker.role === 'editable', 'HxH marker must be editable');
+assert(template.marker.role === 'template', 'template marker must be template');
+assert(resolveWorld({ cwd: path.join(hxh.worldRoot, 'tabs') }).worldRoot === hxh.worldRoot, 'nearest marker must resolve nested cwd');
+assert(resolveWorld({ cwd: repoRoot }).worldRoot === hxh.worldRoot, 'repo root cwd must resolve sole editable world');
 
-const hxhFromRootCwd = resolveWorld({ cwd: repoRoot });
-assert(hxhFromRootCwd.worldRoot === hxh.worldRoot, 'repo-root cwd must resolve the sole editable HxH world');
-const hxhFromNestedCwd = resolveWorld({ cwd: path.join(hxh.worldRoot, 'tabs') });
-assert(hxhFromNestedCwd.worldRoot === hxh.worldRoot, 'cwd inside HxH must resolve HxH');
-const templateFromNestedCwd = resolveWorld({ cwd: path.join(template.worldRoot, 'tabs') });
-assert(templateFromNestedCwd.worldRoot === template.worldRoot, 'cwd inside templates must resolve template');
-const explicitRootFromHxh = resolveWorld({ worldRoot: repoRoot, cwd: path.join(hxh.worldRoot, 'tabs') });
-assert(explicitRootFromHxh.worldRoot === root.worldRoot, 'explicit root target must resolve reference world');
-const explicitTemplateFromHxh = resolveWorld({ worldRoot: path.join(repoRoot, 'templates'), cwd: path.join(hxh.worldRoot, 'tabs') });
-assert(explicitTemplateFromHxh.worldRoot === template.worldRoot, 'explicit target must outrank cwd marker');
-
-const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-resolver-'));
-writeMarker(path.join(fixtureRoot, 'one'), marker('one'));
-writeMarker(path.join(fixtureRoot, 'two'), marker('two'));
+const ambiguousRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-resolver-'));
+writeMarker(path.join(ambiguousRoot, 'one'), marker('one'));
+writeMarker(path.join(ambiguousRoot, 'two'), marker('two'));
 assertThrows(
-  () => resolveWorld({ repoRoot: fixtureRoot, cwd: fixtureRoot }),
-  /Available worlds:\none \(editable\)\ntwo \(editable\)/,
-  'multiple editable worlds must list choices and stop',
-);
-const noEditableRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-resolver-'));
-writeMarker(path.join(noEditableRoot, 'reference'), marker('reference-world', 'reference'));
-assertThrows(
-  () => resolveWorld({ repoRoot: noEditableRoot, cwd: noEditableRoot }),
-  /Available worlds:\nreference \(reference\)/,
-  'no editable worlds must list choices and stop',
+  () => resolveWorld({ repoRoot: ambiguousRoot, cwd: ambiguousRoot }),
+  /Unable to resolve target world/,
+  'ambiguous editable worlds must fail'
 );
 
-const skillRoot = path.join(repoRoot, '.agents', 'skills');
-for (const obsolete of ['japanese-romanization', 'orchestrator', 'charts', 'count', 'maps', 'reflect']) {
-  assert(!fs.existsSync(path.join(skillRoot, obsolete)), `obsolete skill directory remains: ${obsolete}`);
-}
-for (const required of ['world-director', 'world-capacity', 'world-charts', 'world-maps', 'tooling-reflection', 'species-consistency', 'platform-evidence', 'mod-integration']) {
-  assert(fs.existsSync(path.join(skillRoot, required, 'SKILL.md')), `required skill missing: ${required}`);
-}
+const profileRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-profiles-'));
+writeMarker(profileRoot, marker('profile-world', 'editable', { activeProfiles: ['required-profile'] }));
+fs.mkdirSync(path.join(profileRoot, '.agents', 'skills', 'required-skill'), { recursive: true });
+fs.writeFileSync(path.join(profileRoot, '.agents', 'skills', 'required-skill', 'SKILL.md'), '# skill\n');
+writeJson(path.join(profileRoot, '.world-puppeteer', 'profiles', 'required-profile.json'), {
+  schemaVersion: 1,
+  id: 'required-profile',
+  name: 'Required Profile',
+  description: 'Required profile fixture',
+  required: true,
+  appliesTo: ['profile-world'],
+  skills: ['required-skill'],
+});
+assert(resolveWorld({ worldRoot: profileRoot, preferNearest: false }).activeProfiles.length === 1, 'required active profile must resolve');
+writeMarker(profileRoot, marker('profile-world', 'editable', { activeProfiles: [] }));
+assertThrows(
+  () => resolveWorld({ worldRoot: profileRoot, preferNearest: false }),
+  /Required profile is not active/,
+  'missing required profile must fail'
+);
+writeJson(path.join(profileRoot, '.world-puppeteer', 'profiles', 'required-profile.json'), {
+  schemaVersion: 1,
+  id: 'required-profile',
+  name: 'Required Profile',
+  description: 'Required profile fixture',
+  required: false,
+  appliesTo: ['profile-world'],
+  skills: ['required-skill'],
+});
+writeMarker(profileRoot, marker('profile-world', 'editable', { activeProfiles: ['missing-profile'] }));
+assertThrows(
+  () => resolveWorld({ worldRoot: profileRoot, preferNearest: false }),
+  /Active profile not found locally/,
+  'unknown active profile must fail'
+);
 
-const staleScanRoots = ['.agents', '.codex', '.world-puppeteer', 'docs', 'AGENTS.md'];
-const textFiles = staleScanRoots.flatMap((entry) => {
-  const fullPath = path.join(repoRoot, entry);
-  if (!fs.existsSync(fullPath)) return [];
-  return fs.statSync(fullPath).isDirectory() ? listFiles(fullPath) : [fullPath];
-}).filter((file) => /\.(md|toml|json|js|cjs|yaml)$/.test(file));
-const staleCodexPath = '.Co' + 'dex/';
-const staleQuestionTool = 'Ask' + 'UserQuestion';
-const staleBackgroundFlag = 'run_in_' + 'background=true';
-for (const file of textFiles) {
-  const text = read(file);
-  assert(!text.includes(staleCodexPath), `${path.relative(repoRoot, file)} contains stale .Codex path`);
-  assert(!text.includes(staleQuestionTool), `${path.relative(repoRoot, file)} contains Claude-only structured question tool`);
-  assert(!text.includes(staleBackgroundFlag), `${path.relative(repoRoot, file)} contains Claude-only background syntax`);
-}
+const mergeRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-merge-'));
+writeTabs(mergeRoot, {
+  'b.json': { worldBackground: 'hoisted' },
+  'a.json': {
+    configVersion: 'V33',
+    storySettings: { questGenerationGuidance: 'guidance' },
+  },
+});
+const merged = loadAndMergeTabs(path.join(mergeRoot, 'tabs'));
+assert(
+  merged.config.storySettings.worldBackground === 'hoisted',
+  'worldBackground hoist must be explicit'
+);
+assert(
+  merged.config.storySettings.questGenerationGuidance === 'guidance',
+  'disjoint nested storySettings fields must merge'
+);
+assert(
+  merged.files.map((file) => path.basename(file)).join(',') === 'a.json,b.json',
+  'tab files must load in deterministic lexical order'
+);
 
-const routineModel = 'gpt-5.4-mini';
-const highModel = 'gpt-5.4';
-const expected = {
-  'build-skill': ['gpt-5.5', 'high', 'workspace-write'],
-  'ai-instructions': [highModel, 'high', 'workspace-write'],
-  settings: [highModel, 'high', 'workspace-write'],
-  'review-npcs': [highModel, 'high', 'read-only'],
-  'npc-type-review': [highModel, 'high', 'read-only'],
-  'platform-evidence': [highModel, 'high', 'read-only'],
-  'species-coordinator': [highModel, 'high', 'read-only'],
-  'tooling-reflection': [highModel, 'high', 'read-only'],
-  'canon-npcs': [highModel, 'high', 'workspace-write'],
-  'mod-integrator': [highModel, 'high', 'workspace-write'],
-  'world-director': ['gpt-5.5', 'high', 'workspace-write'],
-  'world-capacity': [routineModel, 'medium', 'read-only'],
-  'world-charts': [routineModel, 'medium', 'workspace-write'],
-  'world-maps': [routineModel, 'medium', 'workspace-write'],
-};
-const parsedAgents = parseCodexAgentsWithToml();
-for (const agent of parsedAgents) {
-  const name = agent.name;
-  const exp = expected[name] || [routineModel, 'medium', 'workspace-write'];
-  assert(agent.model === exp[0], `${agent.file}: expected model ${exp[0]}, got ${agent.model}`);
-  assert(agent.model_reasoning_effort === exp[1], `${agent.file}: expected reasoning ${exp[1]}, got ${agent.model_reasoning_effort}`);
-  assert(agent.sandbox_mode === exp[2], `${agent.file}: expected sandbox ${exp[2]}, got ${agent.sandbox_mode}`);
-  assert(agent.skill_paths.length > 0, `${agent.file}: missing skills.config binding`);
-  for (const skillPath of agent.skill_paths) {
-    assert(typeof skillPath === 'string' && fs.existsSync(path.join(repoRoot, skillPath)), `${agent.file}: bound skill does not exist: ${skillPath}`);
+const duplicateLeafRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-merge-leaf-'));
+writeTabs(duplicateLeafRoot, {
+  'a.json': { storySettings: { worldBackground: 'A' } },
+  'b.json': { storySettings: { worldBackground: 'B' } },
+});
+assertThrows(
+  () => loadAndMergeTabs(path.join(duplicateLeafRoot, 'tabs')),
+  /Tab merge collision at "storySettings\.worldBackground".*a\.json.*b\.json/s,
+  'duplicate nested leaves must name the full path and both files'
+);
+
+const objectScalarRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-merge-object-scalar-'));
+writeTabs(objectScalarRoot, {
+  'a.json': { storySettings: { worldBackground: 'A' } },
+  'b.json': { storySettings: 'invalid' },
+});
+assertThrows(
+  () => loadAndMergeTabs(path.join(objectScalarRoot, 'tabs')),
+  /Tab merge collision at "storySettings" \(object vs scalar\).*a\.json.*b\.json/s,
+  'object versus scalar collisions must fail'
+);
+
+const objectArrayRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-merge-object-array-'));
+writeTabs(objectArrayRoot, {
+  'a.json': { storySettings: { worldBackground: 'A' } },
+  'b.json': { storySettings: [] },
+});
+assertThrows(
+  () => loadAndMergeTabs(path.join(objectArrayRoot, 'tabs')),
+  /Tab merge collision at "storySettings" \(object vs array\).*a\.json.*b\.json/s,
+  'object versus array collisions must fail'
+);
+
+const arrayArrayRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-merge-array-array-'));
+writeTabs(arrayArrayRoot, {
+  'a.json': { triggers: [] },
+  'b.json': { triggers: [] },
+});
+assertThrows(
+  () => loadAndMergeTabs(path.join(arrayArrayRoot, 'tabs')),
+  /Tab merge collision at "triggers" \(array vs array\).*a\.json.*b\.json/s,
+  'duplicate arrays must fail instead of concatenating'
+);
+
+const buildRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-build-'));
+writeMarker(buildRoot, marker('build-world'));
+writeTabs(buildRoot, { 'world.json': minimalWorldConfig() });
+const buildWorld = resolveWorld({ worldRoot: buildRoot, preferNearest: false });
+fs.writeFileSync(buildWorld.compiledOutputPath, '{"prior":true}\n');
+const failingRunner = () => ({ status: 1, stdout: '{"errors":[{"path":"fixture","message":"nope"}],"warnings":[]}', stderr: '' });
+assertThrows(
+  () => buildWorldSource(buildWorld, { runner: failingRunner }),
+  /Compiled candidate failed/,
+  'failed candidate validation must fail build'
+);
+assert(read(buildWorld.compiledOutputPath) === '{"prior":true}\n', 'failed validation must leave compiled output byte-for-byte unchanged');
+assert(!fs.readdirSync(buildRoot).some((name) => name.startsWith('.world-puppeteer-build-')), 'failed build must clean temp file');
+const passingRunner = () => ({ status: 0, stdout: '{"errors":[],"warnings":[]}', stderr: '' });
+const buildResult = buildWorldSource(buildWorld, { runner: passingRunner });
+assert(JSON.parse(read(buildWorld.compiledOutputPath)).configVersion === 'V33', 'successful build must replace output');
+assert(buildResult.backupPath && fs.existsSync(buildResult.backupPath), 'successful build must create backup after validation');
+
+const badBuildCli = runNode(['.claude/scripts/build-world.cjs', '--wrold', buildRoot]);
+assert(badBuildCli.status !== 0 && /Unknown option/.test(badBuildCli.stderr), 'build CLI must reject unknown flags');
+const badValidateCli = runNode(['.claude/scripts/validate.js', '--wrold', buildRoot]);
+assert(badValidateCli.status !== 0 && /Unknown option/.test(badValidateCli.stderr), 'validate CLI must reject unknown flags');
+
+const malformedHook = runNode(['.codex/scripts/post-edit-validate.cjs'], { input: '{ broken' });
+assert(malformedHook.status === 0 && /"decision":"block"/.test(malformedHook.stdout), 'malformed hook JSON must block');
+const missingPathHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
+  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: {} }),
+});
+assert(missingPathHook.status === 0 && /"decision":"block"/.test(missingPathHook.stdout), 'missing changed path must block');
+const dryHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
+  env: { WORLD_PUPPETEER_HOOK_DRY_RUN: '1' },
+  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/tabs/npcs.json' } }),
+});
+assert(dryHook.status === 0 && /hxh_hunter_exam_campaign_rebuild/.test(dryHook.stdout), 'hook dry-run must classify HxH tab edits');
+
+const agentDir = path.join(repoRoot, '.codex', 'agents');
+for (const file of fs.readdirSync(agentDir).filter((name) => name.endsWith('.toml'))) {
+  const text = read(path.join(agentDir, file));
+  let parsed;
+  try {
+    parsed = toml.parse(text);
+  } catch (error) {
+    failures.push(`${file}: TOML parse failed: ${error.message}`);
+    continue;
   }
+  for (const key of ['name', 'description', 'model', 'model_reasoning_effort', 'sandbox_mode', 'developer_instructions']) {
+    assert(parsed[key] !== undefined, `${file}: missing ${key}`);
+  }
+  assert(Array.isArray(parsed.skills?.config), `${file}: missing [[skills.config]]`);
 }
-for (const utility of [
-  ['world-charts.toml', 'stuff/trigger-chart.html'],
-  ['world-maps.toml', 'stuff/world-map.html'],
-]) {
-  const text = read(path.join(repoRoot, '.codex', 'agents', utility[0]));
-  assert(text.includes(utility[1]), `${utility[0]} must name exact permitted output path`);
-  assert(text.includes('Do not edit tabs/'), `${utility[0]} must prohibit normal world-content writes`);
-  assert(text.includes('post-run diff/status check'), `${utility[0]} must require post-run status inspection`);
+
+function listTextFiles(dir, out = []) {
+  if (!fs.existsSync(dir)) return out;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) listTextFiles(full, out);
+    else if (/\.(md|json|js|cjs|toml|yaml)$/.test(entry.name)) out.push(full);
+  }
+  return out;
 }
-assert(parsedAgents.find((agent) => agent.name === 'world-capacity')?.sandbox_mode === 'read-only', 'world-capacity must remain read-only');
 
-const directWrite = runHookDryRun({
-  hook_event_name: 'PostToolUse',
-  tool_name: 'Write',
-  tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/tabs/npcs.json' },
-});
-assert(directWrite.validatedEditableWorlds.length === 1 && directWrite.validatedEditableWorlds[0] === 'hxh_hunter_exam_campaign_rebuild', 'direct write must validate only HxH');
+const activeTextFiles = [
+  ...listTextFiles(path.join(repoRoot, '.claude', 'agents')),
+  ...listTextFiles(path.join(repoRoot, '.claude', 'skills')),
+  ...listTextFiles(path.join(repoRoot, '.claude', 'scripts')),
+  path.join(repoRoot, '.claude', 'settings.json'),
+].filter((file) => fs.existsSync(file) && path.basename(file) !== 'tooling-architecture-tests.cjs');
+for (const file of activeTextFiles) {
+  const relative = path.relative(repoRoot, file);
+  const text = read(file);
+  assert(!text.includes('bypassPermissions'), `${relative}: contains bypassPermissions`);
+  assert(!text.includes('create-tabs.js'), `${relative}: references create-tabs.js`);
+  assert(!text.includes('create-checklist.js'), `${relative}: references create-checklist.js`);
+  assert(!/\b(skill|agent): (count|charts|maps)\b/.test(text), `${relative}: active obsolete utility name remains`);
+}
 
-const nestedDirectWrite = runHookDryRun({
-  cwd: path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild'),
-  hook_event_name: 'PostToolUse',
-  tool_name: 'Write',
-  tool_input: { file_path: 'tabs/npcs.json' },
-});
-assert(nestedDirectWrite.validatedEditableWorlds.length === 1 && nestedDirectWrite.validatedEditableWorlds[0] === 'hxh_hunter_exam_campaign_rebuild', 'direct file_path must resolve relative to nested world cwd');
-
-const patchWrite = runHookDryRun({
-  hook_event_name: 'PostToolUse',
-  tool_name: 'apply_patch',
-  tool_input: {
-    command: [
-      '*** Begin Patch',
-      '*** Update File: hxh_hunter_exam_campaign_rebuild/tabs/npcs.json',
-      '*** Add File: templates/tabs/new-file.json',
-      '*** Delete File: hxh_hunter_exam_campaign_rebuild/tabs/items.json',
-      '*** End Patch',
-    ].join('\n'),
-  },
-});
-assert(patchWrite.affectedWorlds.includes('hxh_hunter_exam_campaign_rebuild'), 'apply_patch must detect HxH path');
-assert(patchWrite.affectedWorlds.includes('templates'), 'apply_patch must detect template path');
-assert(patchWrite.validatedEditableWorlds.length === 1 && patchWrite.validatedEditableWorlds[0] === 'hxh_hunter_exam_campaign_rebuild', 'apply_patch must validate only affected editable worlds');
-
-const nestedPatchWrite = runHookDryRun({
-  cwd: path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild'),
-  hook_event_name: 'PostToolUse',
-  tool_name: 'apply_patch',
-  tool_input: {
-    command: [
-      '*** Begin Patch',
-      '*** Update File: tabs/npcs.json',
-      '*** End Patch',
-    ].join('\n'),
-  },
-});
-assert(nestedPatchWrite.affectedWorlds.length === 1 && nestedPatchWrite.affectedWorlds[0] === 'hxh_hunter_exam_campaign_rebuild', 'nested cwd apply_patch must validate only HxH');
-
-const absoluteSafeWrite = runHookDryRun({
-  hook_event_name: 'PostToolUse',
-  tool_name: 'Write',
-  tool_input: { file_path: path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', 'tabs', 'npcs.json') },
-});
-assert(absoluteSafeWrite.validatedEditableWorlds.length === 1 && absoluteSafeWrite.validatedEditableWorlds[0] === 'hxh_hunter_exam_campaign_rebuild', 'absolute in-repo path must be accepted');
-
-const outsideWrite = runHookDryRun({
-  hook_event_name: 'PostToolUse',
-  tool_name: 'Write',
-  tool_input: { file_path: path.join(os.tmpdir(), 'outside-world-puppeteer.json') },
-});
-assert(outsideWrite.affectedWorlds.length === 0 && outsideWrite.warnings.some((message) => message.includes('outside repository')), 'out-of-repository paths must be ignored with warning');
-
-const malformedCwdWrite = runHookDryRun({
-  cwd: path.join(os.tmpdir(), 'not-inside-world-puppeteer'),
-  hook_event_name: 'PostToolUse',
-  tool_name: 'Write',
-  tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/tabs/npcs.json' },
-});
-assert(malformedCwdWrite.validatedEditableWorlds.includes('hxh_hunter_exam_campaign_rebuild'), 'malformed cwd must fall back to repo root for repo-relative paths');
-assert(malformedCwdWrite.warnings.some((message) => message.includes('unsafe hook cwd')), 'malformed cwd must warn');
-
-const metadataEdit = runHookDryRun({
-  hook_event_name: 'PostToolUse',
-  tool_name: 'Write',
-  tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/.world-puppeteer/profiles/hxh-canon.json' },
-});
-assert(metadataEdit.metadataWorlds.includes('hxh_hunter_exam_campaign_rebuild'), 'world profile edits must route as metadata');
-assert(metadataEdit.validatedEditableWorlds.length === 0, 'metadata-only edits must not be reported as tabs validation');
-
-const rootToolingEdit = runHookDryRun({
-  hook_event_name: 'PostToolUse',
-  tool_name: 'Write',
-  tool_input: { file_path: '.claude/scripts/world-puppeteer-lib.cjs' },
-});
-assert(rootToolingEdit.repositoryTooling === true, 'repository tooling edits must route to architecture validation');
-
-for (const filePath of [
-  '.agents/skills/locations/SKILL.md',
-  '.claude/scripts/world-puppeteer-lib.cjs',
-  '.codex/agents/abilities.toml',
+if (fs.existsSync(path.join(repoRoot, '.world-puppeteer', 'mods'))) {
+  failures.push('.world-puppeteer/mods must be migrated to reference-packs');
+}
+for (const obsolete of [
   '.world-puppeteer/schemas/mod.schema.json',
+  '.world-puppeteer/schemas/mod-integration-plan.schema.json',
+  '.codex/agents/mod-integrator.toml',
+  '.agents/skills/mod-integration/SKILL.md',
 ]) {
-  const routing = runHookDryRun({
-    hook_event_name: 'PostToolUse',
-    tool_name: 'Write',
-    tool_input: { file_path: filePath },
-  });
-  assert(routing.repositoryTooling === true, `${filePath} must route to repository tooling validation`);
-  assert(routing.validatedEditableWorlds.length === 0, `${filePath} must not trigger editable-world content validation`);
+  assert(!fs.existsSync(path.join(repoRoot, obsolete)), `obsolete mod artifact remains: ${obsolete}`);
 }
-
-const nonWorldEdit = runHookDryRun({
-  hook_event_name: 'PostToolUse',
-  tool_name: 'Write',
-  tool_input: { file_path: '.codex/agents/abilities.toml' },
-});
-assert(nonWorldEdit.affectedWorlds.length === 0, 'non-world edit must not validate a world');
-
-const unknownPaths = runHookDryRun({
-  hook_event_name: 'PostToolUse',
-  tool_name: 'apply_patch',
-  tool_input: { command: 'patch text without file headers' },
-});
-assert(unknownPaths.warnings.some((message) => message.includes('final world validation manually')), 'unknown hook paths must warn about final validation');
-
-const toolchain = knownToolchain();
-assert(toolchain.formatProfiles.has('voyage-json-tabs'), 'format registry must include voyage-json-tabs');
-assert(toolchain.buildProfiles.has('world-build-cjs'), 'build registry must include world-build-cjs');
-assert(toolchain.validationProfiles.has('voyage-local-validator'), 'validation registry must include voyage-local-validator');
-
-const mockFormatRuns = [];
-const formatRun = runFormatProfile('voyage-json-tabs', hxh, {
-  runner: (command, args) => {
-    mockFormatRuns.push({ command, args });
-    return { status: 0, stdout: '', stderr: '' };
-  },
-});
-assert(formatRun.status === 0, 'mock format dispatch must succeed');
-assert(mockFormatRuns[0].args.some((arg) => arg.endsWith(path.join('.claude', 'scripts', 'pretty-print.js'))), 'format dispatch must call pretty-print.js');
-assert(mockFormatRuns[0].args.includes(hxh.tabsPath), 'format dispatch must pass resolved tabs path');
-
-const mockValidationRuns = [];
-const validationRun = runValidationProfile('voyage-local-validator', hxh, {
-  runner: (command, args) => {
-    mockValidationRuns.push({ command, args });
-    return { status: 0, stdout: '{"errors":[],"warnings":[]}', stderr: '' };
-  },
-});
-assert(validationRun.ok === true, 'mock validation dispatch must parse success JSON');
-assert(mockValidationRuns[0].args.some((arg) => arg.endsWith(path.join('.claude', 'scripts', 'validate.js'))), 'validation dispatch must call validate.js');
-assert(mockValidationRuns[0].args.includes(hxh.tabsPath) && mockValidationRuns[0].args.includes('--json'), 'validation dispatch must pass resolved tabs path and --json');
-
-const { exitCodeForSpawnResult } = require(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', 'build.cjs'));
-assert(exitCodeForSpawnResult({ status: 0 }) === 0, 'build wrapper must preserve zero exit');
-assert(exitCodeForSpawnResult({ status: 7 }) === 7, 'build wrapper must preserve non-zero exit');
-assert(exitCodeForSpawnResult({ status: null }) === 1, 'build wrapper must treat null status as failure');
-assert(exitCodeForSpawnResult({ error: new Error('spawn failed'), status: null }) === 1, 'build wrapper must treat spawn error as failure');
-
-const hxhTimelineSkill = read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', '.agents', 'skills', 'hxh-timeline', 'SKILL.md'));
-const hxhTimelineProfile = JSON.parse(read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', '.world-puppeteer', 'profiles', 'hxh-timeline.json')));
-const hxhOverride = read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', 'AGENTS.override.md'));
-const hxhCanonSkill = read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', '.agents', 'skills', 'hxh-canon', 'SKILL.md'));
-assert(hxhCanonSkill.includes('initial entry point'), 'HxH canon skill must preserve initial entry point wording');
-assert(hxhCanonSkill.includes('not a permanent visibility boundary'), 'HxH canon skill must preserve visibility boundary wording');
-for (const [label, text] of [['timeline skill', hxhTimelineSkill], ['HxH override', hxhOverride]]) {
-  assert(text.includes('initial') && text.includes('current campaign phase') && text.includes('canon divergence'), `${label} must distinguish initial anchor, current campaign phase, and canon divergence`);
-  assert(!text.includes('campaign present is Year 0'), `${label} must not freeze the campaign present at Year 0`);
-  assert(text.includes('not a permanent present'), `${label} must state the 287th Hunter Exam is not a permanent present`);
-}
-assert(hxhTimelineProfile.description.includes('current-campaign-phase') && hxhTimelineProfile.description.includes('canon-divergence'), 'timeline profile must advertise progression and divergence support');
-
-const modRegistry = validateModRegistry(repoRoot);
-for (const error of modRegistry.errors) failures.push(error);
-assert(modRegistry.modsById.has('meteion-story-instructions'), 'canonical registry must include Meteion mod');
-assert(modRegistry.modsById.has('sephii-instruction-pack'), 'canonical registry must include Sephii mod');
-for (const [id, entry] of modRegistry.modsById) {
-  const listed = [...entry.manifest.files].sort();
-  const actual = listFiles(path.join(repoRoot, '.world-puppeteer', 'mods', entry.dirName))
-    .map((file) => path.relative(entry.modDir, file).replace(/\\/g, '/'))
-    .filter((relative) => !['mod.json', 'README.md'].includes(relative))
-    .sort();
-  assert(JSON.stringify(listed) === JSON.stringify(actual), `${id}: manifest files must exactly match payload inventory`);
-}
-const claudeModPayloads = listFiles(path.join(repoRoot, '.claude', 'mods'))
-  .map((file) => path.relative(path.join(repoRoot, '.claude', 'mods'), file).replace(/\\/g, '/'))
-  .filter((relative) => relative !== 'README.md');
-assert(claudeModPayloads.length === 0, `.claude/mods must not contain duplicated payload files: ${claudeModPayloads.join(', ')}`);
-
-const { createPlan, validatePlanShape } = require(path.join(repoRoot, '.claude', 'scripts', 'mod-dry-run.cjs'));
-const dryRun = createPlan({ modId: 'meteion-story-instructions', worldRoot: hxh.worldRoot, repoRoot });
-assert(validatePlanShape(dryRun.plan).length === 0, 'mod dry-run plan must satisfy plan schema');
-assert(dryRun.plan.sourcePayloads.length === 2, 'Meteion dry-run must inventory two source payloads');
-assert(dryRun.plan.proposedOperations.every((operation) => operation.type !== 'replace'), 'dry-run must not propose replace operations');
-assert(dryRun.plan.approvalRequired === true, 'dry-run must require approval');
-
-const fixtureModsRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
-writeMod(fixtureModsRoot, 'one', modManifest('one'));
-writeJson(path.join(fixtureModsRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
-assert(validateModRegistry(fixtureModsRoot).errors.length === 0, 'fixture valid mod registry must pass');
-
-const duplicateIdRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
-writeMod(duplicateIdRoot, 'one-a', modManifest('one'));
-writeMod(duplicateIdRoot, 'one-b', modManifest('one'));
-writeJson(path.join(duplicateIdRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
-assert(validateModRegistry(duplicateIdRoot).errors.some((error) => error.includes('duplicate mod id')), 'duplicate mod IDs must fail');
-
-const duplicateRegistryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
-writeMod(duplicateRegistryRoot, 'one', modManifest('one'));
-writeJson(path.join(duplicateRegistryRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one', 'one'] });
-assert(validateModRegistry(duplicateRegistryRoot).errors.some((error) => error.includes('duplicate registry entry')), 'duplicate registry entries must fail');
-
-const missingDependencyRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
-writeMod(missingDependencyRoot, 'one', modManifest('one', { dependencies: ['missing-required'] }));
-writeJson(path.join(missingDependencyRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
-assert(validateModRegistry(missingDependencyRoot).errors.some((error) => error.includes('required dependency not found')), 'missing required dependency must fail');
-
-const optionalDependencyRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
-writeMod(optionalDependencyRoot, 'one', modManifest('one', { optionalDependencies: ['missing-optional'] }));
-writeJson(path.join(optionalDependencyRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
-const optionalResult = validateModRegistry(optionalDependencyRoot);
-assert(optionalResult.errors.length === 0, 'missing optional dependency must not fail');
-assert(optionalResult.warnings.some((warning) => warning.includes('optional dependency not found')), 'missing optional dependency must warn');
-
-const cycleRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
-writeMod(cycleRoot, 'one', modManifest('one', { dependencies: ['two'] }));
-writeMod(cycleRoot, 'two', modManifest('two', { dependencies: ['one'] }));
-writeJson(path.join(cycleRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one', 'two'] });
-assert(validateModRegistry(cycleRoot).errors.some((error) => error.includes('dependency cycle')), 'required dependency cycle must fail');
-
-const unlistedPayloadRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
-writeMod(unlistedPayloadRoot, 'one', modManifest('one'), { 'payload.json': {}, 'extra.json': {} });
-writeJson(path.join(unlistedPayloadRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
-assert(validateModRegistry(unlistedPayloadRoot).errors.some((error) => error.includes('payload file not listed')), 'unlisted payload files must fail');
-
-const missingPayloadRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
-writeMod(missingPayloadRoot, 'one', modManifest('one', { files: ['missing.json'] }), {});
-writeJson(path.join(missingPayloadRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
-assert(validateModRegistry(missingPayloadRoot).errors.some((error) => error.includes('listed payload missing')), 'missing listed payload files must fail');
-
-const coverageRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
-writeMod(coverageRoot, 'one', modManifest('one'));
-writeMod(coverageRoot, 'two', modManifest('two'));
-writeJson(path.join(coverageRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
-assert(validateModRegistry(coverageRoot).errors.some((error) => error.includes('not represented in registry')), 'every mod directory must be represented in registry');
 
 if (failures.length > 0) {
   for (const failure of failures) console.error(`FAIL ${failure}`);

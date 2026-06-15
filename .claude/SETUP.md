@@ -1,74 +1,57 @@
-# Setup Guide
+# Claude Setup Guide
 
-Follow these steps in order.
+## Requirements
 
-## Step 1: Install an Editor
+- Node.js LTS
+- npm
+- Claude Code in VS Code or Cursor, if using the Claude frontend
 
-Install one of the following:
+Install dependencies from the repository root:
 
-- [VS Code](https://code.visualstudio.com/)
-- [Cursor](https://www.cursor.com/)
-
-## Step 2: Install Node.js
-
-Node runs the project's build scripts, validation hooks, and automation. The project won't function without it.
-
-**macOS** (using Homebrew):
 ```bash
-brew install node
+npm install
 ```
 
-**Windows** (using winget):
+## Clone
+
+Use this fork as the authoritative repository:
+
 ```bash
-winget install OpenJS.NodeJS.LTS
+git clone https://github.com/NobodyIsUgly/World-Puppeteer.git
+cd World-Puppeteer
+npm install
 ```
 
-Or download directly from [nodejs.org](https://nodejs.org/en/download) (LTS version).
+## Claude Workflow
 
-Verify it installed:
+Open the repository in VS Code or Cursor and start Claude Code. Claude reads `.claude/CLAUDE.md`, root `AGENTS.md`, and the nearest applicable `AGENTS.override.md`.
+
+Claude hooks are marker-aware:
+
+- SessionStart runs `.claude/scripts/session-context.cjs` and is read-only.
+- PostToolUse forwards edit payloads to the shared hook pipeline.
+- Hooks validate only reliably classified changed paths.
+- Final explicit validation is still required after arbitrary shell writes.
+
+## Validation
+
+Run these before reporting tooling work complete:
+
 ```bash
-node --version
+npm test
+npm run test:reference-packs
+npm run validate:metadata
 ```
 
-## Step 3: Install the Claude Code Extension
+For a world build:
 
-1. Open VS Code or Cursor
-2. Go to the Extensions panel (`Cmd+Shift+X` on macOS, `Ctrl+Shift+X` on Windows)
-3. Search for **Claude Code**
-4. Click Install
+```bash
+node .claude/scripts/build-world.cjs --world <world-root>
+node .claude/scripts/validate.js <world-root>/tabs --json
+```
 
-## Step 4: Open the Project
+The build command validates the exact compiled candidate before backup or publication.
 
-Open this folder in your editor and start a Claude Code session. Claude Code hooks will run automatically on session start.
+## Optional Image Generation
 
-## Step 5 (Optional): Image Generation
-
-To generate images (portraits, covers, etc.) using Google Gemini:
-
-1. Get an API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
-
-2. Add the key to your environment:
-
-   **macOS / Linux** — add to `~/.zshrc` or `~/.bashrc`:
-   ```bash
-   export GEMINI_API_KEY="your-key-here"
-   ```
-   Then reload: `source ~/.zshrc`
-
-   **Windows (PowerShell)**:
-   ```powershell
-   [Environment]::SetEnvironmentVariable('GEMINI_API_KEY', 'your-key-here', 'User')
-   ```
-   Then restart your terminal.
-
-3. Install the Gemini SDK in your home directory:
-
-   **macOS / Linux**:
-   ```bash
-   cd ~ && npm install @google/genai
-   ```
-
-   **Windows (PowerShell)**:
-   ```powershell
-   cd $HOME; npm install @google/genai
-   ```
+Image generation is separate from the core tooling. Configure any provider-specific API keys only when a task explicitly requires image generation.

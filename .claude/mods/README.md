@@ -1,9 +1,11 @@
-# World-Puppeteer Mods
+# Legacy Claude Mod Directory
 
-Canonical reusable mod payloads live in:
+Do not place payloads here.
+
+Reusable source material now lives under:
 
 ```text
-.world-puppeteer/mods/
+.world-puppeteer/reference-packs/
 ```
 
-Do not place editable mod payload mirrors under `.claude/mods/`. Claude and Codex tooling must reference the shared neutral directory.
+Reference packs are read-only. Inspect them with the shared reference-pack tooling, then use an ordinary domain specialist for any later approved manual adaptation.

@@ -3,7 +3,6 @@ name: locations
 description: |
   Use this agent when the user wants to add or edit locations. This includes places, areas, towns, cities, buildings, dungeons, or any other physical location.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - locations
 ---

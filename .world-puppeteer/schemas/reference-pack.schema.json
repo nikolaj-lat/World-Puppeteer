@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-puppeteer.local/schemas/reference-pack.schema.json",
+  "title": "World Puppeteer Reference Pack",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "source",
+    "description",
+    "compatibleFormats",
+    "domains",
+    "licenseNotes",
+    "files",
+    "sourceSections"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "name": { "type": "string", "minLength": 1 },
+    "source": { "type": "string", "minLength": 1 },
+    "sourceVersion": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "compatibleFormats": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "domains": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "licenseNotes": { "type": "string", "minLength": 1 },
+    "relatedPacks": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+      "uniqueItems": true
+    },
+    "files": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "sourceSections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "sourcePath", "candidateTargetPath", "candidateTargetFile", "domain"],
+        "additionalProperties": false,
+        "properties": {
+          "file": { "type": "string", "minLength": 1 },
+          "sourcePath": { "type": "string", "minLength": 1 },
+          "candidateTargetPath": { "type": "string", "minLength": 1 },
+          "candidateTargetFile": { "type": "string", "pattern": "\\.json$" },
+          "domain": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" }
+        }
+      }
+    }
+  }
+}

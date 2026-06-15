@@ -3,7 +3,6 @@ name: premade-characters
 description: |
   Use this agent when the user wants to add or edit premade characters. Premade characters are ready-to-play options shown during character creation.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - premade-characters
 ---

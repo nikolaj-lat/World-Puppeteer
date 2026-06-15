@@ -1,10 +1,63 @@
 #!/usr/bin/env node
-// Injects default nameFilterSettings into tabs/meta.json, then rebuilds config.json
+// Inject default nameFilterSettings into a resolved editable world's meta tab,
+// then build through that world's configured World-Puppeteer build profile.
 const fs = require('fs');
 const path = require('path');
-const { execFileSync } = require('child_process');
+const {
+  resolveWorld,
+  runConfiguredBuild,
+} = require('../../../scripts/world-puppeteer-lib.cjs');
 
-const META_PATH = path.resolve(__dirname, '../../../../tabs/meta.json');
+function usage() {
+  return [
+    'Usage:',
+    '  node .claude/skills/name-filter-settings/scripts/name-filter.js --world <world-root>',
+    '',
+    'The --world flag may be omitted only when the current working directory',
+    'resolves unambiguously to an editable world marker.',
+  ].join('\n');
+}
+
+function parseArgs(argv) {
+  const options = { worldRoot: null };
+
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+
+    if (arg === '--help' || arg === '-h') {
+      console.log(usage());
+      process.exit(0);
+    }
+
+    if (arg === '--world') {
+      const value = argv[index + 1];
+      if (!value || value.startsWith('--')) {
+        throw new Error('--world requires a path value');
+      }
+      if (options.worldRoot !== null) {
+        throw new Error('--world may be provided only once');
+      }
+      options.worldRoot = value;
+      index += 1;
+      continue;
+    }
+
+    throw new Error(`Unknown argument: ${arg}\n${usage()}`);
+  }
+
+  return options;
+}
+
+function restoreMeta(metaPath, originalText, buildError) {
+  try {
+    fs.writeFileSync(metaPath, originalText);
+  } catch (restoreError) {
+    throw new Error(
+      `${buildError}\nAdditionally failed to restore ${metaPath}: ${restoreError.message}`
+    );
+  }
+  throw new Error(`${buildError}\nRestored ${metaPath} to its original contents.`);
+}
 
 const DEFAULT_FILTERS = {
   "Marcus": { "replacements": ["Alex","Ethan","Jason","Ryan","Owen","Nathaniel","Adrian","Colin","Scott","Blake","Tyler","Brandon","Mitchell","Douglas","Kenneth"] },
@@ -112,23 +165,70 @@ const DEFAULT_FILTERS = {
   "ozone": { "replacements": ["electricity","petrichor","rain","lightning","metal","bleach","static","copper","antiseptic","chemicals","burnt air","ionized air","sterility","chlorine","heated metal"] }
 };
 
-const meta = JSON.parse(fs.readFileSync(META_PATH, 'utf8'));
+function main() {
+  const options = parseArgs(process.argv.slice(2));
+  const world = resolveWorld({
+    cwd: process.cwd(),
+    worldRoot: options.worldRoot || undefined,
+    preferNearest: true,
+  });
 
-if (meta.nameFilterSettings && Object.keys(meta.nameFilterSettings).length > 0) {
-  console.log(`nameFilterSettings already exists with ${Object.keys(meta.nameFilterSettings).length} entries. Skipping.`);
-  process.exit(0);
+  if (world.marker.role !== 'editable') {
+    throw new Error(
+      `Refusing to modify world "${world.marker.id}" because role=${world.marker.role}; ` +
+      'name-filter injection requires an editable world.'
+    );
+  }
+
+  const metaPath = path.join(world.tabsPath, 'meta.json');
+  if (!fs.existsSync(metaPath)) {
+    throw new Error(`Target world has no meta tab: ${metaPath}`);
+  }
+
+  const originalText = fs.readFileSync(metaPath, 'utf8');
+  const meta = JSON.parse(originalText);
+
+  if (
+    meta.nameFilterSettings &&
+    Object.keys(meta.nameFilterSettings).length > 0
+  ) {
+    console.log(
+      `nameFilterSettings already exists with ` +
+      `${Object.keys(meta.nameFilterSettings).length} entries. Skipping.`
+    );
+    return;
+  }
+
+  meta.nameFilterSettings = DEFAULT_FILTERS;
+
+  const MOD_ATTRIBUTION = { shortId: '0bt3nPRLuqvh', version: 13 };
+  meta.mods = Array.isArray(meta.mods) ? meta.mods : [];
+  if (!meta.mods.some((entry) => entry.shortId === MOD_ATTRIBUTION.shortId)) {
+    meta.mods.push(MOD_ATTRIBUTION);
+  }
+
+  fs.writeFileSync(metaPath, JSON.stringify(meta, null, 2) + '\n');
+
+  const build = runConfiguredBuild(world);
+  if (build.status !== 0 || build.error) {
+    const detail =
+      build.stderr ||
+      build.stdout ||
+      build.error?.message ||
+      'Unknown configured build failure';
+    restoreMeta(metaPath, originalText, `Configured build failed: ${detail}`);
+  }
+
+  console.log(
+    `Injected ${Object.keys(DEFAULT_FILTERS).length} name filter entries into ` +
+    `${path.relative(world.repoRoot, metaPath)} and rebuilt ` +
+    `${path.relative(world.repoRoot, world.compiledOutputPath)}.`
+  );
 }
 
-meta.nameFilterSettings = DEFAULT_FILTERS;
-
-const MOD_ATTRIBUTION = { shortId: "0bt3nPRLuqvh", version: 13 };
-meta.mods = meta.mods || [];
-if (!meta.mods.some(m => m.shortId === MOD_ATTRIBUTION.shortId)) {
-  meta.mods.push(MOD_ATTRIBUTION);
+try {
+  main();
+} catch (error) {
+  console.error(`error: ${error.message}`);
+  process.exit(1);
 }
-
-fs.writeFileSync(META_PATH, JSON.stringify(meta, null, 2) + '\n');
-console.log(`Injected ${Object.keys(DEFAULT_FILTERS).length} name filter entries into tabs/meta.json`);
-
-const buildScript = path.resolve(__dirname, '../../../scripts/build.js');
-execFileSync('node', [buildScript], { stdio: 'inherit' });

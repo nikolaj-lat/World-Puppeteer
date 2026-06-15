@@ -216,6 +216,10 @@ function block(reason) {
   console.log(JSON.stringify({ decision: 'block', reason }));
 }
 
+function diagnosticMode() {
+  return process.env.WORLD_PUPPETEER_HOOK_DIAGNOSTIC === '1';
+}
+
 function runNodeScript(scriptRelativePath, args = [], cwd = projectDir) {
   const result = spawnSync('node', [scriptRelativePath, ...args], {
     cwd,
@@ -297,15 +301,19 @@ function main() {
   const warnings = [];
   const { data: hookData, parseError } = readHookInput();
   if (parseError) {
-    warning('Post-edit hook could not parse Codex hook payload; run final world validation manually.', warnings);
+    const message = 'Post-edit hook could not parse Codex hook payload; blocking because changed paths cannot be recovered reliably.';
+    warning(message, warnings);
     if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') dryRunOutput({ targets: [], repositoryTooling: false }, warnings);
+    else if (!diagnosticMode()) block(message);
     return;
   }
 
   const collected = collectReliablePathValues(hookData);
   if (!collected.reliable) {
-    warning('Post-edit hook could not recover reliable changed paths; run final world validation manually.', warnings);
+    const message = 'Post-edit hook could not recover reliable changed paths; blocking because validation cannot be routed.';
+    warning(message, warnings);
     if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') dryRunOutput({ targets: [], repositoryTooling: false }, warnings);
+    else if (!diagnosticMode()) block(message);
     return;
   }
 
@@ -319,10 +327,21 @@ function main() {
     pathCandidates.push(candidate);
   }
   const worlds = findMarkers(projectDir);
+  if (pathCandidates.length !== collected.paths.length) {
+    const message = 'One or more changed paths were unsafe or outside repository containment; blocking normal edit flow.';
+    if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') {
+      warning(message, warnings);
+    } else if (!diagnosticMode()) {
+      block(message);
+      return;
+    }
+  }
   const routes = affectedRoutesForPaths(pathCandidates, worlds);
 
   if (routes.targets.length === 0 && !routes.repositoryTooling) {
+    const message = 'Changed paths could not be classified as world content, world metadata, or repository tooling; blocking normal edit flow.';
     if (process.env.WORLD_PUPPETEER_HOOK_DRY_RUN === '1') dryRunOutput(routes, warnings);
+    else if (!diagnosticMode()) block(message);
     return;
   }
 

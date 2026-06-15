@@ -3,7 +3,6 @@ name: quests
 description: |
   Use this agent when the user wants to add or edit quests. This includes main quests, side quests, or any player objective.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - quests
 ---

@@ -14,68 +14,22 @@
   "hooks": {
     "SessionStart": [
       {
+        "matcher": "startup|resume|clear|compact",
         "hooks": [
           {
             "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/create-tabs.js"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/create-checklist.js"
-          }
-        ]
-      },
-      {
-        "matcher": "compact",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/post-compact.js"
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "matcher": "count",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/count.js"
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/check-background-agents.js"
+            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/session-context.cjs"
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Edit|Write",
+        "matcher": "Edit|Write|apply_patch",
         "hooks": [
           {
             "type": "command",
             "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/post-edit-validate.js"
-          }
-        ]
-      },
-      {
-        "matcher": "Task",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/agent-completed.js"
           }
         ]
       }

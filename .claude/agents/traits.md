@@ -3,7 +3,6 @@ name: traits
 description: |
   Use this agent when the user wants to add or edit traits. Traits are character modifiers selected during character creation.
 model: haiku
-permissionMode: bypassPermissions
 skills:
   - traits
 ---
