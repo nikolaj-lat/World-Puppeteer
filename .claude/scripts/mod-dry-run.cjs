@@ -8,6 +8,9 @@ const {
   resolveWorld,
 } = require('./world-puppeteer-lib.cjs');
 const {
+  validateAgainstSchemaFile,
+} = require('./mod-architecture.cjs');
+const {
   createDryRunPlan,
 } = require('./mod-architecture-v2.cjs');
 
@@ -32,6 +35,13 @@ function usage() {
     'The command validates manifests, payload mappings, dependencies, compatibility, provenance, and the emitted plan schema.',
     'It performs no writes to the target world. Optional --out must remain inside the repository and outside the target world.',
   ].join('\n');
+}
+
+function validatePlanShape(plan, repoRoot = findRepoRoot(process.cwd())) {
+  return validateAgainstSchemaFile(
+    plan,
+    path.join(repoRoot, '.world-puppeteer', 'schemas', 'mod-integration-plan.schema.json')
+  );
 }
 
 function createPlan({ modId, worldRoot, mode, repoRoot }) {
@@ -82,4 +92,5 @@ if (require.main === module) main();
 module.exports = {
   createPlan,
   parseArgs,
+  validatePlanShape,
 };
