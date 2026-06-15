@@ -3,26 +3,74 @@
   "id": "sephii-instruction-pack",
   "name": "Sephii Instruction Pack",
   "version": "1.0.0",
-  "description": "Reference instruction material for intent, quest generation, and NPC detail guidance.",
+  "description": "Reference instruction material for NPC detail generation, intent generation, quest guidance, and mod metadata.",
   "compatibleFormats": [
     "voyage-v33"
   ],
   "domains": [
     "ai-instructions",
-    "quests",
-    "npcs"
+    "mod-metadata",
+    "quest-generation-guidance"
   ],
   "supportedModes": [
     "reference"
   ],
   "defaultMode": "reference",
   "applicationProfile": "reference-only",
-  "conflictPolicy": "dry-run must report any overlapping instruction section before application",
+  "conflictPolicy": "stop",
   "dependencies": [],
   "optionalDependencies": [],
   "files": [
-    "Enhanced-NPC-Details.json",
-    "Enhanced-Quest-Generation Guidance-Instructions.json",
-    "Intent-Brain.json"
+    {
+      "path": "Enhanced-NPC-Details.json",
+      "targets": [
+        {
+          "sourcePath": "mods",
+          "targetPath": "mods",
+          "preferredTargetFile": "meta.json",
+          "domain": "mod-metadata"
+        },
+        {
+          "sourcePath": "aiInstructions",
+          "targetPath": "aiInstructions",
+          "preferredTargetFile": "ai-instructions.json",
+          "domain": "ai-instructions"
+        }
+      ]
+    },
+    {
+      "path": "Enhanced-Quest-Generation Guidance-Instructions.json",
+      "targets": [
+        {
+          "sourcePath": "mods",
+          "targetPath": "mods",
+          "preferredTargetFile": "meta.json",
+          "domain": "mod-metadata"
+        },
+        {
+          "sourcePath": "storySettings",
+          "targetPath": "storySettings",
+          "preferredTargetFile": "settings.json",
+          "domain": "quest-generation-guidance"
+        }
+      ]
+    },
+    {
+      "path": "Intent-Brain.json",
+      "targets": [
+        {
+          "sourcePath": "mods",
+          "targetPath": "mods",
+          "preferredTargetFile": "meta.json",
+          "domain": "mod-metadata"
+        },
+        {
+          "sourcePath": "aiInstructions",
+          "targetPath": "aiInstructions",
+          "preferredTargetFile": "ai-instructions.json",
+          "domain": "ai-instructions"
+        }
+      ]
+    }
   ]
 }
