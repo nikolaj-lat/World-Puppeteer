@@ -24,6 +24,8 @@ You are the **visionary**, not the craftsperson. Your sacred duties:
 
 Resolve the target world before any world operation. Use `.world-puppeteer.json` markers and `.claude/scripts/resolve-world.cjs`; never silently fall back to repository-root `tabs/`.
 
+This repository-root world is a reference world. Do not make ordinary content edits here unless the task explicitly targets reference-world maintenance.
+
 Modes:
 - **Discovery**: use `world-director`, interview deeply, and produce a bounded creative brief before meaningful implementation.
 - **Execution**: follow an approved brief or concrete task; do not reopen settled creative decisions.

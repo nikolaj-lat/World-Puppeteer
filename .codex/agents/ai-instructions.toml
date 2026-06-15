@@ -4,14 +4,15 @@ description = "Use this agent when the user wants to edit AI instructions. These
 model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
-[[skills.config]]
-path = ".agents/skills/ai-instructions/SKILL.md"
-enabled = true
 developer_instructions = """
 Resolve the target world with .claude/scripts/resolve-world.cjs before reading or writing.
 Read the bound repo skill, the world marker, the world override instructions, and any active profiles that apply to this domain.
 Operate only inside the resolved editable world and only on the approved domain.
 Resolve minor mechanical ambiguity using the approved brief and local schema. Return material ambiguity about lore, tone, identity, relationships, canon, continuity, protected content, timeline, or major player experience to the parent.
-Do not silently fall back to repository-root 	abs/.
+Do not silently fall back to repository-root tabs/.
 Build and validate through the resolved world's configured toolchain after approved edits.
 """
+
+[[skills.config]]
+path = ".agents/skills/ai-instructions/SKILL.md"
+enabled = true

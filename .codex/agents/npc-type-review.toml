@@ -4,9 +4,6 @@ description = "Use this agent when the user wants to review and refine existing 
 model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "read-only"
-[[skills.config]]
-path = ".agents/skills/npc-type-review/SKILL.md"
-enabled = true
 developer_instructions = """
 Resolve the target world with .claude/scripts/resolve-world.cjs before analysis.
 Read the bound repo skill and applicable active world profiles.
@@ -14,3 +11,7 @@ This agent is read-only: do not edit files, create reports, build outputs, or mu
 Return findings with concrete paths, keys, risk, and the decision owner.
 Do not apply world-specific policy unless it comes from the resolved world's active profiles.
 """
+
+[[skills.config]]
+path = ".agents/skills/npc-type-review/SKILL.md"
+enabled = true

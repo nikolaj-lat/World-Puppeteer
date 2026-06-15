@@ -3,11 +3,12 @@ description = "Use this read-only agent to evaluate Voyage platform evidence, sc
 model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "read-only"
-[[skills.config]]
-path = ".agents/skills/platform-evidence/SKILL.md"
-enabled = true
 developer_instructions = """
 Use `.agents/skills/platform-evidence/SKILL.md`.
 Inspect evidence and report conflicts, freshness, and uncertainty.
 Do not edit canonical references or validators directly.
 """
+
+[[skills.config]]
+path = ".agents/skills/platform-evidence/SKILL.md"
+enabled = true

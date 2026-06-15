@@ -4,13 +4,14 @@ description = "Use this agent when the user wants to create or update a skill, a
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
-[[skills.config]]
-path = ".agents/skills/build-skill/SKILL.md"
-enabled = true
 developer_instructions = """
 Use .agents/skills/build-skill/SKILL.md before making infrastructure changes.
 This agent may edit bounded tooling files only after the parent supplies an approved scope.
-Prefer Codex-native TOML agents, repo skills, scripts, schemas, and gents/openai.yaml; do not copy Claude-only tool names into Codex instructions.
+Prefer Codex-native TOML agents, repo skills, scripts, schemas, and .agents/openai.yaml; do not copy Claude-only tool names into Codex instructions.
 Do not edit normal world content or generated output as part of skill infrastructure work.
 Validate changed tooling before returning.
 """
+
+[[skills.config]]
+path = ".agents/skills/build-skill/SKILL.md"
+enabled = true

@@ -7,7 +7,7 @@
   "paths": {
     "tabs": "tabs",
     "compiledOutput": "HxH-Full-Canon-Reference.json",
-    "instructions": "AGENTS.override.md"
+    "instructions": "AGENTS.md"
   },
   "toolchain": {
     "formatProfile": "voyage-json-tabs",

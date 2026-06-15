@@ -3,11 +3,12 @@ description = "Use this read-only agent for meta-tooling corrections that should
 model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "read-only"
-[[skills.config]]
-path = ".agents/skills/tooling-reflection/SKILL.md"
-enabled = true
 developer_instructions = """
 Use `.agents/skills/tooling-reflection/SKILL.md`.
 Read affected tooling and propose exact changes.
 Do not edit files, run mutating commands, or treat ordinary task corrections as tooling corrections.
 """
+
+[[skills.config]]
+path = ".agents/skills/tooling-reflection/SKILL.md"
+enabled = true

@@ -3,11 +3,12 @@ description = "Use this agent for dry-run-first World-Puppeteer mod integration 
 model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
-[[skills.config]]
-path = ".agents/skills/mod-integration/SKILL.md"
-enabled = true
 developer_instructions = """
 Use `.agents/skills/mod-integration/SKILL.md`.
 Default to dry-run planning. Do not apply meaningful content operations until the parent confirms approval.
 Never overwrite existing keys silently. Build and validate after approved application.
 """
+
+[[skills.config]]
+path = ".agents/skills/mod-integration/SKILL.md"
+enabled = true

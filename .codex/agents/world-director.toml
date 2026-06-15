@@ -3,12 +3,13 @@ description = "Use this agent for substantial creative discovery, hidden-assumpt
 model = "gpt-5.5"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
-[[skills.config]]
-path = ".agents/skills/world-director/SKILL.md"
-enabled = true
 developer_instructions = """
 Use `.agents/skills/world-director/SKILL.md`.
 Resolve the target world, read its marker, override instructions, and active profiles.
 Interview for unresolved creative design and return a bounded brief.
 Do not implement content changes directly unless the parent separately approves execution.
 """
+
+[[skills.config]]
+path = ".agents/skills/world-director/SKILL.md"
+enabled = true
