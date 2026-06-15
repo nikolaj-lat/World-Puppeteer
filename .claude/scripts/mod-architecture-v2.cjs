@@ -102,10 +102,14 @@ function validateModManifest(modDir, repoRoot) {
 
   const seenMappings = new Set();
   for (const [index, mapping] of (manifest.payloadMappings || []).entries()) {
+    if (!mapping || typeof mapping !== 'object' || Array.isArray(mapping)) {
+      errors.push(`${manifestPath}: payloadMappings[${index}] must be an object`);
+      continue;
+    }
     const mappingKey = `${mapping.file}|${mapping.sourcePath}|${mapping.targetPath}|${mapping.preferredTargetFile}`;
     if (seenMappings.has(mappingKey)) errors.push(`${manifestPath}: duplicate payload mapping ${mappingKey}`);
     seenMappings.add(mappingKey);
-    if (!listedPayloads.has(normalizeRelative(mapping.file || ''))) {
+    if (!listedPayloads.has(normalizeRelative(typeof mapping.file === 'string' ? mapping.file : ''))) {
       errors.push(`${manifestPath}: payloadMappings[${index}].file is not listed in files: ${mapping.file}`);
       continue;
     }
@@ -123,7 +127,7 @@ function validateModManifest(modDir, repoRoot) {
     }
   }
   for (const file of listedPayloads) {
-    if (!(manifest.payloadMappings || []).some((mapping) => normalizeRelative(mapping.file) === file)) {
+    if (!(manifest.payloadMappings || []).some((mapping) => mapping && normalizeRelative(typeof mapping.file === 'string' ? mapping.file : '') === file)) {
       errors.push(`${manifestPath}: payload has no target mappings: ${file}`);
     }
   }
@@ -210,6 +214,16 @@ function validateModRegistry(repoRoot) {
   return { errors, warnings, modsById, modsRoot };
 }
 
+function isValidAppliedAt(value) {
+  if (typeof value !== 'string') return false;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    const parsed = new Date(`${value}T00:00:00.000Z`);
+    return !Number.isNaN(parsed.valueOf()) && parsed.toISOString().slice(0, 10) === value;
+  }
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(value)) return false;
+  return !Number.isNaN(Date.parse(value));
+}
+
 function validateAppliedMods(marker, registry, markerPath) {
   const errors = [];
   const seen = new Set();
@@ -222,9 +236,7 @@ function validateAppliedMods(marker, registry, markerPath) {
     if (seen.has(record.modId)) errors.push(`${prefix}: duplicate applied mod ${record.modId}`);
     seen.add(record.modId);
     if (record.mode !== 'apply') errors.push(`${prefix}.mode must be apply; reference use is not application provenance`);
-    if (!/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z)?$/.test(record.appliedAt || '')) {
-      errors.push(`${prefix}.appliedAt must be an ISO date or UTC timestamp`);
-    }
+    if (!isValidAppliedAt(record.appliedAt)) errors.push(`${prefix}.appliedAt must be a real ISO date or UTC timestamp`);
     const mod = registry.modsById.get(record.modId);
     if (!mod) {
       errors.push(`${prefix}: unknown mod id ${record.modId}`);
@@ -250,7 +262,8 @@ function findExistingTargetFiles(world, targetPath) {
   for (const file of fs.readdirSync(world.tabsPath).filter((name) => name.endsWith('.json')).sort()) {
     const fullPath = path.join(world.tabsPath, file);
     const loaded = readJsonResult(fullPath);
-    if (!loaded.error && getByPath(loaded.value, targetPath) !== undefined) found.push({ file, value: loaded.value });
+    if (loaded.error) throw new Error(loaded.error);
+    if (getByPath(loaded.value, targetPath) !== undefined) found.push({ file, value: loaded.value });
   }
   return found;
 }
@@ -311,20 +324,48 @@ function createDryRunPlan({ repoRoot, world, modId, mode }) {
     const sourceValue = getByPath(payload, mapping.sourcePath);
     const existing = findExistingTargetFiles(world, mapping.targetPath);
     if (existing.length > 1) {
+      const ambiguousTarget = existing.map((item) => item.file).join(', ');
+      const keys = [mapping.targetPath];
       conflicts.push({
         source: mapping.file,
         sourcePath: mapping.sourcePath,
-        targetFile: existing.map((item) => item.file).join(', '),
+        targetFile: ambiguousTarget,
         targetPath: mapping.targetPath,
-        keys: [mapping.targetPath],
+        keys,
         policy: manifest.conflictPolicy,
         reason: 'The target path already exists in multiple tab files.',
       });
+      if (selectedMode === 'reference') {
+        proposedOperations.push({
+          type: 'reference',
+          source: mapping.file,
+          sourcePath: mapping.sourcePath,
+          targetFile: ambiguousTarget,
+          targetPath: mapping.targetPath,
+          domain: mapping.domain,
+          requiresApproval: true,
+          reason: 'Use as reference only; multiple existing target files require human resolution.',
+        });
+      }
+      payloadByPath.get(mapping.file).targets.push({
+        sourcePath: mapping.sourcePath,
+        targetPath: mapping.targetPath,
+        preferredTargetFile: mapping.preferredTargetFile,
+        domain: mapping.domain,
+        resolvedTargetFile: ambiguousTarget,
+        collisionKeys: keys,
+      });
       continue;
     }
+
     const targetFile = existing[0]?.file || mapping.preferredTargetFile;
     const preferredPath = path.join(world.tabsPath, targetFile);
-    const preferredDocument = existing[0]?.value || (fs.existsSync(preferredPath) ? readJsonResult(preferredPath).value || {} : {});
+    let preferredDocument = existing[0]?.value || {};
+    if (!existing[0] && fs.existsSync(preferredPath)) {
+      const loadedPreferred = readJsonResult(preferredPath);
+      if (loadedPreferred.error) throw new Error(loadedPreferred.error);
+      preferredDocument = loadedPreferred.value;
+    }
     const targetValue = getByPath(preferredDocument, mapping.targetPath);
     const keys = collisionKeys(sourceValue, targetValue, mapping.targetPath);
     const hasCollision = keys.length > 0;
