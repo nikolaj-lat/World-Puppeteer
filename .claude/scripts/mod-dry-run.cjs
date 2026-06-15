@@ -44,11 +44,13 @@ function validatePlanShape(plan, repoRoot = findRepoRoot(process.cwd())) {
   );
 }
 
-function createPlan({ modId, worldRoot, mode, repoRoot }) {
+function createPlan({ modId, worldRoot, mode, repoRoot, cwd = process.cwd() }) {
+  const resolvedWorldRoot = path.resolve(cwd, worldRoot);
   const world = resolveWorld({
-    worldRoot,
-    cwd: worldRoot || process.cwd(),
-    preferNearest: !worldRoot,
+    worldRoot: resolvedWorldRoot,
+    cwd,
+    repoRoot,
+    preferNearest: false,
   });
   const { plan } = createDryRunPlan({ repoRoot, world, modId, mode });
   return { plan, world };
@@ -64,17 +66,19 @@ function main() {
     if (!args.modId) throw new Error('--mod is required');
     if (!args.worldRoot) throw new Error('--world is required');
 
-    const repoRoot = findRepoRoot(process.cwd());
+    const cwd = process.cwd();
+    const repoRoot = findRepoRoot(cwd);
     const { plan, world } = createPlan({
       modId: args.modId,
       worldRoot: args.worldRoot,
       mode: args.mode,
       repoRoot,
+      cwd,
     });
     const output = JSON.stringify(plan, null, 2) + '\n';
 
     if (args.out) {
-      const outPath = path.resolve(process.cwd(), args.out);
+      const outPath = path.resolve(cwd, args.out);
       if (!isInside(outPath, repoRoot)) throw new Error('--out must remain inside the repository');
       if (isInside(outPath, world.worldRoot)) throw new Error('--out must not write inside the target world');
       fs.mkdirSync(path.dirname(outPath), { recursive: true });
