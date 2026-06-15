@@ -28,6 +28,21 @@
       ],
       "notes": "Used for Codex skill invocation metadata and custom agent TOML fields.",
       "conflicts": []
+    },
+    {
+      "id": "upstream-world-puppeteer-locations-reference",
+      "kind": "community-repository",
+      "location": "https://github.com/nikolaj-lat/World-Puppeteer/blob/main/.claude/skills/locations/references/locations-reference.md",
+      "retrievalDate": "2026-06-15",
+      "sourceUpdateDate": "2026-06-04",
+      "revision": null,
+      "affectedDomains": [
+        "locations",
+        "schema",
+        "field-lifecycle"
+      ],
+      "notes": "Marks visualTags and embeddingId as predefinable and visited, lastVisitedTick, and visitedAreas as initialization-overwritten. No directly indexed VoyageWiki locations page was found during the same check, so confidence is medium and local schema or reproducible platform evidence takes precedence.",
+      "conflicts": []
     }
   ]
 }
