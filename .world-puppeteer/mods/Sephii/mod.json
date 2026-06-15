@@ -4,73 +4,61 @@
   "name": "Sephii Instruction Pack",
   "version": "1.0.0",
   "description": "Reference instruction material for NPC detail generation, intent generation, quest guidance, and mod metadata.",
-  "compatibleFormats": [
-    "voyage-v33"
-  ],
-  "domains": [
-    "ai-instructions",
-    "mod-metadata",
-    "quest-generation-guidance"
-  ],
-  "supportedModes": [
-    "reference"
-  ],
+  "compatibleFormats": ["voyage-v33"],
+  "domains": ["ai-instructions", "mod-metadata", "quest-generation-guidance"],
+  "supportedModes": ["reference"],
   "defaultMode": "reference",
   "applicationProfile": "reference-only",
   "conflictPolicy": "stop",
   "dependencies": [],
   "optionalDependencies": [],
   "files": [
+    "Enhanced-NPC-Details.json",
+    "Enhanced-Quest-Generation Guidance-Instructions.json",
+    "Intent-Brain.json"
+  ],
+  "payloadMappings": [
     {
-      "path": "Enhanced-NPC-Details.json",
-      "targets": [
-        {
-          "sourcePath": "mods",
-          "targetPath": "mods",
-          "preferredTargetFile": "meta.json",
-          "domain": "mod-metadata"
-        },
-        {
-          "sourcePath": "aiInstructions",
-          "targetPath": "aiInstructions",
-          "preferredTargetFile": "ai-instructions.json",
-          "domain": "ai-instructions"
-        }
-      ]
+      "file": "Enhanced-NPC-Details.json",
+      "sourcePath": "mods",
+      "targetPath": "mods",
+      "preferredTargetFile": "meta.json",
+      "domain": "mod-metadata"
     },
     {
-      "path": "Enhanced-Quest-Generation Guidance-Instructions.json",
-      "targets": [
-        {
-          "sourcePath": "mods",
-          "targetPath": "mods",
-          "preferredTargetFile": "meta.json",
-          "domain": "mod-metadata"
-        },
-        {
-          "sourcePath": "storySettings",
-          "targetPath": "storySettings",
-          "preferredTargetFile": "settings.json",
-          "domain": "quest-generation-guidance"
-        }
-      ]
+      "file": "Enhanced-NPC-Details.json",
+      "sourcePath": "aiInstructions",
+      "targetPath": "aiInstructions",
+      "preferredTargetFile": "ai-instructions.json",
+      "domain": "ai-instructions"
     },
     {
-      "path": "Intent-Brain.json",
-      "targets": [
-        {
-          "sourcePath": "mods",
-          "targetPath": "mods",
-          "preferredTargetFile": "meta.json",
-          "domain": "mod-metadata"
-        },
-        {
-          "sourcePath": "aiInstructions",
-          "targetPath": "aiInstructions",
-          "preferredTargetFile": "ai-instructions.json",
-          "domain": "ai-instructions"
-        }
-      ]
+      "file": "Enhanced-Quest-Generation Guidance-Instructions.json",
+      "sourcePath": "mods",
+      "targetPath": "mods",
+      "preferredTargetFile": "meta.json",
+      "domain": "mod-metadata"
+    },
+    {
+      "file": "Enhanced-Quest-Generation Guidance-Instructions.json",
+      "sourcePath": "storySettings",
+      "targetPath": "storySettings",
+      "preferredTargetFile": "settings.json",
+      "domain": "quest-generation-guidance"
+    },
+    {
+      "file": "Intent-Brain.json",
+      "sourcePath": "mods",
+      "targetPath": "mods",
+      "preferredTargetFile": "meta.json",
+      "domain": "mod-metadata"
+    },
+    {
+      "file": "Intent-Brain.json",
+      "sourcePath": "aiInstructions",
+      "targetPath": "aiInstructions",
+      "preferredTargetFile": "ai-instructions.json",
+      "domain": "ai-instructions"
     }
   ]
 }
