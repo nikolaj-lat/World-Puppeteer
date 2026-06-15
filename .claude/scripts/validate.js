@@ -22,7 +22,16 @@
 
 const fs = require('fs');
 const path = require('path');
-const { loadAndMergeTabs } = require('./world-puppeteer-lib.cjs');
+const {
+  loadAndMergeTabs,
+  resolveWorld,
+} = require('./world-puppeteer-lib.cjs');
+const { parseStrictArgs } = require('./cli-utils.cjs');
+const {
+  AI_INSTRUCTION_LEAF_LIMIT,
+  AI_INSTRUCTION_TASK_LIMIT,
+  measureAiInstructions,
+} = require('./ai-instruction-limits.cjs');
 
 // ============================================================================
 // ENUMS AND VALID VALUES
@@ -267,8 +276,8 @@ const LIMITS = {
     questGenerationGuidance: 5_000,
     narratorStyle: 2_000,
     deathInstructions: 4_000,
-    aiInstructionIndividual: 5_000,
-    aiInstructionCombined: 20_000,
+    aiInstructionIndividual: AI_INSTRUCTION_LEAF_LIMIT,
+    aiInstructionCombined: AI_INSTRUCTION_TASK_LIMIT,
     worldLoreEntry: 4_000,
     storyStartEntry: 4_000,
     itemDescription: 4_000,
@@ -322,28 +331,6 @@ function createError(path, message, severity = 'error') {
   return { path, message, severity };
 }
 
-function codePointLength(value) {
-  return Array.from(value).length;
-}
-
-function collectAiInstructionTexts(value, pathName) {
-  if (typeof value === 'string') return [{ path: pathName, text: value }];
-  if (Array.isArray(value)) {
-    return value.flatMap((item, index) =>
-      collectAiInstructionTexts(item, `${pathName}[${index}]`)
-    );
-  }
-  if (value && typeof value === 'object') {
-    return Object.entries(value).flatMap(([key, child]) =>
-      collectAiInstructionTexts(child, `${pathName}.${key}`)
-    );
-  }
-  return [{
-    path: pathName,
-    invalidType: true,
-    actual: value === null ? 'null' : typeof value,
-  }];
-}
 
 function getJsonLength(obj) {
   // Use pretty-printing (2-space indent) to match how world configs are stored
@@ -1132,42 +1119,33 @@ function validateCharacterLimits(config, errors, warnings) {
     errors.push(createError('death.instructions', `Too long: ${config.death.instructions.length} chars (max: ${LIMITS.fields.deathInstructions})`));
   }
 
-  // AI instruction limits:
-  // - 5,000 Unicode codepoints per string leaf
-  // - 20,000 Unicode codepoints per top-level task value, measured from
-  //   JSON.stringify(taskValue, null, 2)
-  if (config.aiInstructions && typeof config.aiInstructions === 'object') {
-    for (const [taskId, taskValue] of Object.entries(config.aiInstructions)) {
-      const taskPath = `aiInstructions.${taskId}`;
-      const taskUsed = codePointLength(JSON.stringify(taskValue, null, 2));
+  const aiMeasurement = measureAiInstructions(config.aiInstructions);
 
-      if (taskUsed > LIMITS.fields.aiInstructionCombined) {
-        errors.push(createError(
-          taskPath,
-          `AI instruction task too long: ${taskUsed} codepoints ` +
-          `(max: ${LIMITS.fields.aiInstructionCombined})`
-        ));
-      }
-
-      for (const entry of collectAiInstructionTexts(taskValue, taskPath)) {
-        if (entry.invalidType) {
-          errors.push(createError(
-            entry.path,
-            `Invalid AI instruction value type: ${entry.actual}`
-          ));
-          continue;
-        }
-
-        const used = codePointLength(entry.text);
-        if (used > LIMITS.fields.aiInstructionIndividual) {
-          errors.push(createError(
-            entry.path,
-            `Instruction too long: ${used} codepoints ` +
-            `(max: ${LIMITS.fields.aiInstructionIndividual})`
-          ));
-        }
-      }
+  for (const task of aiMeasurement.tasks) {
+    if (task.used > task.limit) {
+      errors.push(createError(
+        task.path,
+        `AI instruction task too long: ${task.used} codepoints ` +
+        `(max: ${task.limit})`
+      ));
     }
+  }
+
+  for (const entry of aiMeasurement.leaves) {
+    if (entry.used > entry.limit) {
+      errors.push(createError(
+        entry.path,
+        `Instruction too long: ${entry.used} codepoints ` +
+        `(max: ${entry.limit})`
+      ));
+    }
+  }
+
+  for (const entry of aiMeasurement.invalid) {
+    errors.push(createError(
+      entry.path,
+      `Invalid AI instruction value type: ${entry.actual}`
+    ));
   }
 
   // Entry-level checks
@@ -2160,51 +2138,63 @@ function printReport(result, inputPath, verbose) {
 }
 
 function main() {
-  let jsonOutput = false;
-  let verbose = false;
-  let help = false;
-  let inputPath = null;
-  const seen = new Set();
-  for (const arg of process.argv.slice(2)) {
-    if (arg === '--help' || arg === '-h') help = true;
-    else if (arg === '--json') {
-      if (seen.has('--json')) throw new Error('--json may be provided only once');
-      seen.add('--json');
-      jsonOutput = true;
-    } else if (arg === '--verbose' || arg === '-v') {
-      if (seen.has('--verbose')) throw new Error('--verbose may be provided only once');
-      seen.add('--verbose');
-      verbose = true;
-    } else if (arg.startsWith('-')) {
-      throw new Error(`Unknown option: ${arg}`);
-    } else if (inputPath) {
-      throw new Error(`Unexpected positional argument: ${arg}`);
-    } else {
-      inputPath = arg;
+  const { options, positionals } = parseStrictArgs(
+    process.argv.slice(2),
+    {
+      options: {
+        '--world': { key: 'worldRoot', takesValue: true },
+        '--json': { key: 'json' },
+        '--verbose': { key: 'verbose', aliases: ['-v'] },
+        '--help': { key: 'help', aliases: ['-h'] },
+      },
+      maxPositionals: 1,
     }
-  }
-  inputPath = inputPath || path.join(__dirname, '../../tabs');
+  );
 
-  if (help) {
-    console.log('Usage: node validate.js [world.json | directory] [--json] [--verbose]');
-    console.log('');
-    console.log('Validates a Voyage world config JSON file or directory of JSON files.');
-    console.log('');
-    console.log('Options:');
-    console.log('  --json     Output as JSON (for programmatic use)');
-    console.log('  --verbose  Show detailed error messages');
-    console.log('  --help     Show this help');
+  if (options.worldRoot && positionals.length > 0) {
+    throw new Error('--world cannot be combined with a positional input path');
+  }
+
+  if (options.help) {
+    console.log(
+      'Usage: node .claude/scripts/validate.js ' +
+      '[world.json | tabs-directory | --world <world-root>] ' +
+      '[--json] [--verbose]'
+    );
     process.exit(0);
   }
 
-  const fullPath = path.resolve(inputPath);
+  let inputPath;
+  let fullPath;
 
-  if (!fs.existsSync(fullPath)) {
-    console.error(`Error: Path not found: ${inputPath}`);
-    process.exit(1);
+  if (options.worldRoot) {
+    const resolved = resolveWorld({
+      worldRoot: options.worldRoot,
+      cwd: process.cwd(),
+      preferNearest: false,
+    });
+    inputPath = options.worldRoot;
+    fullPath = resolved.tabsPath;
+  } else if (positionals.length > 0) {
+    inputPath = positionals[0];
+    fullPath = path.resolve(inputPath);
+    if (fs.existsSync(path.join(fullPath, '.world-puppeteer.json'))) {
+      fullPath = resolveWorld({
+        worldRoot: fullPath,
+        cwd: fullPath,
+        preferNearest: false,
+      }).tabsPath;
+    }
+  } else {
+    const resolved = resolveWorld({ cwd: process.cwd() });
+    inputPath = resolved.tabsPath;
+    fullPath = resolved.tabsPath;
   }
 
-  // Check if input is a directory
+  if (!fs.existsSync(fullPath)) {
+    throw new Error(`Path not found: ${inputPath}`);
+  }
+
   const stats = fs.statSync(fullPath);
   let config;
   let displayPath = inputPath;
@@ -2240,10 +2230,10 @@ function main() {
 
   const result = validate(config);
 
-  if (jsonOutput) {
+  if (options.json) {
     console.log(JSON.stringify(result, null, 2));
   } else {
-    printReport(result, displayPath, verbose);
+    printReport(result, displayPath, options.verbose);
   }
 
   process.exit(result.errors.length > 0 ? 1 : 0);

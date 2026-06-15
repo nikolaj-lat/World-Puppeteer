@@ -1,29 +1,45 @@
 #!/usr/bin/env node
 
 const path = require('path');
+const { parseStrictArgs } = require('./cli-utils.cjs');
 const { resolveWorld } = require('./world-puppeteer-lib.cjs');
 
-function parseArgs(argv) {
-  const args = {};
-  for (let i = 0; i < argv.length; i++) {
-    const arg = argv[i];
-    if (arg === '--world') args.worldRoot = argv[++i];
-    else if (arg === '--cwd') args.cwd = argv[++i];
-    else if (arg === '--json') args.json = true;
-  }
-  return args;
-}
+function main() {
+  const { options } = parseStrictArgs(
+    process.argv.slice(2),
+    {
+      options: {
+        '--world': { key: 'worldRoot', takesValue: true },
+        '--cwd': { key: 'cwd', takesValue: true },
+        '--json': { key: 'json' },
+        '--help': { key: 'help', aliases: ['-h'] },
+      },
+      maxPositionals: 0,
+    }
+  );
 
-try {
-  const args = parseArgs(process.argv.slice(2));
-  const resolved = resolveWorld({ ...args, preferNearest: !args.worldRoot });
-  const profileSummaries = resolved.activeProfiles.map(({ profilePath, profile }) => ({
-    id: profile.id,
-    path: path.relative(resolved.repoRoot, profilePath),
-    skills: profile.skills,
-    appliesTo: profile.appliesTo,
-    required: profile.required,
-  }));
+  if (options.help) {
+    console.log(
+      'Usage: node .claude/scripts/resolve-world.cjs ' +
+      '[--world <world-root>] [--cwd <directory>] [--json]'
+    );
+    return;
+  }
+
+  const resolved = resolveWorld({
+    worldRoot: options.worldRoot,
+    cwd: options.cwd || process.cwd(),
+    preferNearest: !options.worldRoot,
+  });
+  const profileSummaries = resolved.activeProfiles.map(
+    ({ profilePath, profile }) => ({
+      id: profile.id,
+      path: path.relative(resolved.repoRoot, profilePath),
+      skills: profile.skills,
+      appliesTo: profile.appliesTo,
+      required: profile.required,
+    })
+  );
   const output = {
     repoRoot: resolved.repoRoot,
     worldRoot: resolved.worldRoot,
@@ -37,17 +53,27 @@ try {
     validationProfiles: resolved.marker.toolchain.validationProfiles,
   };
 
-  if (args.json) {
+  if (options.json) {
     console.log(JSON.stringify(output, null, 2));
   } else {
     console.log(`Resolved world: ${output.name}`);
     console.log(`Role: ${output.role}`);
-    console.log(`Root: ${path.relative(resolved.repoRoot, output.worldRoot) || '.'}`);
-    console.log(`Output: ${path.relative(resolved.repoRoot, output.compiledOutputPath)}`);
-    console.log(`Profiles: ${profileSummaries.map((p) => p.id).join(', ') || '(none)'}`);
+    console.log(
+      `Root: ${path.relative(resolved.repoRoot, output.worldRoot) || '.'}`
+    );
+    console.log(
+      `Output: ${path.relative(resolved.repoRoot, output.compiledOutputPath)}`
+    );
+    console.log(
+      `Profiles: ${profileSummaries.map((profile) => profile.id).join(', ') || '(none)'}`
+    );
     console.log(`Validators: ${output.validationProfiles.join(', ')}`);
   }
+}
+
+try {
+  main();
 } catch (error) {
-  console.error(error.message);
+  console.error(`Error: ${error.message}`);
   process.exit(1);
 }

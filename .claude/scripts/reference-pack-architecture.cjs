@@ -10,6 +10,7 @@ const {
   findRepoRoot,
   isInside,
 } = require('./world-puppeteer-lib.cjs');
+const { parseStrictArgs } = require('./cli-utils.cjs');
 
 const NON_PAYLOAD_FILES = new Set(['pack.json', 'README.md']);
 const REPORT_ROOT = path.join('.world-puppeteer', 'reports', 'reference-packs');
@@ -364,11 +365,85 @@ module.exports = {
   validateReferencePackRegistry,
 };
 
-if (require.main === module) {
+function runCli(argv = process.argv.slice(2)) {
+  const { options, positionals } = parseStrictArgs(
+    argv,
+    {
+      options: {
+        '--pack': { key: 'packId', takesValue: true },
+        '--output': { key: 'outputPath', takesValue: true },
+        '--json': { key: 'json' },
+        '--help': { key: 'help', aliases: ['-h'] },
+      },
+      maxPositionals: 1,
+    }
+  );
+
+  const command = positionals[0] || 'validate';
+
+  if (options.help) {
+    console.log(
+      'Usage:\n' +
+      '  node .claude/scripts/reference-pack-architecture.cjs validate [--json]\n' +
+      '  node .claude/scripts/reference-pack-architecture.cjs inspect ' +
+      '--pack <pack-id> [--output <report-path>] [--json]'
+    );
+    return 0;
+  }
+
   const repoRoot = findRepoRoot(process.cwd());
-  const result = validateReferencePackRegistry(repoRoot);
-  for (const warning of result.warnings) console.warn(`warning: ${warning}`);
-  for (const error of result.errors) console.error(`error: ${error}`);
-  if (result.errors.length === 0) console.log(`Reference packs: ${result.packsById.size}`);
-  process.exit(result.errors.length > 0 ? 1 : 0);
+
+  if (command === 'validate') {
+    if (options.packId || options.outputPath) {
+      throw new Error('validate does not accept --pack or --output');
+    }
+    const result = validateReferencePackRegistry(repoRoot);
+    if (options.json) {
+      console.log(JSON.stringify({
+        errors: result.errors,
+        warnings: result.warnings,
+        packs: Array.from(result.packsById.keys()).sort(),
+      }, null, 2));
+    } else {
+      for (const warning of result.warnings) {
+        console.warn(`warning: ${warning}`);
+      }
+      for (const error of result.errors) {
+        console.error(`error: ${error}`);
+      }
+      if (result.errors.length === 0) {
+        console.log(`Reference packs: ${result.packsById.size}`);
+      }
+    }
+    return result.errors.length > 0 ? 1 : 0;
+  }
+
+  if (command === 'inspect') {
+    if (!options.packId) throw new Error('inspect requires --pack <pack-id>');
+    const { report } = inspectReferencePack({
+      repoRoot,
+      packId: options.packId,
+      outputPath: options.outputPath || null,
+    });
+    if (options.json) {
+      console.log(JSON.stringify(report, null, 2));
+    } else {
+      console.log(`Reference pack: ${report.name} (${report.packId})`);
+      console.log(`Domains: ${report.domains.join(', ')}`);
+      console.log(`Payload files: ${report.files.length}`);
+      if (report.outputPath) console.log(`Report: ${report.outputPath}`);
+    }
+    return 0;
+  }
+
+  throw new Error(`Unknown command: ${command}`);
+}
+
+if (require.main === module) {
+  try {
+    process.exitCode = runCli();
+  } catch (error) {
+    console.error(`error: ${error.message}`);
+    process.exitCode = 1;
+  }
 }

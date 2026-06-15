@@ -21,6 +21,11 @@
 const fs = require('fs');
 const path = require('path');
 const { loadAndMergeTabs, resolveWorld } = require('./world-puppeteer-lib.cjs');
+const { parseStrictArgs } = require('./cli-utils.cjs');
+const {
+  AI_INSTRUCTION_TASK_LIMIT,
+  measureAiInstructions,
+} = require('./ai-instruction-limits.cjs');
 
 // Section character limits (from validation.md)
 const SECTION_LIMITS = {
@@ -93,28 +98,6 @@ const SETTINGS_ENTRY_LIMITS = {
   premadeCharacter: 20_000, // per-character JSON length
 };
 
-// AI instruction limits
-const AI_INSTRUCTION_INDIVIDUAL_LIMIT = 5_000;
-const AI_INSTRUCTION_COMBINED_LIMIT = 20_000;
-
-function codePointLength(value) {
-  return Array.from(value).length;
-}
-
-function collectAiInstructionTexts(value, pathName) {
-  if (typeof value === 'string') return [{ path: pathName, text: value }];
-  if (Array.isArray(value)) {
-    return value.flatMap((item, index) =>
-      collectAiInstructionTexts(item, `${pathName}[${index}]`)
-    );
-  }
-  if (value && typeof value === 'object') {
-    return Object.entries(value).flatMap(([key, child]) =>
-      collectAiInstructionTexts(child, `${pathName}.${key}`)
-    );
-  }
-  return [];
-}
 
 // Game mode field limits (per mode)
 const GAME_MODE_FIELD_LIMITS = {
@@ -177,7 +160,7 @@ function analyzeConfig(config) {
     aiInstructions: {
       individual: [],
       tasks: [],
-      taskLimit: AI_INSTRUCTION_COMBINED_LIMIT,
+      taskLimit: AI_INSTRUCTION_TASK_LIMIT,
     },
     triggers: {
       oversizedConditions: [],
@@ -412,33 +395,11 @@ function analyzeConfig(config) {
     }
   }
 
-  // AI instruction limits:
-  // - 5,000 Unicode codepoints per string leaf
-  // - 20,000 Unicode codepoints per top-level task value, measured from
-  //   JSON.stringify(taskValue, null, 2)
-  if (config.aiInstructions && typeof config.aiInstructions === 'object') {
-    for (const [taskId, taskValue] of Object.entries(config.aiInstructions)) {
-      const taskPath = `aiInstructions.${taskId}`;
-      const taskUsed = codePointLength(JSON.stringify(taskValue, null, 2));
-
-      result.aiInstructions.tasks.push({
-        path: taskPath,
-        used: taskUsed,
-        limit: AI_INSTRUCTION_COMBINED_LIMIT,
-      });
-
-      for (const entry of collectAiInstructionTexts(taskValue, taskPath)) {
-        const used = codePointLength(entry.text);
-        if (used > AI_INSTRUCTION_INDIVIDUAL_LIMIT) {
-          result.aiInstructions.individual.push({
-            path: entry.path,
-            used,
-            limit: AI_INSTRUCTION_INDIVIDUAL_LIMIT,
-          });
-        }
-      }
-    }
-  }
+  const aiMeasurement = measureAiInstructions(config.aiInstructions);
+  result.aiInstructions.tasks = aiMeasurement.tasks;
+  result.aiInstructions.individual = aiMeasurement.leaves.filter(
+    (entry) => entry.used > entry.limit
+  );
 
   // Game mode field analysis
   if (config.gameModes && typeof config.gameModes === 'object') {
@@ -795,66 +756,88 @@ function printReport(result, inputPath) {
 }
 
 function main() {
-  const args = process.argv.slice(2);
-  const jsonOutput = args.includes('--json');
-  const worldArgIndex = args.indexOf('--world');
-  const worldRoot = worldArgIndex >= 0 ? args[worldArgIndex + 1] : null;
-  const inputPath = worldRoot || args.find((a) => !a.startsWith('--')) || path.join(__dirname, '../../tabs');
+  const { options, positionals } = parseStrictArgs(
+    process.argv.slice(2),
+    {
+      options: {
+        '--world': { key: 'worldRoot', takesValue: true },
+        '--json': { key: 'json' },
+        '--help': { key: 'help', aliases: ['-h'] },
+      },
+      maxPositionals: 1,
+    }
+  );
 
-  let fullPath = path.resolve(inputPath);
+  if (options.worldRoot && positionals.length > 0) {
+    throw new Error('--world cannot be combined with a positional input path');
+  }
+
+  if (options.help) {
+    console.log(
+      'Usage: node .claude/scripts/count.js ' +
+      '[world.json | tabs-directory | --world <world-root>] [--json]'
+    );
+    process.exit(0);
+  }
+
+  let inputPath;
+  let fullPath;
+
+  if (options.worldRoot) {
+    const resolved = resolveWorld({
+      worldRoot: options.worldRoot,
+      cwd: process.cwd(),
+      preferNearest: false,
+    });
+    inputPath = options.worldRoot;
+    fullPath = resolved.tabsPath;
+  } else if (positionals.length > 0) {
+    inputPath = positionals[0];
+    fullPath = path.resolve(inputPath);
+    if (fs.existsSync(path.join(fullPath, '.world-puppeteer.json'))) {
+      fullPath = resolveWorld({
+        worldRoot: fullPath,
+        cwd: fullPath,
+        preferNearest: false,
+      }).tabsPath;
+    }
+  } else {
+    const resolved = resolveWorld({ cwd: process.cwd() });
+    inputPath = resolved.tabsPath;
+    fullPath = resolved.tabsPath;
+  }
 
   if (!fs.existsSync(fullPath)) {
-    console.error(`Error: Path not found: ${inputPath}`);
-    process.exit(1);
+    throw new Error(`Path not found: ${inputPath}`);
   }
 
-  if (worldRoot || fs.existsSync(path.join(fullPath, '.world-puppeteer.json'))) {
-    try {
-      fullPath = resolveWorld({ worldRoot: fullPath, cwd: fullPath, preferNearest: false }).tabsPath;
-    } catch (err) {
-      console.error(`Error resolving world root ${inputPath}: ${err.message}`);
-      process.exit(1);
-    }
-  }
-
-  // Check if input is a directory
   const stats = fs.statSync(fullPath);
   let config;
   let displayPath = inputPath;
 
   if (stats.isDirectory()) {
-    try {
-      const merged = loadAndMergeTabs(fullPath);
-      if (merged.files.length === 0) {
-        console.error(`Error: No JSON files found in ${inputPath}`);
-        process.exit(1);
-      }
-      config = merged.config;
-      displayPath = `${inputPath} (${merged.files.length} files)`;
-    } catch (err) {
-      console.error(`Error: ${err.message}`);
-      process.exit(1);
+    const merged = loadAndMergeTabs(fullPath);
+    if (merged.files.length === 0) {
+      throw new Error(`No JSON files found in ${inputPath}`);
     }
+    config = merged.config;
+    displayPath = `${inputPath} (${merged.files.length} files)`;
   } else {
-    // Single file
     try {
-      const content = fs.readFileSync(fullPath, 'utf-8');
-      config = JSON.parse(content);
-    } catch (err) {
-      console.error(`Error reading ${inputPath}: ${err.message}`);
-      process.exit(1);
+      config = JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
+    } catch (error) {
+      throw new Error(`Error reading ${inputPath}: ${error.message}`);
     }
   }
 
   const result = analyzeConfig(config);
 
-  if (jsonOutput) {
+  if (options.json) {
     console.log(JSON.stringify(result, null, 2));
   } else {
     printReport(result, displayPath);
   }
 
-  // Exit with error code if over limits
   const hasViolations =
     result.total.used > result.total.limit ||
     Object.values(result.sections).some((s) => s.used > s.limit) ||
@@ -870,7 +853,10 @@ function main() {
     result.areas.oversized.length > 0 ||
     result.gameModes.oversizedFields.length > 0 ||
     result.imagePrompts.oversized.length > 0 ||
-    (result.imagePrompts.total !== null && result.imagePrompts.total.used > result.imagePrompts.total.limit) ||
+    (
+      result.imagePrompts.total !== null &&
+      result.imagePrompts.total.used > result.imagePrompts.total.limit
+    ) ||
     result.settingsEntries.oversized.length > 0 ||
     result.aiInstructions.tasks.some((task) => task.used > task.limit) ||
     result.aiInstructions.individual.length > 0;
@@ -878,4 +864,9 @@ function main() {
   process.exit(hasViolations ? 1 : 0);
 }
 
-main();
+try {
+  main();
+} catch (error) {
+  console.error(`Error: ${error.message}`);
+  process.exit(1);
+}

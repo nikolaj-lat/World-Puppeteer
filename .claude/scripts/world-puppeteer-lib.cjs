@@ -6,6 +6,7 @@ const MARKER_FILE = '.world-puppeteer.json';
 const KNOWN_FORMATS = new Set(['voyage-v33']);
 const TIMEOUT_MS = 120000;
 const BUILD_TEMP_PREFIX = '.world-puppeteer-build-';
+const BUILD_LOCK_STALE_MS = 10 * 60 * 1000;
 
 const FORMAT_PROFILES = {
   'voyage-json-tabs': {
@@ -361,6 +362,112 @@ function uniqueBuildTempPath(destinationPath) {
   return path.join(dir, `${BUILD_TEMP_PREFIX}${parsed.name}-${suffix}${parsed.ext}`);
 }
 
+function buildLockPath(destinationPath) {
+  const parsed = path.parse(destinationPath);
+  return path.join(
+    parsed.dir,
+    `.${parsed.base}.world-puppeteer.lock`
+  );
+}
+
+function isProcessAlive(pid) {
+  if (!Number.isInteger(pid) || pid <= 0) return false;
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (error) {
+    return error.code === 'EPERM';
+  }
+}
+
+function readBuildLock(lockPath) {
+  try {
+    return JSON.parse(fs.readFileSync(lockPath, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function acquireBuildLock(destinationPath, options = {}) {
+  const lockPath = buildLockPath(destinationPath);
+  const staleMs = options.lockStaleMs ?? BUILD_LOCK_STALE_MS;
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const token = `${process.pid}-${Date.now()}-${Math.random()
+      .toString(16)
+      .slice(2)}`;
+    let fd = null;
+
+    try {
+      fd = fs.openSync(lockPath, 'wx');
+      fs.writeFileSync(
+        fd,
+        JSON.stringify({
+          schemaVersion: 1,
+          pid: process.pid,
+          token,
+          startedAt: new Date().toISOString(),
+          destinationPath: path.resolve(destinationPath),
+        }) + '\n'
+      );
+      return { fd, lockPath, token };
+    } catch (error) {
+      if (fd !== null) {
+        try {
+          fs.closeSync(fd);
+        } catch {}
+        try {
+          fs.rmSync(lockPath, { force: true });
+        } catch {}
+      }
+
+      if (error.code !== 'EEXIST') throw error;
+
+      const stat = fs.lstatSync(lockPath);
+      if (stat.isSymbolicLink() || !stat.isFile()) {
+        throw new Error(
+          `Unsafe build lock path: ${lockPath}`
+        );
+      }
+
+      const metadata = readBuildLock(lockPath);
+      const ageMs = Math.max(0, Date.now() - stat.mtimeMs);
+      const hasPid = Number.isInteger(metadata?.pid) && metadata.pid > 0;
+      const ownerAlive = hasPid && isProcessAlive(metadata.pid);
+      const reclaimable = hasPid
+        ? !ownerAlive
+        : ageMs > staleMs;
+
+      if (reclaimable && attempt === 0) {
+        fs.rmSync(lockPath, { force: true });
+        continue;
+      }
+
+      const owner = hasPid ? `pid ${metadata.pid}` : 'unknown owner';
+      throw new Error(
+        `Build already in progress for ${destinationPath} ` +
+        `(${owner}; lock ${lockPath})`
+      );
+    }
+  }
+
+  throw new Error(`Could not acquire build lock for ${destinationPath}`);
+}
+
+function releaseBuildLock(lock) {
+  if (!lock) return;
+
+  if (lock.fd !== null && lock.fd !== undefined) {
+    try {
+      fs.closeSync(lock.fd);
+    } catch {}
+  }
+
+  if (!fs.existsSync(lock.lockPath)) return;
+  const metadata = readBuildLock(lock.lockPath);
+  if (metadata?.token !== lock.token) return;
+  fs.rmSync(lock.lockPath, { force: true });
+}
 function atomicReplaceFile(sourcePath, destinationPath) {
   fs.renameSync(sourcePath, destinationPath);
 }
@@ -391,15 +498,33 @@ function validateCompiledCandidate(world, candidatePath, options = {}) {
 }
 
 function buildWorldSource(world, options = {}) {
-  const merged = loadAndMergeTabs(world.tabsPath);
   fs.mkdirSync(path.dirname(world.compiledOutputPath), { recursive: true });
-  const tempPath = options.tempPath || uniqueBuildTempPath(world.compiledOutputPath);
+  const lock = acquireBuildLock(world.compiledOutputPath, options);
+  let tempPath = null;
   let backupPath = null;
+
   try {
-    fs.writeFileSync(tempPath, JSON.stringify(merged.config, null, 2) + '\n');
+    const merged = loadAndMergeTabs(world.tabsPath);
+    tempPath =
+      options.tempPath ||
+      uniqueBuildTempPath(world.compiledOutputPath);
+
+    fs.writeFileSync(
+      tempPath,
+      JSON.stringify(merged.config, null, 2) + '\n'
+    );
     validateCompiledCandidate(world, tempPath, options);
-    if (!options.noBackup) backupPath = createBuildBackup(world.compiledOutputPath);
-    atomicReplaceFile(tempPath, world.compiledOutputPath);
+
+    const backupFactory =
+      options.createBuildBackup || createBuildBackup;
+    const replaceFile =
+      options.atomicReplaceFile || atomicReplaceFile;
+
+    if (!options.noBackup) {
+      backupPath = backupFactory(world.compiledOutputPath);
+    }
+    replaceFile(tempPath, world.compiledOutputPath);
+
     return {
       topLevelKeys: Object.keys(merged.config).length,
       sourceFiles: merged.files,
@@ -407,7 +532,10 @@ function buildWorldSource(world, options = {}) {
       backupPath,
     };
   } finally {
-    if (fs.existsSync(tempPath)) fs.rmSync(tempPath, { force: true });
+    if (tempPath && fs.existsSync(tempPath)) {
+      fs.rmSync(tempPath, { force: true });
+    }
+    releaseBuildLock(lock);
   }
 }
 
@@ -583,10 +711,13 @@ function resolveWorld(options = {}) {
 }
 
 module.exports = {
+  BUILD_LOCK_STALE_MS,
   BUILD_PROFILES,
   FORMAT_PROFILES,
   VALIDATION_PROFILES,
   MARKER_FILE,
+  acquireBuildLock,
+  buildLockPath,
   buildWorldSource,
   loadAndMergeTabs,
   findRepoRoot,
@@ -597,6 +728,7 @@ module.exports = {
   knownToolchain,
   readJson,
   readProfile,
+  releaseBuildLock,
   resolveWorld,
   runBuildProfile,
   runConfiguredBuild,
