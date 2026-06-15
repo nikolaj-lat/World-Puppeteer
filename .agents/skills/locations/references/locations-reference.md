@@ -2,6 +2,13 @@
 
 Complete documentation for `tabs/locations.json`.
 
+## Evidence status
+
+- Current upstream World-Puppeteer documentation, modified 2026-06-04 and checked 2026-06-15, marks `visualTags` and `embeddingId` as predefinable fields preserved from config.
+- The same source marks `visited`, `lastVisitedTick`, and `visitedAreas` as initialization-overwritten runtime state.
+- No directly indexed VoyageWiki locations page was found during this reconciliation, so these field-lifecycle claims remain medium-confidence community-source evidence rather than official platform certainty.
+- Local schema and reproducible platform behavior outrank this reference when they conflict. Do not fabricate `embeddingId` values.
+
 ## Schema
 
 ```typescript
@@ -17,16 +24,16 @@ interface Location {
   areas?: Record<string, Area>      // ✅ Areas within location (for complex types)
   factions?: string[]               // ✅ Keys from factions.json
   hiddenInfo?: string               // ✅ Secret information revealed through exploration
-  visualTags?: string[]             // ✅ Visual metadata tags for the location
+  visualTags?: string[]             // ✅ Optional visual metadata tags; author only when meaningful
   imageUrl?: string                 // ✅ URL for the location's image
-  embeddingId?: string              // ✅ Reference to embeddings record
+  embeddingId?: string              // ✅ Optional reference to a known embeddings record; never fabricate
   known?: boolean                   // ✅ Defaults to true; set false to hide at game start
   npcLevelRange?: { min: number, max: number }  // ✅ Optional level band for NPCs generated here. NPCs with no explicit level are rolled near party level, then clamped into this band. Takes priority over the region's band. NPCs with an explicit level ignore it
   visited?: boolean                 // ❌ Always false at creation
   lastVisitedTick?: number          // ❌ Always 0 at creation
   visitedAreas?: string[]           // ❌ Always [] at creation
-  questOriginArcId?: string         // ✅ Auto-generated for quest-spawned locations. Links to the arc that spawned this location; provides arc context to AI detail generation
-  questOriginQuestId?: string       // ✅ Auto-generated for quest-spawned locations. Links to the quest that spawned this location; provides quest design brief to AI detail generation
+  questOriginArcId?: string         // ✅ Engine-generated for quest-spawned locations; do not invent for ordinary authored locations
+  questOriginQuestId?: string       // ✅ Engine-generated for quest-spawned locations; do not invent for ordinary authored locations
 }
 
 type ComplexityType = 'simple' | 'complex' | 'wilderness'
@@ -34,8 +41,8 @@ type ComplexityType = 'simple' | 'complex' | 'wilderness'
 
 ### Legend
 
-- ✅ **Predefine-able**: Can be set in config, preserved via spread
-- ❌ **Always overwritten**: Set by initialization regardless of what exists in config
+- ✅ **Predefine-able**: Can be set in config and preserved via spread, subject to the evidence caveat above.
+- ❌ **Always overwritten**: Set by initialization regardless of what exists in config.
 
 ## Area Schema
 
@@ -95,3 +102,4 @@ Generates: areas (with paths), hiddenInfo
 |-------|------------|
 | `region` | `tabs/regions.json` |
 | `factions` | `tabs/factions.json` |
+| `embeddingId` | A known entry in the world's embedding metadata/workflow |
