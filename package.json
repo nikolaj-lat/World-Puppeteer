@@ -4,9 +4,11 @@
   "description": "World-Puppeteer tooling, validation, hook, and reference-pack architecture.",
   "private": true,
   "scripts": {
-    "test": "node .claude/scripts/tooling-architecture-tests.cjs && node .claude/scripts/cli-contract-tests.cjs && node .claude/scripts/ai-instruction-limit-tests.cjs && node .claude/scripts/build-safety-tests.cjs",
+    "test": "node .claude/scripts/tooling-architecture-tests.cjs && node .claude/scripts/cli-contract-tests.cjs && node .claude/scripts/ai-instruction-limit-tests.cjs && node .claude/scripts/build-safety-tests.cjs && node .claude/scripts/git-hook-enforcement-tests.cjs",
     "test:reference-packs": "node .claude/scripts/reference-pack-architecture-tests.cjs",
-    "validate:metadata": "node .claude/scripts/validate-world-puppeteer.cjs"
+    "validate:metadata": "node .claude/scripts/validate-world-puppeteer.cjs",
+    "verify:changed": "node .claude/scripts/verify-changed-paths.cjs",
+    "hooks:install": "node .claude/scripts/install-git-hooks.cjs"
   },
   "repository": {
     "type": "git",

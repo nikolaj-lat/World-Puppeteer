@@ -1,0 +1,4 @@
+#!/bin/sh
+repo_root="$(git rev-parse --show-toplevel)" || exit 1
+cd "$repo_root" || exit 1
+exec node "$repo_root/.claude/scripts/verify-changed-paths.cjs" --mode pre-commit
