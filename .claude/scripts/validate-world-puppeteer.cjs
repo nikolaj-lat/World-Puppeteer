@@ -10,9 +10,11 @@ const {
 const {
   readJsonResult,
   validateAgainstSchemaFile,
+} = require('./mod-architecture.cjs');
+const {
   validateAppliedMods,
   validateModRegistry,
-} = require('./mod-architecture.cjs');
+} = require('./mod-architecture-v2.cjs');
 
 const MARKER_FILE = '.world-puppeteer.json';
 const IGNORED_DIRS = new Set(['.git', 'node_modules', 'config-backups', 'images', 'stuff']);
