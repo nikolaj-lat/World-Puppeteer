@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-puppeteer.local/schemas/mod-integration-plan.schema.json",
+  "title": "World Puppeteer Mod Integration Dry-Run Plan",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "modId",
+    "modVersion",
+    "targetWorldId",
+    "mode",
+    "affectedDomains",
+    "sourcePayloads",
+    "proposedOperations",
+    "conflicts",
+    "warnings",
+    "approvalRequired"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "modId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "modVersion": { "type": "string", "minLength": 1 },
+    "targetWorldId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "mode": { "enum": ["reference", "apply"] },
+    "affectedDomains": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "sourcePayloads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "kind", "topLevelKeys"],
+        "additionalProperties": false,
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "kind": { "enum": ["json", "file"] },
+          "topLevelKeys": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "proposedOperations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "source", "target", "requiresApproval", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "type": { "enum": ["reference", "add", "adapt"] },
+          "source": { "type": "string", "minLength": 1 },
+          "target": { "type": "string", "minLength": 1 },
+          "requiresApproval": { "type": "boolean" },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "target", "keys"],
+        "additionalProperties": false,
+        "properties": {
+          "source": { "type": "string", "minLength": 1 },
+          "target": { "type": "string", "minLength": 1 },
+          "keys": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "approvalRequired": { "type": "boolean" }
+  }
+}

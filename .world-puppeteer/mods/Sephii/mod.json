@@ -19,5 +19,10 @@
   "applicationProfile": "reference-only",
   "conflictPolicy": "dry-run must report any overlapping instruction section before application",
   "dependencies": [],
-  "optionalDependencies": []
+  "optionalDependencies": [],
+  "files": [
+    "Enhanced-NPC-Details.json",
+    "Enhanced-Quest-Generation Guidance-Instructions.json",
+    "Intent-Brain.json"
+  ]
 }

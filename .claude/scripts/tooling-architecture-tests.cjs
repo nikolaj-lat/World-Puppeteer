@@ -11,6 +11,7 @@ const {
   runFormatProfile,
   runValidationProfile,
   resolveWorld,
+  validateModRegistry,
 } = require('./world-puppeteer-lib.cjs');
 
 const repoRoot = findRepoRoot(process.cwd());
@@ -59,6 +60,44 @@ function marker(id, role = 'editable') {
     activeProfiles: [],
     appliedMods: [],
   };
+}
+
+function writeJson(filePath, value) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, JSON.stringify(value, null, 2) + '\n');
+}
+
+function modManifest(id, overrides = {}) {
+  return {
+    schemaVersion: 1,
+    id,
+    name: id,
+    version: '1.0.0',
+    description: 'fixture mod',
+    compatibleFormats: ['voyage-v33'],
+    domains: ['ai-instructions'],
+    supportedModes: ['reference'],
+    defaultMode: 'reference',
+    applicationProfile: 'reference-only',
+    conflictPolicy: 'dry-run only',
+    dependencies: [],
+    optionalDependencies: [],
+    files: ['payload.json'],
+    ...overrides,
+  };
+}
+
+function writeMod(root, dirName, manifest, payloads = { 'payload.json': { payload: true } }) {
+  const modDir = path.join(root, '.world-puppeteer', 'mods', dirName);
+  fs.mkdirSync(modDir, { recursive: true });
+  writeJson(path.join(modDir, 'mod.json'), manifest);
+  fs.writeFileSync(path.join(modDir, 'README.md'), `${manifest.name}\n`);
+  for (const [relative, content] of Object.entries(payloads)) {
+    const filePath = path.join(modDir, relative);
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    if (typeof content === 'string') fs.writeFileSync(filePath, content);
+    else writeJson(filePath, content);
+  }
 }
 
 function assertThrows(fn, matcher, message) {
@@ -408,14 +447,79 @@ for (const [label, text] of [['timeline skill', hxhTimelineSkill], ['HxH overrid
 }
 assert(hxhTimelineProfile.description.includes('current-campaign-phase') && hxhTimelineProfile.description.includes('canon-divergence'), 'timeline profile must advertise progression and divergence support');
 
-const modsIndex = JSON.parse(read(path.join(repoRoot, '.world-puppeteer', 'mods', 'index.json')));
-for (const modId of modsIndex.mods) {
-  const manifest = listFiles(path.join(repoRoot, '.world-puppeteer', 'mods')).find((file) => {
-    if (path.basename(file) !== 'mod.json') return false;
-    return JSON.parse(read(file)).id === modId;
-  });
-  assert(!!manifest, `mod index references missing manifest id ${modId}`);
+const modRegistry = validateModRegistry(repoRoot);
+for (const error of modRegistry.errors) failures.push(error);
+assert(modRegistry.modsById.has('meteion-story-instructions'), 'canonical registry must include Meteion mod');
+assert(modRegistry.modsById.has('sephii-instruction-pack'), 'canonical registry must include Sephii mod');
+for (const [id, entry] of modRegistry.modsById) {
+  const listed = [...entry.manifest.files].sort();
+  const actual = listFiles(path.join(repoRoot, '.world-puppeteer', 'mods', entry.dirName))
+    .map((file) => path.relative(entry.modDir, file).replace(/\\/g, '/'))
+    .filter((relative) => !['mod.json', 'README.md'].includes(relative))
+    .sort();
+  assert(JSON.stringify(listed) === JSON.stringify(actual), `${id}: manifest files must exactly match payload inventory`);
 }
+const claudeModPayloads = listFiles(path.join(repoRoot, '.claude', 'mods'))
+  .map((file) => path.relative(path.join(repoRoot, '.claude', 'mods'), file).replace(/\\/g, '/'))
+  .filter((relative) => relative !== 'README.md');
+assert(claudeModPayloads.length === 0, `.claude/mods must not contain duplicated payload files: ${claudeModPayloads.join(', ')}`);
+
+const { createPlan, validatePlanShape } = require(path.join(repoRoot, '.claude', 'scripts', 'mod-dry-run.cjs'));
+const dryRun = createPlan({ modId: 'meteion-story-instructions', worldRoot: hxh.worldRoot, repoRoot });
+assert(validatePlanShape(dryRun.plan).length === 0, 'mod dry-run plan must satisfy plan schema');
+assert(dryRun.plan.sourcePayloads.length === 2, 'Meteion dry-run must inventory two source payloads');
+assert(dryRun.plan.proposedOperations.every((operation) => operation.type !== 'replace'), 'dry-run must not propose replace operations');
+assert(dryRun.plan.approvalRequired === true, 'dry-run must require approval');
+
+const fixtureModsRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
+writeMod(fixtureModsRoot, 'one', modManifest('one'));
+writeJson(path.join(fixtureModsRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
+assert(validateModRegistry(fixtureModsRoot).errors.length === 0, 'fixture valid mod registry must pass');
+
+const duplicateIdRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
+writeMod(duplicateIdRoot, 'one-a', modManifest('one'));
+writeMod(duplicateIdRoot, 'one-b', modManifest('one'));
+writeJson(path.join(duplicateIdRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
+assert(validateModRegistry(duplicateIdRoot).errors.some((error) => error.includes('duplicate mod id')), 'duplicate mod IDs must fail');
+
+const duplicateRegistryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
+writeMod(duplicateRegistryRoot, 'one', modManifest('one'));
+writeJson(path.join(duplicateRegistryRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one', 'one'] });
+assert(validateModRegistry(duplicateRegistryRoot).errors.some((error) => error.includes('duplicate registry entry')), 'duplicate registry entries must fail');
+
+const missingDependencyRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
+writeMod(missingDependencyRoot, 'one', modManifest('one', { dependencies: ['missing-required'] }));
+writeJson(path.join(missingDependencyRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
+assert(validateModRegistry(missingDependencyRoot).errors.some((error) => error.includes('required dependency not found')), 'missing required dependency must fail');
+
+const optionalDependencyRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
+writeMod(optionalDependencyRoot, 'one', modManifest('one', { optionalDependencies: ['missing-optional'] }));
+writeJson(path.join(optionalDependencyRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
+const optionalResult = validateModRegistry(optionalDependencyRoot);
+assert(optionalResult.errors.length === 0, 'missing optional dependency must not fail');
+assert(optionalResult.warnings.some((warning) => warning.includes('optional dependency not found')), 'missing optional dependency must warn');
+
+const cycleRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
+writeMod(cycleRoot, 'one', modManifest('one', { dependencies: ['two'] }));
+writeMod(cycleRoot, 'two', modManifest('two', { dependencies: ['one'] }));
+writeJson(path.join(cycleRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one', 'two'] });
+assert(validateModRegistry(cycleRoot).errors.some((error) => error.includes('dependency cycle')), 'required dependency cycle must fail');
+
+const unlistedPayloadRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
+writeMod(unlistedPayloadRoot, 'one', modManifest('one'), { 'payload.json': {}, 'extra.json': {} });
+writeJson(path.join(unlistedPayloadRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
+assert(validateModRegistry(unlistedPayloadRoot).errors.some((error) => error.includes('payload file not listed')), 'unlisted payload files must fail');
+
+const missingPayloadRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
+writeMod(missingPayloadRoot, 'one', modManifest('one', { files: ['missing.json'] }), {});
+writeJson(path.join(missingPayloadRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
+assert(validateModRegistry(missingPayloadRoot).errors.some((error) => error.includes('listed payload missing')), 'missing listed payload files must fail');
+
+const coverageRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'world-puppeteer-mods-'));
+writeMod(coverageRoot, 'one', modManifest('one'));
+writeMod(coverageRoot, 'two', modManifest('two'));
+writeJson(path.join(coverageRoot, '.world-puppeteer', 'mods', 'index.json'), { schemaVersion: 1, mods: ['one'] });
+assert(validateModRegistry(coverageRoot).errors.some((error) => error.includes('not represented in registry')), 'every mod directory must be represented in registry');
 
 if (failures.length > 0) {
   for (const failure of failures) console.error(`FAIL ${failure}`);

@@ -16,7 +16,8 @@
     "applicationProfile",
     "conflictPolicy",
     "dependencies",
-    "optionalDependencies"
+    "optionalDependencies",
+    "files"
   ],
   "additionalProperties": false,
   "properties": {
@@ -32,6 +33,11 @@
     "applicationProfile": { "enum": ["reference-only", "additive", "structured-merge", "template-copy", "manual"] },
     "conflictPolicy": { "type": "string", "minLength": 1 },
     "dependencies": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
-    "optionalDependencies": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+    "optionalDependencies": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "files": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "not": { "pattern": "(^/|^[A-Za-z]:|\\.\\.)" } },
+      "uniqueItems": true
+    }
   }
 }

@@ -53,7 +53,28 @@
     },
     "appliedMods": {
       "type": "array",
-      "items": { "type": "object" }
+      "items": {
+        "type": "object",
+        "required": ["modId", "version", "mode", "appliedAt", "sourceFiles", "operations"],
+        "additionalProperties": false,
+        "properties": {
+          "modId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+          "version": { "type": "string", "minLength": 1 },
+          "mode": { "enum": ["reference", "apply"] },
+          "appliedAt": { "type": "string", "minLength": 1 },
+          "sourceFiles": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          },
+          "operations": {
+            "type": "array",
+            "items": { "enum": ["reference", "add", "adapt"] },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        }
+      }
     }
   }
 }

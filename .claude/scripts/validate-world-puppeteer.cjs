@@ -7,6 +7,7 @@ const {
   findRepoRoot,
   readJson,
   validateMarkerShape,
+  validateModRegistry,
   validateProfileShape,
 } = require('./world-puppeteer-lib.cjs');
 
@@ -19,37 +20,6 @@ function collectSkillIds(rootDir) {
       .filter((entry) => entry.isDirectory() && fs.existsSync(path.join(skillsRoot, entry.name, 'SKILL.md')))
       .map((entry) => entry.name)
   );
-}
-
-function validateModManifest(modPath) {
-  const errors = [];
-  const manifest = readJson(modPath);
-  const required = [
-    'schemaVersion',
-    'id',
-    'name',
-    'version',
-    'description',
-    'compatibleFormats',
-    'domains',
-    'supportedModes',
-    'defaultMode',
-    'applicationProfile',
-    'conflictPolicy',
-    'dependencies',
-    'optionalDependencies',
-  ];
-  for (const key of required) {
-    if (!(key in manifest)) errors.push(`${modPath}: missing ${key}`);
-  }
-  if (manifest.schemaVersion !== 1) errors.push(`${modPath}: schemaVersion must be 1`);
-  if (!['reference-only', 'additive', 'structured-merge', 'template-copy', 'manual'].includes(manifest.applicationProfile)) {
-    errors.push(`${modPath}: invalid applicationProfile`);
-  }
-  if (!Array.isArray(manifest.supportedModes) || !manifest.supportedModes.includes(manifest.defaultMode)) {
-    errors.push(`${modPath}: defaultMode must be in supportedModes`);
-  }
-  return errors;
 }
 
 function main() {
@@ -77,30 +47,9 @@ function main() {
     }
   }
 
-  const modsRoot = path.join(repoRoot, '.world-puppeteer', 'mods');
-  const modIds = new Set();
-  if (fs.existsSync(modsRoot)) {
-    for (const entry of fs.readdirSync(modsRoot, { withFileTypes: true })) {
-      if (!entry.isDirectory()) continue;
-      const modPath = path.join(modsRoot, entry.name, 'mod.json');
-      const readmePath = path.join(modsRoot, entry.name, 'README.md');
-      if (!fs.existsSync(modPath)) errors.push(`${entry.name}: missing mod.json`);
-      else {
-        const manifest = readJson(modPath);
-        modIds.add(manifest.id);
-        errors.push(...validateModManifest(modPath));
-      }
-      if (!fs.existsSync(readmePath)) errors.push(`${entry.name}: missing README.md`);
-    }
-
-    const indexPath = path.join(modsRoot, 'index.json');
-    if (fs.existsSync(indexPath)) {
-      const index = readJson(indexPath);
-      for (const id of index.mods || []) {
-        if (!modIds.has(id)) errors.push(`${indexPath}: unknown mod id ${id}`);
-      }
-    }
-  }
+  const modResult = validateModRegistry(repoRoot);
+  errors.push(...modResult.errors);
+  warnings.push(...modResult.warnings);
 
   for (const skillId of ['japanese-romanization', 'orchestrator', 'charts', 'count', 'maps', 'reflect']) {
     if (repoSkillIds.has(skillId)) errors.push(`obsolete generic skill remains: ${skillId}`);
