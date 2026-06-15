@@ -9,7 +9,7 @@ const {
 } = require('./world-puppeteer-lib.cjs');
 const {
   createDryRunPlan,
-} = require('./mod-architecture.cjs');
+} = require('./mod-architecture-v2.cjs');
 
 function parseArgs(argv) {
   const args = { mode: null };
