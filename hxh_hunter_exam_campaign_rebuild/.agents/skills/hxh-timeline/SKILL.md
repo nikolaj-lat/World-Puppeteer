@@ -5,10 +5,12 @@ description: Timeline and spoiler-gating profile for the active HxH world. Use o
 
 # HxH Timeline Profile
 
-The campaign present is Year 0, anchored to the 287th Hunter Exam.
+The 287th Hunter Exam is the initial anchor for campaign start, not a permanent present or a limit on play.
 
-- Treat the exam as the time anchor, not as the full scope of the world.
-- Keep later-arc deaths, identities, powers, and events out of player-visible `basicInfo`.
-- Store later-arc continuity in `hiddenInfo` or explicit canon timeline notes.
-- Preserve static NPC placement according to the world’s chosen timeline strategy.
-- Escalate any proposed change that alters timeline placement, spoiler visibility, or canon-clock behavior.
+- Resolve every timeline-sensitive claim against the current campaign phase.
+- NPC state, placement, relationships, powers, factions, deaths, and event availability depend on the current campaign phase and any established canon divergence.
+- Later-arc facts may remain hidden until relevant, then become available through narrator-facing `hiddenInfo` or explicit canon timeline notes.
+- Canon is scaffolding for expected pressure and continuity, not a railroad. Player actions may alter, delay, prevent, or replace canon events.
+- Preserve divergence consequences once established; never reset the campaign to canon to repair continuity.
+- "Timeless" means usable across campaign phases, not chronology-free.
+- Escalate any proposed change that alters the initial anchor, current campaign phase, spoiler visibility, or canon divergence behavior.
