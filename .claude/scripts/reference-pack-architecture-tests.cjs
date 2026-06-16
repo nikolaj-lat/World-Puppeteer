@@ -178,7 +178,7 @@ function tryCreateSymlink(target, linkPath, type, label) {
     return true;
   } catch (error) {
     const permissionCodes = new Set(['EPERM', 'EACCES', 'ENOTSUP']);
-    if (permissionCodes.has(error.code)) {
+    if (process.platform === 'win32' && permissionCodes.has(error.code)) {
       console.warn(`warning: ${label} skipped because symlink creation is not permitted: ${error.message}`);
       return false;
     }
