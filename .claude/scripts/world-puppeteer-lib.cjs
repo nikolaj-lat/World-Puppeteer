@@ -589,20 +589,28 @@ function validateMarkerShape(marker, worldRoot) {
   if (!marker.format) errors.push('format is required');
   if (marker.format && !KNOWN_FORMATS.has(marker.format)) warnings.push(`unknown format: ${marker.format}`);
 
-  const paths = marker.paths || {};
+  const paths = isPlainObject(marker.paths) ? marker.paths : {};
+  if (!isPlainObject(marker.paths)) errors.push('paths must be a plain object');
   for (const key of ['tabs', 'compiledOutput', 'instructions']) {
     if (!isSafeRelativePath(paths[key])) errors.push(`paths.${key} must be a relative path without traversal`);
   }
-  if (paths.compiledOutput && !paths.compiledOutput.endsWith('.json')) {
+  if (
+    typeof paths.compiledOutput === 'string' &&
+    !paths.compiledOutput.endsWith('.json')
+  ) {
     errors.push('paths.compiledOutput must end in .json');
   }
-  if (paths.compiledOutput && paths.tabs) {
+  if (
+    typeof paths.compiledOutput === 'string' &&
+    typeof paths.tabs === 'string'
+  ) {
     const tabsPath = path.resolve(worldRoot, paths.tabs);
     const outputPath = path.resolve(worldRoot, paths.compiledOutput);
     if (isInside(outputPath, tabsPath)) errors.push('paths.compiledOutput must not be inside tabs');
   }
 
-  const toolchain = marker.toolchain || {};
+  const toolchain = isPlainObject(marker.toolchain) ? marker.toolchain : {};
+  if (!isPlainObject(marker.toolchain)) errors.push('toolchain must be a plain object');
   const toolchainIds = knownToolchain();
   if (!toolchainIds.formatProfiles.has(toolchain.formatProfile)) {
     errors.push(`unknown formatProfile: ${toolchain.formatProfile}`);
@@ -967,7 +975,19 @@ function discoverProfileDirectory(worldRoot) {
   const files = [];
   const profileRoot = path.join(worldRoot, '.world-puppeteer', 'profiles');
 
-  if (!fs.existsSync(profileRoot)) {
+  let profileStat;
+  try {
+    profileStat = fs.lstatSync(profileRoot);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return { directoryPath: profileRoot, files, errors };
+    }
+    errors.push(`${profileRoot}: unable to inspect profile directory: ${error.message}`);
+    return { directoryPath: profileRoot, files, errors };
+  }
+
+  if (profileStat.isSymbolicLink()) {
+    errors.push(`${profileRoot}: symlinked profile directories are not allowed`);
     return { directoryPath: profileRoot, files, errors };
   }
 
@@ -1040,9 +1060,15 @@ function validateProfileShape(profile, worldRoot) {
   if (!Array.isArray(profile.appliesTo)) errors.push('appliesTo must be an array');
   if (typeof profile.required !== 'boolean') errors.push('required must be boolean');
 
-  for (const skillId of profile.skills || []) {
-    const skillPath = path.join(worldRoot, '.agents', 'skills', skillId, 'SKILL.md');
-    if (!fs.existsSync(skillPath)) errors.push(`profile skill not found: ${skillId}`);
+  if (Array.isArray(profile.skills)) {
+    for (const skillId of profile.skills) {
+      if (typeof skillId !== 'string' || skillId.length === 0) {
+        errors.push('skills entries must be non-empty strings');
+        continue;
+      }
+      const skillPath = path.join(worldRoot, '.agents', 'skills', skillId, 'SKILL.md');
+      if (!fs.existsSync(skillPath)) errors.push(`profile skill not found: ${skillId}`);
+    }
   }
   return { errors, warnings: [] };
 }

@@ -7,6 +7,7 @@ const repoRoot = path.resolve(__dirname, '../..');
 
 const SUPPORTED_COMMANDS = [
   ['node', ['.claude/scripts/tooling-architecture-tests.cjs']],
+  ['node', ['.claude/scripts/metadata-hardening-tests.cjs']],
   ['node', ['.claude/scripts/cli-contract-tests.cjs']],
   ['node', ['.claude/scripts/ai-instruction-limit-tests.cjs']],
   ['node', ['.claude/scripts/build-safety-tests.cjs']],
