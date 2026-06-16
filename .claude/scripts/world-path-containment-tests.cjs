@@ -111,8 +111,12 @@ function trySymlink(target, linkPath, type, label) {
     fs.symlinkSync(target, linkPath, type);
     return true;
   } catch (error) {
-    skipped.push(`${label}: ${error.message}`);
-    return false;
+    const permissionCodes = new Set(['EPERM', 'EACCES', 'ENOTSUP']);
+    if (process.platform === 'win32' && permissionCodes.has(error.code)) {
+      skipped.push(`${label}: ${error.message}`);
+      return false;
+    }
+    throw error;
   }
 }
 

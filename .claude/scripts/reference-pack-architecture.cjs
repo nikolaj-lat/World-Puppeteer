@@ -294,6 +294,8 @@ function safeReportPath(repoRoot, outputPath) {
     throw new Error(`report output realpath escapes ${REPORT_ROOT}: ${outputPath}`);
   }
 
+  assertNoSymlinkComponents(lexicalRepoRoot, requested, 'report output');
+
   if (fs.existsSync(requested)) {
     const stat = fs.lstatSync(requested);
     if (stat.isSymbolicLink()) {

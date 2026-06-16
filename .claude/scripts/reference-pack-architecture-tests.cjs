@@ -291,6 +291,75 @@ function tryCreateSymlink(target, linkPath, type, label) {
   }
 }
 
+{
+  const reportFileSymlinkRoot = fixtureRoot();
+  writePack(reportFileSymlinkRoot, 'one', packManifest('one'));
+  writeJson(
+    path.join(reportFileSymlinkRoot, '.world-puppeteer', 'reference-packs', 'index.json'),
+    { schemaVersion: 1, packs: ['one'] }
+  );
+
+  const reportsDir = path.join(reportFileSymlinkRoot, '.world-puppeteer', 'reports', 'reference-packs');
+  fs.mkdirSync(reportsDir, { recursive: true });
+  const reportFilePath = path.join(reportsDir, 'one.json');
+
+  const outsideTarget = path.join(reportFileSymlinkRoot, 'outside-target.json');
+  const outsideContent = '{"untouched":true}\n';
+  fs.writeFileSync(outsideTarget, outsideContent);
+
+  const created = tryCreateSymlink(
+    outsideTarget,
+    reportFilePath,
+    'file',
+    'normal symlink at report filename test'
+  );
+
+  if (created) {
+    assertThrows(
+      () => safeReportPath(reportFileSymlinkRoot, '.world-puppeteer/reports/reference-packs/one.json'),
+      /symlink/,
+      'normal symlink at exact report filename must be rejected'
+    );
+    assert(
+      fs.readFileSync(outsideTarget, 'utf8') === outsideContent,
+      'existing outside target must not be modified when report filename is a normal symlink'
+    );
+  }
+}
+
+{
+  const danglingReportSymlinkRoot = fixtureRoot();
+  writePack(danglingReportSymlinkRoot, 'one', packManifest('one'));
+  writeJson(
+    path.join(danglingReportSymlinkRoot, '.world-puppeteer', 'reference-packs', 'index.json'),
+    { schemaVersion: 1, packs: ['one'] }
+  );
+
+  const danglingReportsDir = path.join(danglingReportSymlinkRoot, '.world-puppeteer', 'reports', 'reference-packs');
+  fs.mkdirSync(danglingReportsDir, { recursive: true });
+  const danglingReportFilePath = path.join(danglingReportsDir, 'one.json');
+  const missingOutsideTarget = path.join(danglingReportSymlinkRoot, 'missing-outside-target.json');
+
+  const created = tryCreateSymlink(
+    missingOutsideTarget,
+    danglingReportFilePath,
+    'file',
+    'dangling symlink at report filename test'
+  );
+
+  if (created) {
+    assertThrows(
+      () => safeReportPath(danglingReportSymlinkRoot, '.world-puppeteer/reports/reference-packs/one.json'),
+      /symlink/,
+      'dangling symlink at exact report filename must be rejected'
+    );
+    assert(
+      !fs.existsSync(missingOutsideTarget),
+      'missing outside target must not be created when report filename is a dangling symlink'
+    );
+  }
+}
+
 if (failures.length > 0) {
   for (const failure of failures) console.error(`FAIL ${failure}`);
   process.exit(1);

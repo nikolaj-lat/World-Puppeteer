@@ -171,16 +171,21 @@ for (const testCase of [
     process.execPath,
     [
       '-e',
-      `require(${JSON.stringify(path.join(schemaRoot, '.claude/scripts/validate-world-puppeteer.cjs'))});`,
+      `require(${JSON.stringify(path.join(schemaRoot, '.claude/scripts/validate-world-puppeteer.cjs'))}); require('fs').writeSync(3, String(process.exitCode));`,
     ],
     {
       cwd: schemaRoot,
       encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe', 'pipe'],
     }
   );
   assert(importCheck.status === 0, `import-only validator child must exit 0: ${importCheck.status}`);
   assert(importCheck.stdout === '', `import-only validator child must not print stdout: ${JSON.stringify(importCheck.stdout)}`);
   assert(importCheck.stderr === '', `import-only validator child must not print stderr: ${JSON.stringify(importCheck.stderr)}`);
+  assert(
+    importCheck.output && importCheck.output[3] === 'undefined',
+    `import-only validator child must not set process.exitCode: ${JSON.stringify(importCheck.output && importCheck.output[3])}`
+  );
 }
 
 {
