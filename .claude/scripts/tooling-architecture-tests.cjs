@@ -351,10 +351,10 @@ for (const failure of scanStaleReferences(repoRoot)) {
 
 {
   const invalidMarkerCases = [
-    { label: 'null', raw: 'null', expected: /marker root must be a plain object; received null/ },
-    { label: 'array', raw: '[]', expected: /marker root must be a plain object; received array/ },
-    { label: 'string', raw: '"marker"', expected: /marker root must be a plain object; received string/ },
-    { label: 'number', raw: '42', expected: /marker root must be a plain object; received number/ },
+    { label: 'null', raw: 'null', expected: /marker root must be a plain object; received null|\$: must be object/ },
+    { label: 'array', raw: '[]', expected: /marker root must be a plain object; received array|\$: must be object/ },
+    { label: 'string', raw: '"marker"', expected: /marker root must be a plain object; received string|\$: must be object/ },
+    { label: 'number', raw: '42', expected: /marker root must be a plain object; received number|\$: must be object/ },
   ];
 
   for (const testCase of invalidMarkerCases) {
@@ -392,10 +392,10 @@ for (const failure of scanStaleReferences(repoRoot)) {
 
 {
   const invalidProfileCases = [
-    { label: 'null', raw: 'null', expected: /profile root must be a plain object; received null/ },
-    { label: 'array', raw: '[]', expected: /profile root must be a plain object; received array/ },
-    { label: 'string', raw: '"profile"', expected: /profile root must be a plain object; received string/ },
-    { label: 'number', raw: '7', expected: /profile root must be a plain object; received number/ },
+    { label: 'null', raw: 'null', expected: /profile root must be a plain object; received null|\$: must be object/ },
+    { label: 'array', raw: '[]', expected: /profile root must be a plain object; received array|\$: must be object/ },
+    { label: 'string', raw: '"profile"', expected: /profile root must be a plain object; received string|\$: must be object/ },
+    { label: 'number', raw: '7', expected: /profile root must be a plain object; received number|\$: must be object/ },
   ];
 
   for (const testCase of invalidProfileCases) {

@@ -1,12 +1,18 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const {
+  readJsonResult,
+  validateAgainstSchemaFile,
+} = require('./schema-utils.cjs');
 
 const MARKER_FILE = '.world-puppeteer.json';
 const KNOWN_FORMATS = new Set(['voyage-v33']);
 const TIMEOUT_MS = 120000;
 const BUILD_TEMP_PREFIX = '.world-puppeteer-build-';
 const BUILD_LOCK_STALE_MS = 10 * 60 * 1000;
+const BACKUP_DIR_NAME = 'config-backups';
+const BACKUP_RETENTION_LIMIT = 20;
 
 const FORMAT_PROFILES = {
   'voyage-json-tabs': {
@@ -337,6 +343,21 @@ function runTransactionalFileMutation(plannedWrites, afterWrite = () => undefine
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+
+function readJsonFileOrThrow(filePath, kind) {
+  const loaded = readJsonResult(filePath);
+  if (loaded.error) {
+    throw new Error(`Invalid ${kind} ${filePath}:\n${loaded.error}`);
+  }
+  return loaded.value;
+}
+
+function validateControlMetadataSchema(value, schemaPath, filePath) {
+  // These schemas validate World-Puppeteer control metadata only.
+  // Voyage world tabs and compiled content are validated separately.
+  return validateAgainstSchemaFile(value, schemaPath)
+    .map((message) => `${filePath}: ${message}`);
 }
 
 function listTabJsonFiles(dir) {
@@ -834,15 +855,147 @@ function atomicReplaceFile(sourcePath, destinationPath) {
   fs.renameSync(sourcePath, destinationPath);
 }
 
-function createBuildBackup(destinationPath) {
-  if (!fs.existsSync(destinationPath)) return null;
-  const backupDir = path.join(path.dirname(destinationPath), 'config-backups');
-  fs.mkdirSync(backupDir, { recursive: true });
-  const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-  const unique = `${process.pid}-${Math.random().toString(16).slice(2)}`;
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function buildBackupStamp(date = new Date()) {
+  return date.toISOString().replace(/[:.]/g, '-');
+}
+
+function buildBackupFileName(destinationPath, stamp, unique) {
   const parsed = path.parse(destinationPath);
-  const backupPath = path.join(backupDir, `${parsed.name}-${stamp}-${unique}${parsed.ext}`);
-  fs.copyFileSync(destinationPath, backupPath);
+  return `${parsed.name}-${stamp}-${unique}${parsed.ext}`;
+}
+
+function parseBackupStamp(stamp) {
+  const match = /^(?<date>\d{4}-\d{2}-\d{2})T(?<hour>\d{2})-(?<minute>\d{2})-(?<second>\d{2})-(?<millis>\d{3})Z$/
+    .exec(stamp);
+  if (!match) return null;
+
+  const isoValue = `${match.groups.date}T${match.groups.hour}:${match.groups.minute}:${match.groups.second}.${match.groups.millis}Z`;
+  const timestampMs = Date.parse(isoValue);
+  return Number.isNaN(timestampMs) ? null : timestampMs;
+}
+
+function recognizedBackupEntries(backupDir, destinationPath) {
+  if (!fs.existsSync(backupDir)) return [];
+
+  const parsed = path.parse(destinationPath);
+  const pattern = new RegExp(
+    `^${escapeRegExp(parsed.name)}-(?<stamp>\\d{4}-\\d{2}-\\d{2}T\\d{2}-\\d{2}-\\d{2}-\\d{3}Z)-(?<unique>\\d+-[0-9a-f]+)${escapeRegExp(parsed.ext)}$`
+  );
+  const recognized = [];
+
+  for (const entry of fs.readdirSync(backupDir)) {
+    const entryPath = path.join(backupDir, entry);
+    const match = pattern.exec(entry);
+    if (!match) continue;
+
+    const stat = fs.lstatSync(entryPath);
+    if (stat.isSymbolicLink() || !stat.isFile()) continue;
+
+    const timestampMs = parseBackupStamp(match.groups.stamp);
+    if (timestampMs === null) continue;
+
+    recognized.push({
+      path: entryPath,
+      name: entry,
+      timestampMs,
+    });
+  }
+
+  return recognized;
+}
+
+function compareRecognizedBackupsNewestFirst(left, right) {
+  if (left.timestampMs !== right.timestampMs) {
+    return right.timestampMs - left.timestampMs;
+  }
+  return right.name.localeCompare(left.name);
+}
+
+function pruneRecognizedBackups(backupDir, destinationPath, newBackupPath) {
+  const recognized = recognizedBackupEntries(backupDir, destinationPath)
+    .sort(compareRecognizedBackupsNewestFirst);
+  if (recognized.length <= BACKUP_RETENTION_LIMIT) return [];
+
+  const newBackupKey = pathKey(newBackupPath);
+  let retained = recognized.slice(0, BACKUP_RETENTION_LIMIT);
+  if (!retained.some((entry) => pathKey(entry.path) === newBackupKey)) {
+    const newEntry = recognized.find((entry) => pathKey(entry.path) === newBackupKey);
+    if (newEntry) {
+      retained = [...retained.slice(0, BACKUP_RETENTION_LIMIT - 1), newEntry];
+    }
+  }
+
+  const retainedKeys = new Set(retained.map((entry) => pathKey(entry.path)));
+  const pruned = [];
+
+  for (const entry of recognized) {
+    if (retainedKeys.has(pathKey(entry.path))) continue;
+
+    const stat = fs.lstatSync(entry.path);
+    if (stat.isSymbolicLink() || !stat.isFile()) continue;
+
+    fs.rmSync(entry.path, { force: true });
+    pruned.push(entry.path);
+  }
+
+  return pruned;
+}
+
+function createBuildBackup(worldRoot, destinationPath) {
+  if (!fs.existsSync(destinationPath)) return null;
+
+  const validatedOutputPath = resolveContainedPath({
+    rootPath: worldRoot,
+    relativePath: path.relative(worldRoot, destinationPath),
+    field: 'paths.compiledOutput',
+    kind: 'output',
+    expectedType: 'file',
+  });
+  const backupDir = path.join(path.dirname(validatedOutputPath), BACKUP_DIR_NAME);
+  const backupDirRelative = path.relative(worldRoot, backupDir);
+
+  const preparedBackupDir = resolveContainedPath({
+    rootPath: worldRoot,
+    relativePath: backupDirRelative,
+    field: BACKUP_DIR_NAME,
+    kind: 'output',
+    expectedType: 'directory',
+  });
+  fs.mkdirSync(preparedBackupDir, { recursive: true });
+  const validatedBackupDir = resolveContainedPath({
+    rootPath: worldRoot,
+    relativePath: backupDirRelative,
+    field: BACKUP_DIR_NAME,
+    kind: 'input',
+    expectedType: 'directory',
+  });
+
+  const stamp = buildBackupStamp();
+  const unique = `${process.pid}-${Math.random().toString(16).slice(2)}`;
+  const backupPath = path.join(
+    validatedBackupDir,
+    buildBackupFileName(validatedOutputPath, stamp, unique)
+  );
+  resolveContainedPath({
+    rootPath: worldRoot,
+    relativePath: path.relative(worldRoot, backupPath),
+    field: `${BACKUP_DIR_NAME} destination`,
+    kind: 'output',
+    expectedType: 'file',
+  });
+
+  fs.copyFileSync(validatedOutputPath, backupPath);
+  try {
+    pruneRecognizedBackups(validatedBackupDir, validatedOutputPath, backupPath);
+  } catch (error) {
+    throw new Error(
+      `Failed to prune old build backups in ${validatedBackupDir}: ${error.message}`
+    );
+  }
   return backupPath;
 }
 
@@ -894,7 +1047,7 @@ function buildWorldSource(world, options = {}) {
       options.atomicReplaceFile || atomicReplaceFile;
 
     if (!options.noBackup) {
-      backupPath = backupFactory(world.compiledOutputPath);
+      backupPath = backupFactory(world.worldRoot, world.compiledOutputPath);
     }
     replaceFile(tempPath, world.compiledOutputPath);
 
@@ -1087,6 +1240,19 @@ function validateProfileShape(profile, worldRoot) {
 function resolveWorld(options = {}) {
   const cwd = path.resolve(options.cwd || process.cwd());
   const repoRoot = findRepoRoot(options.repoRoot || cwd);
+  const schemaRoot = findRepoRoot(__dirname);
+  const markerSchemaPath = path.join(
+    schemaRoot,
+    '.world-puppeteer',
+    'schemas',
+    'world-marker.schema.json'
+  );
+  const profileSchemaPath = path.join(
+    schemaRoot,
+    '.world-puppeteer',
+    'schemas',
+    'profile.schema.json'
+  );
   const explicit = options.worldRoot
     ? options.worldRoot === options.cwd
       ? cwd
@@ -1129,6 +1295,22 @@ function resolveWorld(options = {}) {
     }
   }
 
+  selected = {
+    ...selected,
+    marker: readJsonFileOrThrow(selected.markerPath, 'world marker'),
+  };
+
+  const markerSchemaErrors = validateControlMetadataSchema(
+    selected.marker,
+    markerSchemaPath,
+    selected.markerPath
+  );
+  if (markerSchemaErrors.length > 0) {
+    throw new Error(
+      `Invalid world marker ${selected.markerPath}:\n${markerSchemaErrors.join('\n')}`
+    );
+  }
+
   const markerResult = validateMarkerShape(selected.marker, selected.root);
   if (markerResult.errors.length > 0) {
     throw new Error(`Invalid world marker ${selected.markerPath}:\n${markerResult.errors.join('\n')}`);
@@ -1145,13 +1327,15 @@ function resolveWorld(options = {}) {
 
   const allProfiles = [];
   for (const profilePath of profileDiscovery.files) {
-    const profile = readJson(profilePath);
+    const profile = readJsonFileOrThrow(profilePath, 'profile');
     const expectedId = path.basename(profilePath, '.json');
-    if (!isPlainObject(profile)) {
-      throw new Error(
-        `Invalid profile ${profilePath}:\n` +
-        `profile root must be a plain object; received ${describeJsonRootKind(profile)}`
-      );
+    const profileSchemaErrors = validateControlMetadataSchema(
+      profile,
+      profileSchemaPath,
+      profilePath
+    );
+    if (profileSchemaErrors.length > 0) {
+      throw new Error(`Invalid profile ${profilePath}:\n${profileSchemaErrors.join('\n')}`);
     }
     if (profile.id !== expectedId) throw new Error(`Invalid profile ${profilePath}:\nprofile id must match filename`);
     const profileResult = validateProfileShape(profile, selected.root);

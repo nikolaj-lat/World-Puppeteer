@@ -6,6 +6,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 const {
   findRepoRoot,
+  loadAndMergeTabs,
   resolveWorld,
 } = require('./world-puppeteer-lib.cjs');
 const {
@@ -53,6 +54,24 @@ function writeWorld(worldRoot, value) {
   writeJson(path.join(worldRoot, '.world-puppeteer.json'), value);
 }
 
+function writeSkill(worldRoot, skillId) {
+  const skillPath = path.join(worldRoot, '.agents', 'skills', skillId, 'SKILL.md');
+  fs.mkdirSync(path.dirname(skillPath), { recursive: true });
+  fs.writeFileSync(skillPath, '# skill\n');
+}
+
+function acceptedGenerateStoryTab() {
+  return {
+    aiInstructions: {
+      generateStory: {
+        'Victory and Downtime': 'Keep victory scenes focused on recovery.',
+        'Character Behavior': 'Keep character actions coherent and specific.',
+        custom: 'Preserve this custom world field exactly as written.',
+      },
+    },
+  };
+}
+
 function captureConsoleJson(fn) {
   const originalLog = console.log;
   let output = '';
@@ -76,24 +95,36 @@ function validateFixture(repoRoot) {
   }));
 }
 
-function assertMetadataFailure(result, expected, label) {
+function assertMetadataFailure(result, expected, label, expectedPath = null) {
   assert(result.status !== 0, `${label}: metadata validation must fail`);
   assert(
     result.parsed.errors.some((entry) => expected.test(entry)),
     `${label}: missing actionable metadata error: ${JSON.stringify(result.parsed.errors)}`
   );
+  if (expectedPath) {
+    assert(
+      result.parsed.errors.some((entry) => entry.includes(expectedPath)),
+      `${label}: metadata error must identify ${expectedPath}`
+    );
+  }
   assert(
     !unsafeRuntimeErrorPattern.test(JSON.stringify(result.parsed)),
     `${label}: metadata validation surfaced unrelated runtime exception`
   );
 }
 
-function assertResolveFailure(worldRoot, expected, label) {
+function assertResolveFailure(worldRoot, expected, label, expectedPath = null) {
   try {
     resolveWorld({ worldRoot, preferNearest: false });
     failures.push(`${label}: resolveWorld must fail`);
   } catch (error) {
     assert(expected.test(error.message), `${label}: ${error.message}`);
+    if (expectedPath) {
+      assert(
+        error.message.includes(expectedPath),
+        `${label}: resolveWorld error must identify ${expectedPath}`
+      );
+    }
     assert(
       !unsafeRuntimeErrorPattern.test(error.message),
       `${label}: resolveWorld surfaced unrelated runtime exception: ${error.message}`
@@ -105,43 +136,60 @@ for (const testCase of [
   {
     label: 'compiledOutput number',
     mutate: (value) => { value.paths.compiledOutput = 42; },
-    expected: /paths\.compiledOutput must be a relative path/,
+    expected: /\/paths\/compiledOutput: must be string/,
   },
   {
     label: 'tabs object',
     mutate: (value) => { value.paths.tabs = {}; },
-    expected: /paths\.tabs must be a relative path/,
+    expected: /\/paths\/tabs: must be string/,
   },
   {
     label: 'instructions array',
     mutate: (value) => { value.paths.instructions = ['AGENTS.override.md']; },
-    expected: /paths\.instructions must be a relative path/,
+    expected: /\/paths\/instructions: must be string/,
   },
   {
     label: 'toolchain non-object',
     mutate: (value) => { value.toolchain = 7; },
-    expected: /toolchain must be a plain object/,
+    expected: /\/toolchain: must be object/,
   },
   {
     label: 'activeProfiles non-array',
     mutate: (value) => { value.activeProfiles = {}; },
-    expected: /activeProfiles must be an array/,
+    expected: /\/activeProfiles: must be array/,
+  },
+  {
+    label: 'unknown marker root property',
+    mutate: (value) => { value.unexpectedRoot = true; },
+    expected: /must NOT have additional properties \(unexpectedRoot\)/,
+  },
+  {
+    label: 'unknown marker paths property',
+    mutate: (value) => { value.paths.unexpectedPath = 'spare'; },
+    expected: /must NOT have additional properties \(unexpectedPath\)/,
+  },
+  {
+    label: 'unknown marker toolchain property',
+    mutate: (value) => { value.toolchain.unexpectedTool = 'spare'; },
+    expected: /must NOT have additional properties \(unexpectedTool\)/,
   },
 ]) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-marker-hardening-'));
   const worldRoot = path.join(root, 'world');
+  const markerPath = path.join(worldRoot, '.world-puppeteer.json');
   const value = marker(`marker-${testCase.label.replace(/[^a-z]+/g, '-')}`);
   testCase.mutate(value);
   writeWorld(worldRoot, value);
-  assertMetadataFailure(validateFixture(root), testCase.expected, testCase.label);
-  assertResolveFailure(worldRoot, testCase.expected, testCase.label);
+  assertMetadataFailure(validateFixture(root), testCase.expected, testCase.label, markerPath);
+  assertResolveFailure(worldRoot, testCase.expected, testCase.label, markerPath);
 }
 
 for (const testCase of [
-  { label: 'skills number', field: 'skills', value: 7, expected: /skills must be an array/ },
-  { label: 'skills object', field: 'skills', value: {}, expected: /skills must be an array/ },
-  { label: 'appliesTo non-array', field: 'appliesTo', value: {}, expected: /appliesTo must be an array/ },
-  { label: 'skill entry number', field: 'skills', value: [7], expected: /skills entries must be non-empty strings/ },
+  { label: 'skills number', field: 'skills', value: 7, expected: /\/skills: must be array/ },
+  { label: 'skills object', field: 'skills', value: {}, expected: /\/skills: must be array/ },
+  { label: 'appliesTo non-array', field: 'appliesTo', value: {}, expected: /\/appliesTo: must be array/ },
+  { label: 'skill entry number', field: 'skills', value: [7], expected: /\/skills\/0: must be string/ },
+  { label: 'unknown profile root property', field: 'unexpectedRoot', value: true, expected: /must NOT have additional properties \(unexpectedRoot\)/ },
 ]) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-profile-hardening-'));
   const worldRoot = path.join(root, 'world');
@@ -158,12 +206,82 @@ for (const testCase of [
     skills: [],
   };
   profile[testCase.field] = testCase.value;
+  const profilePath = path.join(
+    worldRoot,
+    '.world-puppeteer',
+    'profiles',
+    'fixture-profile.json'
+  );
   writeJson(
-    path.join(worldRoot, '.world-puppeteer', 'profiles', 'fixture-profile.json'),
+    profilePath,
     profile
   );
-  assertMetadataFailure(validateFixture(root), testCase.expected, testCase.label);
-  assertResolveFailure(worldRoot, testCase.expected, testCase.label);
+  assertMetadataFailure(validateFixture(root), testCase.expected, testCase.label, profilePath);
+  assertResolveFailure(worldRoot, testCase.expected, testCase.label, profilePath);
+}
+
+{
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-valid-metadata-resolution-'));
+  const worldRoot = path.join(root, 'world');
+  const markerValue = marker('valid-resolution');
+  markerValue.activeProfiles = ['fixture-profile'];
+  writeWorld(worldRoot, markerValue);
+  writeSkill(worldRoot, 'fixture-skill');
+  writeJson(
+    path.join(worldRoot, '.world-puppeteer', 'profiles', 'fixture-profile.json'),
+    {
+      schemaVersion: 1,
+      id: 'fixture-profile',
+      name: 'Fixture Profile',
+      description: 'fixture',
+      required: false,
+      appliesTo: ['valid-resolution'],
+      skills: ['fixture-skill'],
+    }
+  );
+  const tabPath = path.join(worldRoot, 'tabs', 'ai-instructions.json');
+  const originalTab = acceptedGenerateStoryTab();
+  writeJson(tabPath, originalTab);
+
+  const metadataResult = validateFixture(root);
+  assert(metadataResult.status === 0, 'valid marker and profile metadata must pass');
+
+  const resolved = resolveWorld({ worldRoot, preferNearest: false });
+  assert(resolved.worldRoot === worldRoot, 'valid marker and profile must resolve');
+  assert(resolved.activeProfiles.length === 1, 'valid active profile must load');
+
+  const merged = loadAndMergeTabs(resolved.tabsPath);
+  assert(
+    JSON.stringify(merged.config.aiInstructions.generateStory) ===
+      JSON.stringify(originalTab.aiInstructions.generateStory),
+    'world-tab aiInstructions.generateStory siblings must resolve and merge unchanged'
+  );
+  assert(
+    JSON.stringify(JSON.parse(fs.readFileSync(tabPath, 'utf8'))) === JSON.stringify(originalTab),
+    'metadata schema validation must not mutate world-tab contents'
+  );
+}
+
+{
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-semantic-after-schema-'));
+  const worldRoot = path.join(root, 'world');
+  const markerPath = path.join(worldRoot, '.world-puppeteer.json');
+  const markerValue = marker('semantic-after-schema');
+  markerValue.toolchain.buildProfile = 'missing-build-profile';
+  writeWorld(worldRoot, markerValue);
+
+  assertMetadataFailure(
+    validateFixture(root),
+    /unknown buildProfile: missing-build-profile/,
+    'semantic validation after schema',
+    markerPath
+  );
+  assertResolveFailure(
+    worldRoot,
+    /unknown buildProfile: missing-build-profile/,
+    'semantic validation after schema',
+    markerPath
+  );
 }
 
 {
