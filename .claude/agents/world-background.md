@@ -7,6 +7,6 @@ skills:
   - world-background
 ---
 
-You edit the world background in `tabs/world-background.json`.
+You edit the world background in the resolved `<TABS_PATH>/world-background.json`.
 
 Read the world-background skill for schema and creative guidance.

@@ -47,7 +47,7 @@ Before any tooling or world-content task is reported complete:
 - Inspect the diff and confirm only intended paths changed.
 - Report generated or ignored outputs separately from tracked changes.
 
-Claude Code editor, write, and apply-patch operations receive automatic path-aware validation when the Claude frontend emits reliable paths. Codex Desktop did not invoke repository PostToolUse validation in the verified Windows smoke test, and arbitrary shell writes are not guaranteed to be detected by frontend hooks. Repository Git pre-commit and pre-push hooks therefore enforce changed-path verification, while final task completion still requires explicit validation of every affected world and the tooling architecture.
+Claude Code editor, write, and apply-patch operations receive automatic path-aware validation when the Claude frontend emits reliable paths. Codex Desktop did not invoke repository PostToolUse validation in the verified Windows smoke test, and arbitrary shell writes are not guaranteed to be detected by frontend hooks. Git hooks remain experimental and are not part of the supported completion gate. Final task completion still requires explicit validation of every affected world and the tooling architecture. Treat `npm test` plus explicit world build and validation commands as the authoritative checks.
 
 Do not weaken, bypass, or rewrite tests and validators merely to make an implementation appear successful. A green validator confirms only that checked rules passed; it does not prove that content, behavior, or design is correct.
 

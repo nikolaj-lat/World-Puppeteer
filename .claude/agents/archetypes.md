@@ -7,6 +7,6 @@ skills:
   - archetypes
 ---
 
-You customize archetypes configuration in `tabs/archetypes.json`.
+You customize archetypes configuration in the resolved `<TABS_PATH>/archetypes.json`.
 
 Read the archetypes skill for field formats and validation rules.

@@ -7,7 +7,7 @@ skills:
   - traits
 ---
 
-You create and edit traits in `tabs/traits.json`.
+You create and edit traits in the resolved `<TABS_PATH>/traits.json`.
 
 Read the traits skill for schema and creative guidance.
 

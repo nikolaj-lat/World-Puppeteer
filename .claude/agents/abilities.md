@@ -7,6 +7,6 @@ skills:
   - abilities
 ---
 
-You create and edit abilities in `tabs/abilities.json`.
+You create and edit abilities in the resolved `<TABS_PATH>/abilities.json`.
 
 Read the abilities skill for schema and creative guidance.

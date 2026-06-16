@@ -7,7 +7,7 @@ skills:
   - ai-instructions
 ---
 
-You edit AI instructions in `tabs/ai-instructions.json`.
+You edit AI instructions in the resolved `<TABS_PATH>/ai-instructions.json`.
 
 Read the ai-instructions skill for templates and guidance.
 

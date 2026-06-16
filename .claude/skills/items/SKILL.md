@@ -7,7 +7,7 @@ agent: items
 
 # Items
 
-Edit `tabs/items.json`.
+Edit the resolved `<TABS_PATH>/items.json`.
 
 ## Required Fields
 

@@ -7,7 +7,7 @@ agent: npcs
 
 # NPCs
 
-Edit `tabs/npcs.json`.
+Edit the resolved `<TABS_PATH>/npcs.json`.
 
 ## Required Fields
 
@@ -145,7 +145,7 @@ interface NPC {
 
 When creating an NPC with a species `type`, the NPC should **inherit the 3 species skills** from the corresponding trait as abilities:
 
-1. Look up the species in `tabs/traits.json`
+1. Look up the species in the resolved `<TABS_PATH>/traits.json`
 2. Copy those skill names and descriptions into the NPC's `abilities` array
 3. Add additional unique abilities specific to that individual
 4. Add the `\nfighting style:` summary

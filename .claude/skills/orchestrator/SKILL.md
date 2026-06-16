@@ -12,7 +12,7 @@ Use this skill to coordinate World-Puppeteer work through the appropriate specia
 1. Resolve the target world before any world operation.
 2. Treat every world-source path as relative to the resolved `TABS_PATH`;
    never default to repository-root `tabs`.
-3. Do not edit `tabs/*.json` directly during ordinary content work.
+3. Do not edit `<TABS_PATH>/*.json` directly during ordinary content work.
 3. Delegate to named specialists when implementation benefits from focused craft work.
 4. Review specialist output before presenting it as complete.
 5. Run the required build and validation steps before reporting completion.

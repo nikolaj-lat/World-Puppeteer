@@ -151,6 +151,45 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
   );
 }
 
+{
+  const imagePromptConfig = clone(baseConfig);
+  imagePromptConfig.imagePromptConfiguration = {
+    npcs: 'n'.repeat(VOYAGE_LIMITS.fields.imagePromptInstruction + 1),
+    locations: 'l'.repeat(VOYAGE_LIMITS.fields.imagePromptInstruction),
+    regions: 'r'.repeat(VOYAGE_LIMITS.fields.imagePromptInstruction),
+  };
+
+  const validateResult = validate(imagePromptConfig);
+  const countResult = analyzeConfig(imagePromptConfig);
+
+  assert(
+    validateResult.errors.some((entry) =>
+      entry.path === 'imagePromptConfiguration.npcs' &&
+      entry.message.includes(`Exceeds ${VOYAGE_LIMITS.fields.imagePromptInstruction} chars`)
+    ),
+    'validate.js must use the shared image prompt per-section limit'
+  );
+  assert(
+    validateResult.errors.some((entry) =>
+      entry.path === 'imagePromptConfiguration' &&
+      entry.message.includes(`Total exceeds ${VOYAGE_LIMITS.fields.imagePromptTotal} chars`)
+    ),
+    'validate.js must use the shared image prompt total limit'
+  );
+  assert(
+    countResult.imagePrompts.oversized.some((entry) =>
+      entry.path === 'imagePromptConfiguration.npcs' &&
+      entry.limit === VOYAGE_LIMITS.fields.imagePromptInstruction
+    ),
+    'count.js must use the shared image prompt per-section limit'
+  );
+  assert(
+    countResult.imagePrompts.total &&
+      countResult.imagePrompts.total.limit === VOYAGE_LIMITS.fields.imagePromptTotal,
+    'count.js must use the shared image prompt total limit'
+  );
+}
+
 if (failures.length > 0) {
   for (const failure of failures) console.error(`FAIL: ${failure}`);
   process.exit(1);

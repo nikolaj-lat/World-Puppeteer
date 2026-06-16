@@ -8,7 +8,7 @@ skills:
   - npc-types
 ---
 
-You review and refine NPC type definitions in `tabs/npc-types.json`.
+You review and refine NPC type definitions in the resolved `<TABS_PATH>/npc-types.json`.
 
 ## Process
 

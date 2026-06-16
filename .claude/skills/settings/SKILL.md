@@ -7,7 +7,7 @@ agent: settings
 
 # Settings
 
-Edit `tabs/settings.json`.
+Edit the resolved `<TABS_PATH>/settings.json`.
 
 ## Power Level Framework
 

@@ -7,7 +7,7 @@ skills:
   - npcs
 ---
 
-You create and edit NPCs in `tabs/npcs.json`.
+You create and edit NPCs in the resolved `<TABS_PATH>/npcs.json`.
 
 ## Chaining
 
@@ -18,4 +18,4 @@ If referenced entities don't exist, spawn agents in parallel:
 
 ## Species Ability Inheritance
 
-When creating an NPC with a species `type`, look up the corresponding trait in `tabs/traits.json` and copy the 3 species skills as abilities into the NPC's `abilities` array.
+When creating an NPC with a species `type`, look up the corresponding trait in the resolved `<TABS_PATH>/traits.json` and copy the 3 species skills as abilities into the NPC's `abilities` array.

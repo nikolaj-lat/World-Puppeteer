@@ -48,12 +48,16 @@ SessionStart hooks are read-only. They emit context and must not create `tabs/`,
 ```bash
 npm install
 npm test
-npm run test:reference-packs
+npm run test:experimental-git-hooks
 npm run validate:metadata
 node .claude/scripts/build-world.cjs --world hxh_hunter_exam_campaign_rebuild
 node .claude/scripts/validate.js --world hxh_hunter_exam_campaign_rebuild --json
 node .claude/scripts/count.js --world hxh_hunter_exam_campaign_rebuild --json
 ```
+
+`npm test` is the supported non-experimental gate. It runs tooling architecture, CLI contract, AI instruction limits, build safety, reference-pack architecture, world-path containment, transactional tooling, Voyage tooling, and repository metadata validation.
+
+`npm run test:experimental-git-hooks` is informational only. Git-hook enforcement remains experimental and is not part of the supported completion gate.
 
 Supported compatibility wrappers:
 
@@ -90,4 +94,4 @@ World-Puppeteer metadata is closed and schema-backed: markers, profiles, referen
 
 Voyage content is selectively extensible. Known required fields, types, counts, limits, references, and closed nested structures are enforced; arbitrary AI instruction task names and documented object-form instruction sections are traversed and validated without treating every unknown content key as a hard schema failure.
 
-Arbitrary shell writes are outside frontend hook guarantees. Always run explicit final validation before declaring tooling or world work complete.
+Frontend validation is path-dependent, and arbitrary shell writes are outside frontend hook guarantees. Git hooks remain experimental. The authoritative checks are `npm test` plus the explicit world build and validation commands for each affected editable world.

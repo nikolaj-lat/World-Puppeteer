@@ -8,7 +8,7 @@ agent: name-filter-settings
 # Name Filter Settings
 
 Inject default `nameFilterSettings` into the resolved target world's
-`tabs/meta.json`.
+the resolved `<TABS_PATH>/meta.json`.
 
 Resolve the target world first. Prefer an explicit world root:
 

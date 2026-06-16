@@ -7,7 +7,7 @@ skills:
   - npc-types
 ---
 
-You create and edit NPC types in `tabs/npc-types.json`.
+You create and edit NPC types in the resolved `<TABS_PATH>/npc-types.json`.
 
 Read the npc-types skill for schema and creative guidance.
 

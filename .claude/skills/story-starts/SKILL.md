@@ -7,7 +7,7 @@ agent: story-starts
 
 # Story Starts
 
-Edit `tabs/story-starts.json`.
+Edit the resolved `<TABS_PATH>/story-starts.json`.
 
 ## Required Fields
 
@@ -60,7 +60,7 @@ Three-part structure:
 ## Quest Integration
 
 **startingQuests vs firstQuest:**
-- `startingQuests`: Array of quest names from `tabs/quests.json` - sets them to `'available'` status at game start
+- `startingQuests`: Array of quest names from the resolved `<TABS_PATH>/quests.json` - sets them to `'available'` status at game start
 - `firstQuest`: Freeform text instruction - on turn 0, forces AI to generate a quest matching this description
 
 These are independent systems. Use `startingQuests` for predefined quests, use `firstQuest` for AI-generated opening quests.

@@ -7,7 +7,7 @@ agent: abilities
 
 # Abilities
 
-Edit `tabs/abilities.json`.
+Edit the resolved `<TABS_PATH>/abilities.json`.
 
 ## Required Fields
 

@@ -1801,19 +1801,19 @@ function validateUnknownFields(config, errors) {
   // Image prompt configuration
   if (config.imagePromptConfiguration && typeof config.imagePromptConfiguration === 'object') {
     checkNested('imagePromptConfiguration', config.imagePromptConfiguration, KNOWN_NESTED.imagePromptConfiguration);
-    const MAX_IMAGE_PROMPT_INSTRUCTION = 5_000;
-    const MAX_IMAGE_PROMPT_TOTAL = 15_000;
+    const imagePromptInstructionLimit = LIMITS.fields.imagePromptInstruction;
+    const imagePromptTotalLimit = LIMITS.fields.imagePromptTotal;
     let imagePromptTotal = 0;
     for (const entityType of ['npcs', 'locations', 'regions']) {
       const prompt = config.imagePromptConfiguration[entityType];
       if (typeof prompt !== 'string') continue;
       imagePromptTotal += prompt.length;
-      if (prompt.length > MAX_IMAGE_PROMPT_INSTRUCTION) {
-        errors.push(createError(`imagePromptConfiguration.${entityType}`, `Exceeds ${MAX_IMAGE_PROMPT_INSTRUCTION} chars: ${prompt.length}`));
+      if (prompt.length > imagePromptInstructionLimit) {
+        errors.push(createError(`imagePromptConfiguration.${entityType}`, `Exceeds ${imagePromptInstructionLimit} chars: ${prompt.length}`));
       }
     }
-    if (imagePromptTotal > MAX_IMAGE_PROMPT_TOTAL) {
-      errors.push(createError('imagePromptConfiguration', `Total exceeds ${MAX_IMAGE_PROMPT_TOTAL} chars: ${imagePromptTotal}`));
+    if (imagePromptTotal > imagePromptTotalLimit) {
+      errors.push(createError('imagePromptConfiguration', `Total exceeds ${imagePromptTotalLimit} chars: ${imagePromptTotal}`));
     }
   }
 

@@ -7,6 +7,6 @@ skills:
   - items
 ---
 
-You create and edit items in `tabs/items.json`.
+You create and edit items in the resolved `<TABS_PATH>/items.json`.
 
 Read the items skill for schema and creative guidance.

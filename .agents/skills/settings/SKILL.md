@@ -12,7 +12,7 @@ Settings define world mechanics and platform behavior. Treat them as high-impact
 ## Workflow
 
 1. Resolve the target world and read active profiles.
-2. Read `references/settings-reference.md` and current `tabs/settings.json`.
+2. Read `references/settings-reference.md` and the current resolved `<TABS_PATH>/settings.json`.
 3. Separate platform facts, local validator requirements, project policy, and world-specific preferences.
 4. Change only the approved setting surface.
 5. Build and validate the target world.

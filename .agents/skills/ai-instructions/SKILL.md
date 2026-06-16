@@ -7,7 +7,7 @@ agent: ai-instructions
 
 # AI Instructions
 
-Edit `tabs/ai-instructions.json`.
+Edit the resolved `<TABS_PATH>/ai-instructions.json`.
 
 ## Approach
 
@@ -114,7 +114,7 @@ Optional. Per-entity-type art-direction instructions (`npcs`, `locations`, `regi
 
 Use these as starting points for new worlds. Customize to fit your world's tone.
 
-After a full pass through every applied section, add each section's mod entry to `tabs/meta.json`'s `mods` array (deduped by `shortId`).
+After a full pass through every applied section, add each section's mod entry to the resolved `<TABS_PATH>/meta.json` `mods` array (deduped by `shortId`).
 
 ### generateStory - Victory and Downtime
 

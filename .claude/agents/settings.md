@@ -7,6 +7,6 @@ skills:
   - settings
 ---
 
-You edit configuration in `tabs/settings.json`.
+You edit configuration in the resolved `<TABS_PATH>/settings.json`.
 
 Read the settings skill for schema guidance.

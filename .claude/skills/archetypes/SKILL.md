@@ -7,7 +7,7 @@ agent: archetypes
 
 # Archetypes
 
-Edit `tabs/archetypes.json`.
+Edit the resolved `<TABS_PATH>/archetypes.json`.
 
 AI generation enhancement through author styles and archetypes.
 

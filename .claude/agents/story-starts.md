@@ -7,7 +7,7 @@ skills:
   - story-starts
 ---
 
-You create and edit story starts in `tabs/story-starts.json`.
+You create and edit story starts in the resolved `<TABS_PATH>/story-starts.json`.
 
 Read the story-starts skill for schema and creative guidance.
 

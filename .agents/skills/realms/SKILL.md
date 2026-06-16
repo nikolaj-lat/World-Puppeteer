@@ -7,7 +7,7 @@ agent: realms
 
 # Realms
 
-Edit `tabs/realms.json`.
+Edit the resolved `<TABS_PATH>/realms.json`.
 
 ## Required Fields
 

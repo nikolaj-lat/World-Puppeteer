@@ -7,7 +7,7 @@ skills:
   - quests
 ---
 
-You create and edit quests in `tabs/quests.json`.
+You create and edit quests in the resolved `<TABS_PATH>/quests.json`.
 
 Read the quests skill for schema and creative guidance.
 

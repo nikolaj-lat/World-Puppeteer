@@ -7,7 +7,7 @@ agent: factions
 
 # Factions
 
-Edit `tabs/factions.json`.
+Edit the resolved `<TABS_PATH>/factions.json`.
 
 ## Required Fields
 

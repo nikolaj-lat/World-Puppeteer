@@ -7,7 +7,7 @@ skills:
   - premade-characters
 ---
 
-You create and edit premade characters in `tabs/premade-characters.json`.
+You create and edit premade characters in the resolved `<TABS_PATH>/premade-characters.json`.
 
 Read the premade-characters skill for schema and creative guidance.
 

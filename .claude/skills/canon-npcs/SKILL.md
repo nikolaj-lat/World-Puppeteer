@@ -5,7 +5,7 @@ description: Workflow for researching and adapting folklore/historical figures i
 
 # Canon NPCs
 
-Research folklore, yokai, mythology, and historical figures using web search, then write the four lore fields — `basicInfo`, `hiddenInfo`, `personality`, and `abilities` — directly onto existing NPC skeletons in `tabs/npcs.json`.
+Research folklore, yokai, mythology, and historical figures using web search, then write the four lore fields — `basicInfo`, `hiddenInfo`, `personality`, and `abilities` — directly onto existing NPC skeletons in the resolved `<TABS_PATH>/npcs.json`.
 
 This is a self-contained workflow skill. It produces only the lore-rich fields that require deep research, writing them directly to existing NPC entries. All other NPC fields (tier, level, hpMax, location, etc.) must already exist on the skeleton or be set separately.
 
@@ -13,9 +13,9 @@ This is a self-contained workflow skill. It produces only the lore-rich fields t
 
 ### Phase 0: Context
 
-Before starting, read `tabs/world-background.json` to understand the world's setting, current crisis, tone, and core mechanics. Abilities and traits that seem extraordinary in folklore may be mundane in the world's system — verify before treating them as distinctive. This context shapes how research findings are adapted — especially hiddenInfo (relationship to the crisis) and ability framing.
+Before starting, read the resolved `<TABS_PATH>/world-background.json` to understand the world's setting, current crisis, tone, and core mechanics. Abilities and traits that seem extraordinary in folklore may be mundane in the world's system — verify before treating them as distinctive. This context shapes how research findings are adapted — especially hiddenInfo (relationship to the crisis) and ability framing.
 
-Before drafting any field, read completed NPC entries of the same or similar type in `tabs/npcs.json` to internalize the voice, sentence structure, vocabulary level, and formatting conventions already established. Match them.
+Before drafting any field, read completed NPC entries of the same or similar type in the resolved `<TABS_PATH>/npcs.json` to internalize the voice, sentence structure, vocabulary level, and formatting conventions already established. Match them.
 
 This instruction applies at every drafting point — not just at session start. Before drafting abilities, read abilities of the same type. Before drafting hiddenInfo, read hiddenInfo of batch-mates. Before customizing a shared ability description, check how existing NPCs of the same type have handled it. When in doubt about whether a convention exists, check before asking the user.
 
@@ -195,7 +195,7 @@ Incorporate ALL user tweaks into the final version. Do not push back on creative
 
 ### Phase 4: Write
 
-After user approval, write the four lore fields directly onto the existing NPC skeleton in `tabs/npcs.json` using the `Edit` tool. The target NPC entry must already exist. **Always show the complete text to the user and receive explicit approval before writing to the file** — never write a field based on an assumed approval from an earlier draft.
+After user approval, write the four lore fields directly onto the existing NPC skeleton in the resolved `<TABS_PATH>/npcs.json` using the `Edit` tool. The target NPC entry must already exist. **Always show the complete text to the user and receive explicit approval before writing to the file** — never write a field based on an assumed approval from an earlier draft.
 
 Fields must conform to the `npcs` skill format:
 - `basicInfo`: three-sentence structure
@@ -278,7 +278,7 @@ Build ability sets one NPC at a time, in order, with user approval at each stage
 0. **Feat inventory**: Before proposing any abilities, compile every power, capability, trait, and weakness attested in the research into a numbered list, organized by source. Present this as a table or list in free text — not inside AskUserQuestion. This is analysis, not a decision point.
 1. **Feat-to-ability mapping**: Map each feat to a candidate ability (base, cross-discipline, or unique) in a table showing feat → ability → justification. Present uncovered feats explicitly. Use AskUserQuestion only after the full mapping is visible.
 2. **Base abilities**: List the NPC type's signature arts verbatim from npc-types.json. Confirm with the user which apply — not all base abilities suit every NPC of that type. Before presenting, read existing NPCs of the same type to check for customization conventions (e.g., type-specific flavor in the last sentence of a shared ability description).
-3. **Cross-discipline picks**: Draw from `tabs/skills.json`. Only pick skills that are attested in the NPC's folklore. Present the folklore evidence for each proposed pick. Do not pick Innate-type skills associated with other yōkai species — these are species-locked.
+3. **Cross-discipline picks**: Draw from the resolved `<TABS_PATH>/skills.json`. Only pick skills that are attested in the NPC's folklore. Present the folklore evidence for each proposed pick. Do not pick Innate-type skills associated with other yōkai species — these are species-locked.
 4. **Unique abilities**: Propose abilities that capture what is genuinely unique to this NPC and not already covered by base or cross-discipline picks. Each unique must be folklore-attested — name the source. Do not duplicate what a base ability already does.
 5. **Fighting style**: Draft only after all abilities are locked. Name every ability and show them working together. The fighting style must reflect the NPC's personality traits — not just mechanical synergy but *how this specific character* would use these abilities, given their temperament.
 

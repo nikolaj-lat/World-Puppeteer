@@ -7,7 +7,7 @@ agent: triggers
 
 # Triggers
 
-Edit `tabs/triggers.json`.
+Edit the resolved `<TABS_PATH>/triggers.json`.
 
 ## Required Fields
 

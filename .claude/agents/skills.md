@@ -7,7 +7,7 @@ skills:
   - skills
 ---
 
-You create and edit skills in `tabs/skills.json`.
+You create and edit skills in the resolved `<TABS_PATH>/skills.json`.
 
 Read the skills skill for schema and creative guidance.
 

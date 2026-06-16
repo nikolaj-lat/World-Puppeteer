@@ -7,7 +7,7 @@ agent: premade-characters
 
 # Premade Characters
 
-Edit `tabs/premade-characters.json`.
+Edit the resolved `<TABS_PATH>/premade-characters.json`.
 
 Premade characters are ready-to-play character options shown during character creation. They give players a curated on-ramp into the world — attributes, traits, and backstory pre-filled — versus rolling their own from scratch.
 
@@ -20,14 +20,14 @@ Unlike every other tab, `premadeCharacters` is a **JSON array** (not a keyed obj
 | `name` | Character name — also serves as the identifier |
 | `gender` | Character gender (normalized to `"male"`, `"female"`, or `"non-binary"`) |
 | `description` | The character's full background. Shown in the selection UI and sent verbatim to the story AI as the character's `Background:` every turn |
-| `traits` | Trait names from `tabs/traits.json`. Traits are how you shape the character's stats — attribute modifiers, skills, resource maxes, abilities, and starting items all come through traits |
+| `traits` | Trait names from the resolved `<TABS_PATH>/traits.json`. Traits are how you shape the character's stats — attribute modifiers, skills, resource maxes, abilities, and starting items all come through traits |
 | `portraitUrl` | Image URL for the character portrait. Always provide — avoids the cost and latency of a portrait generation on first play |
 
 ## Conditional Fields
 
 | Field | When to Include |
 |-------|-----------------|
-| `replacesNpc` | Name of an NPC in `tabs/npcs.json` — when this premade is selected, that NPC is removed from the world |
+| `replacesNpc` | Name of an NPC in the resolved `<TABS_PATH>/npcs.json` — when this premade is selected, that NPC is removed from the world |
 
 ## Never Include
 
@@ -38,7 +38,7 @@ Unlike every other tab, `premadeCharacters` is a **JSON array** (not a keyed obj
 
 Use `replacesNpc` when a premade character *is* one of the world's existing NPCs — so selecting "Lyra the Ranger" removes the Lyra NPC from the world rather than leaving two copies of her running around.
 
-- The value is the NPC's identifier in `tabs/npcs.json` (the object key, which by convention matches the NPC's `name`).
+- The value is the NPC's identifier in the resolved `<TABS_PATH>/npcs.json` (the object key, which by convention matches the NPC's `name`).
 - The NPC is removed at game start (filtered during initialization) and at mid-game join (removed from live state, party, and scene).
 - If the NPC doesn't exist in the config, `replacesNpc` is silently ignored.
 
@@ -66,10 +66,10 @@ interface PremadeCharacter {
   gender: string                         // Normalized to "male" | "female" | "non-binary"
   description: string                    // Full background — shown in selection UI and sent to story AI as Background:
   attributes?: Record<string, number>    // See "Never Include" — shape via traits instead
-  traits?: string[]                      // Trait names from tabs/traits.json
+  traits?: string[]                      // Trait names from <TABS_PATH>/traits.json
   backstory?: string                     // See "Never Include" — redundant with description
   portraitUrl?: string                   // Image URL; player generates if absent
-  replacesNpc?: string                   // NPC name from tabs/npcs.json
+  replacesNpc?: string                   // NPC name from <TABS_PATH>/npcs.json
 }
 ```
 

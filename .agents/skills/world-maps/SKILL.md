@@ -9,7 +9,7 @@ agent: world-maps
 
 Generate a self-contained HTML map from world config data. Output only to `<resolved-world>/stuff/world-map.html`.
 
-This skill may create the resolved world's ignored `stuff/` directory if absent. It must not edit `tabs/`, markers, profiles, instructions, generated world JSON, other reports, or other worlds. After writing, run a diff/status check and fail if any unexpected path changed.
+This skill may create the resolved world's ignored `stuff/` directory if absent. It must not edit files under `<TABS_PATH>/`, markers, profiles, instructions, generated world JSON, other reports, or other worlds. After writing, run a diff/status check and fail if any unexpected path changed.
 
 ## Design
 

@@ -13,7 +13,7 @@ Read the build-skill skill for templates and principles.
 
 ## Workflow
 
-1. Identify the config type (which `tabs/*.json` file)
+1. Identify the config type (which `<TABS_PATH>/*.json` file)
 2. Read the relevant skill's reference in `.claude/skills/{name}/references/`
 3. Create skill with curated Required/Conditional/Never fields
 4. Create reference with full schema

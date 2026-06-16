@@ -7,7 +7,7 @@ agent: npc-types
 
 # NPC Types
 
-Edit `tabs/npc-types.json`.
+Edit the resolved `<TABS_PATH>/npc-types.json`.
 
 ## Required Fields
 

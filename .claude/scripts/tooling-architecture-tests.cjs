@@ -17,6 +17,9 @@ const {
   scanStaleReferences,
   staleReferenceTargets,
 } = require('./stale-reference-rules.cjs');
+const {
+  validateRepositoryMetadata,
+} = require('./validate-world-puppeteer.cjs');
 
 const repoRoot = findRepoRoot(process.cwd());
 const failures = [];
@@ -108,6 +111,23 @@ function runNode(args, options = {}) {
     env: { ...process.env, ...(options.env || {}) },
     input: options.input,
   });
+}
+
+function captureConsoleJson(fn) {
+  const originalLog = console.log;
+  let output = '';
+  console.log = (...args) => {
+    output += `${args.join(' ')}\n`;
+  };
+  try {
+    const status = fn();
+    return {
+      status,
+      parsed: JSON.parse(output),
+    };
+  } finally {
+    console.log = originalLog;
+  }
 }
 
 const markers = findMarkers(repoRoot);
@@ -310,6 +330,196 @@ assert(
 );
 for (const failure of scanStaleReferences(repoRoot)) {
   failures.push(failure);
+}
+
+{
+  const metadataRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-metadata-'));
+  writeMarker(path.join(metadataRoot, 'missing-paths'), {
+    ...marker('missing-paths'),
+    paths: undefined,
+  });
+  writeMarker(path.join(metadataRoot, 'missing-output'), {
+    ...marker('missing-output'),
+    paths: {
+      tabs: 'tabs',
+      instructions: 'AGENTS.override.md',
+    },
+  });
+  writeMarker(path.join(metadataRoot, 'traversal-output'), {
+    ...marker('traversal-output'),
+    paths: {
+      tabs: 'tabs',
+      compiledOutput: '../escape.json',
+      instructions: 'AGENTS.override.md',
+    },
+  });
+  writeMarker(path.join(metadataRoot, 'duplicate-a'), {
+    ...marker('duplicate-id'),
+    paths: undefined,
+  });
+  writeMarker(path.join(metadataRoot, 'duplicate-b'), {
+    ...marker('duplicate-id'),
+    paths: {
+      tabs: 'tabs',
+      instructions: 'AGENTS.override.md',
+    },
+  });
+
+  const result = captureConsoleJson(() => validateRepositoryMetadata({
+    json: true,
+    repoRoot: metadataRoot,
+    schemaRoot: repoRoot,
+    referencePackValidator: () => ({ errors: [], warnings: [] }),
+    staleReferenceScanner: () => [],
+  }));
+
+  assert(result.status === 1, 'metadata validation must return nonzero for malformed markers');
+  assert(Array.isArray(result.parsed.errors), 'metadata validation JSON output must contain errors');
+  assert(
+    result.parsed.errors.some((entry) => entry.includes('missing-paths') && entry.includes('paths')),
+    'metadata validation must report missing paths'
+  );
+  assert(
+    result.parsed.errors.some((entry) => entry.includes('missing-output') && entry.includes('paths.compiledOutput')),
+    'metadata validation must report missing compiledOutput'
+  );
+  assert(
+    result.parsed.errors.some((entry) => entry.includes('traversal-output') && entry.includes('paths.compiledOutput')),
+    'metadata validation must report invalid traversal paths'
+  );
+  assert(
+    result.parsed.errors.some((entry) => entry.includes('duplicate world id duplicate-id')),
+    'metadata validation must still report duplicate ids for malformed markers with valid ids'
+  );
+}
+
+{
+  const profileRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-profile-validation-'));
+  writeMarker(profileRoot, marker('profile-fixture'));
+  const localProfileRoot = path.join(profileRoot, '.world-puppeteer', 'profiles');
+  fs.mkdirSync(localProfileRoot, { recursive: true });
+  fs.mkdirSync(path.join(localProfileRoot, 'nested'), { recursive: true });
+  fs.writeFileSync(path.join(localProfileRoot, 'README.md'), '# unsupported\n');
+  writeJson(path.join(localProfileRoot, 'valid-profile.json'), {
+    schemaVersion: 1,
+    id: 'valid-profile',
+    name: 'Valid Profile',
+    description: 'fixture',
+    required: false,
+    appliesTo: ['profile-fixture'],
+    skills: [],
+  });
+
+  let symlinkBlocked = false;
+  try {
+    fs.symlinkSync(path.join(localProfileRoot, 'valid-profile.json'), path.join(localProfileRoot, 'linked-profile.json'));
+  } catch (error) {
+    if (error.code === 'EPERM' || error.code === 'EINVAL' || error.code === 'UNKNOWN') {
+      symlinkBlocked = true;
+    } else {
+      throw error;
+    }
+  }
+
+  const result = captureConsoleJson(() => validateRepositoryMetadata({
+    json: true,
+    repoRoot: profileRoot,
+    schemaRoot: repoRoot,
+    referencePackValidator: () => ({ errors: [], warnings: [] }),
+    staleReferenceScanner: () => [],
+  }));
+
+  assert(
+    result.parsed.errors.some((entry) => entry.includes('nested directories are not allowed')),
+    'metadata validation must reject nested profile directories'
+  );
+  assert(
+    result.parsed.errors.some((entry) => entry.includes('README.md') && entry.includes('only .json files are allowed')),
+    'metadata validation must reject unexpected non-JSON profile entries'
+  );
+  if (!symlinkBlocked) {
+    assert(
+      result.parsed.errors.some((entry) => entry.includes('linked-profile.json') && entry.includes('symlinked profile entries are not allowed')),
+      'metadata validation must reject symlinked profile entries'
+    );
+  }
+}
+
+{
+  const staleWorldRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-stale-world-'));
+  const customInstructions = 'WORLD-INSTRUCTIONS.md';
+  writeMarker(staleWorldRoot, marker('stale-world', 'editable', {
+    paths: {
+      tabs: 'tabs',
+      compiledOutput: 'stale-world.json',
+      instructions: customInstructions,
+    },
+  }));
+  fs.writeFileSync(path.join(staleWorldRoot, customInstructions), '# instruction file\n');
+  fs.mkdirSync(path.join(staleWorldRoot, '.agents', 'skills', 'stale-skill'), { recursive: true });
+  fs.writeFileSync(path.join(staleWorldRoot, '.agents', 'skills', 'stale-skill', 'SKILL.md'), 'mentions create-checklist.js\n');
+  const staleWorldPaths = {
+    worldRoot: staleWorldRoot,
+    instructionsPath: path.join(staleWorldRoot, customInstructions),
+  };
+  const staleWorldTargets = staleReferenceTargets(repoRoot, {
+    validatedWorlds: [staleWorldPaths],
+  });
+  assert(
+    staleWorldTargets.some((file) => file === path.join(staleWorldRoot, customInstructions)),
+    'stale-reference targets must include validated marker instruction files'
+  );
+  assert(
+    staleWorldTargets.some((file) => file.endsWith(path.join('.agents', 'skills', 'stale-skill', 'SKILL.md'))),
+    'stale-reference targets must include world-local skill directories'
+  );
+  assert(
+    scanStaleReferences(repoRoot, { validatedWorlds: [staleWorldPaths] })
+      .some((entry) => entry.includes('stale-skill') && entry.includes('references create-checklist.js')),
+    'stale-reference scan must report stale references from world-local skills'
+  );
+}
+
+{
+  const allowedPatterns = [
+    /repository-root tabs\.\//,
+    /literal `tabs\/` directory/,
+  ];
+  const operationalPatterns = [
+    /Edit `tabs\/[^`]+`/,
+    /You .*`tabs\/[^`]+`/,
+    /Review and refine .*`tabs\/[^`]+`/,
+    /read `tabs\/[^`]+`/i,
+    /write .*`tabs\/[^`]+`/i,
+    /look up .*`tabs\/[^`]+`/i,
+    /check .*`tabs\/[^`]+`/i,
+    /add .*`tabs\/[^`]+`/i,
+    /Do not edit `tabs\/\*\.json`/i,
+    /It must not edit `tabs\/`/i,
+  ];
+  const activeInstructionFiles = [
+    ...fs.readdirSync(path.join(repoRoot, '.claude', 'agents')).map((name) => path.join(repoRoot, '.claude', 'agents', name)),
+    ...fs.readdirSync(path.join(repoRoot, '.claude', 'skills'))
+      .map((name) => path.join(repoRoot, '.claude', 'skills', name, 'SKILL.md'))
+      .filter((file) => fs.existsSync(file)),
+    ...fs.readdirSync(path.join(repoRoot, '.agents', 'skills'))
+      .map((name) => path.join(repoRoot, '.agents', 'skills', name, 'SKILL.md'))
+      .filter((file) => fs.existsSync(file)),
+    ...fs.readdirSync(path.join(repoRoot, '.codex', 'agents'))
+      .filter((name) => name.endsWith('.toml'))
+      .map((name) => path.join(repoRoot, '.codex', 'agents', name)),
+  ];
+
+  for (const file of activeInstructionFiles) {
+    const relative = path.relative(repoRoot, file);
+    for (const [index, line] of read(file).split(/\r?\n/).entries()) {
+      if (!line.includes('tabs/')) continue;
+      if (allowedPatterns.some((pattern) => pattern.test(line))) continue;
+      if (operationalPatterns.some((pattern) => pattern.test(line))) {
+        failures.push(`${relative}:${index + 1}: operational instruction must use TABS_PATH instead of literal tabs/`);
+      }
+    }
+  }
 }
 
 if (fs.existsSync(path.join(repoRoot, '.world-puppeteer', 'mods'))) {

@@ -7,7 +7,7 @@ agent: world-lore
 
 # World Lore
 
-Edit `tabs/world-lore.json`.
+Edit the resolved `<TABS_PATH>/world-lore.json`.
 
 World lore entries are **specific discoverable knowledge** - facts, history, legends, and secrets that the AI knows and can gradually reveal during gameplay. This is distinct from `worldBackground` (overall setting description).
 

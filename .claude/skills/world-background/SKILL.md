@@ -7,7 +7,7 @@ agent: world-background
 
 # World Background
 
-Edit `tabs/world-background.json`.
+Edit the resolved `<TABS_PATH>/world-background.json`.
 
 This is the **main setting description** - the overall tone, context, and foundation of your world. It establishes the mood, genre, and broad context for the AI narrator. This is DISTINCT from `worldLore`, which contains specific discoverable facts.
 

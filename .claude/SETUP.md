@@ -31,7 +31,9 @@ Claude hooks are marker-aware:
 - SessionStart runs `.claude/scripts/session-context.cjs` and is read-only.
 - PostToolUse forwards edit payloads to the shared hook pipeline.
 - Hooks validate only reliably classified changed paths.
+- Frontend validation is path-dependent.
 - Final explicit validation is still required after arbitrary shell writes.
+- Git hooks are experimental and are not part of the supported completion gate.
 
 ## Validation
 
@@ -39,9 +41,13 @@ Run these before reporting tooling work complete:
 
 ```bash
 npm test
-npm run test:reference-packs
+npm run test:experimental-git-hooks
 npm run validate:metadata
 ```
+
+`npm test` is the supported non-experimental gate. It runs tooling architecture, CLI contract, AI instruction limits, build safety, reference-pack architecture, world-path containment, transactional tooling, Voyage tooling, and repository metadata validation.
+
+`npm run test:experimental-git-hooks` is optional and informational only.
 
 For a world build:
 

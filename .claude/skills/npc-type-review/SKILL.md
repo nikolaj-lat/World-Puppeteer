@@ -7,7 +7,7 @@ agent: npc-type-review
 
 # NPC Type Review
 
-Review and refine NPC type definitions in `tabs/npc-types.json`.
+Review and refine NPC type definitions in the resolved `<TABS_PATH>/npc-types.json`.
 
 ## Review Process
 

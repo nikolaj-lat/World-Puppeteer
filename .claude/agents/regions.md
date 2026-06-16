@@ -7,7 +7,7 @@ skills:
   - regions
 ---
 
-You create and edit regions in `tabs/regions.json`.
+You create and edit regions in the resolved `<TABS_PATH>/regions.json`.
 
 Read the regions skill for schema and creative guidance.
 

@@ -7,7 +7,7 @@ agent: regions
 
 # Regions
 
-Edit `tabs/regions.json`.
+Edit the resolved `<TABS_PATH>/regions.json`.
 
 ## Required Fields
 
@@ -57,7 +57,7 @@ Regions use integer grid coordinates. **Within a realm, regions must be adjacent
 **Rules:**
 - Regions in the same realm must form a connected grid (no isolated regions)
 - Adjacent means sharing an edge, not diagonal
-- Check existing regions in `tabs/regions.json` before assigning coordinates
+- Check existing regions in the resolved `<TABS_PATH>/regions.json` before assigning coordinates
 
 **Design guidance:**
 - Place related regions adjacent to each other

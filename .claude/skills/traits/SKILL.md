@@ -7,11 +7,11 @@ agent: traits
 
 # Traits
 
-Edit `tabs/traits.json`.
+Edit the resolved `<TABS_PATH>/traits.json`.
 
 ## Trait Categories
 
-Traits must be organized into categories in `tabs/traits.json` under `traitCategories`.
+Traits must be organized into categories in the resolved `<TABS_PATH>/traits.json` under `traitCategories`.
 
 | Field | Description |
 |-------|-------------|
@@ -95,7 +95,7 @@ Every trait within a single traitCategory should be roughly equal.
 { item: string, quantity: number }
 ```
 
-The `item` must reference a valid item key from `tabs/items.json`.
+The `item` must reference a valid item key from the resolved `<TABS_PATH>/items.json`.
 
 ## Schema
 

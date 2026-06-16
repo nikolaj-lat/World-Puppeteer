@@ -48,10 +48,18 @@ function findMarkerPaths(rootDir) {
   return markers.sort();
 }
 
+function hasResolvedMarkerPaths(entry) {
+  return (
+    typeof entry.tabsPath === 'string' &&
+    typeof entry.compiledOutputPath === 'string' &&
+    typeof entry.instructionsPath === 'string'
+  );
+}
+
 function addUniqueMarkerChecks(markerEntries, errors) {
   const ids = new Map();
   const outputs = new Map();
-  const pathEntries = markerEntries.filter((entry) => entry.pathErrors.length === 0);
+  const pathEntries = markerEntries.filter(hasResolvedMarkerPaths);
 
   for (const entry of markerEntries) {
     if (typeof entry.marker.id === 'string' && entry.marker.id.length > 0) {
@@ -115,13 +123,18 @@ function addUniqueMarkerChecks(markerEntries, errors) {
   }
 }
 
-function validateRepositoryMetadata({ json = false } = {}) {
-  const repoRoot = findRepoRoot(process.cwd());
+function validateRepositoryMetadata({
+  json = false,
+  repoRoot = findRepoRoot(process.cwd()),
+  schemaRoot = repoRoot,
+  referencePackValidator = validateReferencePackRegistry,
+  staleReferenceScanner = scanStaleReferences,
+} = {}) {
   const errors = [];
   const warnings = [];
   const repoSkillIds = collectSkillIds(repoRoot);
-  const markerSchemaPath = path.join(repoRoot, '.world-puppeteer', 'schemas', 'world-marker.schema.json');
-  const profileSchemaPath = path.join(repoRoot, '.world-puppeteer', 'schemas', 'profile.schema.json');
+  const markerSchemaPath = path.join(schemaRoot, '.world-puppeteer', 'schemas', 'world-marker.schema.json');
+  const profileSchemaPath = path.join(schemaRoot, '.world-puppeteer', 'schemas', 'profile.schema.json');
   const markerEntries = [];
 
   for (const markerPath of findMarkerPaths(repoRoot)) {
@@ -132,7 +145,7 @@ function validateRepositoryMetadata({ json = false } = {}) {
     }
     const marker = loaded.value;
     const worldRoot = path.dirname(markerPath);
-    const entry = { markerPath, marker, worldRoot, pathErrors: [] };
+    const entry = { markerPath, marker, worldRoot, pathErrors: null };
     markerEntries.push(entry);
 
     errors.push(...validateAgainstSchemaFile(marker, markerSchemaPath).map((message) => `${markerPath}: ${message}`));
@@ -144,7 +157,9 @@ function validateRepositoryMetadata({ json = false } = {}) {
       const pathResult = validateMarkerPaths(marker, worldRoot);
       entry.pathErrors = pathResult.errors;
       errors.push(...pathResult.errors.map((message) => `${markerPath}: ${message}`));
-      Object.assign(entry, pathResult.paths);
+      if (pathResult.errors.length === 0 && hasResolvedMarkerPaths(pathResult.paths)) {
+        Object.assign(entry, pathResult.paths);
+      }
     }
 
     const profileRoot = path.join(worldRoot, '.world-puppeteer', 'profiles');
@@ -165,10 +180,30 @@ function validateRepositoryMetadata({ json = false } = {}) {
         continue;
       }
 
-      const profileFiles = fs.readdirSync(profileRoot, { withFileTypes: true })
-        .filter((entry) => entry.isFile() && entry.name.endsWith('.json'))
-        .map((entry) => entry.name)
-        .sort((a, b) => a.localeCompare(b));
+      const profileFiles = [];
+      const profileEntries = fs.readdirSync(profileRoot, { withFileTypes: true })
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      for (const profileEntry of profileEntries) {
+        const profilePath = path.join(profileRoot, profileEntry.name);
+        if (profileEntry.isSymbolicLink()) {
+          errors.push(`${profilePath}: symlinked profile entries are not allowed`);
+          continue;
+        }
+        if (profileEntry.isDirectory()) {
+          errors.push(`${profilePath}: nested directories are not allowed in .world-puppeteer/profiles`);
+          continue;
+        }
+        if (!profileEntry.isFile()) {
+          errors.push(`${profilePath}: unsupported profile entry type`);
+          continue;
+        }
+        if (!profileEntry.name.endsWith('.json')) {
+          errors.push(`${profilePath}: unexpected profile entry; only .json files are allowed`);
+          continue;
+        }
+        profileFiles.push(profileEntry.name);
+      }
 
       for (const profileFile of profileFiles) {
         const profileIdFromFilename = path.basename(profileFile, '.json');
@@ -222,10 +257,14 @@ function validateRepositoryMetadata({ json = false } = {}) {
 
   addUniqueMarkerChecks(markerEntries, errors);
 
-  const referencePackResult = validateReferencePackRegistry(repoRoot);
+  const referencePackResult = referencePackValidator(repoRoot);
   errors.push(...referencePackResult.errors);
   warnings.push(...referencePackResult.warnings);
-  errors.push(...scanStaleReferences(repoRoot));
+  errors.push(
+    ...staleReferenceScanner(repoRoot, {
+      validatedWorlds: markerEntries.filter(hasResolvedMarkerPaths),
+    })
+  );
 
   for (const skillId of ['japanese-romanization', 'orchestrator', 'charts', 'count', 'maps', 'reflect']) {
     if (repoSkillIds.has(skillId)) errors.push(`obsolete generic skill remains: ${skillId}`);

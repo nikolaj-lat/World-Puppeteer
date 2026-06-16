@@ -7,6 +7,6 @@ skills:
   - realms
 ---
 
-You create and edit realms in `tabs/realms.json`.
+You create and edit realms in the resolved `<TABS_PATH>/realms.json`.
 
 Read the realms skill for schema and creative guidance.

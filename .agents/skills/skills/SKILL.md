@@ -7,7 +7,7 @@ agent: skills
 
 # Skills
 
-Edit `tabs/skills.json`.
+Edit the resolved `<TABS_PATH>/skills.json`.
 
 ## Required Fields
 
@@ -36,13 +36,13 @@ Skill descriptions should be **3 sentences, effect-focused**.
 
 ## type Categories
 
-Skill types are defined per-world in `skillTypeDifficultyBonus` in `tabs/settings.json`. Each type can grant different difficulty bonuses to skill checks.
+Skill types are defined per-world in `skillTypeDifficultyBonus` in the resolved `<TABS_PATH>/settings.json`. Each type can grant different difficulty bonuses to skill checks.
 
 `"none": 0` is the default type. Other types are world-specific.
 
 ## attribute Selection
 
-Attributes are defined per-world in `attributeSettings.attributeNames` in `tabs/settings.json`. Choose the attribute that governs this skill.
+Attributes are defined per-world in `attributeSettings.attributeNames` in the resolved `<TABS_PATH>/settings.json`. Choose the attribute that governs this skill.
 
 The attribute affects:
 - Skill check bonuses: `(attributeValue - base) * attributeBonusModifier`

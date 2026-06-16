@@ -7,6 +7,6 @@ skills:
   - name-filter-settings
 ---
 
-You manage name filter settings in `tabs/meta.json` using the script at `.claude/skills/name-filter-settings/scripts/name-filter.js`.
+You manage name filter settings in the resolved `<TABS_PATH>/meta.json` using the script at `.claude/skills/name-filter-settings/scripts/name-filter.js`.
 
 Use the script for all operations — do not edit meta.json directly.

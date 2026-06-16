@@ -7,7 +7,7 @@ agent: quests
 
 # Quests
 
-Edit `tabs/quests.json`.
+Edit the resolved `<TABS_PATH>/quests.json`.
 
 ## Required Fields
 

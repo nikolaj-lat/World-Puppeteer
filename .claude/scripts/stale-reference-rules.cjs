@@ -41,8 +41,12 @@ const STALE_REFERENCE_RULES = [
 
 function listInstructionTextFiles(dir, out = []) {
   if (!fs.existsSync(dir)) return out;
+  if (fs.lstatSync(dir).isSymbolicLink()) return out;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
+    if (entry.isSymbolicLink()) {
+      continue;
+    }
     if (entry.isDirectory()) {
       listInstructionTextFiles(full, out);
     } else if (TEXT_FILE_PATTERN.test(entry.name)) {
@@ -52,7 +56,8 @@ function listInstructionTextFiles(dir, out = []) {
   return out;
 }
 
-function staleReferenceTargets(repoRoot) {
+function staleReferenceTargets(repoRoot, options = {}) {
+  const validatedWorlds = Array.isArray(options.validatedWorlds) ? options.validatedWorlds : [];
   const targets = [
     ...listInstructionTextFiles(path.join(repoRoot, '.claude', 'agents')),
     ...listInstructionTextFiles(path.join(repoRoot, '.claude', 'skills')),
@@ -65,18 +70,29 @@ function staleReferenceTargets(repoRoot) {
     path.join(repoRoot, '.claude', 'SETUP.md'),
   ];
 
+  for (const world of validatedWorlds) {
+    if (typeof world.instructionsPath === 'string') targets.push(world.instructionsPath);
+    for (const localDir of [
+      path.join(world.worldRoot, '.agents', 'skills'),
+      path.join(world.worldRoot, '.claude', 'skills'),
+      path.join(world.worldRoot, '.codex', 'agents'),
+    ]) {
+      targets.push(...listInstructionTextFiles(localDir));
+    }
+  }
+
   return [...new Set(targets.map((file) => path.resolve(file)))]
     .filter((file) => fs.existsSync(file));
 }
 
-function scanStaleReferences(repoRoot) {
+function scanStaleReferences(repoRoot, options = {}) {
   const errors = [];
   const ignoredBasenames = new Set([
     'stale-reference-rules.cjs',
     'tooling-architecture-tests.cjs',
   ]);
 
-  for (const file of staleReferenceTargets(repoRoot)) {
+  for (const file of staleReferenceTargets(repoRoot, options)) {
     if (ignoredBasenames.has(path.basename(file))) continue;
     const relative = path.relative(repoRoot, file) || path.basename(file);
     const text = fs.readFileSync(file, 'utf8');

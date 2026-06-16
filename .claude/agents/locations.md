@@ -7,7 +7,7 @@ skills:
   - locations
 ---
 
-You create and edit locations in `tabs/locations.json`.
+You create and edit locations in the resolved `<TABS_PATH>/locations.json`.
 
 Read the locations skill for schema and creative guidance.
 

@@ -36,8 +36,8 @@ Run from the project root. Set Bash timeout to **120000ms**.
 
 When the user asks for a portrait of an NPC:
 
-1. Read `tabs/npcs.json` and find the NPC entry
-2. If the user wants to change appearance details before generating, update `basicInfo` in `tabs/npcs.json` first (with user approval via AskUserQuestion). The prompt is always curated from the current basicInfo — never invent appearance details directly in the prompt that aren't in basicInfo.
+1. Read the resolved `<TABS_PATH>/npcs.json` and find the NPC entry
+2. If the user wants to change appearance details before generating, update `basicInfo` in the resolved `<TABS_PATH>/npcs.json` first (with user approval via AskUserQuestion). The prompt is always curated from the current basicInfo — never invent appearance details directly in the prompt that aren't in basicInfo.
 3. Curate `basicInfo` down to **visual/appearance details only**. Keep gender and NPC type as they set visual tone. Drop narrative role, relationships, and lore. Include **all physical features** (ears, tails, horns, wings, skin texture, missing limbs, etc.) even if they extend beyond the frame — the model handles composition. Always include the primary weapon. Be selective with other accessories — pick **1-2 signature items**, not every item mentioned. Too many props create visual clutter.
    - **Keep:** `[gender], [type], [build], [hair], [eyes], [fangs/claws/horns/ears/tails/wings/skin], [clothing + 1-2 items]`
    - **Drop:** `serving as [role]`, `bound as one of [master]'s [group]`, `who commands [unit]`
@@ -65,7 +65,7 @@ node .claude/skills/image-gen/scripts/upload-image.mjs -n [npc-name-lowercase] i
 
 This uploads, prints the URL, and moves the file to `images/uploaded/{name}-{hash}.png`.
 
-10. Add the returned URL as `"portraitUrl"` on the NPC entry in `tabs/npcs.json`
+10. Add the returned URL as `"portraitUrl"` on the NPC entry in the resolved `<TABS_PATH>/npcs.json`
 
 ### Batch Portrait Workflow
 

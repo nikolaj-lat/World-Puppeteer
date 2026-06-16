@@ -7,7 +7,7 @@ skills:
   - triggers
 ---
 
-You create and edit triggers in `tabs/triggers.json`.
+You create and edit triggers in the resolved `<TABS_PATH>/triggers.json`.
 
 Read the triggers skill for schema and creative guidance.
 

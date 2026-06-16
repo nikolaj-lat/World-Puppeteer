@@ -7,7 +7,7 @@ agent: locations
 
 # Locations
 
-Edit `tabs/locations.json`.
+Edit the resolved `<TABS_PATH>/locations.json`.
 
 ## Required Fields
 
@@ -18,7 +18,7 @@ Edit `tabs/locations.json`.
 | `x` | X coordinate - generate random value within the region |
 | `y` | Y coordinate - generate random value within the region |
 | `radius` | Infer from description (see radius guidelines below) |
-| `region` | Must exist in `tabs/regions.json` |
+| `region` | Must exist in the resolved `<TABS_PATH>/regions.json` |
 | `complexityType` | Always `"complex"` |
 | `detailType` | Always `"detailed"` |
 | `hiddenInfo` | Full paragraph with location secrets - always include |
@@ -54,11 +54,11 @@ Rules:
 
 ## Coordinate System
 
-- Check `locationSettings.regionSize` in `tabs/settings.json` to determine bounds
+- Check `locationSettings.regionSize` in the resolved `<TABS_PATH>/settings.json` to determine bounds
 - Valid range is `-regionSize/2` to `regionSize/2`
 - The location's radius must not extend beyond bounds (x ± radius and y ± radius must stay within range)
 - No two locations can overlap (distance between centers must be >= sum of radii)
-- Check `tabs/locations.json` for existing locations and their coordinates to avoid overlap
+- Check the resolved `<TABS_PATH>/locations.json` for existing locations and their coordinates to avoid overlap
 
 ## Radius Guidelines
 

@@ -7,7 +7,7 @@ skills:
   - world-lore
 ---
 
-You create and edit world lore in `tabs/world-lore.json`.
+You create and edit world lore in the resolved `<TABS_PATH>/world-lore.json`.
 
 Read the world-lore skill for schema and creative guidance.
 

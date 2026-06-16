@@ -7,7 +7,6 @@ skills:
   - factions
 ---
 
-You create and edit factions in `tabs/factions.json`.
+You create and edit factions in the resolved `<TABS_PATH>/factions.json`.
 
 Read the factions skill for schema and creative guidance.
-
