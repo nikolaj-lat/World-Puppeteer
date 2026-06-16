@@ -622,7 +622,7 @@ for (const failure of scanStaleReferences(repoRoot)) {
   if (!linkedDirectory.blocked) {
     assertThrows(
       () => resolveWorld({ worldRoot: symlinkedProfileDirRoot, preferNearest: false }),
-      /Invalid profile directory .*symlink/i,
+      /Invalid profile directory .*symlink/is,
       'resolveWorld must reject a symlinked profile directory'
     );
   }
