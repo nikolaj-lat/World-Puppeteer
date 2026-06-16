@@ -10,7 +10,7 @@ This skill is read-only. It reports capacity; it does not recommend adding conte
 ## Workflow
 
 1. Resolve the target world with `.claude/scripts/resolve-world.cjs`.
-2. Run `.claude/scripts/count.js` against the resolved compiled output or explicit tabs/config path.
+2. Prefer `.claude/scripts/count.js --world <world-root> --json`; otherwise use the resolved `COMPILED_OUTPUT_PATH` or `TABS_PATH` explicitly.
 3. Report limits, current usage, remaining capacity, category counts, over-limit entries, and warnings.
 4. Treat unused space as headroom, not a defect.
 

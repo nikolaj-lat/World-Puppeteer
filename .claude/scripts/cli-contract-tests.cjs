@@ -41,6 +41,9 @@ const validate = '.claude/scripts/validate.js';
 const resolve = '.claude/scripts/resolve-world.cjs';
 const referencePacks = '.claude/scripts/reference-pack-architecture.cjs';
 const build = '.claude/scripts/build-world.cjs';
+const buildCompat = '.claude/scripts/build.js';
+const metadata = '.claude/scripts/validate-world-puppeteer.cjs';
+const pretty = '.claude/scripts/pretty-print.js';
 
 expectFailure(count, ['--bogus'], /Unknown option: --bogus/, 'count unknown flag');
 expectFailure(count, ['--json', '--json'], /--json may be provided only once/, 'count duplicate flag');
@@ -76,6 +79,10 @@ const resolveResult = expectSuccess(
 try {
   const parsed = JSON.parse(resolveResult.stdout);
   assert(parsed.role === 'template', 'resolve template role must be template');
+  assert(parsed.worldRole === 'template', 'resolve template worldRole must mirror role');
+  assert(typeof parsed.instructionsPath === 'string' && parsed.instructionsPath.length > 0, 'resolve template JSON must include instructionsPath');
+  assert(typeof parsed.tabsPath === 'string' && parsed.tabsPath.length > 0, 'resolve template JSON must include tabsPath');
+  assert(typeof parsed.compiledOutputPath === 'string' && parsed.compiledOutputPath.length > 0, 'resolve template JSON must include compiledOutputPath');
 } catch (error) {
   failures.push(`resolve template JSON parse failed: ${error.message}`);
 }
@@ -120,6 +127,21 @@ expectFailure(
   'build duplicate world'
 );
 expectSuccess(build, ['--help'], 'build help');
+expectSuccess(buildCompat, ['--help'], 'build compatibility wrapper help');
+
+expectFailure(metadata, ['--bogus'], /Unknown option: --bogus/, 'metadata unknown flag');
+expectFailure(metadata, ['unexpected'], /Unexpected positional argument/, 'metadata unexpected positional');
+expectSuccess(metadata, ['--json'], 'metadata validation JSON');
+expectSuccess(metadata, ['--help'], 'metadata help');
+
+expectFailure(pretty, ['--bogus'], /Unknown option: --bogus/, 'pretty-print unknown flag');
+expectFailure(
+  pretty,
+  ['--world', 'templates', 'templates/tabs'],
+  /--world cannot be combined/,
+  'pretty-print world and positional conflict'
+);
+expectSuccess(pretty, ['--help'], 'pretty-print help');
 
 if (failures.length > 0) {
   for (const failure of failures) console.error(`FAIL: ${failure}`);

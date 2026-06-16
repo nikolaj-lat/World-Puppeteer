@@ -25,13 +25,17 @@ const path = require('path');
 const {
   loadAndMergeTabs,
   resolveWorld,
+  tryResolveExplicitWorldRoot,
 } = require('./world-puppeteer-lib.cjs');
 const { parseStrictArgs } = require('./cli-utils.cjs');
 const {
-  AI_INSTRUCTION_LEAF_LIMIT,
-  AI_INSTRUCTION_TASK_LIMIT,
   measureAiInstructions,
 } = require('./ai-instruction-limits.cjs');
+const {
+  VALID_GAME_MODE_DIFFICULTIES,
+  VOYAGE_LIMITS,
+  classifyTriggers,
+} = require('./voyage-platform-rules.cjs');
 
 // ============================================================================
 // ENUMS AND VALID VALUES
@@ -241,75 +245,7 @@ const REQUIRED_RESOURCE_FIELDS = [
 // LIMITS (for validation)
 // ============================================================================
 
-const LIMITS = {
-  total: 10_000_000,
-  sections: {
-    worldLore: 500_000,
-    npcs: 1_000_000,
-    locations: 1_000_000,
-    npcTypes: 500_000,
-    items: 100_000,
-    factions: 100_000,
-    regions: 500_000,
-    realms: 100_000,
-    traitCategories: 100_000,
-    itemSettings: 5_000,
-    nameFilterSettings: 50_000,
-  },
-  counts: {
-    storyStarts: 100,
-    semanticTriggers: 200,
-    mechanicalTriggers: 500,
-    abilities: 1_000,
-    triggerConditions: 5,
-    triggerEffects: 5,
-    abilityRequirements: 10,
-    triggerSize: 10_000,
-    premadeCharacters: 100,
-    itemCategories: 40,
-    itemSlots: 60,
-    damageTypes: 40,
-    attributeNames: 30,
-  },
-  fields: {
-    worldBackground: 5_000,
-    questGenerationGuidance: 5_000,
-    narratorStyle: 2_000,
-    deathInstructions: 4_000,
-    aiInstructionIndividual: AI_INSTRUCTION_LEAF_LIMIT,
-    aiInstructionCombined: AI_INSTRUCTION_TASK_LIMIT,
-    worldLoreEntry: 4_000,
-    storyStartEntry: 4_000,
-    itemDescription: 4_000,
-    factionBasicInfo: 4_000,
-    factionHiddenInfo: 4_000,
-    npcTypeDescription: 8_000,
-    npcCombined: 8_000,
-    regionBasicInfo: 4_000,
-    regionHiddenInfo: 4_000,
-    locationBasicInfo: 4_000,
-    locationHiddenInfo: 4_000,
-    areaDescription: 4_000,
-    traitDescription: 4_000,
-    abilityDescription: 2_000,
-    realmBasicInfo: 100_000,
-    triggerConditionQuery: 1_000,
-    triggerConditionValue: 100,
-    triggerEffectInstruction: 1_000,
-    triggerEffectValue: 100,
-    currencyName: 64,
-  },
-  // Per-element character limits for settings arrays
-  settingsEntries: {
-    itemCategory: 60,
-    itemSlotName: 64,
-    itemSlotCategory: 60,
-    damageType: 60,
-    attributeName: 64,
-    nameFilterReplacement: 64,
-    premadeCharacter: 20_000,
-  },
-};
+const LIMITS = VOYAGE_LIMITS;
 
 // ============================================================================
 // VALIDATION FUNCTIONS
@@ -329,6 +265,55 @@ function buildResourceKeySet(config) {
 
 function createError(path, message, severity = 'error') {
   return { path, message, severity };
+}
+
+function createFindingCollector() {
+  const buckets = {
+    error: [],
+    warning: [],
+    info: [],
+  };
+
+  function normalizeSeverity(value, fallback = 'error') {
+    if (value === 'warning' || value === 'info' || value === 'error') return value;
+    return fallback;
+  }
+
+  function route(finding, fallbackSeverity) {
+    if (!finding || typeof finding !== 'object') {
+      const severity = normalizeSeverity(fallbackSeverity);
+      buckets[severity].push({
+        path: 'unknown',
+        message: String(finding),
+        severity,
+      });
+      return;
+    }
+
+    const severity = normalizeSeverity(finding.severity, fallbackSeverity);
+    buckets[severity].push({
+      ...finding,
+      severity,
+    });
+  }
+
+  function sink(defaultSeverity) {
+    return {
+      push(...items) {
+        for (const item of items) route(item, defaultSeverity);
+        return items.length;
+      },
+    };
+  }
+
+  return {
+    errors: buckets.error,
+    warnings: buckets.warning,
+    infos: buckets.info,
+    errorSink: sink('error'),
+    warningSink: sink('warning'),
+    infoSink: sink('info'),
+  };
 }
 
 
@@ -1029,14 +1014,7 @@ function validateCharacterLimits(config, errors, warnings) {
 
   if (config.triggers) {
     const triggers = Array.isArray(config.triggers) ? config.triggers : Object.values(config.triggers);
-    const hasSemantic = (trigger) =>
-      trigger.conditions && trigger.conditions.some((c) => c.type === 'story' || c.type === 'action');
-    let semanticCount = 0;
-    let mechanicalCount = 0;
-    for (const trigger of triggers) {
-      if (hasSemantic(trigger)) semanticCount++;
-      else mechanicalCount++;
-    }
+    const { semantic: semanticCount, mechanical: mechanicalCount } = classifyTriggers(triggers);
     if (semanticCount > LIMITS.counts.semanticTriggers) {
       errors.push(createError('triggers', `Too many semantic triggers: ${semanticCount} (max: ${LIMITS.counts.semanticTriggers})`));
     }
@@ -1797,10 +1775,14 @@ function validateUnknownFields(config, errors) {
 
   // Game modes
   if (config.gameModes && typeof config.gameModes === 'object') {
-    const VALID_GAME_MODE_DIFFICULTIES = ['very easy', 'easy', 'medium', 'hard', 'very hard'];
     const gameModesJson = JSON.stringify(config.gameModes, null, 2);
-    if (gameModesJson.length > 100000) {
-      errors.push(createError('gameModes', `Game modes exceed 100,000 characters: ${gameModesJson.length}`));
+    if (gameModesJson.length > LIMITS.sections.gameModes) {
+      errors.push(
+        createError(
+          'gameModes',
+          `Game modes exceed ${LIMITS.sections.gameModes.toLocaleString()} characters: ${gameModesJson.length}`
+        )
+      );
     }
     for (const [modeKey, mode] of Object.entries(config.gameModes)) {
       if (!mode || typeof mode !== 'object') continue;
@@ -2041,8 +2023,9 @@ function validateLocationCoordinates(config, errors) {
 // ============================================================================
 
 function validate(config) {
-  const errors = [];
-  const warnings = [];
+  const collector = createFindingCollector();
+  const errors = collector.errorSink;
+  const warnings = collector.warningSink;
 
   validateVersionFields(config, errors);
   validateRequiredFields(config, errors);
@@ -2057,7 +2040,11 @@ function validate(config) {
   validateLocationCoordinates(config, errors);
   validateUnknownFields(config, errors);
 
-  return { errors, warnings };
+  return {
+    errors: collector.errors,
+    warnings: collector.warnings,
+    infos: collector.infos,
+  };
 }
 
 function printReport(result, inputPath, verbose) {
@@ -2161,7 +2148,7 @@ function main() {
       '[world.json | tabs-directory | --world <world-root>] ' +
       '[--json] [--verbose]'
     );
-    process.exit(0);
+    return 0;
   }
 
   let inputPath;
@@ -2178,13 +2165,8 @@ function main() {
   } else if (positionals.length > 0) {
     inputPath = positionals[0];
     fullPath = path.resolve(inputPath);
-    if (fs.existsSync(path.join(fullPath, '.world-puppeteer.json'))) {
-      fullPath = resolveWorld({
-        worldRoot: fullPath,
-        cwd: fullPath,
-        preferNearest: false,
-      }).tabsPath;
-    }
+    const resolvedWorld = tryResolveExplicitWorldRoot(fullPath, { cwd: fullPath });
+    if (resolvedWorld) fullPath = resolvedWorld.tabsPath;
   } else {
     const resolved = resolveWorld({ cwd: process.cwd() });
     inputPath = resolved.tabsPath;
@@ -2204,13 +2186,13 @@ function main() {
       const merged = loadAndMergeTabs(fullPath);
       if (merged.files.length === 0) {
         console.error(`Error: No JSON files found in ${inputPath}`);
-        process.exit(1);
+        return 1;
       }
       config = merged.config;
       displayPath = `${inputPath} (${merged.files.length} files)`;
     } catch (err) {
       console.error(`Error: ${err.message}`);
-      process.exit(1);
+      return 1;
     }
   } else {
     // Single file
@@ -2224,7 +2206,7 @@ function main() {
       } else {
         console.error(`Error reading ${inputPath}: ${err.message}`);
       }
-      process.exit(1);
+      return 1;
     }
   }
 
@@ -2236,12 +2218,22 @@ function main() {
     printReport(result, displayPath, options.verbose);
   }
 
-  process.exit(result.errors.length > 0 ? 1 : 0);
+  return result.errors.length > 0 ? 1 : 0;
 }
 
-try {
-  main();
-} catch (error) {
-  console.error(`Error: ${error.message}`);
-  process.exit(1);
+if (require.main === module) {
+  try {
+    process.exitCode = main();
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    process.exit(1);
+  }
 }
+
+module.exports = {
+  createError,
+  createFindingCollector,
+  main,
+  printReport,
+  validate,
+};

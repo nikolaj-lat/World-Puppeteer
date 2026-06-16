@@ -258,7 +258,7 @@ function formatBuildValidateWorld(world) {
     return false;
   }
 
-  const validationRuns = runConfiguredValidations(world);
+  const validationRuns = build.output?.validationRuns || runConfiguredValidations(world);
   const errors = validationRuns.flatMap((run) => run.errors.map((error) => ({ ...error, profileId: run.profileId })));
   if (validationRuns.some((run) => !run.ok) || errors.length > 0) {
     const errorMessages = errors

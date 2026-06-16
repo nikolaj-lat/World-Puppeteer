@@ -44,11 +44,13 @@ function main() {
     repoRoot: resolved.repoRoot,
     worldRoot: resolved.worldRoot,
     role: resolved.marker.role,
+    worldRole: resolved.marker.role,
     id: resolved.marker.id,
     name: resolved.marker.name,
     format: resolved.marker.format,
     tabsPath: resolved.tabsPath,
     compiledOutputPath: resolved.compiledOutputPath,
+    instructionsPath: resolved.instructionsPath,
     activeProfiles: profileSummaries,
     validationProfiles: resolved.marker.toolchain.validationProfiles,
   };
@@ -63,6 +65,9 @@ function main() {
     );
     console.log(
       `Output: ${path.relative(resolved.repoRoot, output.compiledOutputPath)}`
+    );
+    console.log(
+      `Tabs: ${path.relative(resolved.repoRoot, output.tabsPath)}`
     );
     console.log(
       `Profiles: ${profileSummaries.map((profile) => profile.id).join(', ') || '(none)'}`

@@ -7,13 +7,13 @@ agent: world-capacity
 
 # World Capacity
 
-Resolve the target world first, then run `node .claude/scripts/count.js <world-root>/tabs --json` or count the marker-declared compiled output.
+Resolve the target world first, then run `node .claude/scripts/count.js --world <world-root> --json` or count the resolved `COMPILED_OUTPUT_PATH` / `TABS_PATH` directly when needed.
 
 ## Usage
 
 ```bash
-node .claude/scripts/count.js hxh_hunter_exam_campaign_rebuild/tabs --json
-node .claude/scripts/count.js templates/tabs --json
+node .claude/scripts/count.js --world hxh_hunter_exam_campaign_rebuild --json
+node .claude/scripts/count.js --world templates --json
 ```
 
 ## Output

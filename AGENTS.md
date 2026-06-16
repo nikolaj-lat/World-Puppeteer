@@ -90,6 +90,10 @@ When summoning agents, provide a target-world contract:
 
 ```text
 TARGET_WORLD_ROOT: <relative path>
+TABS_PATH: <resolved absolute or repo-relative tabs path>
+COMPILED_OUTPUT_PATH: <resolved absolute or repo-relative compiled output path>
+INSTRUCTIONS_PATH: <resolved absolute or repo-relative instructions path>
+WORLD_ROLE: <editable|reference|template>
 ACTIVE_PROFILES:
 - <profile id>: <resolved skill/reference paths>
 ```
@@ -99,7 +103,7 @@ Agents may resolve minor mechanical ambiguity from the approved brief and local 
 ## Project Structure
 
 ```text
-tabs/                    # Local world source JSON; ignored by Git in local worlds
+<paths.tabs>/            # Local world source JSON at the marker-declared tabs path
 <world output>.json      # Compiled production named by .world-puppeteer.json
 .world-puppeteer.json    # Declarative world marker
 .world-puppeteer/        # Shared schemas, reference packs, registries, and tooling metadata

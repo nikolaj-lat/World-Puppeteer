@@ -84,9 +84,9 @@ Complete character and count limits for world configs.
 ## Script Usage
 
 ```bash
-node .claude/scripts/count.js              # defaults to tabs/
-node .claude/scripts/count.js ./tabs/      # explicit path
-node .claude/scripts/count.js --json       # JSON output
+node .claude/scripts/count.js --world hxh_hunter_exam_campaign_rebuild --json
+node .claude/scripts/count.js --world templates --json
+node .claude/scripts/count.js ./compiled-world.json --json
 ```
 
 ## Output Indicators

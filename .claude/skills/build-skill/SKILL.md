@@ -12,9 +12,10 @@ Create skills for editing files under a resolved target world's tab directory.
 Every generated agent and skill must:
 
 1. require a resolved `TARGET_WORLD_ROOT`;
-2. interpret `tabs/...` as `<TARGET_WORLD_ROOT>/tabs/...`;
-3. never assume repository-root `tabs`;
-4. preserve marker role restrictions and shared build/validation routing.
+2. require resolved `TABS_PATH`, `COMPILED_OUTPUT_PATH`, `INSTRUCTIONS_PATH`, and `WORLD_ROLE`;
+3. interpret world-source paths through `TABS_PATH` instead of assuming a literal `tabs/` directory;
+4. never assume repository-root `tabs`;
+5. preserve marker role restrictions and shared build/validation routing.
 
 ## File Structure
 
@@ -39,7 +40,7 @@ agent: {name}
 
 # {Title}
 
-Edit `<TARGET_WORLD_ROOT>/tabs/{name}.json`.
+Edit `<TABS_PATH>/{name}.json`.
 
 ## Required Fields
 
@@ -90,13 +91,14 @@ skills:
 ---
 
 Require `TARGET_WORLD_ROOT` from the parent orchestration context.
+Also require `TABS_PATH`, `COMPILED_OUTPUT_PATH`, `INSTRUCTIONS_PATH`, and `WORLD_ROLE`.
 
 You create and edit {plural} in
-`<TARGET_WORLD_ROOT>/tabs/{name}.json`.
+`<TABS_PATH>/{name}.json`.
 
 ## Chaining
 
-If `{cross-reference}` does not exist in `<TARGET_WORLD_ROOT>/tabs/{other}.json`, spawn **{other}** agent with the same `TARGET_WORLD_ROOT`.
+If `{cross-reference}` does not exist in `<TABS_PATH>/{other}.json`, spawn **{other}** agent with the same resolved target-world contract.
 ```
 
 ## Reference Template
@@ -104,7 +106,7 @@ If `{cross-reference}` does not exist in `<TARGET_WORLD_ROOT>/tabs/{other}.json`
 ```markdown
 # {Title} Reference
 
-Complete documentation for `<TARGET_WORLD_ROOT>/tabs/{name}.json`.
+Complete documentation for `<TABS_PATH>/{name}.json`.
 
 ## Schema
 
@@ -151,7 +153,7 @@ Reads `inputField` and generates: outputField1, outputField2, outputField3. Sets
 
 | Field | References |
 |-------|------------|
-| `field` | `<TARGET_WORLD_ROOT>/tabs/{other}.json` |
+| `field` | `<TABS_PATH>/{other}.json` |
 ```
 
 ## Principles
@@ -177,4 +179,4 @@ Reads `inputField` and generates: outputField1, outputField2, outputField3. Sets
 
 - Skill name = agent name = folder name
 - Use kebab-case for multi-word names
-- Match the filename under `<TARGET_WORLD_ROOT>/tabs/` when possible
+- Match the filename under `<TABS_PATH>/` when possible

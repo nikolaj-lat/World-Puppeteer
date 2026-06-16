@@ -4,9 +4,14 @@ const fs = require('fs');
 const path = require('path');
 const {
   findRepoRoot,
+  isInside,
+  pathKey,
+  resolveContainedPath,
   validateMarkerShape,
+  validateMarkerPaths,
   validateProfileShape,
 } = require('./world-puppeteer-lib.cjs');
+const { parseStrictArgs } = require('./cli-utils.cjs');
 const {
   readJsonResult,
   validateAgainstSchemaFile,
@@ -14,6 +19,7 @@ const {
 const {
   validateReferencePackRegistry,
 } = require('./reference-pack-architecture.cjs');
+const { scanStaleReferences } = require('./stale-reference-rules.cjs');
 
 const MARKER_FILE = '.world-puppeteer.json';
 const IGNORED_DIRS = new Set(['.git', 'node_modules', 'config-backups', 'images', 'stuff']);
@@ -42,7 +48,74 @@ function findMarkerPaths(rootDir) {
   return markers.sort();
 }
 
-function main() {
+function addUniqueMarkerChecks(markerEntries, errors) {
+  const ids = new Map();
+  const outputs = new Map();
+  const pathEntries = markerEntries.filter((entry) => entry.pathErrors.length === 0);
+
+  for (const entry of markerEntries) {
+    if (typeof entry.marker.id === 'string' && entry.marker.id.length > 0) {
+      const existing = ids.get(entry.marker.id);
+      if (existing) {
+        errors.push(
+          `duplicate world id ${entry.marker.id}: ${existing.markerPath} and ${entry.markerPath}`
+        );
+      } else {
+        ids.set(entry.marker.id, entry);
+      }
+    }
+  }
+
+  for (const entry of pathEntries) {
+    const key = pathKey(entry.compiledOutputPath);
+    const existing = outputs.get(key);
+    if (existing) {
+      errors.push(
+        `duplicate compiled output destination ${entry.compiledOutputPath}: ` +
+        `${existing.markerPath} and ${entry.markerPath}`
+      );
+    } else {
+      outputs.set(key, entry);
+    }
+  }
+
+  for (const entry of pathEntries) {
+    for (const other of pathEntries) {
+      if (entry === other) continue;
+
+      if (isInside(entry.compiledOutputPath, other.tabsPath)) {
+        errors.push(
+          `${entry.markerPath}: paths.compiledOutput overlaps ${other.markerPath} tabs path: ` +
+          `${entry.compiledOutputPath}`
+        );
+      }
+
+      if (
+        isInside(entry.compiledOutputPath, other.worldRoot) &&
+        !isInside(entry.worldRoot, other.worldRoot)
+      ) {
+        errors.push(
+          `${entry.markerPath}: paths.compiledOutput is inside another declared world ` +
+          `${other.markerPath}: ${entry.compiledOutputPath}`
+        );
+      }
+
+      for (const [label, protectedPath] of [
+        ['marker', other.markerPath],
+        ['instructions', other.instructionsPath],
+      ]) {
+        if (pathKey(entry.compiledOutputPath) === pathKey(protectedPath)) {
+          errors.push(
+            `${entry.markerPath}: paths.compiledOutput conflicts with ${label} path from ` +
+            `${other.markerPath}: ${entry.compiledOutputPath}`
+          );
+        }
+      }
+    }
+  }
+}
+
+function validateRepositoryMetadata({ json = false } = {}) {
   const repoRoot = findRepoRoot(process.cwd());
   const errors = [];
   const warnings = [];
@@ -59,18 +132,39 @@ function main() {
     }
     const marker = loaded.value;
     const worldRoot = path.dirname(markerPath);
-    markerEntries.push({ markerPath, marker, worldRoot });
+    const entry = { markerPath, marker, worldRoot, pathErrors: [] };
+    markerEntries.push(entry);
 
     errors.push(...validateAgainstSchemaFile(marker, markerSchemaPath).map((message) => `${markerPath}: ${message}`));
     const markerResult = validateMarkerShape(marker, worldRoot);
     errors.push(...markerResult.errors.map((message) => `${markerPath}: ${message}`));
     warnings.push(...markerResult.warnings.map((message) => `${markerPath}: ${message}`));
 
+    if (marker.paths && markerResult.errors.length === 0) {
+      const pathResult = validateMarkerPaths(marker, worldRoot);
+      entry.pathErrors = pathResult.errors;
+      errors.push(...pathResult.errors.map((message) => `${markerPath}: ${message}`));
+      Object.assign(entry, pathResult.paths);
+    }
+
     const profileRoot = path.join(worldRoot, '.world-puppeteer', 'profiles');
     const activeProfileIds = new Set(marker.activeProfiles || []);
     const localProfileIds = new Set();
 
     if (fs.existsSync(profileRoot)) {
+      try {
+        resolveContainedPath({
+          rootPath: worldRoot,
+          relativePath: path.relative(worldRoot, profileRoot),
+          field: '.world-puppeteer/profiles',
+          kind: 'input',
+          expectedType: 'directory',
+        });
+      } catch (error) {
+        errors.push(`${profileRoot}: ${error.message}`);
+        continue;
+      }
+
       const profileFiles = fs.readdirSync(profileRoot, { withFileTypes: true })
         .filter((entry) => entry.isFile() && entry.name.endsWith('.json'))
         .map((entry) => entry.name)
@@ -80,6 +174,19 @@ function main() {
         const profileIdFromFilename = path.basename(profileFile, '.json');
         const profilePath = path.join(profileRoot, profileFile);
         localProfileIds.add(profileIdFromFilename);
+
+        try {
+          resolveContainedPath({
+            rootPath: worldRoot,
+            relativePath: path.relative(worldRoot, profilePath),
+            field: `.world-puppeteer/profiles/${profileFile}`,
+            kind: 'input',
+            expectedType: 'file',
+          });
+        } catch (error) {
+          errors.push(`${profilePath}: ${error.message}`);
+          continue;
+        }
 
         const profileLoaded = readJsonResult(profilePath);
         if (profileLoaded.error) {
@@ -113,27 +220,55 @@ function main() {
     }
   }
 
+  addUniqueMarkerChecks(markerEntries, errors);
+
   const referencePackResult = validateReferencePackRegistry(repoRoot);
   errors.push(...referencePackResult.errors);
   warnings.push(...referencePackResult.warnings);
+  errors.push(...scanStaleReferences(repoRoot));
 
   for (const skillId of ['japanese-romanization', 'orchestrator', 'charts', 'count', 'maps', 'reflect']) {
     if (repoSkillIds.has(skillId)) errors.push(`obsolete generic skill remains: ${skillId}`);
   }
 
   const result = { errors, warnings, worlds: markerEntries.length };
-  if (process.argv.includes('--json')) console.log(JSON.stringify(result, null, 2));
+  if (json) console.log(JSON.stringify(result, null, 2));
   else {
     console.log(`World markers: ${markerEntries.length}`);
     for (const warning of warnings) console.warn(`warning: ${warning}`);
     for (const error of errors) console.error(`error: ${error}`);
   }
-  process.exit(errors.length > 0 ? 1 : 0);
+  return errors.length > 0 ? 1 : 0;
+}
+
+function main(argv = process.argv.slice(2)) {
+  const { options } = parseStrictArgs(
+    argv,
+    {
+      options: {
+        '--json': { key: 'json' },
+        '--help': { key: 'help', aliases: ['-h'] },
+      },
+      maxPositionals: 0,
+    }
+  );
+
+  if (options.help) {
+    console.log('Usage: node .claude/scripts/validate-world-puppeteer.cjs [--json]');
+    return 0;
+  }
+
+  return validateRepositoryMetadata({ json: options.json === true });
 }
 
 try {
-  main();
+  process.exitCode = main();
 } catch (error) {
   console.error(`error: ${error.message}`);
   process.exit(1);
 }
+
+module.exports = {
+  addUniqueMarkerChecks,
+  validateRepositoryMetadata,
+};

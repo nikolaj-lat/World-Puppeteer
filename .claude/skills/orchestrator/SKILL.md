@@ -10,8 +10,8 @@ Use this skill to coordinate World-Puppeteer work through the appropriate specia
 ## Core Laws
 
 1. Resolve the target world before any world operation.
-2. Treat every `tabs/...` path in specialist instructions as relative to the
-   resolved `TARGET_WORLD_ROOT`; never default to repository-root `tabs`.
+2. Treat every world-source path as relative to the resolved `TABS_PATH`;
+   never default to repository-root `tabs`.
 3. Do not edit `tabs/*.json` directly during ordinary content work.
 3. Delegate to named specialists when implementation benefits from focused craft work.
 4. Review specialist output before presenting it as complete.
@@ -33,6 +33,10 @@ When summoning agents, provide:
 
 ```text
 TARGET_WORLD_ROOT: <relative path>
+TABS_PATH: <resolved tabs path>
+COMPILED_OUTPUT_PATH: <resolved compiled output path>
+INSTRUCTIONS_PATH: <resolved instructions path>
+WORLD_ROLE: <editable|reference|template>
 ACTIVE_PROFILES:
 - <profile id>: <resolved skill/reference paths>
 ```

@@ -7,7 +7,7 @@ agent: world-charts
 
 # World Charts
 
-Generate a mermaid flowchart from triggers.json. Output only to `<resolved-world>/stuff/trigger-chart.html`.
+Generate a mermaid flowchart from the resolved triggers source. Output only to `<resolved-world>/stuff/trigger-chart.html`.
 
 This skill may create the resolved world's ignored `stuff/` directory if absent. It must not edit `tabs/`, markers, profiles, instructions, generated world JSON, other reports, or other worlds. After writing, run a diff/status check and fail if any unexpected path changed.
 
@@ -125,7 +125,7 @@ end
 
 ## Steps
 
-1. Read triggers file (default: `tabs/triggers.json`)
+1. Read the resolved triggers file at `<TABS_PATH>/triggers.json`
 2. Categorize triggers by purpose (setup, selection, gameplay, context)
 3. Identify decision points and branching conditions
 4. Extract reference data (characters, locations, items) for sidebars

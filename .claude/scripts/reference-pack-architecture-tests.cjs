@@ -103,7 +103,7 @@ assert(report.readOnly === true && report.files.includes('payload.json'), 'inspe
 const missingPayloadRoot = fixtureRoot();
 writePack(missingPayloadRoot, 'one', packManifest('one', ['missing.json']), {});
 writeJson(path.join(missingPayloadRoot, '.world-puppeteer', 'reference-packs', 'index.json'), { schemaVersion: 1, packs: ['one'] });
-assert(validateReferencePackRegistry(missingPayloadRoot).errors.some((error) => error.includes('listed payload missing')), 'missing payload must fail');
+assert(validateReferencePackRegistry(missingPayloadRoot).errors.some((error) => error.includes('required path does not exist')), 'missing payload must fail');
 
 const unlistedPayloadRoot = fixtureRoot();
 writePack(unlistedPayloadRoot, 'one', packManifest('one'), {
@@ -116,7 +116,7 @@ assert(validateReferencePackRegistry(unlistedPayloadRoot).errors.some((error) =>
 const traversalRoot = fixtureRoot();
 writePack(traversalRoot, 'one', packManifest('one', ['../escape.json']), {});
 writeJson(path.join(traversalRoot, '.world-puppeteer', 'reference-packs', 'index.json'), { schemaVersion: 1, packs: ['one'] });
-assert(validateReferencePackRegistry(traversalRoot).errors.some((error) => error.includes('unsafe payload path')), 'path traversal payload must fail');
+assert(validateReferencePackRegistry(traversalRoot).errors.some((error) => error.includes('traversal is not allowed')), 'path traversal payload must fail');
 
 
 const unsafeSourceRoot = fixtureRoot();
@@ -124,7 +124,7 @@ writePack(unsafeSourceRoot, 'one', packManifest('one', ['../../outside.json']), 
 fs.writeFileSync(path.join(unsafeSourceRoot, '.world-puppeteer', 'outside.json'), '{ malformed outside payload');
 writeJson(path.join(unsafeSourceRoot, '.world-puppeteer', 'reference-packs', 'index.json'), { schemaVersion: 1, packs: ['one'] });
 const unsafeSourceErrors = validateReferencePackRegistry(unsafeSourceRoot).errors;
-assert(unsafeSourceErrors.some((error) => error.includes('unsafe payload path')), 'unsafe source-section payload must fail path validation');
+assert(unsafeSourceErrors.some((error) => error.includes('traversal is not allowed')), 'unsafe source-section payload must fail path validation');
 assert(
   unsafeSourceErrors.some((error) => error.includes('is not a validated safe payload')),
   'source sections must refuse payloads that failed path validation'
@@ -141,7 +141,7 @@ fs.rmSync(invalidReadmePath);
 fs.mkdirSync(invalidReadmePath);
 writeJson(path.join(invalidReadmeRoot, '.world-puppeteer', 'reference-packs', 'index.json'), { schemaVersion: 1, packs: ['one'] });
 assert(
-  validateReferencePackRegistry(invalidReadmeRoot).errors.some((error) => error.includes('README.md: not a regular file')),
+  validateReferencePackRegistry(invalidReadmeRoot).errors.some((error) => error.includes('README.md: expected file')),
   'pack control files must be regular files'
 );
 
@@ -209,7 +209,7 @@ function tryCreateSymlink(target, linkPath, type, label) {
     );
     const errors = validateReferencePackRegistry(symlinkRoot).errors;
     assert(
-      errors.some((error) => error.includes('symlinked payloads are not allowed')),
+      errors.some((error) => error.includes('symlinked path component') || error.includes('symlinks are not allowed')),
       'symlink payload escape must fail'
     );
   }

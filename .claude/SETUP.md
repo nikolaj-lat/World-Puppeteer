@@ -47,10 +47,11 @@ For a world build:
 
 ```bash
 node .claude/scripts/build-world.cjs --world <world-root>
-node .claude/scripts/validate.js <world-root>/tabs --json
+node .claude/scripts/validate.js --world <world-root> --json
 ```
 
 The build command validates the exact compiled candidate before backup or publication.
+The compatibility wrappers `node .claude/scripts/build.js --world <world-root>` and `node <world-root>/build.cjs` both delegate to the canonical build command.
 
 ## Optional Image Generation
 

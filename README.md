@@ -37,7 +37,7 @@ Claude and Codex are thin adapters over the same Node core:
 - neutral world resolver
 - changed-path classifier
 - hook routing and validation
-- deterministic tab merge with duplicate top-level owner rejection
+- deterministic tab merge with safe disjoint nested object merges and duplicate JSON-path collision rejection
 - validate-before-publish build pipeline
 - marker/profile/reference-pack metadata validation
 
@@ -51,15 +51,20 @@ npm test
 npm run test:reference-packs
 npm run validate:metadata
 node .claude/scripts/build-world.cjs --world hxh_hunter_exam_campaign_rebuild
-node .claude/scripts/validate.js hxh_hunter_exam_campaign_rebuild/tabs --json
-node .claude/scripts/count.js hxh_hunter_exam_campaign_rebuild/tabs --json
+node .claude/scripts/validate.js --world hxh_hunter_exam_campaign_rebuild --json
+node .claude/scripts/count.js --world hxh_hunter_exam_campaign_rebuild --json
 ```
+
+Supported compatibility wrappers:
+
+- `node .claude/scripts/build.js --world <world-root>` delegates to `build-world.cjs`.
+- `node <world-root>/build.cjs` delegates to `build-world.cjs --world <world-root>` for world-local workflows.
 
 All build, validate, resolve, and inspection scripts reject unknown flags and malformed arguments.
 
 ## Safe Build Publication
 
-`build-world.cjs` resolves the intended world, merges source tabs in memory, rejects duplicate top-level ownership, writes a unique candidate file beside the destination, validates the exact candidate, then creates a backup and atomically replaces the compiled output. Failed validation or candidate generation leaves the existing compiled output unchanged.
+`build-world.cjs` resolves the intended world, merges source tabs in memory, allows disjoint nested object ownership, rejects duplicate JSON-path collisions or incompatible value collisions, writes a unique candidate file beside the destination, validates the exact candidate, then creates a backup and atomically replaces the compiled output. Failed validation or candidate generation leaves the existing compiled output unchanged.
 
 ## Profiles
 

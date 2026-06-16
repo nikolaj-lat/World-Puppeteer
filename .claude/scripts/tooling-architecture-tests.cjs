@@ -11,7 +11,12 @@ const {
   findRepoRoot,
   loadAndMergeTabs,
   resolveWorld,
+  runConfiguredBuild,
 } = require('./world-puppeteer-lib.cjs');
+const {
+  scanStaleReferences,
+  staleReferenceTargets,
+} = require('./stale-reference-rules.cjs');
 
 const repoRoot = findRepoRoot(process.cwd());
 const failures = [];
@@ -52,6 +57,11 @@ function marker(id, role = 'editable', overrides = {}) {
 }
 
 function writeMarker(dir, value) {
+  fs.mkdirSync(path.join(dir, value.paths?.tabs || 'tabs'), { recursive: true });
+  fs.writeFileSync(
+    path.join(dir, value.paths?.instructions || 'AGENTS.override.md'),
+    '# fixture instructions\n'
+  );
   writeJson(path.join(dir, '.world-puppeteer.json'), value);
 }
 
@@ -242,11 +252,20 @@ const passingRunner = () => ({ status: 0, stdout: '{"errors":[],"warnings":[]}',
 const buildResult = buildWorldSource(buildWorld, { runner: passingRunner });
 assert(JSON.parse(read(buildWorld.compiledOutputPath)).configVersion === 'V33', 'successful build must replace output');
 assert(buildResult.backupPath && fs.existsSync(buildResult.backupPath), 'successful build must create backup after validation');
+assert(Array.isArray(buildResult.validationRuns) && buildResult.validationRuns.length === 1, 'build must return candidate validation runs');
+assert(buildResult.validationRuns[0].ok === true, 'successful build must preserve successful candidate validation results');
+const configuredBuild = runConfiguredBuild(buildWorld, { runner: passingRunner, noBackup: true });
+assert(configuredBuild.status === 0 && configuredBuild.output.validationRuns.length === 1, 'configured build must surface candidate validation runs');
 
 const badBuildCli = runNode(['.claude/scripts/build-world.cjs', '--wrold', buildRoot]);
 assert(badBuildCli.status !== 0 && /Unknown option/.test(badBuildCli.stderr), 'build CLI must reject unknown flags');
+const buildCompatCli = runNode(['.claude/scripts/build.js', '--help']);
+assert(buildCompatCli.status === 0 && /build-world\.cjs/.test(buildCompatCli.stdout), 'build compatibility wrapper must delegate CLI help to build-world.cjs');
 const badValidateCli = runNode(['.claude/scripts/validate.js', '--wrold', buildRoot]);
 assert(badValidateCli.status !== 0 && /Unknown option/.test(badValidateCli.stderr), 'validate CLI must reject unknown flags');
+const localBuildWrapper = read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', 'build.cjs'));
+assert(localBuildWrapper.includes(".claude', 'scripts', 'build-world.cjs"), 'world-local build wrapper must target the canonical build script');
+assert(localBuildWrapper.includes("[script, '--world', __dirname]"), 'world-local build wrapper must delegate with the resolved world root');
 
 const malformedHook = runNode(['.codex/scripts/post-edit-validate.cjs'], { input: '{ broken' });
 assert(malformedHook.status === 0 && /"decision":"block"/.test(malformedHook.stdout), 'malformed hook JSON must block');
@@ -276,29 +295,21 @@ for (const file of fs.readdirSync(agentDir).filter((name) => name.endsWith('.tom
   assert(Array.isArray(parsed.skills?.config), `${file}: missing [[skills.config]]`);
 }
 
-function listTextFiles(dir, out = []) {
-  if (!fs.existsSync(dir)) return out;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) listTextFiles(full, out);
-    else if (/\.(md|json|js|cjs|toml|yaml)$/.test(entry.name)) out.push(full);
-  }
-  return out;
-}
-
-const activeTextFiles = [
-  ...listTextFiles(path.join(repoRoot, '.claude', 'agents')),
-  ...listTextFiles(path.join(repoRoot, '.claude', 'skills')),
-  ...listTextFiles(path.join(repoRoot, '.claude', 'scripts')),
-  path.join(repoRoot, '.claude', 'settings.json'),
-].filter((file) => fs.existsSync(file) && path.basename(file) !== 'tooling-architecture-tests.cjs');
-for (const file of activeTextFiles) {
-  const relative = path.relative(repoRoot, file);
-  const text = read(file);
-  assert(!text.includes('bypassPermissions'), `${relative}: contains bypassPermissions`);
-  assert(!text.includes('create-tabs.js'), `${relative}: references create-tabs.js`);
-  assert(!text.includes('create-checklist.js'), `${relative}: references create-checklist.js`);
-  assert(!/\b(skill|agent): (count|charts|maps)\b/.test(text), `${relative}: active obsolete utility name remains`);
+const staleTargets = staleReferenceTargets(repoRoot);
+assert(
+  staleTargets.some((file) => file.endsWith(path.join('.agents', 'skills', 'world-capacity', 'SKILL.md'))),
+  'stale-reference scan must cover .agents skills'
+);
+assert(
+  staleTargets.some((file) => file.endsWith(path.join('.codex', 'agents', 'world-lore.toml'))),
+  'stale-reference scan must cover .codex agents'
+);
+assert(
+  staleTargets.some((file) => file.endsWith(path.join('README.md'))),
+  'stale-reference scan must cover root tooling documentation'
+);
+for (const failure of scanStaleReferences(repoRoot)) {
+  failures.push(failure);
 }
 
 if (fs.existsSync(path.join(repoRoot, '.world-puppeteer', 'mods'))) {

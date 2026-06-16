@@ -20,107 +20,71 @@
 
 const fs = require('fs');
 const path = require('path');
-const { loadAndMergeTabs, resolveWorld } = require('./world-puppeteer-lib.cjs');
+const { loadAndMergeTabs, resolveWorld, tryResolveExplicitWorldRoot } = require('./world-puppeteer-lib.cjs');
 const { parseStrictArgs } = require('./cli-utils.cjs');
 const {
   AI_INSTRUCTION_TASK_LIMIT,
   measureAiInstructions,
 } = require('./ai-instruction-limits.cjs');
+const {
+  VOYAGE_LIMITS,
+  classifyTriggers,
+} = require('./voyage-platform-rules.cjs');
 
-// Section character limits (from validation.md)
-const SECTION_LIMITS = {
-  worldLore: 500_000,
-  npcs: 1_000_000,
-  locations: 1_000_000,
-  npcTypes: 500_000,
-  items: 100_000,
-  factions: 100_000,
-  regions: 500_000,
-  realms: 100_000,
-  traitCategories: 100_000,
-  itemSettings: 5_000,
-  gameModes: 100_000,
-  nameFilterSettings: 50_000,
-};
-
-// Total config limit
-const TOTAL_CONFIG_LIMIT = 10_000_000;
+const SECTION_LIMITS = VOYAGE_LIMITS.sections;
+const TOTAL_CONFIG_LIMIT = VOYAGE_LIMITS.total;
 
 // Field character limits
 const FIELD_LIMITS = {
-  'storySettings.worldBackground': 5_000,
-  'storySettings.questGenerationGuidance': 5_000,
-  narratorStyle: 2_000,
-  'death.instructions': 4_000,
-  'itemSettings.currencyName': 64,
+  'storySettings.worldBackground': VOYAGE_LIMITS.fields.worldBackground,
+  'storySettings.questGenerationGuidance': VOYAGE_LIMITS.fields.questGenerationGuidance,
+  narratorStyle: VOYAGE_LIMITS.fields.narratorStyle,
+  'death.instructions': VOYAGE_LIMITS.fields.deathInstructions,
+  'itemSettings.currencyName': VOYAGE_LIMITS.fields.currencyName,
 };
 
 // Individual entry limits
 const ENTRY_LIMITS = {
-  worldLore: { text: 4_000 },
-  storyStarts: { combined: 4_000 },
-  items: { description: 4_000 },
-  factions: { basicInfo: 4_000, hiddenInfo: 4_000 },
-  npcTypes: { description: 8_000 },
-  npcs: { combined: 8_000 },
-  regions: { basicInfo: 4_000, hiddenInfo: 4_000 },
-  locations: { basicInfo: 4_000, hiddenInfo: 4_000 },
-  traits: { description: 4_000 },
-  abilities: { description: 2_000 },
-  realms: { basicInfo: 100_000 },
+  worldLore: { text: VOYAGE_LIMITS.fields.worldLoreEntry },
+  storyStarts: { combined: VOYAGE_LIMITS.fields.storyStartEntry },
+  items: { description: VOYAGE_LIMITS.fields.itemDescription },
+  factions: { basicInfo: VOYAGE_LIMITS.fields.factionBasicInfo, hiddenInfo: VOYAGE_LIMITS.fields.factionHiddenInfo },
+  npcTypes: { description: VOYAGE_LIMITS.fields.npcTypeDescription },
+  npcs: { combined: VOYAGE_LIMITS.fields.npcCombined },
+  regions: { basicInfo: VOYAGE_LIMITS.fields.regionBasicInfo, hiddenInfo: VOYAGE_LIMITS.fields.regionHiddenInfo },
+  locations: { basicInfo: VOYAGE_LIMITS.fields.locationBasicInfo, hiddenInfo: VOYAGE_LIMITS.fields.locationHiddenInfo },
+  traits: { description: VOYAGE_LIMITS.fields.traitDescription },
+  abilities: { description: VOYAGE_LIMITS.fields.abilityDescription },
+  realms: { basicInfo: VOYAGE_LIMITS.fields.realmBasicInfo },
 };
 
 // Count limits
-const COUNT_LIMITS = {
-  storyStarts: 100,
-  semanticTriggers: 200, // triggers with story/action conditions
-  mechanicalTriggers: 500, // triggers without story/action conditions
-  abilities: 1_000,
-  triggerConditions: 5, // per trigger
-  triggerEffects: 5, // per trigger
-  triggerSize: 10_000, // per trigger
-  abilityRequirements: 10, // per ability
-  premadeCharacters: 100,
-  itemCategories: 40,
-  itemSlots: 60,
-  damageTypes: 40,
-  attributeNames: 30,
-};
+const COUNT_LIMITS = VOYAGE_LIMITS.counts;
 
 // Settings list entry limits: per-element character limits for settings arrays
-const SETTINGS_ENTRY_LIMITS = {
-  itemCategory: 60, // each itemSettings.itemCategories entry
-  itemSlotName: 64, // each itemSettings.itemSlots[].slot
-  itemSlotCategory: 60, // each itemSettings.itemSlots[].category
-  damageType: 60, // each combatSettings.damageTypes entry
-  attributeName: 64, // each attributeSettings.attributeNames entry
-  nameFilterReplacement: 64, // each nameFilterSettings replacement string
-  premadeCharacter: 20_000, // per-character JSON length
-};
+const SETTINGS_ENTRY_LIMITS = VOYAGE_LIMITS.settingsEntries;
 
 
 // Game mode field limits (per mode)
 const GAME_MODE_FIELD_LIMITS = {
-  name: 120,
-  description: 500,
-  instructions: 5_000,
-  askTheNarratorPrompt: 1_000,
+  name: VOYAGE_LIMITS.fields.gameModeName,
+  description: VOYAGE_LIMITS.fields.gameModeDescription,
+  instructions: VOYAGE_LIMITS.fields.gameModeInstructions,
+  askTheNarratorPrompt: VOYAGE_LIMITS.fields.gameModeAskTheNarratorPrompt,
 };
 
-// Image prompt configuration limits
-const IMAGE_PROMPT_INSTRUCTION_LIMIT = 5_000; // per entity type
-const IMAGE_PROMPT_TOTAL_LIMIT = 15_000; // all entity types combined
+const IMAGE_PROMPT_INSTRUCTION_LIMIT = VOYAGE_LIMITS.fields.imagePromptInstruction;
+const IMAGE_PROMPT_TOTAL_LIMIT = VOYAGE_LIMITS.fields.imagePromptTotal;
 
 // Trigger field limits
 const TRIGGER_FIELD_LIMITS = {
-  conditionQuery: 1_000,
-  conditionValue: 100,
-  effectInstruction: 1_000,
-  effectValue: 100,
+  conditionQuery: VOYAGE_LIMITS.fields.triggerConditionQuery,
+  conditionValue: VOYAGE_LIMITS.fields.triggerConditionValue,
+  effectInstruction: VOYAGE_LIMITS.fields.triggerEffectInstruction,
+  effectValue: VOYAGE_LIMITS.fields.triggerEffectValue,
 };
 
-// Area description limit
-const AREA_DESCRIPTION_LIMIT = 4_000;
+const AREA_DESCRIPTION_LIMIT = VOYAGE_LIMITS.fields.areaDescription;
 
 function getJsonLength(obj) {
   // Use pretty-printing (2-space indent) to match how world configs are stored
@@ -256,14 +220,7 @@ function analyzeConfig(config) {
 
   if (config.triggers) {
     const triggerValues = Array.isArray(config.triggers) ? config.triggers : Object.values(config.triggers);
-    const hasSemantic = (trigger) =>
-      trigger.conditions && trigger.conditions.some((c) => c.type === 'story' || c.type === 'action');
-    let semanticCount = 0;
-    let mechanicalCount = 0;
-    for (const trigger of triggerValues) {
-      if (hasSemantic(trigger)) semanticCount++;
-      else mechanicalCount++;
-    }
+    const { semantic: semanticCount, mechanical: mechanicalCount } = classifyTriggers(triggerValues);
     result.counts.semanticTriggers = { used: semanticCount, limit: COUNT_LIMITS.semanticTriggers };
     result.counts.mechanicalTriggers = { used: mechanicalCount, limit: COUNT_LIMITS.mechanicalTriggers };
   }
@@ -777,7 +734,7 @@ function main() {
       'Usage: node .claude/scripts/count.js ' +
       '[world.json | tabs-directory | --world <world-root>] [--json]'
     );
-    process.exit(0);
+    return 0;
   }
 
   let inputPath;
@@ -794,13 +751,8 @@ function main() {
   } else if (positionals.length > 0) {
     inputPath = positionals[0];
     fullPath = path.resolve(inputPath);
-    if (fs.existsSync(path.join(fullPath, '.world-puppeteer.json'))) {
-      fullPath = resolveWorld({
-        worldRoot: fullPath,
-        cwd: fullPath,
-        preferNearest: false,
-      }).tabsPath;
-    }
+    const resolvedWorld = tryResolveExplicitWorldRoot(fullPath, { cwd: fullPath });
+    if (resolvedWorld) fullPath = resolvedWorld.tabsPath;
   } else {
     const resolved = resolveWorld({ cwd: process.cwd() });
     inputPath = resolved.tabsPath;
@@ -861,12 +813,20 @@ function main() {
     result.aiInstructions.tasks.some((task) => task.used > task.limit) ||
     result.aiInstructions.individual.length > 0;
 
-  process.exit(hasViolations ? 1 : 0);
+  return hasViolations ? 1 : 0;
 }
 
-try {
-  main();
-} catch (error) {
-  console.error(`Error: ${error.message}`);
-  process.exit(1);
+if (require.main === module) {
+  try {
+    process.exitCode = main();
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    process.exit(1);
+  }
 }
+
+module.exports = {
+  analyzeConfig,
+  main,
+  printReport,
+};

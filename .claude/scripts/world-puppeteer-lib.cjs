@@ -51,23 +51,304 @@ function isInside(child, parent) {
   return relative === '' || (!!relative && !relative.startsWith('..') && !path.isAbsolute(relative));
 }
 
+function pathKey(filePath) {
+  const resolved = path.resolve(filePath);
+  return process.platform === 'win32' ? resolved.toLowerCase() : resolved;
+}
+
+function isAbsolutePathSyntax(value) {
+  return (
+    path.isAbsolute(value) ||
+    path.win32.isAbsolute(value) ||
+    path.posix.isAbsolute(value)
+  );
+}
+
 function isSafeRelativePath(value) {
   return (
     typeof value === 'string' &&
     value.length > 0 &&
-    !path.isAbsolute(value) &&
+    !isAbsolutePathSyntax(value) &&
     !value.split(/[\\/]+/).includes('..')
   );
+}
+
+function assertSafeRelativePath(value, label) {
+  if (typeof value !== 'string' || value.length === 0) {
+    throw new Error(`${label}: path must be a non-empty string`);
+  }
+  if (isAbsolutePathSyntax(value)) {
+    throw new Error(`${label}: absolute paths are not allowed: ${value}`);
+  }
+  if (value.split(/[\\/]+/).includes('..')) {
+    throw new Error(`${label}: traversal is not allowed: ${value}`);
+  }
+}
+
+function nearestExistingAncestor(targetPath) {
+  let current = path.resolve(targetPath);
+  while (!fs.existsSync(current)) {
+    const parent = path.dirname(current);
+    if (parent === current) return null;
+    current = parent;
+  }
+  return current;
+}
+
+function assertNoSymlinkComponents(rootPath, targetPath, label, options = {}) {
+  const root = path.resolve(rootPath);
+  const target = path.resolve(targetPath);
+  if (!isInside(target, root)) throw new Error(`${label}: path escapes world root: ${target}`);
+
+  const relative = path.relative(root, target);
+  if (!relative) return;
+
+  const parts = relative.split(path.sep).filter(Boolean);
+  let current = root;
+  for (let index = 0; index < parts.length; index += 1) {
+    current = path.join(current, parts[index]);
+    if (!fs.existsSync(current)) break;
+    const stat = fs.lstatSync(current);
+    if (stat.isSymbolicLink()) {
+      throw new Error(`${label}: symlinked path component is not allowed: ${current}`);
+    }
+    const isFinal = index === parts.length - 1;
+    if (!isFinal && !stat.isDirectory()) {
+      throw new Error(`${label}: path component is not a directory: ${current}`);
+    }
+    if (isFinal && options.requireDirectoryComponent && !stat.isDirectory()) {
+      throw new Error(`${label}: path component is not a directory: ${current}`);
+    }
+  }
+}
+
+function assertExpectedType(absolutePath, expectedType, label) {
+  const stat = fs.lstatSync(absolutePath);
+  if (stat.isSymbolicLink()) {
+    throw new Error(`${label}: symlinks are not allowed: ${absolutePath}`);
+  }
+  if (expectedType === 'directory' && !stat.isDirectory()) {
+    throw new Error(`${label}: expected directory: ${absolutePath}`);
+  }
+  if (expectedType === 'file' && !stat.isFile()) {
+    throw new Error(`${label}: expected file: ${absolutePath}`);
+  }
+}
+
+function assertRealpathContained(rootPath, targetPath, label) {
+  const realRoot = fs.realpathSync(path.resolve(rootPath));
+  const realTarget = fs.realpathSync(path.resolve(targetPath));
+  if (!isInside(realTarget, realRoot)) {
+    throw new Error(`${label}: realpath escapes world root: ${targetPath}`);
+  }
+}
+
+function resolveContainedPath(options) {
+  const {
+    rootPath,
+    relativePath,
+    field,
+    kind = 'input',
+    expectedType = null,
+  } = options;
+  const label = field || 'path';
+  const root = path.resolve(rootPath);
+
+  assertSafeRelativePath(relativePath, label);
+  if (!fs.existsSync(root)) throw new Error(`${label}: world root does not exist: ${root}`);
+  assertExpectedType(root, 'directory', `${label} world root`);
+
+  const target = path.resolve(root, relativePath);
+  if (!isInside(target, root)) {
+    throw new Error(`${label}: path escapes world root: ${relativePath}`);
+  }
+
+  if (kind === 'input') {
+    if (!fs.existsSync(target)) throw new Error(`${label}: required path does not exist: ${relativePath}`);
+    assertNoSymlinkComponents(root, target, label);
+    if (expectedType) assertExpectedType(target, expectedType, label);
+    assertRealpathContained(root, target, label);
+    return target;
+  }
+
+  const ancestor = fs.existsSync(target)
+    ? path.dirname(target)
+    : nearestExistingAncestor(target);
+  if (!ancestor) throw new Error(`${label}: no existing ancestor for output: ${relativePath}`);
+  assertNoSymlinkComponents(root, ancestor, label, { requireDirectoryComponent: true });
+  assertRealpathContained(root, ancestor, `${label} nearest existing ancestor`);
+
+  if (fs.existsSync(target)) {
+    assertNoSymlinkComponents(root, target, label);
+    if (expectedType) assertExpectedType(target, expectedType, label);
+    assertRealpathContained(root, target, label);
+  }
+
+  return target;
+}
+
+function validateContainedPath(options) {
+  try {
+    return { path: resolveContainedPath(options), errors: [] };
+  } catch (error) {
+    return { path: null, errors: [error.message] };
+  }
+}
+
+function normalizeTransactionalWrite(write, index) {
+  if (!write || typeof write.path !== 'string' || write.path.length === 0) {
+    throw new Error(`transaction write ${index} is missing a file path`);
+  }
+
+  if (!Buffer.isBuffer(write.content) && typeof write.content !== 'string') {
+    throw new Error(
+      `transaction write ${index} for ${write.path} must provide string or Buffer content`
+    );
+  }
+
+  return {
+    path: path.resolve(write.path),
+    content: Buffer.isBuffer(write.content)
+      ? Buffer.from(write.content)
+      : Buffer.from(write.content, 'utf8'),
+  };
+}
+
+function snapshotTransactionalFile(fsImpl, filePath) {
+  const resolvedPath = path.resolve(filePath);
+  const existed = fsImpl.existsSync(resolvedPath);
+  if (!existed) {
+    return { path: resolvedPath, existed: false, content: null };
+  }
+
+  const stat = fsImpl.lstatSync(resolvedPath);
+  if (!stat.isFile() || stat.isSymbolicLink()) {
+    throw new Error(`transaction target must be a regular file: ${resolvedPath}`);
+  }
+
+  return {
+    path: resolvedPath,
+    existed: true,
+    content: fsImpl.readFileSync(resolvedPath),
+  };
+}
+
+function restoreTransactionalFile(fsImpl, snapshot) {
+  if (snapshot.existed) {
+    fsImpl.writeFileSync(snapshot.path, snapshot.content);
+    return;
+  }
+
+  if (fsImpl.existsSync(snapshot.path)) {
+    fsImpl.rmSync(snapshot.path, { force: true });
+  }
+}
+
+function removeTransactionalTempPath(fsImpl, tempPath) {
+  const resolvedPath = path.resolve(tempPath);
+  if (!fsImpl.existsSync(resolvedPath)) return;
+
+  const stat = fsImpl.lstatSync(resolvedPath);
+  if (stat.isDirectory()) {
+    fsImpl.rmSync(resolvedPath, { recursive: true, force: true });
+  } else {
+    fsImpl.rmSync(resolvedPath, { force: true });
+  }
+}
+
+function runTransactionalFileMutation(plannedWrites, afterWrite = () => undefined, options = {}) {
+  const fsImpl = options.fs || fs;
+  const normalizedWrites = plannedWrites.map(normalizeTransactionalWrite);
+  const uniqueWrites = [];
+  const seen = new Set();
+
+  for (const write of normalizedWrites) {
+    const key = pathKey(write.path);
+    if (seen.has(key)) {
+      throw new Error(`duplicate transaction target: ${write.path}`);
+    }
+    seen.add(key);
+    uniqueWrites.push(write);
+  }
+
+  const snapshots = uniqueWrites.map((write) =>
+    snapshotTransactionalFile(fsImpl, write.path)
+  );
+  const writesToApply = uniqueWrites.filter((write, index) => {
+    const original = snapshots[index].content;
+    return !original || !original.equals(write.content);
+  });
+  const cleanupPaths = [];
+  const context = {
+    recordCleanupPath(tempPath) {
+      cleanupPaths.push(path.resolve(tempPath));
+    },
+  };
+
+  try {
+    for (const write of writesToApply) {
+      fsImpl.mkdirSync(path.dirname(write.path), { recursive: true });
+      fsImpl.writeFileSync(write.path, write.content);
+    }
+    return afterWrite(context);
+  } catch (primaryError) {
+    const rollbackErrors = [];
+
+    for (let index = snapshots.length - 1; index >= 0; index -= 1) {
+      try {
+        restoreTransactionalFile(fsImpl, snapshots[index]);
+      } catch (restoreError) {
+        rollbackErrors.push(
+          `failed to restore ${snapshots[index].path}: ${restoreError.message}`
+        );
+      }
+    }
+
+    for (const tempPath of cleanupPaths) {
+      try {
+        removeTransactionalTempPath(fsImpl, tempPath);
+      } catch (cleanupError) {
+        rollbackErrors.push(
+          `failed to remove temporary path ${tempPath}: ${cleanupError.message}`
+        );
+      }
+    }
+
+    if (rollbackErrors.length > 0) {
+      throw new Error(
+        `${primaryError.message}\nRollback failed:\n${rollbackErrors.join('\n')}`
+      );
+    }
+
+    throw primaryError;
+  }
 }
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
-function listJsonFiles(dir) {
-  return fs.readdirSync(dir)
-    .filter((file) => file.endsWith('.json'))
-    .sort((a, b) => a.localeCompare(b));
+function listTabJsonFiles(dir) {
+  const tabsPath = path.resolve(dir);
+  if (!fs.existsSync(tabsPath)) {
+    throw new Error(`Tabs directory not found: ${tabsPath}`);
+  }
+  assertExpectedType(tabsPath, 'directory', 'tabs directory');
+
+  const jsonFiles = [];
+  for (const entry of fs.readdirSync(tabsPath, { withFileTypes: true })) {
+    const entryPath = path.join(tabsPath, entry.name);
+    if (entry.isSymbolicLink()) {
+      throw new Error(`Tabs directory contains symlinked entry: ${entryPath}`);
+    }
+    if (entry.isDirectory()) {
+      throw new Error(`Tabs directory must be flat; nested directory found: ${entryPath}`);
+    }
+    if (entry.isFile() && entry.name.endsWith('.json')) {
+      jsonFiles.push(entry.name);
+    }
+  }
+  return jsonFiles.sort((a, b) => a.localeCompare(b));
 }
 
 function isPlainObject(value) {
@@ -202,7 +483,7 @@ function loadAndMergeTabs(tabsPath) {
   const owners = new Map();
   const files = [];
 
-  for (const file of listJsonFiles(tabsPath)) {
+  for (const file of listTabJsonFiles(tabsPath)) {
     const filePath = path.join(tabsPath, file);
     let parsed;
     try {
@@ -326,6 +607,55 @@ function validateMarkerShape(marker, worldRoot) {
   if (!Array.isArray(marker.activeProfiles)) errors.push('activeProfiles must be an array');
 
   return { errors, warnings };
+}
+
+function resolveMarkerPaths(marker, worldRoot) {
+  return {
+    tabsPath: resolveContainedPath({
+      rootPath: worldRoot,
+      relativePath: marker.paths.tabs,
+      field: 'paths.tabs',
+      kind: 'input',
+      expectedType: 'directory',
+    }),
+    compiledOutputPath: resolveContainedPath({
+      rootPath: worldRoot,
+      relativePath: marker.paths.compiledOutput,
+      field: 'paths.compiledOutput',
+      kind: 'output',
+      expectedType: 'file',
+    }),
+    instructionsPath: resolveContainedPath({
+      rootPath: worldRoot,
+      relativePath: marker.paths.instructions,
+      field: 'paths.instructions',
+      kind: 'input',
+      expectedType: 'file',
+    }),
+  };
+}
+
+function validateMarkerPaths(marker, worldRoot) {
+  const errors = [];
+  const paths = {};
+
+  for (const [field, kind, expectedType, outputKey] of [
+    ['tabs', 'input', 'directory', 'tabsPath'],
+    ['compiledOutput', 'output', 'file', 'compiledOutputPath'],
+    ['instructions', 'input', 'file', 'instructionsPath'],
+  ]) {
+    const result = validateContainedPath({
+      rootPath: worldRoot,
+      relativePath: marker.paths?.[field],
+      field: `paths.${field}`,
+      kind,
+      expectedType,
+    });
+    if (result.errors.length > 0) errors.push(...result.errors);
+    else paths[outputKey] = result.path;
+  }
+
+  return { errors, paths };
 }
 
 function normalizeSpawnResult(result) {
@@ -485,23 +815,34 @@ function createBuildBackup(destinationPath) {
 }
 
 function validateCompiledCandidate(world, candidatePath, options = {}) {
+  const validationRuns = [];
   for (const profileId of world.marker.toolchain.validationProfiles) {
     const profile = VALIDATION_PROFILES[profileId];
     if (!profile) throw new Error(`unknown validationProfile: ${profileId}`);
     const run = runNodeScript(world.repoRoot, profile.script, [candidatePath, '--json'], options);
     const parsed = parseValidationOutput(profile, run);
+    validationRuns.push({ profileId, ...parsed });
     if (!parsed.ok) {
       const detail = parsed.errors.map((error) => `${error.path || 'unknown'}: ${error.message || error}`).join('\n');
       throw new Error(`Compiled candidate failed ${profileId} validation:\n${detail || run.stderr || run.stdout}`);
     }
   }
+  return validationRuns;
 }
 
 function buildWorldSource(world, options = {}) {
+  resolveContainedPath({
+    rootPath: world.worldRoot,
+    relativePath: path.relative(world.worldRoot, world.compiledOutputPath),
+    field: 'paths.compiledOutput',
+    kind: 'output',
+    expectedType: 'file',
+  });
   fs.mkdirSync(path.dirname(world.compiledOutputPath), { recursive: true });
   const lock = acquireBuildLock(world.compiledOutputPath, options);
   let tempPath = null;
   let backupPath = null;
+  let validationRuns = [];
 
   try {
     const merged = loadAndMergeTabs(world.tabsPath);
@@ -513,7 +854,7 @@ function buildWorldSource(world, options = {}) {
       tempPath,
       JSON.stringify(merged.config, null, 2) + '\n'
     );
-    validateCompiledCandidate(world, tempPath, options);
+    validationRuns = validateCompiledCandidate(world, tempPath, options);
 
     const backupFactory =
       options.createBuildBackup || createBuildBackup;
@@ -528,6 +869,7 @@ function buildWorldSource(world, options = {}) {
     return {
       topLevelKeys: Object.keys(merged.config).length,
       sourceFiles: merged.files,
+      validationRuns,
       tempPath,
       backupPath,
     };
@@ -698,16 +1040,31 @@ function resolveWorld(options = {}) {
     activeProfiles.push(loaded);
   }
 
+  const markerPaths = resolveMarkerPaths(selected.marker, selected.root);
+
   return {
     repoRoot,
     worldRoot: selected.root,
     markerPath: selected.markerPath,
     marker: selected.marker,
     activeProfiles,
-    tabsPath: path.resolve(selected.root, selected.marker.paths.tabs),
-    compiledOutputPath: path.resolve(selected.root, selected.marker.paths.compiledOutput),
-    instructionsPath: path.resolve(selected.root, selected.marker.paths.instructions),
+    tabsPath: markerPaths.tabsPath,
+    compiledOutputPath: markerPaths.compiledOutputPath,
+    instructionsPath: markerPaths.instructionsPath,
   };
+}
+
+function tryResolveExplicitWorldRoot(worldRoot, options = {}) {
+  try {
+    return resolveWorld({
+      worldRoot,
+      cwd: options.cwd || worldRoot || process.cwd(),
+      preferNearest: false,
+      repoRoot: options.repoRoot,
+    });
+  } catch {
+    return null;
+  }
 }
 
 module.exports = {
@@ -724,7 +1081,15 @@ module.exports = {
   findMarkers,
   findNearestMarker,
   isInside,
+  isAbsolutePathSyntax,
+  listTabJsonFiles,
+  pathKey,
+  runTransactionalFileMutation,
+  resolveContainedPath,
+  resolveMarkerPaths,
   isSafeRelativePath,
+  validateContainedPath,
+  validateMarkerPaths,
   knownToolchain,
   readJson,
   readProfile,
@@ -736,6 +1101,7 @@ module.exports = {
   runConfiguredValidations,
   runFormatProfile,
   runValidationProfile,
+  tryResolveExplicitWorldRoot,
   validateMarkerShape,
   validateProfileShape,
 };

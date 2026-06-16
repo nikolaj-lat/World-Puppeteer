@@ -19,10 +19,10 @@ This skill may create the resolved world's ignored `stuff/` directory if absent.
 ## Data Sources
 
 ```javascript
-const settings = JSON.parse(fs.readFileSync('tabs/settings.json'))
-const realms = JSON.parse(fs.readFileSync('tabs/realms.json'))
-const regions = JSON.parse(fs.readFileSync('tabs/regions.json'))
-const locations = JSON.parse(fs.readFileSync('tabs/locations.json'))
+const settings = JSON.parse(fs.readFileSync(path.join(world.tabsPath, 'settings.json')))
+const realms = JSON.parse(fs.readFileSync(path.join(world.tabsPath, 'realms.json')))
+const regions = JSON.parse(fs.readFileSync(path.join(world.tabsPath, 'regions.json')))
+const locations = JSON.parse(fs.readFileSync(path.join(world.tabsPath, 'locations.json')))
 
 const regionSize = settings.locationSettings.regionSize // e.g., 100
 const coordRange = regionSize / 2 // e.g., 50

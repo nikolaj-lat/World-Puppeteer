@@ -9,6 +9,8 @@ const {
 const {
   findRepoRoot,
   isInside,
+  isSafeRelativePath,
+  resolveContainedPath,
 } = require('./world-puppeteer-lib.cjs');
 const { parseStrictArgs } = require('./cli-utils.cjs');
 
@@ -17,15 +19,6 @@ const REPORT_ROOT = path.join('.world-puppeteer', 'reports', 'reference-packs');
 
 function normalizeRelative(value) {
   return value.replace(/\\/g, '/');
-}
-
-function isSafeRelativePath(value) {
-  return (
-    typeof value === 'string' &&
-    value.length > 0 &&
-    !path.isAbsolute(value) &&
-    !value.split(/[\\/]+/).includes('..')
-  );
 }
 
 function getByPath(value, dottedPath) {
@@ -43,30 +36,32 @@ function assertSafeDirectory(dirPath, label) {
 }
 
 function validatePayloadPath(packDir, relativePath) {
-  if (!isSafeRelativePath(relativePath)) return `unsafe payload path ${relativePath}`;
-  const lexical = path.resolve(packDir, relativePath);
-  if (!isInside(lexical, packDir)) return `payload escapes pack directory: ${relativePath}`;
-  if (!fs.existsSync(lexical)) return `listed payload missing: ${relativePath}`;
-  const stat = fs.lstatSync(lexical);
-  if (stat.isSymbolicLink()) return `symlinked payloads are not allowed: ${relativePath}`;
-  if (!stat.isFile()) return `payload is not a regular file: ${relativePath}`;
-  const realPack = fs.realpathSync(packDir);
-  const realPayload = fs.realpathSync(lexical);
-  if (!isInside(realPayload, realPack)) return `payload realpath escapes pack directory: ${relativePath}`;
+  try {
+    resolveContainedPath({
+      rootPath: packDir,
+      relativePath,
+      field: `payload path ${relativePath}`,
+      kind: 'input',
+      expectedType: 'file',
+    });
+  } catch (error) {
+    return error.message;
+  }
   return null;
 }
 
 function validateContainedRegularFile(rootDir, filePath, label) {
-  const lexicalRoot = path.resolve(rootDir);
-  const lexicalFile = path.resolve(filePath);
-  if (!isInside(lexicalFile, lexicalRoot)) return `${label}: path escapes ${lexicalRoot}`;
-  if (!fs.existsSync(lexicalFile)) return `${label}: missing`;
-  const stat = fs.lstatSync(lexicalFile);
-  if (stat.isSymbolicLink()) return `${label}: symlinked files are not allowed`;
-  if (!stat.isFile()) return `${label}: not a regular file`;
-  const realRoot = fs.realpathSync(lexicalRoot);
-  const realFile = fs.realpathSync(lexicalFile);
-  if (!isInside(realFile, realRoot)) return `${label}: realpath escapes ${lexicalRoot}`;
+  try {
+    resolveContainedPath({
+      rootPath: rootDir,
+      relativePath: path.relative(rootDir, filePath),
+      field: label,
+      kind: 'input',
+      expectedType: 'file',
+    });
+  } catch (error) {
+    return error.message;
+  }
   return null;
 }
 
