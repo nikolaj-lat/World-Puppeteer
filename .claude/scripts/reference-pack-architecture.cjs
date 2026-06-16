@@ -7,6 +7,7 @@ const {
   validateAgainstSchemaFile,
 } = require('./schema-utils.cjs');
 const {
+  assertNoSymlinkComponents,
   findRepoRoot,
   isInside,
   isSafeRelativePath,
@@ -63,26 +64,6 @@ function validateContainedRegularFile(rootDir, filePath, label) {
     return error.message;
   }
   return null;
-}
-
-function assertNoSymlinkComponents(rootPath, targetPath, label) {
-  const root = path.resolve(rootPath);
-  const target = path.resolve(targetPath);
-  if (!isInside(target, root)) throw new Error(`${label}: path escapes ${root}`);
-
-  const relative = path.relative(root, target);
-  let current = root;
-  for (const segment of relative.split(path.sep).filter(Boolean)) {
-    current = path.join(current, segment);
-    if (!fs.existsSync(current)) break;
-    const stat = fs.lstatSync(current);
-    if (stat.isSymbolicLink()) {
-      throw new Error(`${label}: symlinked path component is not allowed: ${current}`);
-    }
-    if (!stat.isDirectory()) {
-      throw new Error(`${label}: path component is not a directory: ${current}`);
-    }
-  }
 }
 
 function listFilesRecursive(dir, out = []) {
@@ -294,9 +275,13 @@ function safeReportPath(repoRoot, outputPath) {
   }
 
   const parent = path.dirname(requested);
-  assertNoSymlinkComponents(lexicalRepoRoot, parent, 'report output');
+  assertNoSymlinkComponents(lexicalRepoRoot, parent, 'report output', {
+    requireDirectoryComponent: true,
+  });
   fs.mkdirSync(parent, { recursive: true });
-  assertNoSymlinkComponents(lexicalRepoRoot, parent, 'report output');
+  assertNoSymlinkComponents(lexicalRepoRoot, parent, 'report output', {
+    requireDirectoryComponent: true,
+  });
 
   const realRepoRoot = fs.realpathSync(lexicalRepoRoot);
   const realReportRoot = fs.realpathSync(reportRoot);

@@ -260,11 +260,13 @@ function main(argv = process.argv.slice(2)) {
   return validateRepositoryMetadata({ json: options.json === true });
 }
 
-try {
-  process.exitCode = main();
-} catch (error) {
-  console.error(`error: ${error.message}`);
-  process.exit(1);
+if (require.main === module) {
+  try {
+    process.exitCode = main();
+  } catch (error) {
+    console.error(`error: ${error.message}`);
+    process.exit(1);
+  }
 }
 
 module.exports = {

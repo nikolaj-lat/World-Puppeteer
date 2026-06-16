@@ -87,12 +87,22 @@ function assertSafeRelativePath(value, label) {
 
 function nearestExistingAncestor(targetPath) {
   let current = path.resolve(targetPath);
-  while (!fs.existsSync(current)) {
+  while (!pathEntryExists(current)) {
     const parent = path.dirname(current);
     if (parent === current) return null;
     current = parent;
   }
   return current;
+}
+
+function pathEntryExists(targetPath) {
+  try {
+    fs.lstatSync(targetPath);
+    return true;
+  } catch (error) {
+    if (error.code === 'ENOENT') return false;
+    throw error;
+  }
 }
 
 function assertNoSymlinkComponents(rootPath, targetPath, label, options = {}) {
@@ -107,7 +117,7 @@ function assertNoSymlinkComponents(rootPath, targetPath, label, options = {}) {
   let current = root;
   for (let index = 0; index < parts.length; index += 1) {
     current = path.join(current, parts[index]);
-    if (!fs.existsSync(current)) break;
+    if (!pathEntryExists(current)) break;
     const stat = fs.lstatSync(current);
     if (stat.isSymbolicLink()) {
       throw new Error(`${label}: symlinked path component is not allowed: ${current}`);
@@ -171,14 +181,15 @@ function resolveContainedPath(options) {
     return target;
   }
 
-  const ancestor = fs.existsSync(target)
+  const targetExists = pathEntryExists(target);
+  const ancestor = targetExists
     ? path.dirname(target)
     : nearestExistingAncestor(target);
   if (!ancestor) throw new Error(`${label}: no existing ancestor for output: ${relativePath}`);
   assertNoSymlinkComponents(root, ancestor, label, { requireDirectoryComponent: true });
   assertRealpathContained(root, ancestor, `${label} nearest existing ancestor`);
 
-  if (fs.existsSync(target)) {
+  if (targetExists) {
     assertNoSymlinkComponents(root, target, label);
     if (expectedType) assertExpectedType(target, expectedType, label);
     assertRealpathContained(root, target, label);
@@ -1217,6 +1228,7 @@ module.exports = {
   isPlainObject,
   readJson,
   readProfile,
+  assertNoSymlinkComponents,
   discoverProfileDirectory,
   releaseBuildLock,
   resolveWorld,

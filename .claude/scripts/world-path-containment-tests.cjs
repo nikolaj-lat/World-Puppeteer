@@ -155,6 +155,17 @@ try {
   });
   assert(safeOutput.endsWith(path.join('out', 'new.json')), 'safe missing output must resolve');
 
+  const existingOutputPath = path.join(containedRoot, 'out', 'existing.json');
+  fs.writeFileSync(existingOutputPath, '{}\n');
+  const existingOutput = resolveContainedPath({
+    rootPath: containedRoot,
+    relativePath: 'out/existing.json',
+    field: 'paths.compiledOutput',
+    kind: 'output',
+    expectedType: 'file',
+  });
+  assert(existingOutput === existingOutputPath, 'regular existing output file must resolve');
+
   const nestedTabsRoot = path.join(fixtureRoot, 'nested-tabs');
   fs.mkdirSync(path.join(nestedTabsRoot, 'tabs', 'nested'), { recursive: true });
   writeJson(path.join(nestedTabsRoot, 'tabs', 'world.json'), {});
@@ -218,6 +229,38 @@ try {
       }),
       /symlinked path component|realpath escapes/,
       'realpath escape must fail closed'
+    );
+  }
+
+  const outputFileSymlinkRoot = path.join(fixtureRoot, 'output-file-symlink');
+  fs.mkdirSync(path.join(outputFileSymlinkRoot, 'out'), { recursive: true });
+  if (trySymlink(path.join(outside, 'outside.json'), path.join(outputFileSymlinkRoot, 'out', 'linked.json'), 'file', 'output file symlink')) {
+    assertThrows(
+      () => resolveContainedPath({
+        rootPath: outputFileSymlinkRoot,
+        relativePath: 'out/linked.json',
+        field: 'paths.compiledOutput',
+        kind: 'output',
+        expectedType: 'file',
+      }),
+      /symlinked path component|symlinks are not allowed/,
+      'existing output symlink must fail'
+    );
+  }
+
+  const outputDanglingSymlinkRoot = path.join(fixtureRoot, 'output-dangling-symlink');
+  fs.mkdirSync(path.join(outputDanglingSymlinkRoot, 'out'), { recursive: true });
+  if (trySymlink(path.join(outside, 'missing.json'), path.join(outputDanglingSymlinkRoot, 'out', 'dangling.json'), 'file', 'output dangling symlink')) {
+    assertThrows(
+      () => resolveContainedPath({
+        rootPath: outputDanglingSymlinkRoot,
+        relativePath: 'out/dangling.json',
+        field: 'paths.compiledOutput',
+        kind: 'output',
+        expectedType: 'file',
+      }),
+      /symlinked path component|symlinks are not allowed/,
+      'dangling output symlink must fail'
     );
   }
 

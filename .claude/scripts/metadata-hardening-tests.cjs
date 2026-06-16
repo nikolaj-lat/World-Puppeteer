@@ -3,6 +3,7 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const { spawnSync } = require('child_process');
 const {
   findRepoRoot,
   resolveWorld,
@@ -163,6 +164,23 @@ for (const testCase of [
   );
   assertMetadataFailure(validateFixture(root), testCase.expected, testCase.label);
   assertResolveFailure(worldRoot, testCase.expected, testCase.label);
+}
+
+{
+  const importCheck = spawnSync(
+    process.execPath,
+    [
+      '-e',
+      `require(${JSON.stringify(path.join(schemaRoot, '.claude/scripts/validate-world-puppeteer.cjs'))});`,
+    ],
+    {
+      cwd: schemaRoot,
+      encoding: 'utf8',
+    }
+  );
+  assert(importCheck.status === 0, `import-only validator child must exit 0: ${importCheck.status}`);
+  assert(importCheck.stdout === '', `import-only validator child must not print stdout: ${JSON.stringify(importCheck.stdout)}`);
+  assert(importCheck.stderr === '', `import-only validator child must not print stderr: ${JSON.stringify(importCheck.stderr)}`);
 }
 
 {
