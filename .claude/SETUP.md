@@ -41,11 +41,16 @@ Run these before reporting tooling work complete:
 
 ```bash
 npm test
-npm run test:experimental-git-hooks
 npm run validate:metadata
 ```
 
-`npm test` is the supported non-experimental gate. It runs tooling architecture, CLI contract, AI instruction limits, build safety, reference-pack architecture, world-path containment, transactional tooling, Voyage tooling, and repository metadata validation.
+`npm test` and `npm run validate:metadata` are the supported non-experimental completion gate. `npm test` runs tooling architecture, CLI contract, AI instruction limits, build safety, reference-pack architecture, world-path containment, transactional tooling, Voyage tooling, and repository metadata validation.
+
+Optional experimental coverage:
+
+```bash
+npm run test:experimental-git-hooks
+```
 
 `npm run test:experimental-git-hooks` is optional and informational only.
 

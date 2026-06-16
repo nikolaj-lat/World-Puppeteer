@@ -3,8 +3,10 @@
 const fs = require('fs');
 const path = require('path');
 const {
+  discoverProfileDirectory,
   findRepoRoot,
   isInside,
+  isPlainObject,
   pathKey,
   resolveContainedPath,
   validateMarkerShape,
@@ -62,6 +64,7 @@ function addUniqueMarkerChecks(markerEntries, errors) {
   const pathEntries = markerEntries.filter(hasResolvedMarkerPaths);
 
   for (const entry of markerEntries) {
+    if (!isPlainObject(entry.marker)) continue;
     if (typeof entry.marker.id === 'string' && entry.marker.id.length > 0) {
       const existing = ids.get(entry.marker.id);
       if (existing) {
@@ -153,7 +156,7 @@ function validateRepositoryMetadata({
     errors.push(...markerResult.errors.map((message) => `${markerPath}: ${message}`));
     warnings.push(...markerResult.warnings.map((message) => `${markerPath}: ${message}`));
 
-    if (marker.paths && markerResult.errors.length === 0) {
+    if (isPlainObject(marker) && marker.paths && markerResult.errors.length === 0) {
       const pathResult = validateMarkerPaths(marker, worldRoot);
       entry.pathErrors = pathResult.errors;
       errors.push(...pathResult.errors.map((message) => `${markerPath}: ${message}`));
@@ -162,89 +165,46 @@ function validateRepositoryMetadata({
       }
     }
 
-    const profileRoot = path.join(worldRoot, '.world-puppeteer', 'profiles');
-    const activeProfileIds = new Set(marker.activeProfiles || []);
+    const activeProfileIds = new Set(
+      isPlainObject(marker) && Array.isArray(marker.activeProfiles)
+        ? marker.activeProfiles
+        : []
+    );
     const localProfileIds = new Set();
 
-    if (fs.existsSync(profileRoot)) {
-      try {
-        resolveContainedPath({
-          rootPath: worldRoot,
-          relativePath: path.relative(worldRoot, profileRoot),
-          field: '.world-puppeteer/profiles',
-          kind: 'input',
-          expectedType: 'directory',
-        });
-      } catch (error) {
-        errors.push(`${profileRoot}: ${error.message}`);
+    const profileDiscovery = discoverProfileDirectory(worldRoot);
+    errors.push(...profileDiscovery.errors);
+
+    for (const profilePath of profileDiscovery.files) {
+      const profileIdFromFilename = path.basename(profilePath, '.json');
+      localProfileIds.add(profileIdFromFilename);
+
+      const profileLoaded = readJsonResult(profilePath);
+      if (profileLoaded.error) {
+        errors.push(profileLoaded.error);
         continue;
       }
 
-      const profileFiles = [];
-      const profileEntries = fs.readdirSync(profileRoot, { withFileTypes: true })
-        .sort((a, b) => a.name.localeCompare(b.name));
+      const profile = profileLoaded.value;
+      errors.push(
+        ...validateAgainstSchemaFile(profile, profileSchemaPath)
+          .map((message) => `${profilePath}: ${message}`)
+      );
 
-      for (const profileEntry of profileEntries) {
-        const profilePath = path.join(profileRoot, profileEntry.name);
-        if (profileEntry.isSymbolicLink()) {
-          errors.push(`${profilePath}: symlinked profile entries are not allowed`);
-          continue;
-        }
-        if (profileEntry.isDirectory()) {
-          errors.push(`${profilePath}: nested directories are not allowed in .world-puppeteer/profiles`);
-          continue;
-        }
-        if (!profileEntry.isFile()) {
-          errors.push(`${profilePath}: unsupported profile entry type`);
-          continue;
-        }
-        if (!profileEntry.name.endsWith('.json')) {
-          errors.push(`${profilePath}: unexpected profile entry; only .json files are allowed`);
-          continue;
-        }
-        profileFiles.push(profileEntry.name);
+      if (isPlainObject(profile) && profile.id !== profileIdFromFilename) {
+        errors.push(`${profilePath}: profile id must match filename`);
       }
 
-      for (const profileFile of profileFiles) {
-        const profileIdFromFilename = path.basename(profileFile, '.json');
-        const profilePath = path.join(profileRoot, profileFile);
-        localProfileIds.add(profileIdFromFilename);
+      const profileResult = validateProfileShape(profile, worldRoot);
+      errors.push(...profileResult.errors.map((message) => `${profilePath}: ${message}`));
 
-        try {
-          resolveContainedPath({
-            rootPath: worldRoot,
-            relativePath: path.relative(worldRoot, profilePath),
-            field: `.world-puppeteer/profiles/${profileFile}`,
-            kind: 'input',
-            expectedType: 'file',
-          });
-        } catch (error) {
-          errors.push(`${profilePath}: ${error.message}`);
-          continue;
-        }
-
-        const profileLoaded = readJsonResult(profilePath);
-        if (profileLoaded.error) {
-          errors.push(profileLoaded.error);
-          continue;
-        }
-
-        const profile = profileLoaded.value;
-        errors.push(
-          ...validateAgainstSchemaFile(profile, profileSchemaPath)
-            .map((message) => `${profilePath}: ${message}`)
-        );
-
-        if (profile.id !== profileIdFromFilename) {
-          errors.push(`${profilePath}: profile id must match filename`);
-        }
-
-        const profileResult = validateProfileShape(profile, worldRoot);
-        errors.push(...profileResult.errors.map((message) => `${profilePath}: ${message}`));
-
-        if (profile.required === true && !activeProfileIds.has(profile.id)) {
-          errors.push(`${profilePath}: required profile must be listed in activeProfiles`);
-        }
+      if (
+        isPlainObject(profile) &&
+        profile.required === true &&
+        typeof profile.id === 'string' &&
+        !activeProfileIds.has(profile.id)
+      ) {
+        errors.push(`${profilePath}: required profile must be listed in activeProfiles`);
       }
     }
 

@@ -37,6 +37,11 @@ function writeJson(filePath, value) {
   fs.writeFileSync(filePath, JSON.stringify(value, null, 2) + '\n');
 }
 
+function writeRawJson(filePath, rawJson) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, `${rawJson}\n`);
+}
+
 function marker(id, role = 'editable', overrides = {}) {
   return {
     schemaVersion: 1,
@@ -127,6 +132,18 @@ function captureConsoleJson(fn) {
     };
   } finally {
     console.log = originalLog;
+  }
+}
+
+function createSymlinkOrReport(targetPath, linkPath, type = 'file') {
+  try {
+    fs.symlinkSync(targetPath, linkPath, type);
+    return { created: true, blocked: false };
+  } catch (error) {
+    if (error.code === 'EPERM' || error.code === 'EINVAL' || error.code === 'UNKNOWN') {
+      return { created: false, blocked: true, error };
+    }
+    throw error;
   }
 }
 
@@ -333,6 +350,89 @@ for (const failure of scanStaleReferences(repoRoot)) {
 }
 
 {
+  const invalidMarkerCases = [
+    { label: 'null', raw: 'null', expected: /marker root must be a plain object; received null/ },
+    { label: 'array', raw: '[]', expected: /marker root must be a plain object; received array/ },
+    { label: 'string', raw: '"marker"', expected: /marker root must be a plain object; received string/ },
+    { label: 'number', raw: '42', expected: /marker root must be a plain object; received number/ },
+  ];
+
+  for (const testCase of invalidMarkerCases) {
+    const metadataRoot = fs.mkdtempSync(path.join(os.tmpdir(), `wp-marker-root-${testCase.label}-`));
+    const worldRoot = path.join(metadataRoot, `world-${testCase.label}`);
+    fs.mkdirSync(path.join(worldRoot, 'tabs'), { recursive: true });
+    fs.writeFileSync(path.join(worldRoot, 'AGENTS.override.md'), '# fixture instructions\n');
+    writeRawJson(path.join(worldRoot, '.world-puppeteer.json'), testCase.raw);
+
+    const result = captureConsoleJson(() => validateRepositoryMetadata({
+      json: true,
+      repoRoot: metadataRoot,
+      schemaRoot: repoRoot,
+      referencePackValidator: () => ({ errors: [], warnings: [] }),
+      staleReferenceScanner: () => [],
+    }));
+
+    assert(result.status === 1, `metadata validation must fail for marker root ${testCase.label}`);
+    assert(
+      result.parsed.errors.some((entry) => testCase.expected.test(entry)),
+      `metadata validation must report plain-object marker error for ${testCase.label}`
+    );
+    assert(
+      !JSON.stringify(result.parsed).includes('Cannot read properties'),
+      `metadata validation must not surface property-access exceptions for marker root ${testCase.label}`
+    );
+
+    assertThrows(
+      () => resolveWorld({ worldRoot, preferNearest: false }),
+      testCase.expected,
+      `resolveWorld must reject marker root ${testCase.label} with an actionable error`
+    );
+  }
+}
+
+{
+  const invalidProfileCases = [
+    { label: 'null', raw: 'null', expected: /profile root must be a plain object; received null/ },
+    { label: 'array', raw: '[]', expected: /profile root must be a plain object; received array/ },
+    { label: 'string', raw: '"profile"', expected: /profile root must be a plain object; received string/ },
+    { label: 'number', raw: '7', expected: /profile root must be a plain object; received number/ },
+  ];
+
+  for (const testCase of invalidProfileCases) {
+    const profileRoot = fs.mkdtempSync(path.join(os.tmpdir(), `wp-profile-root-${testCase.label}-`));
+    writeMarker(profileRoot, marker('profile-fixture', 'editable', { activeProfiles: ['fixture-profile'] }));
+    writeRawJson(
+      path.join(profileRoot, '.world-puppeteer', 'profiles', 'fixture-profile.json'),
+      testCase.raw
+    );
+
+    const result = captureConsoleJson(() => validateRepositoryMetadata({
+      json: true,
+      repoRoot: profileRoot,
+      schemaRoot: repoRoot,
+      referencePackValidator: () => ({ errors: [], warnings: [] }),
+      staleReferenceScanner: () => [],
+    }));
+
+    assert(result.status === 1, `metadata validation must fail for profile root ${testCase.label}`);
+    assert(
+      result.parsed.errors.some((entry) => testCase.expected.test(entry)),
+      `metadata validation must report plain-object profile error for ${testCase.label}`
+    );
+    assert(
+      !JSON.stringify(result.parsed).includes('Cannot read properties'),
+      `metadata validation must not surface property-access exceptions for profile root ${testCase.label}`
+    );
+
+    assertThrows(
+      () => resolveWorld({ worldRoot: profileRoot, preferNearest: false }),
+      testCase.expected,
+      `resolveWorld must reject profile root ${testCase.label} with an actionable error`
+    );
+  }
+}
+
+{
   const metadataRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-metadata-'));
   writeMarker(path.join(metadataRoot, 'missing-paths'), {
     ...marker('missing-paths'),
@@ -441,6 +541,89 @@ for (const failure of scanStaleReferences(repoRoot)) {
     assert(
       result.parsed.errors.some((entry) => entry.includes('linked-profile.json') && entry.includes('symlinked profile entries are not allowed')),
       'metadata validation must reject symlinked profile entries'
+    );
+  }
+}
+
+{
+  const resolveProfileRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-resolve-profiles-'));
+  writeMarker(resolveProfileRoot, marker('resolve-profile-world', 'editable', { activeProfiles: ['valid-profile'] }));
+  const localProfileRoot = path.join(resolveProfileRoot, '.world-puppeteer', 'profiles');
+  fs.mkdirSync(localProfileRoot, { recursive: true });
+  writeJson(path.join(localProfileRoot, 'valid-profile.json'), {
+    schemaVersion: 1,
+    id: 'valid-profile',
+    name: 'Valid Profile',
+    description: 'fixture',
+    required: false,
+    appliesTo: ['resolve-profile-world'],
+    skills: [],
+  });
+
+  assert(
+    resolveWorld({ worldRoot: resolveProfileRoot, preferNearest: false }).activeProfiles.length === 1,
+    'resolveWorld must accept a valid flat profile directory'
+  );
+
+  fs.writeFileSync(path.join(localProfileRoot, 'README.md'), '# unsupported\n');
+  assertThrows(
+    () => resolveWorld({ worldRoot: resolveProfileRoot, preferNearest: false }),
+    /unexpected profile entry; only \.json files are allowed/,
+    'resolveWorld must reject unexpected non-JSON profile entries'
+  );
+  fs.rmSync(path.join(localProfileRoot, 'README.md'), { force: true });
+
+  fs.mkdirSync(path.join(localProfileRoot, 'nested'), { recursive: true });
+  assertThrows(
+    () => resolveWorld({ worldRoot: resolveProfileRoot, preferNearest: false }),
+    /nested directories are not allowed in \.world-puppeteer\/profiles/,
+    'resolveWorld must reject nested profile directories'
+  );
+  fs.rmSync(path.join(localProfileRoot, 'nested'), { recursive: true, force: true });
+
+  const linkedProfilePath = path.join(localProfileRoot, 'linked-profile.json');
+  const linkedProfile = createSymlinkOrReport(
+    path.join(localProfileRoot, 'valid-profile.json'),
+    linkedProfilePath,
+    'file'
+  );
+  if (!linkedProfile.blocked) {
+    assertThrows(
+      () => resolveWorld({ worldRoot: resolveProfileRoot, preferNearest: false }),
+      /symlinked profile entries are not allowed/,
+      'resolveWorld must reject symlinked profile entries'
+    );
+    fs.rmSync(linkedProfilePath, { force: true });
+  }
+}
+
+{
+  const symlinkedProfileDirRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-profile-dir-link-'));
+  writeMarker(symlinkedProfileDirRoot, marker('symlinked-profile-dir'));
+  const profileParent = path.join(symlinkedProfileDirRoot, '.world-puppeteer');
+  const targetProfileDir = path.join(symlinkedProfileDirRoot, 'profile-store');
+  fs.mkdirSync(profileParent, { recursive: true });
+  fs.mkdirSync(targetProfileDir, { recursive: true });
+  writeJson(path.join(targetProfileDir, 'valid-profile.json'), {
+    schemaVersion: 1,
+    id: 'valid-profile',
+    name: 'Valid Profile',
+    description: 'fixture',
+    required: false,
+    appliesTo: ['symlinked-profile-dir'],
+    skills: [],
+  });
+
+  const linkedDirectory = createSymlinkOrReport(
+    targetProfileDir,
+    path.join(profileParent, 'profiles'),
+    'dir'
+  );
+  if (!linkedDirectory.blocked) {
+    assertThrows(
+      () => resolveWorld({ worldRoot: symlinkedProfileDirRoot, preferNearest: false }),
+      /Invalid profile directory .*symlink/i,
+      'resolveWorld must reject a symlinked profile directory'
     );
   }
 }

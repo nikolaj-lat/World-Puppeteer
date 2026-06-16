@@ -355,6 +355,12 @@ function isPlainObject(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
+function describeJsonRootKind(value) {
+  if (value === null) return 'null';
+  if (Array.isArray(value)) return 'array';
+  return typeof value;
+}
+
 function jsonValueKind(value) {
   if (Array.isArray(value)) return 'array';
   if (isPlainObject(value)) return 'object';
@@ -568,6 +574,13 @@ function validateMarkerShape(marker, worldRoot) {
   const errors = [];
   const warnings = [];
   const roles = new Set(['editable', 'reference', 'template']);
+
+  if (!isPlainObject(marker)) {
+    errors.push(
+      `marker root must be a plain object; received ${describeJsonRootKind(marker)}`
+    );
+    return { errors, warnings };
+  }
 
   if (marker.schemaVersion !== 1) errors.push('schemaVersion must be 1');
   if (!/^[a-z0-9][a-z0-9-]*$/.test(marker.id || '')) errors.push('id must be kebab-case');
@@ -949,8 +962,75 @@ function readProfile(worldRoot, profileId) {
   return { profilePath, profile: readJson(profilePath) };
 }
 
+function discoverProfileDirectory(worldRoot) {
+  const errors = [];
+  const files = [];
+  const profileRoot = path.join(worldRoot, '.world-puppeteer', 'profiles');
+
+  if (!fs.existsSync(profileRoot)) {
+    return { directoryPath: profileRoot, files, errors };
+  }
+
+  const directoryResult = validateContainedPath({
+    rootPath: worldRoot,
+    relativePath: path.relative(worldRoot, profileRoot),
+    field: '.world-puppeteer/profiles',
+    kind: 'input',
+    expectedType: 'directory',
+  });
+  if (directoryResult.errors.length > 0) {
+    errors.push(...directoryResult.errors.map((message) => `${profileRoot}: ${message}`));
+    return { directoryPath: profileRoot, files, errors };
+  }
+
+  const entries = fs.readdirSync(profileRoot, { withFileTypes: true })
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  for (const entry of entries) {
+    const entryPath = path.join(profileRoot, entry.name);
+    if (entry.isSymbolicLink()) {
+      errors.push(`${entryPath}: symlinked profile entries are not allowed`);
+      continue;
+    }
+    if (entry.isDirectory()) {
+      errors.push(`${entryPath}: nested directories are not allowed in .world-puppeteer/profiles`);
+      continue;
+    }
+    if (!entry.isFile()) {
+      errors.push(`${entryPath}: unsupported profile entry type`);
+      continue;
+    }
+    if (!entry.name.endsWith('.json')) {
+      errors.push(`${entryPath}: unexpected profile entry; only .json files are allowed`);
+      continue;
+    }
+
+    const fileResult = validateContainedPath({
+      rootPath: worldRoot,
+      relativePath: path.relative(worldRoot, entryPath),
+      field: `.world-puppeteer/profiles/${entry.name}`,
+      kind: 'input',
+      expectedType: 'file',
+    });
+    if (fileResult.errors.length > 0) {
+      errors.push(...fileResult.errors.map((message) => `${entryPath}: ${message}`));
+      continue;
+    }
+
+    files.push(fileResult.path);
+  }
+
+  return { directoryPath: profileRoot, files, errors };
+}
+
 function validateProfileShape(profile, worldRoot) {
   const errors = [];
+  if (!isPlainObject(profile)) {
+    errors.push(
+      `profile root must be a plain object; received ${describeJsonRootKind(profile)}`
+    );
+    return { errors, warnings: [] };
+  }
   if (profile.schemaVersion !== 1) errors.push('schemaVersion must be 1');
   if (!/^[a-z0-9][a-z0-9-]*$/.test(profile.id || '')) errors.push('id must be kebab-case');
   for (const key of ['name', 'description']) {
@@ -995,11 +1075,18 @@ function resolveWorld(options = {}) {
   }
   if (!selected) {
     const markers = findMarkers(repoRoot);
-    const editable = markers.filter((entry) => entry.marker.role === 'editable');
+    const editable = markers.filter(
+      (entry) => isPlainObject(entry.marker) && entry.marker.role === 'editable'
+    );
     if (editable.length === 1) selected = editable[0];
     else {
       const available = markers
-        .map((entry) => `${path.relative(repoRoot, entry.root) || '.'} (${entry.marker.role})`)
+        .map((entry) => {
+          const role = isPlainObject(entry.marker) && typeof entry.marker.role === 'string'
+            ? entry.marker.role
+            : 'invalid-marker';
+          return `${path.relative(repoRoot, entry.root) || '.'} (${role})`;
+        })
         .join('\n');
       throw new Error(`Unable to resolve target world. Available worlds:\n${available || '(none)'}`);
     }
@@ -1011,20 +1098,30 @@ function resolveWorld(options = {}) {
   }
 
   const activeProfiles = [];
-  const profileRoot = path.join(selected.root, '.world-puppeteer', 'profiles');
+  const profileDiscovery = discoverProfileDirectory(selected.root);
+  if (profileDiscovery.errors.length > 0) {
+    throw new Error(
+      `Invalid profile directory ${profileDiscovery.directoryPath}:\n` +
+      `${profileDiscovery.errors.join('\n')}`
+    );
+  }
+
   const allProfiles = [];
-  if (fs.existsSync(profileRoot)) {
-    for (const file of fs.readdirSync(profileRoot).filter((name) => name.endsWith('.json')).sort()) {
-      const profilePath = path.join(profileRoot, file);
-      const profile = readJson(profilePath);
-      const expectedId = path.basename(file, '.json');
-      if (profile.id !== expectedId) throw new Error(`Invalid profile ${profilePath}:\nprofile id must match filename`);
-      const profileResult = validateProfileShape(profile, selected.root);
-      if (profileResult.errors.length > 0) {
-        throw new Error(`Invalid profile ${profilePath}:\n${profileResult.errors.join('\n')}`);
-      }
-      allProfiles.push({ profilePath, profile });
+  for (const profilePath of profileDiscovery.files) {
+    const profile = readJson(profilePath);
+    const expectedId = path.basename(profilePath, '.json');
+    if (!isPlainObject(profile)) {
+      throw new Error(
+        `Invalid profile ${profilePath}:\n` +
+        `profile root must be a plain object; received ${describeJsonRootKind(profile)}`
+      );
     }
+    if (profile.id !== expectedId) throw new Error(`Invalid profile ${profilePath}:\nprofile id must match filename`);
+    const profileResult = validateProfileShape(profile, selected.root);
+    if (profileResult.errors.length > 0) {
+      throw new Error(`Invalid profile ${profilePath}:\n${profileResult.errors.join('\n')}`);
+    }
+    allProfiles.push({ profilePath, profile });
   }
   const profilesById = new Map(allProfiles.map((entry) => [entry.profile.id, entry]));
   const activeIds = new Set(selected.marker.activeProfiles || []);
@@ -1091,8 +1188,10 @@ module.exports = {
   validateContainedPath,
   validateMarkerPaths,
   knownToolchain,
+  isPlainObject,
   readJson,
   readProfile,
+  discoverProfileDirectory,
   releaseBuildLock,
   resolveWorld,
   runBuildProfile,
