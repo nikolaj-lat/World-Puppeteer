@@ -62,6 +62,8 @@ Format: `{ type: "stat" | "attribute" | "skill" | "resource", variable: string, 
 
 For `type: "stat"`, only `damage` and `armor` are valid `variable` values. Armor reduces incoming damage by `value / 1000` (capped at 90%).
 
+For `attribute`/`skill`/`resource` bonuses, `variable` must be an **exact existing key**: a lowercase attribute name from `attributeSettings.attributeNames`, a **skill's exact key (its `name`, not the skill `type` enum like `scanner_operation`)**, or a resource key. A non-matching variable silently does nothing and is flagged by the live V33 validator.
+
 ## Schema
 
 ```typescript

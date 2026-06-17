@@ -108,7 +108,7 @@ These must be configured per-world:
 
 | Field | Guidance |
 |-------|----------|
-| `attributeSettings.attributeNames` | Thematic attribute names for the world |
+| `attributeSettings.attributeNames` | Thematic names, **all-lowercase** `string[]` (e.g. `["perception",...]`). Mixed-case names are V33-rejected and silently break every skill/trait/ability/item reference. |
 | `attributeSettings.lowAttributeTraits` | See lowAttributeTraits format below |
 | `attributeSettings.attributeStatModifiers` | Only where narratively sensible (e.g., Constitution to Health) |
 | `attributeSettings.attributeDamageModifiers` | Optional. Per-point % bonus to outgoing damage, keyed by attribute (e.g. `{ strength: 1 }` = +1% damage per point). Positive values only |
@@ -161,6 +161,8 @@ interface Settings {
   characterCreationMusic?: 'fantasy' | 'nonfantasy'
 }
 ```
+
+> Only these top-level keys are valid. Do not add undocumented top-level fields (e.g. to stash design notes) — the live V33 validator flags unknown top-level keys, and the engine ignores them at runtime.
 
 ## Reference
 

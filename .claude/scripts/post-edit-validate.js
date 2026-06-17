@@ -63,24 +63,43 @@ if (prettyPrintErrors) {
 
 // Run validation - write to temp file to avoid buffer truncation
 let validation = { errors: [], warnings: [] };
+let crashOutput = '';
 const tempFile = path.join(projectDir, '.claude', '.validate-output.json');
 try {
   execSync(`node .claude/scripts/validate.js --json > "${tempFile}"`, {
     cwd: projectDir,
     encoding: 'utf8',
     shell: true,
+    stdio: ['pipe', 'pipe', 'pipe'],
   });
-} catch {
-  // Validate exits with code 1 on errors, but still writes output
+} catch (err) {
+  // Validate exits with code 1 on validation errors (normal) but still writes
+  // JSON output. A *crash* writes no parseable JSON; capture stderr to tell them apart.
+  crashOutput = `${err.stderr || ''}${err.stdout || ''}`;
 }
+let parsed = false;
 if (fs.existsSync(tempFile)) {
   try {
     const content = fs.readFileSync(tempFile, 'utf8');
-    validation = JSON.parse(content);
+    if (content.trim()) {
+      validation = JSON.parse(content);
+      parsed = true;
+    }
     fs.unlinkSync(tempFile);
   } catch {
-    // Ignore parse errors
+    // Not valid JSON -> validator crashed, handled below
   }
+}
+
+// If the validator produced no parseable output, it crashed. NEVER silently treat
+// a crash as a clean pass (that bug let an entire session go unvalidated).
+if (!parsed) {
+  const output = {
+    decision: 'block',
+    reason: `VALIDATOR CRASHED - it produced no parseable output, so validation did NOT run. Do not assume the config is valid. Fix the crash before continuing.\n\n${crashOutput.slice(0, 1500)}`,
+  };
+  console.log(JSON.stringify(output));
+  process.exit(0);
 }
 
 if (validation.errors.length === 0) {

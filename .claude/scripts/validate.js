@@ -1108,24 +1108,32 @@ function validateCharacterLimits(config, errors, warnings) {
     errors.push(createError('death.instructions', `Too long: ${config.death.instructions.length} chars (max: ${LIMITS.fields.deathInstructions})`));
   }
 
-  // AI instruction limits
+  // AI instruction limits.
+  // Each task's instructions may be an array of strings/objects OR an object of
+  // named instruction sections ({ sectionName: text }). Check both forms, and
+  // enforce the combined limit PER TASK (matches the engine).
   if (config.aiInstructions) {
-    let combinedTotal = 0;
     for (const [taskId, instructions] of Object.entries(config.aiInstructions)) {
-      if (Array.isArray(instructions)) {
-        instructions.forEach((instr, idx) => {
-          const text = typeof instr === 'string' ? instr : instr?.instruction;
-          if (text) {
-            combinedTotal += text.length;
-            if (text.length > LIMITS.fields.aiInstructionIndividual) {
-              errors.push(createError(`aiInstructions.${taskId}[${idx}]`, `Instruction too long: ${text.length} chars (max: ${LIMITS.fields.aiInstructionIndividual})`));
-            }
+      let taskTotal = 0;
+      const checkText = (label, text) => {
+        if (typeof text === 'string' && text) {
+          taskTotal += text.length;
+          if (text.length > LIMITS.fields.aiInstructionIndividual) {
+            errors.push(createError(label, `Instruction too long: ${text.length} chars (max: ${LIMITS.fields.aiInstructionIndividual})`));
           }
-        });
+        }
+      };
+      if (Array.isArray(instructions)) {
+        instructions.forEach((instr, idx) =>
+          checkText(`aiInstructions.${taskId}[${idx}]`, typeof instr === 'string' ? instr : instr?.instruction));
+      } else if (instructions && typeof instructions === 'object') {
+        for (const [key, val] of Object.entries(instructions)) {
+          checkText(`aiInstructions.${taskId}.${key}`, val);
+        }
       }
-    }
-    if (combinedTotal > LIMITS.fields.aiInstructionCombined) {
-      errors.push(createError('aiInstructions', `Combined AI instructions too long: ${combinedTotal} chars (max: ${LIMITS.fields.aiInstructionCombined})`));
+      if (taskTotal > LIMITS.fields.aiInstructionCombined) {
+        errors.push(createError(`aiInstructions.${taskId}`, `Combined task instructions too long: ${taskTotal} chars (max: ${LIMITS.fields.aiInstructionCombined})`));
+      }
     }
   }
 
@@ -1528,7 +1536,7 @@ function validateUnknownFields(config, errors) {
       'name', 'description', 'vulnerabilities', 'resistances', 'immunities',
     ]),
     quests: new Set([
-      'name', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
+      'name', 'questType', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
       'questGiverNPC', 'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
     ]),
     storyStarts: new Set([
@@ -1854,6 +1862,7 @@ function validateNameKeyMatch(config, errors) {
     'triggers',
     'traitCategories',
     'resourceSettings',
+    'gameModes',
   ];
 
   for (const section of sectionsToCheck) {

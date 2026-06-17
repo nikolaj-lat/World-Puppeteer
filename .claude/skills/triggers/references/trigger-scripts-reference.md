@@ -316,3 +316,21 @@ These are complete trigger objects in the JSON shape that goes in `triggers/`. U
   "recurring": true
 }
 ```
+
+## Reconciled notes (Voyage Forge guide)
+
+These reconcile the wiki pages with the Voyage Forge handbook (machine-readable source: `/guide/voyage-reference/sections/triggers.md`).
+
+### Opening-turn (tick 0) gotcha
+A `story` effect that fires on **game-tick 0 does NOT change the initial story** the player sees. Put opening narration in the **story-start text**, or fire it at **tick >= 1** (add a `game-tick greaterThanOrEqual 1` condition, or `skip` in the script when `check({ type: 'game-tick' }) === 0`). Tick-0 triggers are still correct for *initializing state* (write-number/string, resource setup) — just not for narration.
+
+### Randomness — verify before relying on it
+`Math.random()` is core JavaScript and has been reported functional in the sandbox, but it is **NOT a documented Voyage helper**, and sandboxed isolates sometimes freeze or omit RNG for determinism. Do **not** depend on it for critical mechanics without confirming it actually varies in play. Robust fallback: derive pseudo-randomness from changing game state — e.g. hash `check({ type: 'game-tick' })` (or a day counter) into a value — so behavior still varies even if `Math.random()` is unavailable.
+
+### Effect types a script may push (do NOT invent new JS effect/condition types)
+Scripts live ONLY in the top-level `script` field. The effect `type`s a script (or declarative effect) may use: `story` (`{instruction}`); `quest-init` / `quest-progress` (`{questId}` or `{value}`); `party-realm` / `party-region` / `party-location` / `party-area` (`{operator:'set', value}`); `player-resource` (`{resource, operator: add|subtract|set, value}`); `player-traits` (`{operator: add|remove, value}`); `known-entity` (`{entity, operator:'set', value}`); and storage writes `write-string` / `write-number` / `write-boolean` / `write-array` (`write-boolean` uses `toggle`; `write-array` uses `add`/`remove`).
+
+### Quick firing rules
+- A trigger with **no conditions fires every turn**.
+- Without `recurring: true`, a trigger fires **once** — but `skip = true` (before effects) lets a non-recurring trigger re-fire next turn, and a non-recurring trigger with no visible effect can still be silently consumed.
+- Per-character reads (`player-resource`, `player-level`) return `{ characterId: value }`; with an operator, the check matches if **any** character satisfies it (use `Object.values(...)[0]` for a single-PC world).
