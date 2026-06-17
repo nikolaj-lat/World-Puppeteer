@@ -1536,7 +1536,7 @@ function validateUnknownFields(config, errors) {
       'name', 'description', 'vulnerabilities', 'resistances', 'immunities',
     ]),
     quests: new Set([
-      'name', 'questType', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
+      'name', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
       'questGiverNPC', 'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
     ]),
     storyStarts: new Set([

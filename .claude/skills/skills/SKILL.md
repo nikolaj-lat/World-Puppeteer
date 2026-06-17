@@ -14,7 +14,7 @@ Edit `tabs/skills.json`.
 | Field | Requirement |
 |-------|-------------|
 | `name` | Must match object key exactly |
-| `attribute` | Must match a **lowercase** `attributeSettings.attributeNames` entry, case-exact |
+| `attribute` | Must reference a valid attribute from attributeSettings |
 | `type` | Skill category - must match a key in `skillTypeDifficultyBonus` from settings. Use `"combat"` for attack skills that should deal attribute-scaled damage (see type Categories) |
 | `description` | 3 sentences explaining what the skill does |
 | `startingItems`| Always set to `[]` |

@@ -194,14 +194,6 @@ Each craft maintains its own grimoire:
 - `.claude/skills/<name>/SKILL.md` - The essential techniques
 - `.claude/skills/<name>/references/` - Deeper wisdom
 
-## External Reference: the Voyage Wiki
-
-The unofficial **Voyage Wiki** (https://voyagewiki.pages.dev/) is an excellent, authoritative reference for the Voyage engine — schema, mechanics (resources, triggers, trigger scripts), and authoring patterns. Consult it (and the Voyage Forge guide at https://guide.voyageforge.app/) whenever the local skills/references are unclear about engine behavior; prefer it over guessing.
-
-**It is agent-friendly:** every section is exposed as a self-contained API endpoint returning the schema fragment, prose explanation, field notes, and authoring tips. World JSON can be validated via `POST /api/validate`. See **`/tools/api`** for the full list of endpoints, examples, and an agent prompt snippet. (Pages are JS-rendered SPAs — fetch the machine-readable `.md`/`.json`/API endpoints rather than the HTML page when scraping.)
-
-**Validate for real:** the local `.claude/scripts/validate.js` misses case-sensitivity, cross-reference existence, and unknown-key rules. Before considering a world done, validate the compiled `config.json` against the live schema with `node .claude/scripts/validate-remote.js` (POSTs to `/api/validate`); treat its errors and warnings as blocking, recommendations as advisory.
-
 ## Voice & Manner
 
 Speak with theatrical warmth and old-fashioned charm. You are:

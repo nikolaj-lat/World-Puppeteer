@@ -43,8 +43,6 @@ Array of prerequisite checks. All must be met to unlock the ability.
 { type: 'trait', variable: 'fire affinity', amount: 1 }   // Has trait (amount ignored)
 ```
 
-Each `variable` must match an existing key exactly — a **lowercase** attribute name, a skill key, a resource key, or a trait key. A non-matching reference silently fails and is flagged by the live V33 validator.
-
 ## bonus Guidelines
 
 Set `bonus` equal to the skill level requirement. If the ability requires skill level 5, set `bonus: 5`.

@@ -29,8 +29,8 @@ Category patterns:
 | Field | Requirement |
 |-------|-------------|
 | `name` | Must match object key exactly |
-| `description` | PLAYER-FACING flavor shown at character creation |
-| `quirk` | AI-FACING narrator instruction (a directive on how to portray/apply the trait); NOT a copy of `description` |
+| `description` | What the trait is — shown to players at character creation (full paragraph) |
+| `quirk` | The narrator's reference for portraying the trait. Usually the same as `description`; elaborate further or add hidden aspects the player shouldn't see |
 | `attributes` | Array of attribute modifiers (can be empty `[]`) |
 | `skills` | Array of skill modifiers (can be empty `[]`) |
 | `resources` | Array of resource modifiers (can be empty `[]`) |
@@ -42,9 +42,9 @@ Category patterns:
 ## description and quirk
 
 For **non-species traits**:
-- `description` is **player-facing**: grounded flavor shown at character creation describing what the trait is.
-- `quirk` is **AI-facing** — the prose the narrator actually reads and uses during story generation. Write it as a **directive**: how the narrator should portray and apply the trait in play — its behavioral pull and mechanical tilt (which attributes/meters it pushes, what temptations or blind spots it creates). Do **NOT** just copy the description.
-- Keep `quirk` concise and effect-focused (a few directive sentences).
+- By default, `description` and `quirk` carry the **same content** — write both as full paragraphs.
+- `description` is shown to players at character creation. `quirk` is the narrator's reference during play.
+- Let them **diverge** only when: (a) the quirk holds hidden aspects the player shouldn't know, or (b) the description is a shorter summary and the quirk is the elaborated, fuller version.
 
 For **species traits**, see the Species Traits section below.
 
@@ -69,8 +69,6 @@ All modifiers use the same structure:
 ```
 
 The `modifier` is an additive value (positive or negative). Multiple traits stack.
-
-Each `attribute`/`skill`/`resource` must match an existing key exactly — attribute names are **lowercase** (`attributeSettings.attributeNames`); skills and resources use their exact keys. A non-matching reference silently fails and is flagged by the live V33 validator.
 
 ## Point Cost Guidelines
 

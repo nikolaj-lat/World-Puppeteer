@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 /*
- * validate-remote.js — Validate config.json against the Voyage Wiki live V33 schema.
+ * validate-remote-wiki.js — Validate config.json against the unofficial Voyage Wiki schema.
+ * EXPERIMENTAL / OPT-IN: hits a third-party endpoint whose behavior and V33 coverage are
+ * unverified. Not part of the standard validation flow; treat results as advisory.
  * USAGE:
- *   node .claude/scripts/validate-remote.js                # validates ./config.json
- *   node .claude/scripts/validate-remote.js path/to/world.json
- *   node .claude/scripts/validate-remote.js --json         # raw JSON response
+ *   node .claude/scripts/validate-remote-wiki.js                # validates ./config.json
+ *   node .claude/scripts/validate-remote-wiki.js path/to/world.json
+ *   node .claude/scripts/validate-remote-wiki.js --json         # raw JSON response
  * Exit: 0 = no errors; 1 = errors found or request failed.
  * API: POST https://voyagewiki.pages.dev/api/validate, Content-Type: application/json,
  *      body = raw world JSON (config.json, no wrapper; max 10 MB).
