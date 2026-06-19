@@ -30,6 +30,7 @@ hxh_hunter_exam_campaign_rebuild/*
 !hxh_hunter_exam_campaign_rebuild/build.cjs
 !hxh_hunter_exam_campaign_rebuild/.world-puppeteer/
 !hxh_hunter_exam_campaign_rebuild/.world-puppeteer/**
+/hxh_hunter_exam_campaign_rebuild/.world-puppeteer/nonplayable-header-manifest.json
 !hxh_hunter_exam_campaign_rebuild/.agents/
 !hxh_hunter_exam_campaign_rebuild/.agents/skills/
 !hxh_hunter_exam_campaign_rebuild/.agents/skills/**
