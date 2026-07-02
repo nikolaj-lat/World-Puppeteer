@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /*
  * validate-remote-wiki.js — Validate config.json against the unofficial Voyage Wiki schema.
- * EXPERIMENTAL / OPT-IN: hits a third-party endpoint whose behavior and V33 coverage are
+ * EXPERIMENTAL / OPT-IN: hits a third-party endpoint whose behavior and schema coverage are
  * unverified. Not part of the standard validation flow; treat results as advisory.
  * USAGE:
  *   node .claude/scripts/validate-remote-wiki.js                # validates ./config.json
  *   node .claude/scripts/validate-remote-wiki.js path/to/world.json
  *   node .claude/scripts/validate-remote-wiki.js --json         # raw JSON response
  * Exit: 0 = no errors; 1 = errors found or request failed.
- * API: POST https://voyagewiki.pages.dev/api/validate, Content-Type: application/json,
+ * API: POST https://api.unofficial.voyage/validate, Content-Type: application/json,
  *      body = raw world JSON (config.json, no wrapper; max 10 MB).
  *      Response: { counts, errors[], warnings[], recommendations[], validatorVersion };
  *      each issue: { path, title, fix, detail?, value?, message }.
@@ -17,7 +17,7 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const ENDPOINT = 'https://voyagewiki.pages.dev/api/validate';
+const ENDPOINT = 'https://api.unofficial.voyage/validate';
 const args = process.argv.slice(2);
 const rawJsonOut = args.includes('--json');
 const fileArg = args.find((a) => !a.startsWith('--'));
