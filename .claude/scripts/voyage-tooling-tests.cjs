@@ -42,6 +42,156 @@ const templateWorld = resolveWorld({
 const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
 
 {
+  const result = validate(baseConfig);
+  assert(result.schemaVersion === 'V34', 'default validation must use V34');
+  assert(result.errors.length === 0, `template V34 config must validate without errors: ${JSON.stringify(result.errors)}`);
+}
+
+{
+  const v33Config = clone(baseConfig);
+  v33Config.configVersion = 'V33';
+  v33Config.heroesVersion = 33;
+  delete v33Config.narrativeEvents;
+  delete v33Config.embeddingModel;
+  delete v33Config.embeddingDimension;
+
+  const defaultResult = validate(v33Config);
+  assert(defaultResult.errors.some((entry) => entry.path === 'configVersion' && entry.message.includes("expected 'V34'")), 'default V34 validation must reject V33 configVersion');
+
+  const v33Result = validate(v33Config, { schemaVersion: 'V33' });
+  assert(v33Result.schemaVersion === 'V33', 'explicit V33 validation must report V33');
+  assert(!v33Result.errors.some((entry) => entry.path === 'configVersion' || entry.path === 'heroesVersion'), 'explicit V33 validation must preserve historical version checks');
+}
+
+{
+  const validV34 = clone(baseConfig);
+  validV34.skills = {
+    courage: {
+      name: 'courage',
+      attribute: 'will',
+      type: 'general',
+      description: '',
+      startingItems: [],
+    },
+  };
+  validV34.attributeSettings.attributeNames = ['will'];
+  validV34.skillSettings.skillTypeDifficultyBonus = { general: 0 };
+  validV34.traits = {
+    Brave: {
+      name: 'Brave',
+      description: 'Stands firm.',
+      traitNarrativeEffects: 'The character stands firm under pressure.',
+      skills: [{ skill: 'courage', modifier: 5 }],
+      attributes: [{ attribute: 'will', modifier: 1 }],
+      resources: [{ resource: 'health', modifier: 1 }],
+      startingItems: [],
+      abilities: [],
+      unlockedBy: [],
+      excludedBy: [],
+      resistances: [],
+    },
+  };
+  validV34.quests = {
+    'Signal the Guard': {
+      name: 'Signal the Guard',
+      questSource: 'Guard Captain',
+      questStatement: 'Signal the guard when the courier arrives.',
+      mainObjective: 'Signal the guard.',
+      completionCondition: { type: 'narrative-event-completed', eventId: 'courier_arrival' },
+      detailType: 'detailed',
+      questLocation: 'Gate',
+      objectives: {
+        wait: { id: 'wait', text: 'Wait at the gate.', status: 'active' },
+      },
+      activeObjectiveId: 'wait',
+      nextStep: { text: 'Stay near the gate.', source: 'objective' },
+    },
+  };
+  validV34.locations = {
+    Gate: {
+      name: 'Gate',
+      basicInfo: '',
+      x: 0,
+      y: 0,
+      radius: 1,
+      region: 'Yard',
+      complexityType: 'simple',
+      detailType: 'basic',
+      areas: {},
+    },
+  };
+  validV34.regions = { Yard: { name: 'Yard', basicInfo: '', realm: 'World' } };
+  validV34.realms = { World: { name: 'World', basicInfo: '' } };
+  validV34.narrativeEvents = {
+    courier_arrival: {
+      title: 'Courier Arrival',
+      beats: 'A courier arrives and asks for the guard.',
+      targetTurns: 2,
+      onCompleteEffects: [{ type: 'quest-complete', questId: 'Signal the Guard' }],
+    },
+  };
+  validV34.triggers = {
+    start_event: {
+      name: 'start_event',
+      scope: 'party',
+      conditions: [{ type: 'quest-status', questId: 'Signal the Guard', operator: 'equals', value: 'accepted' }],
+      effects: [
+        { type: 'narrative-event-start', eventId: 'courier_arrival' },
+        { type: 'quest-objective-complete', questId: 'Signal the Guard', objectiveId: 'wait' },
+        { type: 'quest-next-step-set', questId: 'Signal the Guard', text: 'Speak to the courier.', source: 'narrative-event' },
+        { type: 'player-resource', operator: 'add', resource: 'health', value: 1, target: 'satisfyingPlayers' },
+      ],
+    },
+  };
+
+  const result = validate(validV34);
+  assert(result.errors.length === 0, `valid V34 narrative/quest/trigger/trait fixture must pass: ${JSON.stringify(result.errors)}`);
+}
+
+{
+  const invalid = clone(baseConfig);
+  invalid.traits = {
+    Legacy: {
+      name: 'Legacy',
+      description: 'Old trait.',
+      quirk: 'V33-only field',
+      skills: [],
+      attributes: [],
+      resources: [],
+      startingItems: [],
+      abilities: [],
+      unlockedBy: [],
+      excludedBy: [],
+    },
+  };
+  invalid.quests = {
+    LegacyQuest: {
+      name: 'LegacyQuest',
+      questSource: 'test',
+      questStatement: 'test',
+      mainObjective: 'Test.',
+      completionCondition: 'legacy string completion',
+      detailType: 'brief',
+    },
+  };
+  invalid.triggers = {
+    old_shape: {
+      name: 'old_shape',
+      conditions: [{ type: 'quest-status', questId: 'LegacyQuest', operator: 'contains', value: 'available' }],
+      effects: [{ type: 'quest-init', value: 'LegacyQuest' }],
+    },
+  };
+
+  const result = validate(invalid);
+  assert(result.errors.some((entry) => entry.path === 'traits.Legacy.traitNarrativeEffects'), 'V34 traits must require traitNarrativeEffects');
+  assert(result.errors.some((entry) => entry.path === 'traits.Legacy.quirk'), 'V34 traits must reject V33-only quirk field');
+  assert(result.errors.some((entry) => entry.path === 'quests.LegacyQuest.completionCondition'), 'V34 quests must reject string completionCondition');
+  assert(result.errors.some((entry) => entry.path === 'quests.LegacyQuest.detailType'), 'V34 quests must reject invalid detailType values');
+  assert(result.errors.some((entry) => entry.path === 'triggers.old_shape.conditions[0].operator'), 'quest-status must use equals/notEquals');
+  assert(result.errors.some((entry) => entry.path === 'triggers.old_shape.effects[0].operator'), 'quest-init must require operator set');
+}
+
+{
   const warningConfig = clone(baseConfig);
   const firstCategory = warningConfig.itemSettings.itemCategories[0] || 'Weapon';
   const firstSlot = warningConfig.itemSettings.itemSlots[0]?.slot || 'mainHand';
@@ -188,6 +338,46 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
       countResult.imagePrompts.total.limit === VOYAGE_LIMITS.fields.imagePromptTotal,
     'count.js must use the shared image prompt total limit'
   );
+}
+
+{
+  const changedLimits = clone(baseConfig);
+  changedLimits.nameFilterSettings = {
+    Long: {
+      replacements: ['r'],
+      pattern: 'x'.repeat(150_000),
+    },
+  };
+  changedLimits.storyStarts.Start.storyStart = 's'.repeat(8_000);
+  changedLimits.triggers = {
+    big: {
+      name: 'big',
+      conditions: [{ type: 'game-tick', operator: 'equals', value: 1 }],
+      effects: [{ type: 'story', instruction: 'x'.repeat(10_000) }],
+    },
+  };
+
+  const countResult = analyzeConfig(changedLimits);
+  const validateResult = validate(changedLimits);
+  assert(countResult.sections.nameFilterSettings.limit === 150_000, 'V34 nameFilterSettings section limit must be 150000');
+  assert(countResult.entries.oversized.some((entry) => entry.path === 'storyStarts[Start]' && entry.limit === 8_008), 'V34 story start entry limit must be 8008 pretty chars');
+  assert(validateResult.errors.some((entry) => entry.path === 'triggers.big' && entry.message.includes('10028')), 'V34 trigger compact size limit must be 10028');
+}
+
+{
+  const cliConfig = clone(baseConfig);
+  cliConfig.configVersion = 'V33';
+  cliConfig.heroesVersion = 33;
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-validate-version-'));
+  const cliPath = path.join(tempRoot, 'version-world.json');
+  writeJson(cliPath, cliConfig);
+  const result = spawnSync(process.execPath, [path.join(repoRoot, '.claude/scripts/validate.js'), cliPath, '--json', '--schema-version', 'V33'], {
+    cwd: repoRoot,
+    encoding: 'utf8',
+  });
+  assert(result.status === 0, `explicit V33 CLI validation must exit 0: ${result.stdout}${result.stderr}`);
+  const parsed = JSON.parse(result.stdout);
+  assert(parsed.schemaVersion === 'V33', 'CLI JSON diagnostics must identify selected schema version');
 }
 
 if (failures.length > 0) {

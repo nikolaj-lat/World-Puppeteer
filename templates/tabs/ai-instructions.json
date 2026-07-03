@@ -33,7 +33,7 @@
     "generateEncounters": {
       "custom": ""
     },
-    "ItemGenerationAndUsage": {
+    "generateItemGenerationAndUsage": {
       "custom": ""
     }
   },
@@ -46,8 +46,8 @@
   "resourceSettings": {
     "health": {
       "name": "health",
-      "initialValue": 0,
-      "maxValue": 0,
+      "initialValue": 1,
+      "maxValue": 1,
       "gainPerLevel": 10,
       "rechargeRate": 1,
       "restRechargeMultiplier": 1,

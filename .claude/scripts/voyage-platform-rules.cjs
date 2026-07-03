@@ -3,9 +3,129 @@ const {
   AI_INSTRUCTION_TASK_LIMIT,
 } = require('./ai-instruction-limits.cjs');
 
-const TRIGGER_SEMANTIC_CONDITION_TYPES = new Set(['story', 'action']);
+const CURRENT_VOYAGE_SCHEMA_VERSION = 'V34';
 
-const VOYAGE_LIMITS = {
+const V33_TRIGGER_CONDITION_TYPES = [
+  'story',
+  'action',
+  'story-text',
+  'action-text',
+  'player-level',
+  'game-tick',
+  'party-realm',
+  'party-region',
+  'party-location',
+  'party-area',
+  'player-resource',
+  'known-entity',
+  'player-traits',
+  'quests-completed',
+  'read-string',
+  'read-number',
+  'read-boolean',
+  'read-array',
+];
+
+const V34_TRIGGER_CONDITION_TYPES = [
+  ...V33_TRIGGER_CONDITION_TYPES,
+  'quest-status',
+  'narrative-event-status',
+];
+
+const V33_TRIGGER_EFFECT_TYPES = [
+  'story',
+  'quest-progress',
+  'party-realm',
+  'party-region',
+  'party-location',
+  'party-area',
+  'player-resource',
+  'known-entity',
+  'player-traits',
+  'quest-init',
+  'write-string',
+  'write-number',
+  'write-boolean',
+  'write-array',
+];
+
+const V34_TRIGGER_EFFECT_TYPES = [
+  'story',
+  'quest-progress',
+  'quest-objective-reveal',
+  'quest-objective-complete',
+  'quest-next-step-set',
+  'quest-next-step-clear',
+  'party-next-step-set',
+  'party-next-step-clear',
+  'quest-complete',
+  'narrative-event-start',
+  'party-realm',
+  'party-region',
+  'party-location',
+  'party-area',
+  'player-resource',
+  'known-entity',
+  'player-traits',
+  'quest-init',
+  'write-string',
+  'write-number',
+  'write-boolean',
+  'write-array',
+];
+
+const V33_REQUIRED_TOP_LEVEL = [
+  'configVersion',
+  'heroesVersion',
+  'aiInstructions',
+  'storySettings',
+  'worldLore',
+  'embeddings',
+  'triggers',
+  'storyStarts',
+  'abilities',
+  'npcTypes',
+  'items',
+  'realms',
+  'regions',
+  'locations',
+  'factions',
+  'npcs',
+  'quests',
+  'attributeSettings',
+  'skills',
+  'skillSettings',
+  'traits',
+  'traitCategories',
+  'locationSettings',
+  'itemSettings',
+  'combatSettings',
+  'otherSettings',
+  'tipSettings',
+  'resourceSettings',
+  'death',
+  'nameFilterSettings',
+  'narratorStyle',
+  'premadeCharacters',
+  'authorSeeds',
+  'characterArchetypes',
+  'locationArchetypes',
+  'regionArchetypes',
+  'encounterElements',
+  'randomNames',
+  'mods',
+];
+
+const V34_REQUIRED_TOP_LEVEL = [
+  ...V33_REQUIRED_TOP_LEVEL.slice(0, 18),
+  'narrativeEvents',
+  ...V33_REQUIRED_TOP_LEVEL.slice(18, -1),
+  'embeddingModel',
+  'embeddingDimension',
+  'mods',
+];
+
+const V33_LIMITS = {
   total: 10_000_000,
   sections: {
     worldLore: 500_000,
@@ -81,6 +201,58 @@ const VOYAGE_LIMITS = {
   },
 };
 
+const V34_LIMITS = {
+  ...V33_LIMITS,
+  sections: {
+    ...V33_LIMITS.sections,
+    nameFilterSettings: 150_000,
+  },
+  counts: {
+    ...V33_LIMITS.counts,
+    triggerSize: 10_028,
+  },
+  fields: {
+    ...V33_LIMITS.fields,
+    npcCombined: 7_996,
+    storyStartEntry: 8_008,
+    triggerConditionText: 1_000,
+    triggerConditionQuery: 1_000,
+    triggerEffectText: 1_000,
+    triggerEffectInstruction: 1_000,
+  },
+};
+
+const VOYAGE_SCHEMA_RULES = {
+  V33: {
+    version: 'V33',
+    heroesVersion: 33,
+    requiredTopLevel: V33_REQUIRED_TOP_LEVEL,
+    triggerConditionTypes: V33_TRIGGER_CONDITION_TYPES,
+    triggerEffectTypes: V33_TRIGGER_EFFECT_TYPES,
+    limits: V33_LIMITS,
+  },
+  V34: {
+    version: 'V34',
+    heroesVersion: 34,
+    requiredTopLevel: V34_REQUIRED_TOP_LEVEL,
+    triggerConditionTypes: V34_TRIGGER_CONDITION_TYPES,
+    triggerEffectTypes: V34_TRIGGER_EFFECT_TYPES,
+    limits: V34_LIMITS,
+  },
+};
+
+const VOYAGE_LIMITS = VOYAGE_SCHEMA_RULES[CURRENT_VOYAGE_SCHEMA_VERSION].limits;
+const TRIGGER_SEMANTIC_CONDITION_TYPES = new Set(['story', 'action']);
+
+function getVoyageSchemaRules(schemaVersion = CURRENT_VOYAGE_SCHEMA_VERSION) {
+  const normalized = String(schemaVersion || CURRENT_VOYAGE_SCHEMA_VERSION).toUpperCase();
+  const rules = VOYAGE_SCHEMA_RULES[normalized];
+  if (!rules) {
+    throw new Error(`Unsupported Voyage schema version: ${schemaVersion}`);
+  }
+  return rules;
+}
+
 const VALID_GAME_MODE_DIFFICULTIES = ['very easy', 'easy', 'medium', 'hard', 'very hard'];
 
 function hasSemanticTriggerCondition(trigger) {
@@ -108,9 +280,12 @@ function classifyTriggers(triggers) {
 }
 
 module.exports = {
+  CURRENT_VOYAGE_SCHEMA_VERSION,
   TRIGGER_SEMANTIC_CONDITION_TYPES,
   VALID_GAME_MODE_DIFFICULTIES,
   VOYAGE_LIMITS,
+  VOYAGE_SCHEMA_RULES,
   classifyTriggers,
+  getVoyageSchemaRules,
   hasSemanticTriggerCondition,
 };

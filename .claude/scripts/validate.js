@@ -32,52 +32,16 @@ const {
   measureAiInstructions,
 } = require('./ai-instruction-limits.cjs');
 const {
+  CURRENT_VOYAGE_SCHEMA_VERSION,
   VALID_GAME_MODE_DIFFICULTIES,
   VOYAGE_LIMITS,
   classifyTriggers,
+  getVoyageSchemaRules,
 } = require('./voyage-platform-rules.cjs');
 
 // ============================================================================
 // ENUMS AND VALID VALUES
 // ============================================================================
-
-const VALID_TRIGGER_CONDITION_TYPES = [
-  'story',
-  'action',
-  'story-text',
-  'action-text',
-  'player-level',
-  'game-tick',
-  'party-realm',
-  'party-region',
-  'party-location',
-  'party-area',
-  'player-resource',
-  'known-entity',
-  'player-traits',
-  'quests-completed',
-  'read-string',
-  'read-number',
-  'read-boolean',
-  'read-array',
-];
-
-const VALID_TRIGGER_EFFECT_TYPES = [
-  'story',
-  'quest-progress',
-  'party-realm',
-  'party-region',
-  'party-location',
-  'party-area',
-  'player-resource',
-  'known-entity',
-  'player-traits',
-  'quest-init',
-  'write-string',
-  'write-number',
-  'write-boolean',
-  'write-array',
-];
 
 const VALID_NPC_TIERS = ['trivial', 'weak', 'average', 'strong', 'elite', 'boss', 'mythic'];
 
@@ -116,48 +80,6 @@ const VALID_ARRAY_EFFECT_OPERATORS = ['set', 'add', 'remove'];
 // ============================================================================
 // REQUIRED FIELDS
 // ============================================================================
-
-const REQUIRED_TOP_LEVEL = [
-  'configVersion',
-  'heroesVersion',
-  'aiInstructions',
-  'storySettings',
-  'worldLore',
-  'embeddings',
-  'triggers',
-  'storyStarts',
-  'abilities',
-  'npcTypes',
-  'items',
-  'realms',
-  'regions',
-  'locations',
-  'factions',
-  'npcs',
-  'quests',
-  'attributeSettings',
-  'skills',
-  'skillSettings',
-  'traits',
-  'traitCategories',
-  'locationSettings',
-  'itemSettings',
-  'combatSettings',
-  'otherSettings',
-  'tipSettings',
-  'resourceSettings',
-  'death',
-  'nameFilterSettings',
-  'narratorStyle',
-  'premadeCharacters',
-  'authorSeeds',
-  'characterArchetypes',
-  'locationArchetypes',
-  'regionArchetypes',
-  'encounterElements',
-  'randomNames',
-  'mods',
-];
 
 const REQUIRED_ATTRIBUTE_SETTINGS = [
   'attributeNames',
@@ -245,7 +167,8 @@ const REQUIRED_RESOURCE_FIELDS = [
 // LIMITS (for validation)
 // ============================================================================
 
-const LIMITS = VOYAGE_LIMITS;
+let LIMITS = VOYAGE_LIMITS;
+let activeSchemaRules = getVoyageSchemaRules(CURRENT_VOYAGE_SCHEMA_VERSION);
 
 // ============================================================================
 // VALIDATION FUNCTIONS
@@ -322,9 +245,13 @@ function getJsonLength(obj) {
   return JSON.stringify(obj, null, 2).length;
 }
 
+function getCompactJsonLength(obj) {
+  return JSON.stringify(obj).length;
+}
+
 function validateRequiredFields(config, errors) {
   // Top-level required fields
-  for (const field of REQUIRED_TOP_LEVEL) {
+  for (const field of activeSchemaRules.requiredTopLevel) {
     if (config[field] === undefined) {
       errors.push(createError(field, `Missing required field: ${field}`));
     }
@@ -449,12 +376,12 @@ function validateRequiredFields(config, errors) {
 }
 
 function validateVersionFields(config, errors) {
-  if (config.configVersion !== undefined && config.configVersion !== 'V33') {
-    errors.push(createError('configVersion', `Invalid configVersion: ${config.configVersion} (expected 'V33')`));
+  if (config.configVersion !== undefined && config.configVersion !== activeSchemaRules.version) {
+    errors.push(createError('configVersion', `Invalid configVersion: ${config.configVersion} (expected '${activeSchemaRules.version}')`));
   }
 
-  if (config.heroesVersion !== undefined && config.heroesVersion !== 33) {
-    errors.push(createError('heroesVersion', `Invalid heroesVersion: ${config.heroesVersion} (expected 33)`));
+  if (config.heroesVersion !== undefined && config.heroesVersion !== activeSchemaRules.heroesVersion) {
+    errors.push(createError('heroesVersion', `Invalid heroesVersion: ${config.heroesVersion} (expected ${activeSchemaRules.heroesVersion})`));
   }
 }
 
@@ -844,6 +771,123 @@ function validateReferenceIntegrity(config, errors) {
   }
 }
 
+function requireField(obj, field, basePath, errors) {
+  if (obj?.[field] === undefined) {
+    errors.push(createError(`${basePath}.${field}`, `Missing required field: ${field}`));
+    return false;
+  }
+  return true;
+}
+
+function validateTriggerConditionShape(cond, condPath, config, errors) {
+  if (!cond || typeof cond !== 'object') return;
+  const questKeys = config.quests ? new Set(Object.keys(config.quests)) : new Set();
+  const eventKeys = config.narrativeEvents ? new Set(Object.keys(config.narrativeEvents)) : new Set();
+
+  if (['story', 'action'].includes(cond.type)) {
+    requireField(cond, 'query', condPath, errors);
+  }
+  if (['story-text', 'action-text', 'player-level', 'game-tick', 'player-resource', 'known-entity', 'player-traits', 'quests-completed', 'quest-status', 'narrative-event-status', 'read-string', 'read-number', 'read-boolean', 'read-array'].includes(cond.type)) {
+    requireField(cond, 'operator', condPath, errors);
+    requireField(cond, 'value', condPath, errors);
+  }
+  if (['read-string', 'read-number', 'read-boolean', 'read-array'].includes(cond.type)) {
+    requireField(cond, 'key', condPath, errors);
+  }
+  if (cond.type === 'player-resource') {
+    requireField(cond, 'resource', condPath, errors);
+  }
+  if (cond.type === 'known-entity') {
+    requireField(cond, 'entity', condPath, errors);
+    if (cond.value !== undefined && typeof cond.value !== 'boolean') {
+      errors.push(createError(`${condPath}.value`, `Expected boolean, got ${typeof cond.value}`));
+    }
+  }
+  if (cond.type === 'quest-status') {
+    requireField(cond, 'questId', condPath, errors);
+    if (typeof cond.questId === 'string' && !questKeys.has(cond.questId)) {
+      errors.push(createError(`${condPath}.questId`, `References non-existent quest: ${cond.questId}`));
+    }
+    const validQuestStatuses = ['hidden', 'available', 'accepted', 'completed', 'abandoned', 'rejected', 'expired'];
+    if (typeof cond.value === 'string' && !validQuestStatuses.includes(cond.value)) {
+      errors.push(createError(`${condPath}.value`, `Invalid quest status: ${cond.value}. Valid: ${validQuestStatuses.join(', ')}`));
+    }
+  }
+  if (cond.type === 'narrative-event-status') {
+    requireField(cond, 'eventId', condPath, errors);
+    if (typeof cond.eventId === 'string' && !eventKeys.has(cond.eventId)) {
+      errors.push(createError(`${condPath}.eventId`, `References non-existent narrative event: ${cond.eventId}`));
+    }
+    const validEventStatuses = ['inactive', 'active', 'completed', 'stopped'];
+    if (typeof cond.value === 'string' && !validEventStatuses.includes(cond.value)) {
+      errors.push(createError(`${condPath}.value`, `Invalid narrative event status: ${cond.value}. Valid: ${validEventStatuses.join(', ')}`));
+    }
+  }
+}
+
+function validateTriggerEffectShape(effect, effectPath, config, errors) {
+  if (!effect || typeof effect !== 'object') return;
+  const questKeys = config.quests ? new Set(Object.keys(config.quests)) : new Set();
+  const eventKeys = config.narrativeEvents ? new Set(Object.keys(config.narrativeEvents)) : new Set();
+  const resourceKeys = buildResourceKeySet(config);
+
+  if (effect.type === 'story') {
+    requireField(effect, 'instruction', effectPath, errors);
+  }
+  if (['quest-progress', 'quest-complete', 'quest-next-step-clear', 'quest-objective-reveal', 'quest-objective-complete', 'quest-next-step-set'].includes(effect.type)) {
+    requireField(effect, 'questId', effectPath, errors);
+    if (typeof effect.questId === 'string' && !questKeys.has(effect.questId)) {
+      errors.push(createError(`${effectPath}.questId`, `References non-existent quest: ${effect.questId}`));
+    }
+  }
+  if (['quest-objective-reveal', 'quest-objective-complete'].includes(effect.type)) {
+    requireField(effect, 'objectiveId', effectPath, errors);
+    const quest = typeof effect.questId === 'string' ? config.quests?.[effect.questId] : null;
+    if (quest && typeof effect.objectiveId === 'string' && !quest.objectives?.[effect.objectiveId]) {
+      errors.push(createError(`${effectPath}.objectiveId`, `References non-existent objective "${effect.objectiveId}" on quest "${effect.questId}"`));
+    }
+  }
+  if (['quest-next-step-set', 'party-next-step-set'].includes(effect.type)) {
+    requireField(effect, 'text', effectPath, errors);
+    requireField(effect, 'source', effectPath, errors);
+    if (effect.source !== undefined && !['objective', 'narrative-event'].includes(effect.source)) {
+      errors.push(createError(`${effectPath}.source`, `Invalid source: ${effect.source}. Valid: objective, narrative-event`));
+    }
+  }
+  if (effect.type === 'narrative-event-start') {
+    requireField(effect, 'eventId', effectPath, errors);
+    if (typeof effect.eventId === 'string' && !eventKeys.has(effect.eventId)) {
+      errors.push(createError(`${effectPath}.eventId`, `References non-existent narrative event: ${effect.eventId}`));
+    }
+  }
+  if (effect.type === 'player-resource') {
+    requireField(effect, 'resource', effectPath, errors);
+    requireField(effect, 'value', effectPath, errors);
+    if (typeof effect.resource === 'string' && !resourceKeys.has(normalizeText(effect.resource))) {
+      errors.push(createError(`${effectPath}.resource`, `References non-existent resource: ${effect.resource}. Valid: ${Object.keys(config.resourceSettings || {}).join(', ') || 'none'}`));
+    }
+    if (effect.target !== undefined && !['allPlayers', 'satisfyingPlayers'].includes(effect.target)) {
+      errors.push(createError(`${effectPath}.target`, `Invalid target: ${effect.target}. Valid: allPlayers, satisfyingPlayers`));
+    }
+  }
+  if (effect.type === 'known-entity') {
+    requireField(effect, 'entity', effectPath, errors);
+    if (effect.value !== undefined && typeof effect.value !== 'boolean') {
+      errors.push(createError(`${effectPath}.value`, `Expected boolean, got ${typeof effect.value}`));
+    }
+  }
+  if (effect.type === 'quest-init') {
+    requireField(effect, 'value', effectPath, errors);
+    if (typeof effect.value === 'string' && !questKeys.has(effect.value)) {
+      errors.push(createError(`${effectPath}.value`, `References non-existent quest: ${effect.value}`));
+    }
+  }
+  if (['write-string', 'write-number', 'write-boolean', 'write-array'].includes(effect.type)) {
+    requireField(effect, 'key', effectPath, errors);
+    requireField(effect, 'value', effectPath, errors);
+  }
+}
+
 function validateTriggers(config, errors) {
   if (!config.triggers) return;
 
@@ -876,13 +920,16 @@ function validateTriggers(config, errors) {
         const condPath = `${basePath}.conditions[${condIdx}]`;
 
         // Type validation
-        if (cond.type && !VALID_TRIGGER_CONDITION_TYPES.includes(cond.type)) {
-          errors.push(createError(`${condPath}.type`, `Invalid condition type: ${cond.type}. Valid: ${VALID_TRIGGER_CONDITION_TYPES.join(', ')}`));
+        if (cond.type && !activeSchemaRules.triggerConditionTypes.includes(cond.type)) {
+          errors.push(createError(`${condPath}.type`, `Invalid condition type: ${cond.type}. Valid for ${activeSchemaRules.version}: ${activeSchemaRules.triggerConditionTypes.join(', ')}`));
         }
 
         // Query length
         if (cond.query && cond.query.length > LIMITS.fields.triggerConditionQuery) {
           errors.push(createError(`${condPath}.query`, `Query too long: ${cond.query.length} chars (max: ${LIMITS.fields.triggerConditionQuery})`));
+        }
+        if (cond.text && cond.text.length > LIMITS.fields.triggerConditionText) {
+          errors.push(createError(`${condPath}.text`, `Text too long: ${cond.text.length} chars (max: ${LIMITS.fields.triggerConditionText})`));
         }
 
         // Value length (if string)
@@ -894,8 +941,9 @@ function validateTriggers(config, errors) {
         if (cond.operator) {
           const isStringCondition = ['story-text', 'action-text', 'party-realm', 'party-region', 'party-location', 'party-area', 'read-string'].includes(cond.type);
           const isNumberCondition = ['player-level', 'game-tick', 'player-resource', 'read-number'].includes(cond.type);
-          const isBooleanCondition = ['read-boolean'].includes(cond.type);
+          const isBooleanCondition = ['read-boolean', 'known-entity'].includes(cond.type);
           const isArrayCondition = ['player-traits', 'quests-completed', 'read-array'].includes(cond.type);
+          const isStatusCondition = ['quest-status', 'narrative-event-status'].includes(cond.type);
 
           if (isStringCondition && !VALID_STRING_OPERATORS.includes(cond.operator)) {
             errors.push(createError(`${condPath}.operator`, `Invalid operator for string condition: ${cond.operator}`));
@@ -905,8 +953,12 @@ function validateTriggers(config, errors) {
             errors.push(createError(`${condPath}.operator`, `Invalid operator for boolean condition: ${cond.operator}`));
           } else if (isArrayCondition && !VALID_ARRAY_OPERATORS.includes(cond.operator)) {
             errors.push(createError(`${condPath}.operator`, `Invalid operator for array condition: ${cond.operator}`));
+          } else if (isStatusCondition && !VALID_BOOLEAN_OPERATORS.includes(cond.operator)) {
+            errors.push(createError(`${condPath}.operator`, `Invalid operator for status condition: ${cond.operator}`));
           }
         }
+
+        validateTriggerConditionShape(cond, condPath, config, errors);
       });
     }
 
@@ -920,13 +972,16 @@ function validateTriggers(config, errors) {
         const effectPath = `${basePath}.effects[${effectIdx}]`;
 
         // Type validation
-        if (effect.type && !VALID_TRIGGER_EFFECT_TYPES.includes(effect.type)) {
-          errors.push(createError(`${effectPath}.type`, `Invalid effect type: ${effect.type}. Valid: ${VALID_TRIGGER_EFFECT_TYPES.join(', ')}`));
+        if (effect.type && !activeSchemaRules.triggerEffectTypes.includes(effect.type)) {
+          errors.push(createError(`${effectPath}.type`, `Invalid effect type: ${effect.type}. Valid for ${activeSchemaRules.version}: ${activeSchemaRules.triggerEffectTypes.join(', ')}`));
         }
 
         // Instruction length
         if (effect.instruction && effect.instruction.length > LIMITS.fields.triggerEffectInstruction) {
           errors.push(createError(`${effectPath}.instruction`, `Instruction too long: ${effect.instruction.length} chars (max: ${LIMITS.fields.triggerEffectInstruction})`));
+        }
+        if (effect.text && effect.text.length > LIMITS.fields.triggerEffectText) {
+          errors.push(createError(`${effectPath}.text`, `Text too long: ${effect.text.length} chars (max: ${LIMITS.fields.triggerEffectText})`));
         }
 
         // Value length (if string)
@@ -938,7 +993,7 @@ function validateTriggers(config, errors) {
         if (effect.operator) {
           const isNumberEffect = ['player-resource', 'write-number'].includes(effect.type);
           const isBooleanEffect = ['write-boolean'].includes(effect.type);
-          const isArrayEffect = ['write-array'].includes(effect.type);
+          const isArrayEffect = ['write-array', 'player-traits'].includes(effect.type);
 
           if (isNumberEffect && !VALID_NUMBER_EFFECT_OPERATORS.includes(effect.operator)) {
             errors.push(createError(`${effectPath}.operator`, `Invalid operator for number effect: ${effect.operator}`));
@@ -958,6 +1013,16 @@ function validateTriggers(config, errors) {
             errors.push(createError(`${effectPath}.operator`, `Invalid operator "${effect.operator}" for ${effect.type} effect (must be "set")`));
           }
         }
+
+        if (effect.type === 'quest-init') {
+          if (effect.operator === undefined) {
+            errors.push(createError(`${effectPath}.operator`, 'Missing required operator: "set" for quest-init effect'));
+          } else if (effect.operator !== 'set') {
+            errors.push(createError(`${effectPath}.operator`, `Invalid operator "${effect.operator}" for quest-init effect (must be "set")`));
+          }
+        }
+
+        validateTriggerEffectShape(effect, effectPath, config, errors);
       });
     }
   });
@@ -983,6 +1048,128 @@ function validateDamageTypes(config, errors) {
       checkDamageArray('vulnerabilities');
       checkDamageArray('resistances');
       checkDamageArray('immunities');
+    }
+  }
+
+  if (config.traits) {
+    for (const [traitId, trait] of Object.entries(config.traits)) {
+      const checkDamageArray = (field) => {
+        if (trait[field] && Array.isArray(trait[field])) {
+          trait[field].forEach((type, idx) => {
+            if (!validDamageTypes.includes(type)) {
+              errors.push(createError(`traits.${traitId}.${field}[${idx}]`, `Invalid damage type: ${type}. Valid: ${validDamageTypes.join(', ')}`));
+            }
+          });
+        }
+      };
+
+      checkDamageArray('vulnerabilities');
+      checkDamageArray('resistances');
+      checkDamageArray('immunities');
+    }
+  }
+}
+
+function validateV34Quests(config, errors) {
+  if (activeSchemaRules.version !== 'V34' || !config.quests) return;
+  const validSpatialRelationships = ['existingLocalArea', 'newLocalArea', 'nearbyNewLocation', 'distantNewLocation', 'existingLocationNewAreas'];
+  const validObjectiveStatuses = ['hidden', 'active', 'completed'];
+  const validNextStepSources = ['objective', 'narrative-event'];
+
+  for (const [questId, quest] of Object.entries(config.quests)) {
+    const basePath = `quests.${questId}`;
+    for (const field of ['name', 'questSource', 'questStatement', 'mainObjective', 'completionCondition', 'detailType']) {
+      requireField(quest, field, basePath, errors);
+    }
+
+    if (quest.name !== undefined && quest.name !== questId) {
+      errors.push(createError(`${basePath}.name`, `Quest name "${quest.name}" does not match key "${questId}"`));
+    }
+
+    if (quest.completionCondition !== undefined) {
+      if (!quest.completionCondition || typeof quest.completionCondition !== 'object' || Array.isArray(quest.completionCondition)) {
+        errors.push(createError(`${basePath}.completionCondition`, 'Expected V34 completionCondition object, got V33 string/invalid shape'));
+      } else if (quest.completionCondition.type === 'story') {
+        requireField(quest.completionCondition, 'query', `${basePath}.completionCondition`, errors);
+      } else if (quest.completionCondition.type === 'narrative-event-completed') {
+        requireField(quest.completionCondition, 'eventId', `${basePath}.completionCondition`, errors);
+        if (typeof quest.completionCondition.eventId === 'string' && !config.narrativeEvents?.[quest.completionCondition.eventId]) {
+          errors.push(createError(`${basePath}.completionCondition.eventId`, `References non-existent narrative event: ${quest.completionCondition.eventId}`));
+        }
+      } else {
+        errors.push(createError(`${basePath}.completionCondition.type`, `Invalid completionCondition type: ${quest.completionCondition.type}. Valid: story, narrative-event-completed`));
+      }
+    }
+
+    if (quest.detailType !== undefined && !['basic', 'detailed'].includes(quest.detailType)) {
+      errors.push(createError(`${basePath}.detailType`, `Invalid detailType: ${quest.detailType}. Valid: basic, detailed`));
+    }
+    if (quest.detailType === 'basic') {
+      requireField(quest, 'spatialRelationship', basePath, errors);
+      if (quest.spatialRelationship !== undefined && !validSpatialRelationships.includes(quest.spatialRelationship)) {
+        errors.push(createError(`${basePath}.spatialRelationship`, `Invalid spatialRelationship: ${quest.spatialRelationship}. Valid: ${validSpatialRelationships.join(', ')}`));
+      }
+    }
+    if (quest.detailType === 'detailed') {
+      requireField(quest, 'questLocation', basePath, errors);
+    }
+
+    if (quest.objectives !== undefined) {
+      if (!quest.objectives || typeof quest.objectives !== 'object' || Array.isArray(quest.objectives)) {
+        errors.push(createError(`${basePath}.objectives`, `Expected object, got ${Array.isArray(quest.objectives) ? 'array' : typeof quest.objectives}`));
+      } else {
+        for (const [objectiveKey, objective] of Object.entries(quest.objectives)) {
+          const objectivePath = `${basePath}.objectives.${objectiveKey}`;
+          for (const field of ['id', 'text', 'status']) requireField(objective, field, objectivePath, errors);
+          if (objective.id !== undefined && objective.id !== objectiveKey) {
+            errors.push(createError(`${objectivePath}.id`, `Objective id "${objective.id}" does not match key "${objectiveKey}"`));
+          }
+          if (objective.status !== undefined && !validObjectiveStatuses.includes(objective.status)) {
+            errors.push(createError(`${objectivePath}.status`, `Invalid objective status: ${objective.status}. Valid: ${validObjectiveStatuses.join(', ')}`));
+          }
+        }
+      }
+    }
+
+    if (quest.activeObjectiveId !== undefined && !quest.objectives?.[quest.activeObjectiveId]) {
+      errors.push(createError(`${basePath}.activeObjectiveId`, `References non-existent objective: ${quest.activeObjectiveId}`));
+    }
+
+    if (quest.nextStep !== undefined) {
+      if (!quest.nextStep || typeof quest.nextStep !== 'object' || Array.isArray(quest.nextStep)) {
+        errors.push(createError(`${basePath}.nextStep`, `Expected object, got ${Array.isArray(quest.nextStep) ? 'array' : typeof quest.nextStep}`));
+      } else {
+        requireField(quest.nextStep, 'text', `${basePath}.nextStep`, errors);
+        requireField(quest.nextStep, 'source', `${basePath}.nextStep`, errors);
+        if (quest.nextStep.source !== undefined && !validNextStepSources.includes(quest.nextStep.source)) {
+          errors.push(createError(`${basePath}.nextStep.source`, `Invalid source: ${quest.nextStep.source}. Valid: ${validNextStepSources.join(', ')}`));
+        }
+      }
+    }
+  }
+}
+
+function validateV34NarrativeEvents(config, errors) {
+  if (activeSchemaRules.version !== 'V34' || !config.narrativeEvents) return;
+  for (const [eventId, event] of Object.entries(config.narrativeEvents)) {
+    const basePath = `narrativeEvents.${eventId}`;
+    for (const field of ['title', 'beats']) requireField(event, field, basePath, errors);
+    if (event.title !== undefined && typeof event.title !== 'string') {
+      errors.push(createError(`${basePath}.title`, `Expected string, got ${typeof event.title}`));
+    }
+    if (event.beats !== undefined && typeof event.beats !== 'string') {
+      errors.push(createError(`${basePath}.beats`, `Expected string, got ${typeof event.beats}`));
+    }
+    if (event.targetTurns !== undefined && typeof event.targetTurns !== 'number') {
+      errors.push(createError(`${basePath}.targetTurns`, `Expected number, got ${typeof event.targetTurns}`));
+    }
+    if (event.onCompleteEffects !== undefined && !Array.isArray(event.onCompleteEffects)) {
+      errors.push(createError(`${basePath}.onCompleteEffects`, `Expected array, got ${typeof event.onCompleteEffects}`));
+    }
+    if (Array.isArray(event.onCompleteEffects)) {
+      event.onCompleteEffects.forEach((effect, idx) => {
+        validateTriggerEffectShape(effect, `${basePath}.onCompleteEffects[${idx}]`, config, errors);
+      });
     }
   }
 }
@@ -1074,7 +1261,7 @@ function validateCharacterLimits(config, errors, warnings) {
     }
   }
   (config.premadeCharacters ?? []).forEach((pc, i) => {
-    const len = getJsonLength(pc);
+    const len = getCompactJsonLength(pc);
     if (len > LIMITS.settingsEntries.premadeCharacter) {
       errors.push(createError(`premadeCharacters[${i}]`, `Too long: ${len} chars (max: ${LIMITS.settingsEntries.premadeCharacter})`));
     }
@@ -1152,7 +1339,7 @@ function validateCharacterLimits(config, errors, warnings) {
   // NPC combined size
   if (config.npcs) {
     for (const [npcId, npc] of Object.entries(config.npcs)) {
-      const size = getJsonLength(npc);
+      const size = getCompactJsonLength(npc);
       if (size > LIMITS.fields.npcCombined) {
         errors.push(createError(`npcs.${npcId}`, `NPC too large: ${size} chars (max: ${LIMITS.fields.npcCombined})`));
       }
@@ -1221,6 +1408,11 @@ function validateTypeChecks(config, errors) {
   const checkNumber = (path, value) => {
     if (value !== undefined && typeof value !== 'number') {
       errors.push(createError(path, `Expected number, got ${typeof value}`));
+    }
+  };
+  const checkInteger = (path, value) => {
+    if (value !== undefined && (typeof value !== 'number' || !Number.isInteger(value))) {
+      errors.push(createError(path, `Expected integer, got ${typeof value === 'number' ? value : typeof value}`));
     }
   };
 
@@ -1410,10 +1602,17 @@ function validateTypeChecks(config, errors) {
       checkString(`resourceSettings.${resourceId}.name`, resource.name);
       checkNumber(`resourceSettings.${resourceId}.initialValue`, resource.initialValue);
       checkNumber(`resourceSettings.${resourceId}.maxValue`, resource.maxValue);
-      checkNumber(`resourceSettings.${resourceId}.rechargeRate`, resource.rechargeRate);
+      checkInteger(`resourceSettings.${resourceId}.rechargeRate`, resource.rechargeRate);
       checkNumber(`resourceSettings.${resourceId}.restRechargeMultiplier`, resource.restRechargeMultiplier);
       checkNumber(`resourceSettings.${resourceId}.gainPerLevel`, resource.gainPerLevel);
       checkString(`resourceSettings.${resourceId}.color`, resource.color);
+      checkBoolean(`resourceSettings.${resourceId}.isHealth`, resource.isHealth);
+      checkBoolean(`resourceSettings.${resourceId}.replenishOnLongRest`, resource.replenishOnLongRest);
+      checkBoolean(`resourceSettings.${resourceId}.canCost`, resource.canCost);
+      checkString(`resourceSettings.${resourceId}.usageInstructions`, resource.usageInstructions);
+      if (resource.maxValue === 0) {
+        errors.push(createError(`resourceSettings.${resourceId}.maxValue`, 'maxValue 0 can produce invalid XP/resource behavior in V34; use a non-zero max value', 'warning'));
+      }
     }
   }
 
@@ -1438,19 +1637,29 @@ function validateTypeChecks(config, errors) {
     }
   }
 
-  // traits - require unlockedBy and excludedBy as arrays (can be empty)
+  // traits - V34 requires complete modifier arrays plus narrator-facing traitNarrativeEffects.
   if (config.traits) {
     for (const [traitId, trait] of Object.entries(config.traits)) {
-      if (trait.unlockedBy === undefined) {
-        errors.push(createError(`traits.${traitId}.unlockedBy`, 'Missing required field: unlockedBy (use empty array [] if none)'));
-      } else {
-        checkArray(`traits.${traitId}.unlockedBy`, trait.unlockedBy);
+      const requiredTraitFields = activeSchemaRules.version === 'V34'
+        ? ['description', 'traitNarrativeEffects', 'skills', 'attributes', 'resources', 'startingItems', 'abilities', 'unlockedBy', 'excludedBy']
+        : ['unlockedBy', 'excludedBy'];
+      for (const field of requiredTraitFields) {
+        if (trait[field] === undefined) {
+          errors.push(createError(`traits.${traitId}.${field}`, `Missing required field: ${field}${Array.isArray(trait[field]) ? '' : ''}`));
+        }
       }
-      if (trait.excludedBy === undefined) {
-        errors.push(createError(`traits.${traitId}.excludedBy`, 'Missing required field: excludedBy (use empty array [] if none)'));
-      } else {
-        checkArray(`traits.${traitId}.excludedBy`, trait.excludedBy);
-      }
+      checkString(`traits.${traitId}.description`, trait.description);
+      checkString(`traits.${traitId}.traitNarrativeEffects`, trait.traitNarrativeEffects);
+      checkArray(`traits.${traitId}.skills`, trait.skills);
+      checkArray(`traits.${traitId}.attributes`, trait.attributes);
+      checkArray(`traits.${traitId}.resources`, trait.resources);
+      checkArray(`traits.${traitId}.startingItems`, trait.startingItems);
+      checkArray(`traits.${traitId}.abilities`, trait.abilities);
+      checkArray(`traits.${traitId}.unlockedBy`, trait.unlockedBy);
+      checkArray(`traits.${traitId}.excludedBy`, trait.excludedBy);
+      checkArray(`traits.${traitId}.vulnerabilities`, trait.vulnerabilities);
+      checkArray(`traits.${traitId}.resistances`, trait.resistances);
+      checkArray(`traits.${traitId}.immunities`, trait.immunities);
     }
   }
 
@@ -1520,6 +1729,7 @@ function validateUnknownFields(config, errors) {
     traits: new Set([
       'name', 'description', 'quirk', 'attributes', 'skills', 'resources',
       'startingItems', 'abilities', 'unlockedBy', 'excludedBy',
+      'traitNarrativeEffects', 'vulnerabilities', 'resistances', 'immunities',
     ]),
     npcTypes: new Set([
       'name', 'description', 'vulnerabilities', 'resistances', 'immunities',
@@ -1527,6 +1737,7 @@ function validateUnknownFields(config, errors) {
     quests: new Set([
       'name', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
       'questGiverNPC', 'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
+      'objectives', 'activeObjectiveId', 'nextStep', 'npcs',
       'questType', // D-018: remote validator (authority) requires/recommends this; local schema was stale (mirrors D-012)
     ]),
     storyStarts: new Set([
@@ -1538,9 +1749,16 @@ function validateUnknownFields(config, errors) {
       'text', 'embeddingId',
     ]),
     triggers: new Set([
-      'name', 'conditions', 'effects', 'recurring', 'script', 'embeddingId',
+      'name', 'conditions', 'effects', 'recurring', 'script', 'embeddingId', 'scope',
+    ]),
+    narrativeEvents: new Set([
+      'title', 'beats', 'targetTurns', 'onCompleteEffects',
     ]),
   };
+
+  if (activeSchemaRules.version === 'V34') {
+    KNOWN_FIELDS.traits.delete('quirk');
+  }
 
   // Settings sub-objects
   const KNOWN_SETTINGS_FIELDS = {
@@ -1614,14 +1832,16 @@ function validateUnknownFields(config, errors) {
     activeBuff: new Set(['type', 'amount', 'duration', 'source', 'resource', 'attribute', 'skill', 'damageType']),
     // Resource settings entries
     resource: new Set(['name', 'initialValue', 'maxValue', 'rechargeRate', 'restRechargeMultiplier', 'gainPerLevel', 'color', 'isHealth', 'usageInstructions']),
+    questObjective: new Set(['id', 'text', 'status']),
+    nextStep: new Set(['text', 'source']),
     // Item slot entries
     itemSlot: new Set(['slot', 'category', 'quantity']),
     // Skill XP rewards
     skillXPRewards: new Set(['small', 'medium', 'large', 'huge']),
     // Trigger conditions (union of all condition types)
-    triggerCondition: new Set(['type', 'operator', 'value', 'query', 'embeddingId', 'resource', 'entity', 'key']),
+    triggerCondition: new Set(['type', 'operator', 'value', 'query', 'text', 'embeddingId', 'resource', 'entity', 'key', 'questId', 'eventId']),
     // Trigger effects (union of all effect types)
-    triggerEffect: new Set(['type', 'operator', 'value', 'instruction', 'questId', 'resource', 'entity', 'key']),
+    triggerEffect: new Set(['type', 'operator', 'value', 'instruction', 'questId', 'resource', 'entity', 'key', 'objectiveId', 'eventId', 'source', 'text', 'target']),
     // Attribute stat modifier entries
     attrStatModifier: new Set(['variable', 'amount']),
     // Game mode entries
@@ -1629,6 +1849,8 @@ function validateUnknownFields(config, errors) {
     // Image prompt configuration (per entity type)
     imagePromptConfiguration: new Set(['npcs', 'locations', 'regions']),
   };
+  KNOWN_NESTED.resource.add('replenishOnLongRest');
+  KNOWN_NESTED.resource.add('canCost');
 
   function checkNested(parentPath, obj, knownSet) {
     if (!obj || typeof obj !== 'object') return;
@@ -1699,6 +1921,20 @@ function validateUnknownFields(config, errors) {
         trait.startingItems.forEach((item, i) => {
           checkNested(`traits.${traitKey}.startingItems[${i}]`, item, KNOWN_NESTED.inventoryDef);
         });
+      }
+    }
+  }
+
+  // Quest nested objects
+  if (config.quests) {
+    for (const [questKey, quest] of Object.entries(config.quests)) {
+      if (quest.objectives && typeof quest.objectives === 'object') {
+        for (const [objectiveKey, objective] of Object.entries(quest.objectives)) {
+          checkNested(`quests.${questKey}.objectives.${objectiveKey}`, objective, KNOWN_NESTED.questObjective);
+        }
+      }
+      if (quest.nextStep && typeof quest.nextStep === 'object') {
+        checkNested(`quests.${questKey}.nextStep`, quest.nextStep, KNOWN_NESTED.nextStep);
       }
     }
   }
@@ -2022,7 +2258,9 @@ function validateLocationCoordinates(config, errors) {
 // MAIN
 // ============================================================================
 
-function validate(config) {
+function validate(config, options = {}) {
+  activeSchemaRules = getVoyageSchemaRules(options.schemaVersion || CURRENT_VOYAGE_SCHEMA_VERSION);
+  LIMITS = activeSchemaRules.limits;
   const collector = createFindingCollector();
   const errors = collector.errorSink;
   const warnings = collector.warningSink;
@@ -2032,6 +2270,8 @@ function validate(config) {
   validateReferenceIntegrity(config, errors);
   validateTriggers(config, errors);
   validateDamageTypes(config, errors);
+  validateV34Quests(config, errors);
+  validateV34NarrativeEvents(config, errors);
   validateCharacterLimits(config, errors, warnings);
   validateTypeChecks(config, errors);
   validateNameKeyMatch(config, errors);
@@ -2041,6 +2281,7 @@ function validate(config) {
   validateUnknownFields(config, errors);
 
   return {
+    schemaVersion: activeSchemaRules.version,
     errors: collector.errors,
     warnings: collector.warnings,
     infos: collector.infos,
@@ -2051,6 +2292,7 @@ function printReport(result, inputPath, verbose) {
   console.log('═'.repeat(70));
   console.log('  VOYAGE WORLD CONFIG VALIDATION REPORT');
   console.log(`  File: ${path.basename(inputPath)}`);
+  console.log(`  Schema: ${result.schemaVersion}`);
   console.log('═'.repeat(70));
 
   if (result.errors.length === 0) {
@@ -2131,6 +2373,7 @@ function main() {
       options: {
         '--world': { key: 'worldRoot', takesValue: true },
         '--json': { key: 'json' },
+        '--schema-version': { key: 'schemaVersion', takesValue: true },
         '--verbose': { key: 'verbose', aliases: ['-v'] },
         '--help': { key: 'help', aliases: ['-h'] },
       },
@@ -2146,7 +2389,7 @@ function main() {
     console.log(
       'Usage: node .claude/scripts/validate.js ' +
       '[world.json | tabs-directory | --world <world-root>] ' +
-      '[--json] [--verbose]'
+      '[--json] [--schema-version V33|V34] [--verbose]'
     );
     return 0;
   }
@@ -2210,7 +2453,7 @@ function main() {
     }
   }
 
-  const result = validate(config);
+  const result = validate(config, { schemaVersion: options.schemaVersion });
 
   if (options.json) {
     console.log(JSON.stringify(result, null, 2));

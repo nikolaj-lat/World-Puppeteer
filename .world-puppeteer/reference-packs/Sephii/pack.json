@@ -5,7 +5,7 @@
   "source": "Sephii",
   "sourceVersion": "1.0.0",
   "description": "Read-only reference instruction material for NPC detail generation, intent generation, quest guidance, and source metadata.",
-  "compatibleFormats": ["voyage-v33"],
+  "compatibleFormats": ["voyage-v33", "voyage-v34"],
   "domains": ["ai-instructions", "source-metadata", "quest-generation-guidance"],
   "licenseNotes": "Legacy local reference material; preserve upstream/source attribution when adapting manually.",
   "files": [

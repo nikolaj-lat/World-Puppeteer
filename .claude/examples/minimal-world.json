@@ -1,6 +1,6 @@
 {
-  "configVersion": "V33",
-  "heroesVersion": 33,
+  "configVersion": "V34",
+  "heroesVersion": 34,
 
   "aiInstructions": {
     "generateStory": {
@@ -36,7 +36,7 @@
     "generateEncounters": {
       "custom": ""
     },
-    "ItemGenerationAndUsage": {
+    "generateItemGenerationAndUsage": {
       "custom": ""
     }
   },
@@ -46,6 +46,8 @@
   "characterCreationMusic": "nonfantasy",
   "worldLore": {},
   "embeddings": {},
+  "embeddingModel": "",
+  "embeddingDimension": 0,
   "triggers": {},
 
   "storyStarts": {
@@ -69,6 +71,7 @@
   "factions": {},
   "npcs": {},
   "quests": {},
+  "narrativeEvents": {},
   "skills": {},
   "traits": {},
   "traitCategories": {},
@@ -160,8 +163,8 @@
   "resourceSettings": {
     "health": {
       "name": "health",
-      "initialValue": 0,
-      "maxValue": 0,
+      "initialValue": 1,
+      "maxValue": 1,
       "gainPerLevel": 10,
       "rechargeRate": 1,
       "restRechargeMultiplier": 1,

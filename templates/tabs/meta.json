@@ -1,7 +1,9 @@
 {
-  "configVersion": "V33",
-  "heroesVersion": 33,
+  "configVersion": "V34",
+  "heroesVersion": 34,
   "embeddings": {},
+  "embeddingModel": "",
+  "embeddingDimension": 0,
   "tipSettings": {
     "tips": [],
     "tipDisplayEnabled": false,

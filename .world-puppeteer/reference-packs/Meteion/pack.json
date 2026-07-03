@@ -5,7 +5,7 @@
   "source": "Meteion",
   "sourceVersion": "1.0.0",
   "description": "Read-only reference instruction-set material for story style, narrator voice, naming filters, and source metadata.",
-  "compatibleFormats": ["voyage-v33"],
+  "compatibleFormats": ["voyage-v33", "voyage-v34"],
   "domains": ["ai-instructions", "source-metadata", "name-filter-settings", "narrator-style"],
   "licenseNotes": "Legacy local reference material; preserve upstream/source attribution when adapting manually.",
   "files": [

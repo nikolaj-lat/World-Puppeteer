@@ -91,6 +91,10 @@ function getJsonLength(obj) {
   return JSON.stringify(obj, null, 2).length;
 }
 
+function getCompactJsonLength(obj) {
+  return JSON.stringify(obj).length;
+}
+
 function formatNumber(n) {
   return n.toLocaleString();
 }
@@ -283,7 +287,7 @@ function analyzeConfig(config) {
     }
   }
   (config.premadeCharacters ?? []).forEach((pc, i) => {
-    pushSettingsEntry(`premadeCharacters[${i}]`, getJsonLength(pc), SETTINGS_ENTRY_LIMITS.premadeCharacter);
+    pushSettingsEntry(`premadeCharacters[${i}]`, getCompactJsonLength(pc), SETTINGS_ENTRY_LIMITS.premadeCharacter);
   });
 
   // Entry-level analysis
@@ -298,7 +302,7 @@ function analyzeConfig(config) {
 
       // Check combined length for NPCs
       if (section === 'npcs' && limits.combined) {
-        const combined = getJsonLength(entry);
+        const combined = getCompactJsonLength(entry);
         if (combined > limits.combined) {
           result.entries.oversized.push({
             path: `${section}.${id}`,
