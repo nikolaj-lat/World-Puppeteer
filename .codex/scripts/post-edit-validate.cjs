@@ -145,11 +145,19 @@ function pathCategoryForWorld(candidate, world) {
     path.join(world.worldRoot, '.claude', 'skills'),
   ];
   if (worldMetadataDirs.some((dir) => isInside(candidate, dir))) return 'metadata';
-  for (const instructionFile of ['AGENTS.override.md', 'CLAUDE.override.md']) {
+  for (const instructionFile of ['AGENTS.override.md', 'CLAUDE.override.md', 'CLAUDE.md']) {
     if (isSamePath(candidate, path.join(world.worldRoot, instructionFile))) return 'metadata';
   }
   if (isSamePath(candidate, world.instructionsPath)) return 'metadata';
   return null;
+}
+
+function isWorldRegressionTestPath(candidate, world) {
+  const testsDir = path.join(world.worldRoot, 'tests');
+  return (
+    isSamePath(path.dirname(candidate), testsDir) &&
+    path.extname(candidate).toLowerCase() === '.cjs'
+  );
 }
 
 function isRepoToolingPath(candidate) {
@@ -176,6 +184,7 @@ function affectedRoutesForPaths(pathCandidates, worlds) {
         existing.categories.add(category);
         affected.set(resolved.worldRoot, existing);
       }
+      if (isWorldRegressionTestPath(candidate, resolved)) repositoryTooling = true;
     }
   }
 

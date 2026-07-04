@@ -118,6 +118,15 @@ function runNode(args, options = {}) {
   });
 }
 
+function parseJsonStdout(result, label) {
+  try {
+    return JSON.parse(result.stdout);
+  } catch (error) {
+    failures.push(`${label}: expected JSON stdout, got ${JSON.stringify(result.stdout)}`);
+    return {};
+  }
+}
+
 function captureConsoleJson(fn) {
   const originalLog = console.log;
   let output = '';
@@ -314,7 +323,56 @@ const dryHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
   env: { WORLD_PUPPETEER_HOOK_DRY_RUN: '1' },
   input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/tabs/npcs.json' } }),
 });
-assert(dryHook.status === 0 && /hxh_hunter_exam_campaign_rebuild/.test(dryHook.stdout), 'hook dry-run must classify HxH tab edits');
+const dryHookRoutes = parseJsonStdout(dryHook, 'hook dry-run for HxH tab edit');
+assert(
+  dryHook.status === 0 &&
+    dryHookRoutes.validatedEditableWorlds?.includes('hxh_hunter_exam_campaign_rebuild') &&
+    dryHookRoutes.repositoryTooling === false,
+  'hook dry-run must classify HxH tab edits as world content'
+);
+const dryHxhTestHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
+  env: { WORLD_PUPPETEER_HOOK_DRY_RUN: '1' },
+  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/tests/correction-regression.cjs' } }),
+});
+const dryHxhTestRoutes = parseJsonStdout(dryHxhTestHook, 'hook dry-run for HxH regression test edit');
+assert(
+  dryHxhTestHook.status === 0 &&
+    dryHxhTestRoutes.repositoryTooling === true &&
+    dryHxhTestRoutes.affectedWorlds?.length === 0,
+  'hook dry-run must classify HxH tests/*.cjs edits as repository tooling'
+);
+const dryHxhCwdTestHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
+  env: { WORLD_PUPPETEER_HOOK_DRY_RUN: '1' },
+  input: JSON.stringify({
+    hook_event_name: 'PostToolUse',
+    tool_name: 'Write',
+    cwd: hxh.worldRoot,
+    tool_input: { file_path: 'tests/correction-regression.cjs' },
+  }),
+});
+const dryHxhCwdTestRoutes = parseJsonStdout(dryHxhCwdTestHook, 'hook dry-run for HxH-cwd regression test edit');
+assert(
+  dryHxhCwdTestHook.status === 0 && dryHxhCwdTestRoutes.repositoryTooling === true,
+  'hook dry-run must classify tests/*.cjs from the HxH cwd as repository tooling'
+);
+const dryRepoToolingHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
+  env: { WORLD_PUPPETEER_HOOK_DRY_RUN: '1' },
+  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: '.codex/scripts/post-edit-validate.cjs' } }),
+});
+const dryRepoToolingRoutes = parseJsonStdout(dryRepoToolingHook, 'hook dry-run for repository tooling edit');
+assert(
+  dryRepoToolingHook.status === 0 && dryRepoToolingRoutes.repositoryTooling === true,
+  'hook dry-run must preserve existing repository tooling classification'
+);
+const unknownHxhPathHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
+  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/notes/scratch.txt' } }),
+});
+assert(
+  unknownHxhPathHook.status === 0 &&
+    /"decision":"block"/.test(unknownHxhPathHook.stdout) &&
+    /could not be classified/.test(unknownHxhPathHook.stdout),
+  'unknown HxH paths must still block'
+);
 
 const agentDir = path.join(repoRoot, '.codex', 'agents');
 for (const file of fs.readdirSync(agentDir).filter((name) => name.endsWith('.toml'))) {
