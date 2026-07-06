@@ -1197,6 +1197,15 @@ function validateCharacterLimits(config, errors, warnings) {
     if (count > LIMITS.counts.storyStarts) {
       errors.push(createError('storyStarts', `Too many story starts: ${count} (max: ${LIMITS.counts.storyStarts})`));
     }
+    const startEntries = Array.isArray(config.storyStarts)
+      ? config.storyStarts.map((start, idx) => [`storyStarts[${idx}]`, start])
+      : Object.entries(config.storyStarts).map(([key, start]) => [`storyStarts.${key}`, start]);
+    for (const [startPath, start] of startEntries) {
+      const size = JSON.stringify(start, null, 2).length;
+      if (size > LIMITS.fields.storyStartEntry) {
+        errors.push(createError(startPath, `Story start entry too long: ${size} chars pretty JSON (max: ${LIMITS.fields.storyStartEntry})`));
+      }
+    }
   }
 
   if (config.triggers) {
@@ -2030,6 +2039,17 @@ function validateUnknownFields(config, errors) {
       }
       if (mode.difficulty !== undefined && !VALID_GAME_MODE_DIFFICULTIES.includes(mode.difficulty)) {
         errors.push(createError(`gameModes.${modeKey}.difficulty`, `Invalid difficulty: ${mode.difficulty}. Valid: ${VALID_GAME_MODE_DIFFICULTIES.join(', ')}`, 'warning'));
+      }
+      const gameModeFieldLimits = {
+        name: LIMITS.fields.gameModeName,
+        description: LIMITS.fields.gameModeDescription,
+        instructions: LIMITS.fields.gameModeInstructions,
+        askTheNarratorPrompt: LIMITS.fields.gameModeAskTheNarratorPrompt,
+      };
+      for (const [field, limit] of Object.entries(gameModeFieldLimits)) {
+        if (typeof limit === 'number' && typeof mode[field] === 'string' && mode[field].length > limit) {
+          errors.push(createError(`gameModes.${modeKey}.${field}`, `Too long: ${mode[field].length} chars (max: ${limit})`));
+        }
       }
     }
   }

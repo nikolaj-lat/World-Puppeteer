@@ -360,8 +360,9 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
   const countResult = analyzeConfig(changedLimits);
   const validateResult = validate(changedLimits);
   assert(countResult.sections.nameFilterSettings.limit === 150_000, 'V34 nameFilterSettings section limit must be 150000');
-  assert(countResult.entries.oversized.some((entry) => entry.path === 'storyStarts[Start]' && entry.limit === 8_008), 'V34 story start entry limit must be 8008 pretty chars');
-  assert(validateResult.errors.some((entry) => entry.path === 'triggers.big' && entry.message.includes('10028')), 'V34 trigger compact size limit must be 10028');
+  // Wiki size-limits (snapshot 2026-07-06): storyStart entry 8,000 pretty JSON, trigger 10,000 compact JSON.
+  assert(countResult.entries.oversized.some((entry) => entry.path === 'storyStarts[Start]' && entry.limit === 8_000), 'V34 story start entry limit must be 8000 pretty chars');
+  assert(validateResult.errors.some((entry) => entry.path === 'triggers.big' && entry.message.includes('10000')), 'V34 trigger compact size limit must be 10000');
 }
 
 {

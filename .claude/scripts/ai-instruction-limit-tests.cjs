@@ -122,13 +122,16 @@ try {
     'the 5,000-codepoint string boundary must produce no AI validation error'
   );
 
+  // Task totals are the SUM of leaf codepoints (wiki: "sum of instruction
+  // chars"), so five 4,001-char leaves land at 20,005 -- just over the cap.
+  const fourThousandOne = 'a'.repeat(4001);
   const oversizedTask = writeFixture('oversized-task', {
     oversizedTask: {
-      one: fourThousand,
-      two: fourThousand,
-      three: fourThousand,
-      four: fourThousand,
-      five: fourThousand,
+      one: fourThousandOne,
+      two: fourThousandOne,
+      three: fourThousandOne,
+      four: fourThousandOne,
+      five: fourThousandOne,
     },
   });
 
@@ -169,6 +172,34 @@ try {
       error.path !== 'aiInstructions.oversizedTask'
     ),
     'the oversized task fixture must not produce false leaf violations'
+  );
+
+  // generateNPCIntents carries raised caps (8,000/leaf, 40,000/task).
+  const npcIntentsOverride = writeFixture('npc-intents-override', {
+    generateNPCIntents: {
+      one: 'a'.repeat(6000),
+      two: fourThousand,
+      three: fourThousand,
+      four: fourThousand,
+      five: fourThousand,
+      six: fourThousand,
+    },
+  });
+
+  const overrideCount = runJson(countScript, npcIntentsOverride);
+  const overrideValidate = runJson(validateScript, npcIntentsOverride);
+
+  assert(
+    overrideCount.status === 0,
+    'count.js must allow generateNPCIntents up to 40,000 codepoints with 8,000-codepoint leaves'
+  );
+  assert(
+    overrideCount.parsed?.aiInstructions?.individual?.length === 0,
+    'a 6,000-codepoint generateNPCIntents leaf must not be oversized'
+  );
+  assert(
+    aiErrors(overrideValidate).length === 0,
+    'the generateNPCIntents raised caps must produce no AI validation errors'
   );
 } finally {
   fs.rmSync(fixtureRoot, { recursive: true, force: true });

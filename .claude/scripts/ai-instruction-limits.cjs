@@ -2,19 +2,41 @@
 
 const AI_INSTRUCTION_LEAF_LIMIT = 5_000;
 const AI_INSTRUCTION_TASK_LIMIT = 20_000;
+// Per the wiki mirror (size-limits, snapshot refreshed 2026-07-06):
+// - leaf limit: 5,000 raw codepoints; generateNPCIntents leaves raised to 8,000.
+// - task limit: 20,000 as the SUM of instruction chars across the task's string
+//   leaves (raw codepoints, not serialized JSON); generateNPCIntents raised to 40,000.
+const AI_INSTRUCTION_TASK_LIMIT_OVERRIDES = {
+  generateNPCIntents: 40_000,
+};
+const AI_INSTRUCTION_LEAF_LIMIT_OVERRIDES = {
+  generateNPCIntents: 8_000,
+};
+
+function aiInstructionTaskLimit(taskId) {
+  return Object.prototype.hasOwnProperty.call(AI_INSTRUCTION_TASK_LIMIT_OVERRIDES, taskId)
+    ? AI_INSTRUCTION_TASK_LIMIT_OVERRIDES[taskId]
+    : AI_INSTRUCTION_TASK_LIMIT;
+}
+
+function aiInstructionLeafLimit(taskId) {
+  return Object.prototype.hasOwnProperty.call(AI_INSTRUCTION_LEAF_LIMIT_OVERRIDES, taskId)
+    ? AI_INSTRUCTION_LEAF_LIMIT_OVERRIDES[taskId]
+    : AI_INSTRUCTION_LEAF_LIMIT;
+}
 
 function codePointLength(value) {
   return Array.from(String(value)).length;
 }
 
-function collectAiInstructionLeaves(value, pathName) {
+function collectAiInstructionLeaves(value, pathName, leafLimit = AI_INSTRUCTION_LEAF_LIMIT) {
   if (typeof value === 'string') {
     return {
       leaves: [{
         path: pathName,
         text: value,
         used: codePointLength(value),
-        limit: AI_INSTRUCTION_LEAF_LIMIT,
+        limit: leafLimit,
       }],
       invalid: [],
     };
@@ -26,7 +48,8 @@ function collectAiInstructionLeaves(value, pathName) {
     value.forEach((child, index) => {
       const result = collectAiInstructionLeaves(
         child,
-        `${pathName}[${index}]`
+        `${pathName}[${index}]`,
+        leafLimit
       );
       leaves.push(...result.leaves);
       invalid.push(...result.invalid);
@@ -40,7 +63,8 @@ function collectAiInstructionLeaves(value, pathName) {
     for (const [key, child] of Object.entries(value)) {
       const result = collectAiInstructionLeaves(
         child,
-        `${pathName}.${key}`
+        `${pathName}.${key}`,
+        leafLimit
       );
       leaves.push(...result.leaves);
       invalid.push(...result.invalid);
@@ -78,16 +102,14 @@ function measureAiInstructions(aiInstructions, rootPath = 'aiInstructions') {
 
   for (const [taskId, taskValue] of Object.entries(aiInstructions)) {
     const path = `${rootPath}.${taskId}`;
-    const serialized = JSON.stringify(taskValue, null, 2);
-    tasks.push({
-      path,
-      used: codePointLength(serialized === undefined ? '' : serialized),
-      limit: AI_INSTRUCTION_TASK_LIMIT,
-    });
-
-    const taskResult = collectAiInstructionLeaves(taskValue, path);
+    const taskResult = collectAiInstructionLeaves(taskValue, path, aiInstructionLeafLimit(taskId));
     leaves.push(...taskResult.leaves);
     invalid.push(...taskResult.invalid);
+    tasks.push({
+      path,
+      used: taskResult.leaves.reduce((sum, leaf) => sum + leaf.used, 0),
+      limit: aiInstructionTaskLimit(taskId),
+    });
   }
 
   return {
@@ -101,7 +123,11 @@ function measureAiInstructions(aiInstructions, rootPath = 'aiInstructions') {
 
 module.exports = {
   AI_INSTRUCTION_LEAF_LIMIT,
+  AI_INSTRUCTION_LEAF_LIMIT_OVERRIDES,
   AI_INSTRUCTION_TASK_LIMIT,
+  AI_INSTRUCTION_TASK_LIMIT_OVERRIDES,
+  aiInstructionLeafLimit,
+  aiInstructionTaskLimit,
   codePointLength,
   collectAiInstructionLeaves,
   measureAiInstructions,

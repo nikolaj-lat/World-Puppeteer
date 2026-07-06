@@ -209,12 +209,15 @@ const V34_LIMITS = {
   },
   counts: {
     ...V33_LIMITS.counts,
-    triggerSize: 10_028,
+    // Wiki size-limits (snapshot 2026-07-06): per-trigger 10,000 compact JSON.
+    triggerSize: 10_000,
   },
   fields: {
     ...V33_LIMITS.fields,
-    npcCombined: 7_996,
-    storyStartEntry: 8_008,
+    // Wiki size-limits (snapshot 2026-07-06): npc entry 8,000 compact JSON,
+    // storyStart entry 8,000 pretty JSON.
+    npcCombined: 8_000,
+    storyStartEntry: 8_000,
     triggerConditionText: 1_000,
     triggerConditionQuery: 1_000,
     triggerEffectText: 1_000,
