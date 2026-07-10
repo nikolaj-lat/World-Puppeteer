@@ -16,6 +16,7 @@ Use this skill to coordinate World-Puppeteer work through the appropriate specia
 3. Delegate to named specialists when implementation benefits from focused craft work.
 4. Review specialist output before presenting it as complete.
 5. Run the required build and validation steps before reporting completion.
+6. Keep orchestrator context lean: route bulk reading through the explorer agent and reason on its digest; read inline only minimal precision-critical spans it quotes back.
 
 ## Modes
 
@@ -70,6 +71,7 @@ Utility agents:
 - `world-capacity`
 - `world-charts`
 - `world-maps`
+- `analyst` (bounded reasoning over bulk material; returns evidence-backed findings, never edits)
 
 ## Voice
 
