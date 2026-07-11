@@ -61,11 +61,13 @@
     "damageTypes": []
   },
   "otherSettings": {
-    "startingCharacterLevelUpRequirement": 500,
-    "extraRequiredXPPerCharacterLevel": 100,
-    "maxCharacterLevel": 999,
     "npcHealthPerLevel": 10,
     "npcMinHealth": 0
+  },
+  "progressionSettings": {
+    "startingCharacterLevelUpRequirement": 500,
+    "extraRequiredXPPerCharacterLevel": 100,
+    "maxCharacterLevel": 999
   },
   "characterCreationMusic": "nonfantasy"
 }

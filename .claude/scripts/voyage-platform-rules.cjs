@@ -3,7 +3,7 @@ const {
   AI_INSTRUCTION_TASK_LIMIT,
 } = require('./ai-instruction-limits.cjs');
 
-const CURRENT_VOYAGE_SCHEMA_VERSION = 'V34';
+const CURRENT_VOYAGE_SCHEMA_VERSION = 'V35';
 
 const V33_TRIGGER_CONDITION_TYPES = [
   'story',
@@ -225,6 +225,21 @@ const V34_LIMITS = {
   },
 };
 
+// V35: removed configVersion/heroesVersion/embeddingModel/embeddingDimension from top-level;
+// moved XP/level fields from otherSettings into new progressionSettings section;
+// traits gain optional requirements array.
+const V35_REQUIRED_TOP_LEVEL = V34_REQUIRED_TOP_LEVEL
+  .filter(f => !['configVersion', 'heroesVersion', 'embeddingModel', 'embeddingDimension'].includes(f))
+  .concat(['progressionSettings']);
+
+const V35_LIMITS = {
+  ...V34_LIMITS,
+  counts: {
+    ...V34_LIMITS.counts,
+    traitRequirements: 10,
+  },
+};
+
 const VOYAGE_SCHEMA_RULES = {
   V33: {
     version: 'V33',
@@ -241,6 +256,14 @@ const VOYAGE_SCHEMA_RULES = {
     triggerConditionTypes: V34_TRIGGER_CONDITION_TYPES,
     triggerEffectTypes: V34_TRIGGER_EFFECT_TYPES,
     limits: V34_LIMITS,
+  },
+  V35: {
+    version: 'V35',
+    heroesVersion: 35,
+    requiredTopLevel: V35_REQUIRED_TOP_LEVEL,
+    triggerConditionTypes: V34_TRIGGER_CONDITION_TYPES,
+    triggerEffectTypes: V34_TRIGGER_EFFECT_TYPES,
+    limits: V35_LIMITS,
   },
 };
 

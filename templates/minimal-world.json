@@ -67,13 +67,11 @@
   "regionArchetypes": {},
   "encounterElements": {},
   "factions": {},
-  "items": {},
+  "itemTypes": {},
   "locations": {},
-  "configVersion": "V34",
-  "heroesVersion": 34,
   "embeddings": {},
-  "embeddingModel": "",
-  "embeddingDimension": 0,
+  "arcs": {},
+  "questTriggers": {},
   "tipSettings": {
     "tips": [],
     "tipDisplayEnabled": false,
@@ -156,11 +154,13 @@
     "damageTypes": []
   },
   "otherSettings": {
-    "startingCharacterLevelUpRequirement": 500,
-    "extraRequiredXPPerCharacterLevel": 100,
-    "maxCharacterLevel": 999,
     "npcHealthPerLevel": 10,
     "npcMinHealth": 0
+  },
+  "progressionSettings": {
+    "startingCharacterLevelUpRequirement": 500,
+    "extraRequiredXPPerCharacterLevel": 100,
+    "maxCharacterLevel": 999
   },
   "characterCreationMusic": "nonfantasy",
   "skills": {},

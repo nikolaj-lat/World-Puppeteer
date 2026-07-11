@@ -2,10 +2,15 @@
 
 const AI_INSTRUCTION_LEAF_LIMIT = 5_000;
 const AI_INSTRUCTION_TASK_LIMIT = 20_000;
-// Per the wiki mirror (size-limits, snapshot refreshed 2026-07-06):
-// - leaf limit: 5,000 raw codepoints; generateNPCIntents leaves raised to 8,000.
-// - task limit: 20,000 as the SUM of instruction chars across the task's string
-//   leaves (raw codepoints, not serialized JSON); generateNPCIntents raised to 40,000.
+// Voyage v35 live-validator behavior (empirically verified 2026-07-11 against
+// four exact live error deltas; the wiki size-limits table still says "raw
+// characters" and is stale on the measurement method):
+// - leaf limit: 5,000 measured as JSON.stringify(leaf).length — the escaped
+//   JSON string INCLUDING the surrounding quotes (\n and " cost 2, surrogate
+//   pairs cost 2); generateNPCIntents leaves raised to 8,000.
+// - task limit: 20,000 measured as JSON.stringify(task, null, 2).length — the
+//   pretty-printed JSON of the whole task object, so key names, indentation,
+//   braces, and escapes all count; generateNPCIntents raised to 40,000.
 const AI_INSTRUCTION_TASK_LIMIT_OVERRIDES = {
   generateNPCIntents: 40_000,
 };
@@ -29,13 +34,23 @@ function codePointLength(value) {
   return Array.from(String(value)).length;
 }
 
+// Live v35 leaf measure: escaped JSON string including surrounding quotes.
+function serializedLeafLength(value) {
+  return JSON.stringify(String(value)).length;
+}
+
+// Live v35 task measure: pretty-printed (indent=2) JSON of the task value.
+function serializedTaskLength(value) {
+  return JSON.stringify(value, null, 2).length;
+}
+
 function collectAiInstructionLeaves(value, pathName, leafLimit = AI_INSTRUCTION_LEAF_LIMIT) {
   if (typeof value === 'string') {
     return {
       leaves: [{
         path: pathName,
         text: value,
-        used: codePointLength(value),
+        used: serializedLeafLength(value),
         limit: leafLimit,
       }],
       invalid: [],
@@ -107,7 +122,7 @@ function measureAiInstructions(aiInstructions, rootPath = 'aiInstructions') {
     invalid.push(...taskResult.invalid);
     tasks.push({
       path,
-      used: taskResult.leaves.reduce((sum, leaf) => sum + leaf.used, 0),
+      used: serializedTaskLength(taskValue),
       limit: aiInstructionTaskLimit(taskId),
     });
   }
@@ -129,6 +144,8 @@ module.exports = {
   aiInstructionLeafLimit,
   aiInstructionTaskLimit,
   codePointLength,
+  serializedLeafLength,
+  serializedTaskLength,
   collectAiInstructionLeaves,
   measureAiInstructions,
 };

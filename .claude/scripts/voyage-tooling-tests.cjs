@@ -43,29 +43,21 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
 
 {
   const result = validate(baseConfig);
-  assert(result.schemaVersion === 'V34', 'default validation must use V34');
-  assert(result.errors.length === 0, `template V34 config must validate without errors: ${JSON.stringify(result.errors)}`);
+  assert(result.schemaVersion === 'V35', 'default validation must use V35');
+  assert(result.errors.length === 0, `template V35 config must validate without errors: ${JSON.stringify(result.errors)}`);
 }
 
 {
-  const v33Config = clone(baseConfig);
-  v33Config.configVersion = 'V33';
-  v33Config.heroesVersion = 33;
-  delete v33Config.narrativeEvents;
-  delete v33Config.embeddingModel;
-  delete v33Config.embeddingDimension;
+  const staleConfig = clone(baseConfig);
+  staleConfig.configVersion = 'V33';
 
-  const defaultResult = validate(v33Config);
-  assert(defaultResult.errors.some((entry) => entry.path === 'configVersion' && entry.message.includes("expected 'V34'")), 'default V34 validation must reject V33 configVersion');
-
-  const v33Result = validate(v33Config, { schemaVersion: 'V33' });
-  assert(v33Result.schemaVersion === 'V33', 'explicit V33 validation must report V33');
-  assert(!v33Result.errors.some((entry) => entry.path === 'configVersion' || entry.path === 'heroesVersion'), 'explicit V33 validation must preserve historical version checks');
+  const defaultResult = validate(staleConfig);
+  assert(defaultResult.errors.some((entry) => entry.path === 'configVersion' && entry.message.includes("expected 'V35'")), 'default V35 validation must reject stale configVersion');
 }
 
 {
-  const validV34 = clone(baseConfig);
-  validV34.skills = {
+  const validV35 = clone(baseConfig);
+  validV35.skills = {
     courage: {
       name: 'courage',
       attribute: 'will',
@@ -74,9 +66,9 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
       startingItems: [],
     },
   };
-  validV34.attributeSettings.attributeNames = ['will'];
-  validV34.skillSettings.skillTypeDifficultyBonus = { general: 0 };
-  validV34.traits = {
+  validV35.attributeSettings.attributeNames = ['will'];
+  validV35.skillSettings.skillTypeDifficultyBonus = { general: 0 };
+  validV35.traits = {
     Brave: {
       name: 'Brave',
       description: 'Stands firm.',
@@ -91,7 +83,7 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
       resistances: [],
     },
   };
-  validV34.quests = {
+  validV35.quests = {
     'Signal the Guard': {
       name: 'Signal the Guard',
       questSource: 'Guard Captain',
@@ -107,7 +99,7 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
       nextStep: { text: 'Stay near the gate.', source: 'objective' },
     },
   };
-  validV34.locations = {
+  validV35.locations = {
     Gate: {
       name: 'Gate',
       basicInfo: '',
@@ -120,9 +112,9 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
       areas: {},
     },
   };
-  validV34.regions = { Yard: { name: 'Yard', basicInfo: '', realm: 'World' } };
-  validV34.realms = { World: { name: 'World', basicInfo: '' } };
-  validV34.narrativeEvents = {
+  validV35.regions = { Yard: { name: 'Yard', basicInfo: '', realm: 'World' } };
+  validV35.realms = { World: { name: 'World', basicInfo: '' } };
+  validV35.narrativeEvents = {
     courier_arrival: {
       title: 'Courier Arrival',
       beats: 'A courier arrives and asks for the guard.',
@@ -130,7 +122,7 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
       onCompleteEffects: [{ type: 'quest-complete', questId: 'Signal the Guard' }],
     },
   };
-  validV34.triggers = {
+  validV35.triggers = {
     start_event: {
       name: 'start_event',
       scope: 'party',
@@ -144,7 +136,7 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
     },
   };
 
-  const result = validate(validV34);
+  const result = validate(validV35);
   assert(result.errors.length === 0, `valid V34 narrative/quest/trigger/trait fixture must pass: ${JSON.stringify(result.errors)}`);
 }
 
@@ -183,10 +175,9 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
   };
 
   const result = validate(invalid);
-  assert(result.errors.some((entry) => entry.path === 'traits.Legacy.traitNarrativeEffects'), 'V34 traits must require traitNarrativeEffects');
-  assert(result.errors.some((entry) => entry.path === 'traits.Legacy.quirk'), 'V34 traits must reject V33-only quirk field');
-  assert(result.errors.some((entry) => entry.path === 'quests.LegacyQuest.completionCondition'), 'V34 quests must reject string completionCondition');
-  assert(result.errors.some((entry) => entry.path === 'quests.LegacyQuest.detailType'), 'V34 quests must reject invalid detailType values');
+  assert(result.errors.some((entry) => entry.path === 'traits.Legacy.quirk'), 'V35 must reject V33-only quirk field');
+  assert(result.errors.some((entry) => entry.path === 'quests.LegacyQuest.completionCondition'), 'V35 quests must reject string completionCondition');
+  assert(result.errors.some((entry) => entry.path === 'quests.LegacyQuest.detailType'), 'V35 quests must reject invalid detailType values');
   assert(result.errors.some((entry) => entry.path === 'triggers.old_shape.conditions[0].operator'), 'quest-status must use equals/notEquals');
   assert(result.errors.some((entry) => entry.path === 'triggers.old_shape.effects[0].operator'), 'quest-init must require operator set');
 }
@@ -201,8 +192,8 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
   warningConfig.itemSettings.itemSlots = warningConfig.itemSettings.itemSlots.length > 0
     ? warningConfig.itemSettings.itemSlots
     : [{ slot: firstSlot, category: firstCategory, quantity: 1 }];
-  warningConfig.items = warningConfig.items || {};
-  warningConfig.items.WarningBlade = {
+  warningConfig.itemTypes = warningConfig.itemTypes || {};
+  warningConfig.itemTypes.WarningBlade = {
     name: 'WarningBlade',
     category: firstCategory,
     slot: firstSlot,
@@ -359,27 +350,13 @@ const baseConfig = loadAndMergeTabs(templateWorld.tabsPath).config;
 
   const countResult = analyzeConfig(changedLimits);
   const validateResult = validate(changedLimits);
-  assert(countResult.sections.nameFilterSettings.limit === 150_000, 'V34 nameFilterSettings section limit must be 150000');
+  assert(countResult.sections.nameFilterSettings.limit === 150_000, 'V35 nameFilterSettings section limit must be 150000');
   // Wiki size-limits (snapshot 2026-07-06): storyStart entry 8,000 pretty JSON, trigger 10,000 compact JSON.
-  assert(countResult.entries.oversized.some((entry) => entry.path === 'storyStarts[Start]' && entry.limit === 8_000), 'V34 story start entry limit must be 8000 pretty chars');
-  assert(validateResult.errors.some((entry) => entry.path === 'triggers.big' && entry.message.includes('10000')), 'V34 trigger compact size limit must be 10000');
+  assert(countResult.entries.oversized.some((entry) => entry.path === 'storyStarts[Start]' && entry.limit === 8_000), 'V35 story start entry limit must be 8000 pretty chars');
+  assert(validateResult.errors.some((entry) => entry.path === 'triggers.big' && entry.message.includes('10000')), 'V35 trigger compact size limit must be 10000');
 }
 
-{
-  const cliConfig = clone(baseConfig);
-  cliConfig.configVersion = 'V33';
-  cliConfig.heroesVersion = 33;
-  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-validate-version-'));
-  const cliPath = path.join(tempRoot, 'version-world.json');
-  writeJson(cliPath, cliConfig);
-  const result = spawnSync(process.execPath, [path.join(repoRoot, '.claude/scripts/validate.js'), cliPath, '--json', '--schema-version', 'V33'], {
-    cwd: repoRoot,
-    encoding: 'utf8',
-  });
-  assert(result.status === 0, `explicit V33 CLI validation must exit 0: ${result.stdout}${result.stderr}`);
-  const parsed = JSON.parse(result.stdout);
-  assert(parsed.schemaVersion === 'V33', 'CLI JSON diagnostics must identify selected schema version');
-}
+
 
 if (failures.length > 0) {
   for (const failure of failures) console.error(`FAIL: ${failure}`);

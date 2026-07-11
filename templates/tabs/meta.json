@@ -1,9 +1,7 @@
 {
-  "configVersion": "V34",
-  "heroesVersion": 34,
   "embeddings": {},
-  "embeddingModel": "",
-  "embeddingDimension": 0,
+  "arcs": {},
+  "questTriggers": {},
   "tipSettings": {
     "tips": [],
     "tipDisplayEnabled": false,

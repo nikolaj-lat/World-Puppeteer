@@ -99,31 +99,52 @@ try {
     'separate valid AI tasks must produce no AI validation errors'
   );
 
-  const unicodeBoundary = writeFixture('unicode-boundary', {
-    unicodeTask: {
-      custom: '😀'.repeat(5000),
+  // v35 live validator measures leaves as JSON.stringify(leaf).length —
+  // escaped string INCLUDING quotes. 4,998 ASCII chars serialize to exactly
+  // 5,000, so this sits at the boundary and must pass.
+  const leafBoundary = writeFixture('leaf-boundary', {
+    boundaryTask: {
+      custom: 'a'.repeat(4998),
     },
   });
 
-  const unicodeCount = runJson(countScript, unicodeBoundary);
-  const unicodeValidate = runJson(validateScript, unicodeBoundary);
+  const boundaryCount = runJson(countScript, leafBoundary);
+  const boundaryValidate = runJson(validateScript, leafBoundary);
 
   assert(
-    unicodeCount.status === 0,
-    'count.js must count 5,000 emoji as 5,000 Unicode codepoints'
+    boundaryCount.status === 0,
+    'count.js must measure leaves as serialized JSON including quotes (4,998 ASCII = 5,000 serialized = at limit)'
   );
 
   assert(
-    unicodeCount.parsed?.aiInstructions?.individual?.length === 0,
-    'the 5,000-codepoint string boundary must not be oversized'
+    boundaryCount.parsed?.aiInstructions?.individual?.length === 0,
+    'the 5,000-serialized-char leaf boundary must not be oversized'
   );
   assert(
-    aiErrors(unicodeValidate).length === 0,
-    'the 5,000-codepoint string boundary must produce no AI validation error'
+    aiErrors(boundaryValidate).length === 0,
+    'the 5,000-serialized-char leaf boundary must produce no AI validation error'
   );
 
-  // Task totals are the SUM of leaf codepoints (wiki: "sum of instruction
-  // chars"), so five 4,001-char leaves land at 20,005 -- just over the cap.
+  // Escapes count double: 4,990 chars + 5 newlines serialize to
+  // 4,990 + 5 + 2 = ... actually 4,985 'a' + 5 '\n' = 4,990 raw but
+  // 4,985 + 10 + 2 = 4,997 serialized (under); push it over with a
+  // 4,994-raw string holding 5 newlines: 4,989 + 10 + 2 = 5,001.
+  const escapedLeaf = writeFixture('escaped-leaf', {
+    escapedTask: {
+      custom: `${'a'.repeat(4989)}${'\n'.repeat(5)}`,
+    },
+  });
+
+  const escapedCount = runJson(countScript, escapedLeaf);
+
+  assert(
+    escapedCount.status === 1,
+    'count.js must count escaped characters (\\n) as 2 serialized chars, matching the live validator'
+  );
+
+  // Task totals are the pretty-printed (indent=2) JSON length of the whole
+  // task object — keys, indentation, braces, and escapes all count — so five
+  // 4,001-char leaves land well over the 20,000 cap.
   const fourThousandOne = 'a'.repeat(4001);
   const oversizedTask = writeFixture('oversized-task', {
     oversizedTask: {

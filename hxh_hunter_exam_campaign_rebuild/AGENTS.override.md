@@ -13,7 +13,7 @@ Never assert a fate, power, Nen category, institution, relationship, or timeline
 - `hxh_hunter_exam_campaign_rebuild/tabs/` is the authoritative editable source for all Hunter x Hunter world content.
 - `hxh_hunter_exam_campaign_rebuild/HxH.json` is generated, tracked output built from those authoritative tabs.
 - `World-Puppeteer/tabs/` is baseline/reference material only. Never copy, synchronize, or restore it over the HxH repository's `tabs/`.
-- `hxh_hunter_exam_campaign_rebuild/_local_reference/snapshot-20260703T112105Z` — mirrored Wiki
+- `hxh_hunter_exam_campaign_rebuild/_local_reference/snapshot-20260711T112610Z` — mirrored Wiki
 - The parent World-Puppeteer checkout supplies shared build and validation tooling; it does not supersede the HxH source files.
 
 For HxH work, edit this repository's `tabs/`, rebuild this repository's `HxH.json`, run validation, and run the maintained suites in `tests/`. The HxH repository tracks its own tabs; parent-repository ignore behavior does not make them disposable.

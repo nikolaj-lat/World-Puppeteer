@@ -117,12 +117,23 @@ const REQUIRED_COMBAT_SETTINGS = [
   'damageTypes',
 ];
 
-const REQUIRED_OTHER_SETTINGS = [
+const REQUIRED_OTHER_SETTINGS_V34 = [
   'startingCharacterLevelUpRequirement',
   'extraRequiredXPPerCharacterLevel',
   'maxCharacterLevel',
   'npcHealthPerLevel',
   'npcMinHealth',
+];
+
+const REQUIRED_OTHER_SETTINGS_V35 = [
+  'npcHealthPerLevel',
+  'npcMinHealth',
+];
+
+const REQUIRED_PROGRESSION_SETTINGS = [
+  'startingCharacterLevelUpRequirement',
+  'extraRequiredXPPerCharacterLevel',
+  'maxCharacterLevel',
 ];
 
 const REQUIRED_LOCATION_SETTINGS = [
@@ -257,9 +268,10 @@ function validateRequiredFields(config, errors) {
     }
   }
 
-  // worldBackground (lives at top-level in tabs/world-background.json; build.js hoists into storySettings.worldBackground)
+  // worldBackground: V34 authored it in tabs/world-background.json (hoisted); V35 authors it
+  // directly as storySettings.worldBackground in any tab. Check the compiled location only.
   if (config.storySettings && config.storySettings.worldBackground === undefined && config.worldBackground === undefined) {
-    errors.push(createError('worldBackground', 'Missing required field: worldBackground (top-level in tabs/world-background.json, hoisted to storySettings.worldBackground in compiled config)'));
+    errors.push(createError('worldBackground', 'Missing required field: storySettings.worldBackground'));
   }
 
   // attributeSettings subfields
@@ -291,9 +303,21 @@ function validateRequiredFields(config, errors) {
 
   // otherSettings subfields
   if (config.otherSettings) {
-    for (const field of REQUIRED_OTHER_SETTINGS) {
+    const requiredOtherSettings = activeSchemaRules.version === 'V34'
+      ? REQUIRED_OTHER_SETTINGS_V34
+      : REQUIRED_OTHER_SETTINGS_V35;
+    for (const field of requiredOtherSettings) {
       if (config.otherSettings[field] === undefined) {
         errors.push(createError(`otherSettings.${field}`, `Missing required field: otherSettings.${field}`));
+      }
+    }
+  }
+
+  // progressionSettings subfields (V35+)
+  if (activeSchemaRules.version !== 'V34' && config.progressionSettings) {
+    for (const field of REQUIRED_PROGRESSION_SETTINGS) {
+      if (config.progressionSettings[field] === undefined) {
+        errors.push(createError(`progressionSettings.${field}`, `Missing required field: progressionSettings.${field}`));
       }
     }
   }
@@ -1070,8 +1094,8 @@ function validateDamageTypes(config, errors) {
   }
 }
 
-function validateV34Quests(config, errors) {
-  if (activeSchemaRules.version !== 'V34' || !config.quests) return;
+function validateQuests(config, errors) {
+  if (!config.quests) return;
   const validSpatialRelationships = ['existingLocalArea', 'newLocalArea', 'nearbyNewLocation', 'distantNewLocation', 'existingLocationNewAreas'];
   const validObjectiveStatuses = ['hidden', 'active', 'completed'];
   const validNextStepSources = ['objective', 'narrative-event'];
@@ -1149,8 +1173,8 @@ function validateV34Quests(config, errors) {
   }
 }
 
-function validateV34NarrativeEvents(config, errors) {
-  if (activeSchemaRules.version !== 'V34' || !config.narrativeEvents) return;
+function validateNarrativeEvents(config, errors) {
+  if (!config.narrativeEvents) return;
   for (const [eventId, event] of Object.entries(config.narrativeEvents)) {
     const basePath = `narrativeEvents.${eventId}`;
     for (const field of ['title', 'beats']) requireField(event, field, basePath, errors);
@@ -1620,7 +1644,7 @@ function validateTypeChecks(config, errors) {
       checkBoolean(`resourceSettings.${resourceId}.canCost`, resource.canCost);
       checkString(`resourceSettings.${resourceId}.usageInstructions`, resource.usageInstructions);
       if (resource.maxValue === 0) {
-        errors.push(createError(`resourceSettings.${resourceId}.maxValue`, 'maxValue 0 can produce invalid XP/resource behavior in V34; use a non-zero max value', 'warning'));
+        errors.push(createError(`resourceSettings.${resourceId}.maxValue`, 'maxValue 0 can produce invalid XP/resource behavior; use a non-zero max value', 'warning'));
       }
     }
   }
@@ -1739,15 +1763,16 @@ function validateUnknownFields(config, errors) {
       'name', 'description', 'quirk', 'attributes', 'skills', 'resources',
       'startingItems', 'abilities', 'unlockedBy', 'excludedBy',
       'traitNarrativeEffects', 'vulnerabilities', 'resistances', 'immunities',
+      'requirements',
     ]),
     npcTypes: new Set([
       'name', 'description', 'vulnerabilities', 'resistances', 'immunities',
     ]),
     quests: new Set([
       'name', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
-      'questGiverNPC', 'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
-      'objectives', 'activeObjectiveId', 'nextStep', 'npcs',
-      'questType', // D-018: remote validator (authority) requires/recommends this; local schema was stale (mirrors D-012)
+      'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
+      'objectives', 'activeObjectiveId', 'nextStep',
+      // V35 removed: questGiverNPC, questType (D-018), npcs
     ]),
     storyStarts: new Set([
       'name', 'description', 'storyStart', 'locations', 'locationAreas',
@@ -1765,9 +1790,7 @@ function validateUnknownFields(config, errors) {
     ]),
   };
 
-  if (activeSchemaRules.version === 'V34') {
-    KNOWN_FIELDS.traits.delete('quirk');
-  }
+  KNOWN_FIELDS.traits.delete('quirk'); // quirk is V33-only; invalid in V34+
 
   // Settings sub-objects
   const KNOWN_SETTINGS_FIELDS = {
@@ -1797,9 +1820,16 @@ function validateUnknownFields(config, errors) {
       'npcDailyHealingAmount', 'damageTypes',
     ]),
     otherSettings: new Set([
-      'startingCharacterLevelUpRequirement', 'extraRequiredXPPerCharacterLevel',
-      'maxCharacterLevel',
       'npcHealthPerLevel', 'npcMinHealth',
+      // V34 only — tolerate if present (platform auto-migrates to progressionSettings on load)
+      'startingCharacterLevelUpRequirement', 'extraRequiredXPPerCharacterLevel', 'maxCharacterLevel',
+    ]),
+    progressionSettings: new Set([
+      'startingCharacterLevelUpRequirement', 'extraRequiredXPPerCharacterLevel',
+      'maxCharacterLevel', 'abilityPointEveryLevels', 'abilityPointsPerGrant',
+      'attributePointEveryLevels', 'attributePointsPerGrant', 'maxAttributeValue',
+      'traitPickEveryLevels', 'traitPicksPerGrant', 'locationDiscoveryXP',
+      'levelUpTraitPool', 'milestoneTitles',
     ]),
     storySettings: new Set([
       'worldBackground', 'questGenerationGuidance',
@@ -2281,6 +2311,16 @@ function validateLocationCoordinates(config, errors) {
 function validate(config, options = {}) {
   activeSchemaRules = getVoyageSchemaRules(options.schemaVersion || CURRENT_VOYAGE_SCHEMA_VERSION);
   LIMITS = activeSchemaRules.limits;
+
+  // V35 renames: normalize to V34 internal key names so all downstream checks work unchanged.
+  if (activeSchemaRules.version === 'V35') {
+    config = { ...config };
+    if (config.itemTypes !== undefined && config.items === undefined) {
+      config.items = config.itemTypes;
+      delete config.itemTypes;
+    }
+  }
+
   const collector = createFindingCollector();
   const errors = collector.errorSink;
   const warnings = collector.warningSink;
@@ -2290,8 +2330,8 @@ function validate(config, options = {}) {
   validateReferenceIntegrity(config, errors);
   validateTriggers(config, errors);
   validateDamageTypes(config, errors);
-  validateV34Quests(config, errors);
-  validateV34NarrativeEvents(config, errors);
+  validateQuests(config, errors);
+  validateNarrativeEvents(config, errors);
   validateCharacterLimits(config, errors, warnings);
   validateTypeChecks(config, errors);
   validateNameKeyMatch(config, errors);
