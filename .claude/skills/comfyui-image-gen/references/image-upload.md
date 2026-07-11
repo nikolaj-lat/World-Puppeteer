@@ -1,6 +1,6 @@
 # Image Upload (Trinetra)
 
-Upload an image to a self-hosted **Trinetra** instance and get a public URL. The
+Upload an image to **Trinetra** and get a public URL. The
 instance requires an API key; the script provisions one for you with no browser
 (register → mint key → cache), so first-run setup is a single flag.
 
@@ -51,7 +51,7 @@ commit that file; it holds the password and API key in plaintext (it is
 - A suspended account (or a deleted/revoked key) makes every request `401`
   ("authentication required"), because Trinetra treats a suspended user as
   unauthenticated for API keys and sessions alike. Try to re-provision a fresh
-  API-Key if that happens, try a POST request on `{ base_url }/auth/login`
+  API-Key if that happens, but first do a `POST` request on `{ base_url }/auth/login`
   with `-H 'Content-Type: application/json' \
   -d '{"username":"<username>","password":"<password>"}'`. If the response
   is `{"error":"this account has been suspended"}`, blacklist the image upload in memory and inform the user.
