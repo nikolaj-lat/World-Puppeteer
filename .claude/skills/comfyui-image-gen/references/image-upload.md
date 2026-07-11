@@ -39,7 +39,6 @@ commit that file; it holds the password and API key in plaintext (it is
 
 | Variable | Effect |
 |----------|--------|
-| `TRINETRA_BASE_URL` | Target a different instance (default `https://trinetra.mahesvara.cloud`). |
 | `TRINETRA_USERNAME` | Provide the registration username instead of `-U`. |
 | `TRINETRA_CREDENTIALS` | Credentials file path (same as `-c`). |
 | `TRINETRA_API_KEY` | Use an existing key and skip provisioning entirely. |
