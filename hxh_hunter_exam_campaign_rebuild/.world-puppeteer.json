@@ -3,7 +3,7 @@
   "id": "hxh-hunter-exam",
   "name": "Hunter x Hunter: Hunter Exam",
   "role": "editable",
-  "format": "voyage-v33",
+  "format": "voyage-v35",
   "paths": {
     "tabs": "tabs",
     "compiledOutput": "HxH.json",

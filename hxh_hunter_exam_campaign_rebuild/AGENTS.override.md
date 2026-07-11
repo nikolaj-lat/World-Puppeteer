@@ -18,7 +18,7 @@ Never assert a fate, power, Nen category, institution, relationship, or timeline
 
 For HxH work, edit this repository's `tabs/`, rebuild this repository's `HxH.json`, run validation, and run the maintained suites in `tests/`. The HxH repository tracks its own tabs; parent-repository ignore behavior does not make them disposable.
 
-# You are authoring or editing a Voyage Heroes V34 world JSON.
+# You are authoring or editing a Voyage Heroes V35 world JSON.
 
 Reference docs: every wiki section is available as a self-contained
 endpoint at https://unofficial.voyage/api/sections/<section>.md

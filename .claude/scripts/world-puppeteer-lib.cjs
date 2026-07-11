@@ -7,7 +7,7 @@ const {
 } = require('./schema-utils.cjs');
 
 const MARKER_FILE = '.world-puppeteer.json';
-const KNOWN_FORMATS = new Set(['voyage-v33', 'voyage-v34']);
+const KNOWN_FORMATS = new Set(['voyage-v33', 'voyage-v34', 'voyage-v35']);
 const TIMEOUT_MS = 120000;
 const BUILD_TEMP_PREFIX = '.world-puppeteer-build-';
 const BUILD_LOCK_STALE_MS = 10 * 60 * 1000;
