@@ -20,7 +20,7 @@ const { values, positionals } = parseArgs({
   allowPositionals: true,
   options: {
     name:     { type: "string",  short: "n" },
-    workflow: { type: "string",  short: "w", default: "anima.json" },
+    workflow: { type: "string",  short: "w", default: "base_workflow.json" },
     host:     { type: "string", default: "127.0.0.1:5000" }, // which comfyui-api to hit
     negative: { type: "string" },
     width:    { type: "string" },
@@ -48,7 +48,7 @@ if (!prompt || !name) {
   console.error("");
   console.error("Options:");
   console.error("  -n, --name       Output name (required, e.g. 'leo'). Auto-increments.");
-  console.error("  -w, --workflow   Workflow file (default: anima.json). 'anima.json' takes natural language.");
+  console.error("  -w, --workflow   Workflow file (default: base_workflow.json). Prompt format depends on the workflow.");
   console.error("      --host       comfyui-api host:port or URL (default: 127.0.0.1:5000)");
   console.error("      --negative   Negative prompt (default: painterly-leaning quality negative)");
   console.error("      --width      Width override (default: workflow's own / 832)");

@@ -254,13 +254,30 @@ A semi-realistic painterly digital portrait, RPG character splash art, painted b
 6. **Never modify the approved prompt without flagging the change.** If a previous generation didn't capture a detail (e.g., build reads too thin), explain the issue and propose a prompt change before regenerating. Do not silently add words to the prompt.
 7. Run cli.exe with `--workflow <chosen>.json --out images/generated/[name-lowercase]-000.png --prompt "<prompt>"`. Add `--width 832 --height 1216` to force portrait size. Match the prompt style to the chosen workflow (natural language vs. tags). For each retry/variant, increment the `--out` suffix (`-001`, `-002`, …) yourself — cli.exe does not auto-increment.
 8. Show the image and **wait for user approval**. If touch-ups are needed, use `--img2img <path>` to edit the existing image rather than regenerating from scratch. When the user specifies a base image for img2img edits, use that base for all subsequent retries unless the user explicitly changes it.
-9. Only once approved, host it for a stable URL (the local file lives under `images/generated/`, but a hosted link is what goes into the config):
+9. Only once approved, host it for a stable URL (the local file lives under `images/generated/`, but a hosted link is what goes into the config). Images are hosted on a self-hosted **Trinetra** instance (default `https://pixelvault.andrew.home`, override with `TRINETRA_BASE_URL`):
 
 ```bash
-node .claude/skills/comfyui-image-gen/scripts/upload-image.mjs -n [name-lowercase] images/generated/<file>.png
+node .claude/skills/comfyui-image-gen/scripts/upload-image.mjs -n [name-lowercase] -l <purpose-label> -U <username> images/generated/<file>.png
 ```
 
-This uploads (to catbox.moe), prints the URL, and moves the file to `images/uploaded/{name}-{hash}.png`. **Note:** catbox may return `412 Precondition Failed` when anonymous uploads are blocked/rate-limited — set `CATBOX_USERHASH`, use a different host, or paste a URL the user provides. If the user already has a hosted image URL, skip this step.
+**Always pass `-l <purpose-label>`** — this names the image *on the server* (`PATCH /api/images/:id`, cosmetic `original_name`; the URL/id never change) so the LLM can later tell which `/i/<url>` is for what, straight from the gallery or `GET /api/images`. **Name by what the image is FOR, using an `<purpose>_<name>` convention:**
+
+| Image is a… | Label |
+|---|---|
+| Character/NPC portrait | `portrait_<name>` (e.g. `portrait_leo`) |
+| App/scene background | `background_<name>` (e.g. `background_tavern`) |
+| Logo / glyph / icon | `logo_<name>`, `glyph_<name>`, `icon_<name>` |
+| Anything else | `<purpose>_<name>` — a short descriptive purpose + the subject |
+
+Use lowercase, `_`/`-` separators, no spaces. When uploading an NPC portrait (step 10 flow), the label is `portrait_<npc-name-lowercase>`. Rename is best-effort: if it fails, the upload still succeeds and prints the URL — you just get a warning.
+
+**First run — provisioning credentials:** the instance needs an API key, and the script mints one for you with no browser. **Ask the user for a `username`** (3–32 chars: letters, numbers, `.` `_` `-`) and pass it via `-U <username>`. On that first run the script registers the account (it **generates the password itself** — you do not choose one), mints an API key, and saves `{ base_url, username, password, api_key }` to **`trinetra.credentials`** in the project root (mode `600`). **Later runs reuse that file automatically** — omit `-U` once the file exists. Never commit `trinetra.credentials`; it holds the password and key in plaintext.
+
+The script prints the public URL and moves the file to `images/uploaded/{name}-{hash}.png`. **Notes:**
+- If `trinetra.credentials` already exists, `-U` is ignored — the cached key is used.
+- A `409` on first run means that username is already taken (or the credentials file was lost); pick a different `-U <username>`.
+- Override the instance with `TRINETRA_BASE_URL`, the username with `$TRINETRA_USERNAME`, the credentials path with `-c`/`$TRINETRA_CREDENTIALS`, or skip provisioning entirely by setting `$TRINETRA_API_KEY`.
+- If the user already has a hosted image URL, skip this step.
 
 10. Add the returned URL as `"portraitUrl"`:
     - **NPCs** → the NPC entry in `tabs/npcs.json`
