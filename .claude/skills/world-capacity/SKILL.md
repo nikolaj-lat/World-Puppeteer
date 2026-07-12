@@ -12,7 +12,7 @@ Resolve the target world first, then run `node .claude/scripts/count.js --world 
 ## Usage
 
 ```bash
-node .claude/scripts/count.js --world hxh_hunter_exam_campaign_rebuild --json
+node .claude/scripts/count.js --world <world-root> --json
 node .claude/scripts/count.js --world templates --json
 ```
 

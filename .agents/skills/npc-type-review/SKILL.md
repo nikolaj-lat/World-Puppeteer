@@ -19,4 +19,4 @@ Review only. Do not edit reviewed content directly.
 
 Use `species-consistency` only when the type represents a species/lineage and the target world or task requires cross-entry synchronization.
 
-Do not apply yokai, kegare, or Japanese folklore criteria unless an active world profile explicitly requires them.
+Do not apply any world-specific cultural, folklore, or genre criteria unless an active world profile explicitly requires them.

@@ -20,10 +20,10 @@ Each field serves a different purpose and has a **different format**, but all sh
 
 The lore paragraphs are identical across NPC Type `description`, Trait `description`, and Trait `quirk`. They follow this structure:
 
-1. **Origin sentence** - How the species comes into being (transformation, born as yokai, made through ritual, etc.)
+1. **Origin sentence** - How the species comes into being (transformation, born into the kind, made through ritual, etc.)
 2. **Physical features** - Concrete sensory details of their appearance
-3. **Reikan sentence** - "These features remain invisible to those without Reikan, though [species] may reveal them at will or find them manifesting unbidden in combat."
-4. **Personality and yokai logic** - One-word personality label ("Mischievous by nature"), followed by their alien operating logic explained through concrete examples
+3. **Perception sentence** - "These features remain invisible to those without [the world's supernatural perception sense], though [species] may reveal them at will or find them manifesting unbidden in combat."
+4. **Personality and nonhuman logic** - One-word personality label ("Mischievous by nature"), followed by their alien operating logic explained through concrete examples
 
 ### Field-Specific Formats
 
@@ -52,7 +52,7 @@ Lore paragraphs, then skills appended with double newlines:
 
 ### Trait Quirk Format
 
-Lore paragraphs only. No skills section at all. Ends after the personality/yokai logic paragraph.
+Lore paragraphs only. No skills section at all. Ends after the personality/nonhuman logic paragraph.
 
 ### World Lore Text Format
 

@@ -28,7 +28,7 @@ Perform a thorough narrative review of all NPCs. Run `node .claude/scripts/revie
 
 **Depth imbalance**: Flag NPCs that are significantly underdeveloped compared to the average. Compare basicInfo and hiddenInfo length and detail level across the cast.
 
-**Tone/voice drift**: Flag modern phrasing, anachronistic language, or anything that breaks the world's established Heian-era voice. Check against the world-background for tone.
+**Tone/voice drift**: Flag phrasing that breaks the world's established voice or tone. Check against the world-background for tone.
 
 **Voice distinctiveness**: Flag NPCs whose basicInfo or hiddenInfo could be swapped with another NPC and no one would notice. Each NPC should sound like a distinct person.
 

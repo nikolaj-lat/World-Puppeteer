@@ -165,10 +165,23 @@ function isRepoToolingPath(candidate) {
     '.agents',
     '.claude',
     '.codex',
+    '.githooks',
     '.world-puppeteer',
+    'docs',
   ].map((relative) => path.join(projectDir, relative));
   if (repoToolingDirs.some((dir) => isInside(candidate, dir))) return true;
-  return ['AGENTS.md', '.world-puppeteer.json'].some((relative) => isSamePath(candidate, path.join(projectDir, relative)));
+  return [
+    'AGENTS.md',
+    'CLAUDE.md',
+    'README.md',
+    'LICENSE',
+    'package.json',
+    'package-lock.json',
+    '_config.yml',
+    '.gitignore',
+    '.gitattributes',
+    '.world-puppeteer.json',
+  ].some((relative) => isSamePath(candidate, path.join(projectDir, relative)));
 }
 
 function affectedRoutesForPaths(pathCandidates, worlds) {

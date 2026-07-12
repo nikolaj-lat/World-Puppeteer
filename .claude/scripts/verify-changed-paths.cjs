@@ -369,13 +369,19 @@ function classifyPaths(repoRoot, relativePaths, worlds) {
     '.codex',
     '.githooks',
     '.world-puppeteer',
+    'docs',
   ].map((relative) => path.join(repoRoot, relative));
 
   const toolingFiles = new Set([
     'AGENTS.md',
     'CLAUDE.md',
+    'README.md',
+    'LICENSE',
     'package.json',
     'package-lock.json',
+    '_config.yml',
+    '.gitignore',
+    '.gitattributes',
   ]);
 
   for (const relative of relativePaths) {
@@ -790,6 +796,7 @@ function main() {
           '.codex',
           '.githooks',
           '.world-puppeteer',
+          'docs',
         ].some((root) =>
           isInside(
             absolute,
@@ -799,8 +806,13 @@ function main() {
         [
           'AGENTS.md',
           'CLAUDE.md',
+          'README.md',
+          'LICENSE',
           'package.json',
           'package-lock.json',
+          '_config.yml',
+          '.gitignore',
+          '.gitattributes',
         ].includes(relative)
       ) {
         relevant.add(relative);

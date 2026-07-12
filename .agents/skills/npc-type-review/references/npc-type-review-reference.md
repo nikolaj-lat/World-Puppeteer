@@ -46,11 +46,11 @@ Every NPC type should feel like a glimpse into a life, not a stat block. The bes
 - **Duties**: What obligations constrain their choices?
 - **Secrets**: What do they hide? Why?
 
-### Alien Nature (for Yokai/Supernatural)
+### Alien Nature (for Supernatural/Nonhuman)
 
 - **Wrongness**: What feels subtly or overtly inhuman?
 - **Logic**: How does their thinking differ from human reasoning?
-- **Kegare relationship**: Are they sources, victims, or cleansers of spiritual pollution?
+- **Corruption relationship**: Are they sources, victims, or cleansers of whatever spiritual pollution or taboo the world defines?
 - **Natural connection**: What aspect of nature do they embody or distort?
 - **Spirit world ties**: How do they move between realms or perceive reality differently?
 
@@ -86,7 +86,7 @@ Every NPC type should feel like a glimpse into a life, not a stat block. The bes
 - Unique physical marker (weeping scar)
 - Cultural grounding (fallen house mon, bushido forms)
 
-### Weak Description (Yokai)
+### Weak Description (Supernatural)
 
 > **Kappa**: A water demon that lives in rivers. Green skin and a turtle shell. Loves cucumbers and can be tricked by making them spill the water in their head bowl.
 
@@ -97,15 +97,15 @@ Every NPC type should feel like a glimpse into a life, not a stat block. The bes
 - No sensory details beyond "green skin"
 - Purely mechanical interaction model
 
-### Strong Description (Yokai)
+### Strong Description (Supernatural)
 
-> **Kappa of the Silted Crossing**: Skin the color of algae bloom, perpetually slick with river water that smells of copper and rotting leaves. The dish atop their head ripples with murky liquid, reflecting distorted faces of the drowned. They move with jerky, arthropod grace, head always level to avoid spilling. Their voice gurgles like water over stones, obsessively polite while discussing which travelers might "balance the crossing's debts." They collect cucumber offerings with the solemnity of a priest receiving tribute, arranging them in precise patterns before devouring. The turtle shell fused to their back bears carved names - those who tried to trick them and failed. They see kegare as a kind of currency, measuring spiritual pollution with the cold assessment of a merchant calculating worth.
+> **Kappa of the Silted Crossing**: Skin the color of algae bloom, perpetually slick with river water that smells of copper and rotting leaves. The dish atop their head ripples with murky liquid, reflecting distorted faces of the drowned. They move with jerky, arthropod grace, head always level to avoid spilling. Their voice gurgles like water over stones, obsessively polite while discussing which travelers might "balance the crossing's debts." They collect cucumber offerings with the solemnity of a priest receiving tribute, arranging them in precise patterns before devouring. The turtle shell fused to their back bears carved names - those who tried to trick them and failed. They see spiritual pollution as a kind of currency, measuring it with the cold assessment of a merchant calculating worth.
 
 **Strengths**:
 - Specific sensory details (algae color, copper smell, gurgling voice)
 - Alien movement and perspective (head always level, arthropod grace)
 - Personality (obsessively polite, coldly mercantile)
-- Unique interpretation (kegare as currency)
+- Unique interpretation (spiritual pollution as currency)
 - Disturbing elements (faces of the drowned, carved names)
 - Kappa folklore integrated into character, not merely listed
 - Behavioral specifics (precise cucumber arrangement)

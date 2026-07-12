@@ -41,8 +41,8 @@ Work through NPC types systematically, one at a time:
 
 ### Cultural/Spiritual Depth
 
-For yokai and supernatural types:
-- How do they relate to kegare (spiritual pollution)?
+For supernatural or nonhuman types:
+- How do they relate to the world's spiritual order or metaphysics?
 - What is their relationship to the natural/spirit world?
 - What makes them alien vs humanlike?
 

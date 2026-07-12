@@ -19,4 +19,4 @@ This skill is read-only by default. Return findings; do not edit NPCs unless a s
 
 ## Boundaries
 
-Do not enforce Heian, Japanese, yokai, or other culture-specific voice rules unless the resolved world has an active profile requiring them.
+Do not enforce any culture-specific or era-specific voice rules unless the resolved world has an active profile requiring them.

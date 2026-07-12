@@ -5,7 +5,7 @@ description: Workflow for researching and adapting folklore/historical figures i
 
 # Canon NPCs
 
-Research folklore, yokai, mythology, and historical figures using web search, then write the four lore fields — `basicInfo`, `hiddenInfo`, `personality`, and `abilities` — directly onto existing NPC skeletons in the resolved `<TABS_PATH>/npcs.json`.
+Research folklore, mythology, and historical figures using web search, then write the four lore fields — `basicInfo`, `hiddenInfo`, `personality`, and `abilities` — directly onto existing NPC skeletons in the resolved `<TABS_PATH>/npcs.json`.
 
 This is a self-contained workflow skill. It produces only the lore-rich fields that require deep research, writing them directly to existing NPC entries. All other NPC fields (tier, level, hpMax, location, etc.) must already exist on the skeleton or be set separately.
 

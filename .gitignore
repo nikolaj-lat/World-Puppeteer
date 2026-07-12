@@ -4,26 +4,11 @@
 # Node tooling dependencies
 node_modules/
 
-# World specific files
-/config.json
-/HxH-Full-Canon-Reference.json
-/tabs/
-BUILD-PLAN.md
-BUILD-REPORT.md
-GEOGRAPHY.md
-NEN-DESIGN.md
-OPEN-QUESTIONS.md
-REVIEW-FINDINGS.md
-ROSTER.md
-WORLD-BIBLE.md
+# Local / generated files (not tracked)
 CLAUDE.md
-TASKS.md
 config-backups/
 images/
-stuff/
 .world-puppeteer/reports/
-dashboard.html
-memory/
 hxh_hunter_exam_campaign_rebuild/*
 !hxh_hunter_exam_campaign_rebuild/.world-puppeteer.json
 !hxh_hunter_exam_campaign_rebuild/AGENTS.override.md

@@ -26,9 +26,10 @@ World source lives in the marker-declared `paths.tabs` directory. Compiled outpu
 
 The current tracked markers are:
 
-- `.`: reference world, output `HxH-Full-Canon-Reference.json`
-- `hxh_hunter_exam_campaign_rebuild`: editable HxH world, output `HxH.json`
+- `hxh_hunter_exam_campaign_rebuild`: editable world, output `HxH.json`
 - `templates`: minimal template world, output `minimal-world.json`
+
+The repository root is tooling only; it is not itself a world.
 
 ## Shared Tooling
 
@@ -50,9 +51,9 @@ npm install
 npm test
 npm run test:experimental-git-hooks
 npm run validate:metadata
-node .claude/scripts/build-world.cjs --world hxh_hunter_exam_campaign_rebuild
-node .claude/scripts/validate.js --world hxh_hunter_exam_campaign_rebuild --json
-node .claude/scripts/count.js --world hxh_hunter_exam_campaign_rebuild --json
+node .claude/scripts/build-world.cjs --world <world-root>
+node .claude/scripts/validate.js --world <world-root> --json
+node .claude/scripts/count.js --world <world-root> --json
 ```
 
 `npm test` is the supported non-experimental gate. It runs tooling architecture, CLI contract, AI instruction limits, build safety, reference-pack architecture, world-path containment, transactional tooling, Voyage tooling, and repository metadata validation.

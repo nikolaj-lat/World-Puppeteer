@@ -157,18 +157,24 @@ function createSymlinkOrReport(targetPath, linkPath, type = 'file') {
 }
 
 const markers = findMarkers(repoRoot);
-assert(markers.length >= 3, `expected root, editable, and template world markers, found ${markers.length}`);
-assert(markers.some((entry) => entry.marker.role === 'reference'), 'expected a reference marker');
+assert(markers.length >= 2, `expected at least the editable and template world markers, found ${markers.length}`);
 assert(markers.filter((entry) => entry.marker.role === 'editable').length === 1, 'expected exactly one editable marker');
+assert(markers.some((entry) => entry.marker.role === 'template'), 'expected a template marker');
 
-const root = resolveWorld({ worldRoot: repoRoot, preferNearest: false });
-const hxh = resolveWorld({ worldRoot: path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild'), preferNearest: false });
-const template = resolveWorld({ worldRoot: path.join(repoRoot, 'templates'), preferNearest: false });
-assert(root.marker.role === 'reference', 'root marker must be reference');
-assert(hxh.marker.role === 'editable', 'HxH marker must be editable');
+// The repository root is tooling only; it must not itself be a world.
+assert(!fs.existsSync(path.join(repoRoot, '.world-puppeteer.json')), 'repo root must not carry a world marker');
+assertThrows(
+  () => resolveWorld({ worldRoot: repoRoot, preferNearest: false }),
+  /No world marker/,
+  'repo root must not resolve as a world (tooling only)'
+);
+
+const editable = resolveWorld({ worldRoot: markers.find((entry) => entry.marker.role === 'editable').root, preferNearest: false });
+const template = resolveWorld({ worldRoot: markers.find((entry) => entry.marker.role === 'template').root, preferNearest: false });
+assert(editable.marker.role === 'editable', 'editable marker must be editable');
 assert(template.marker.role === 'template', 'template marker must be template');
-assert(resolveWorld({ cwd: path.join(hxh.worldRoot, 'tabs') }).worldRoot === hxh.worldRoot, 'nearest marker must resolve nested cwd');
-assert(resolveWorld({ cwd: repoRoot }).worldRoot === hxh.worldRoot, 'repo root cwd must resolve sole editable world');
+assert(resolveWorld({ cwd: path.join(editable.worldRoot, 'tabs') }).worldRoot === editable.worldRoot, 'nearest marker must resolve nested cwd');
+assert(resolveWorld({ cwd: repoRoot }).worldRoot === editable.worldRoot, 'repo root cwd must resolve sole editable world');
 
 const ambiguousRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wp-resolver-'));
 writeMarker(path.join(ambiguousRoot, 'one'), marker('one'));
@@ -309,7 +315,8 @@ const buildCompatCli = runNode(['.claude/scripts/build.js', '--help']);
 assert(buildCompatCli.status === 0 && /build-world\.cjs/.test(buildCompatCli.stdout), 'build compatibility wrapper must delegate CLI help to build-world.cjs');
 const badValidateCli = runNode(['.claude/scripts/validate.js', '--wrold', buildRoot]);
 assert(badValidateCli.status !== 0 && /Unknown option/.test(badValidateCli.stderr), 'validate CLI must reject unknown flags');
-const localBuildWrapper = read(path.join(repoRoot, 'hxh_hunter_exam_campaign_rebuild', 'build.cjs'));
+const editableRel = path.relative(repoRoot, editable.worldRoot).split(path.sep).join('/');
+const localBuildWrapper = read(path.join(editable.worldRoot, 'build.cjs'));
 assert(localBuildWrapper.includes(".claude', 'scripts', 'build-world.cjs"), 'world-local build wrapper must target the canonical build script');
 assert(localBuildWrapper.includes("[script, '--world', __dirname]"), 'world-local build wrapper must delegate with the resolved world root');
 
@@ -321,39 +328,39 @@ const missingPathHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
 assert(missingPathHook.status === 0 && /"decision":"block"/.test(missingPathHook.stdout), 'missing changed path must block');
 const dryHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
   env: { WORLD_PUPPETEER_HOOK_DRY_RUN: '1' },
-  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/tabs/npcs.json' } }),
+  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: `${editableRel}/tabs/npcs.json` } }),
 });
-const dryHookRoutes = parseJsonStdout(dryHook, 'hook dry-run for HxH tab edit');
+const dryHookRoutes = parseJsonStdout(dryHook, 'hook dry-run for editable-world tab edit');
 assert(
   dryHook.status === 0 &&
-    dryHookRoutes.validatedEditableWorlds?.includes('hxh_hunter_exam_campaign_rebuild') &&
+    dryHookRoutes.validatedEditableWorlds?.includes(editableRel) &&
     dryHookRoutes.repositoryTooling === false,
-  'hook dry-run must classify HxH tab edits as world content'
+  'hook dry-run must classify editable-world tab edits as world content'
 );
-const dryHxhTestHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
+const dryEditableTestHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
   env: { WORLD_PUPPETEER_HOOK_DRY_RUN: '1' },
-  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/tests/correction-regression.cjs' } }),
+  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: `${editableRel}/tests/correction-regression.cjs` } }),
 });
-const dryHxhTestRoutes = parseJsonStdout(dryHxhTestHook, 'hook dry-run for HxH regression test edit');
+const dryEditableTestRoutes = parseJsonStdout(dryEditableTestHook, 'hook dry-run for editable-world regression test edit');
 assert(
-  dryHxhTestHook.status === 0 &&
-    dryHxhTestRoutes.repositoryTooling === true &&
-    dryHxhTestRoutes.affectedWorlds?.length === 0,
-  'hook dry-run must classify HxH tests/*.cjs edits as repository tooling'
+  dryEditableTestHook.status === 0 &&
+    dryEditableTestRoutes.repositoryTooling === true &&
+    dryEditableTestRoutes.affectedWorlds?.length === 0,
+  'hook dry-run must classify editable-world tests/*.cjs edits as repository tooling'
 );
-const dryHxhCwdTestHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
+const dryCwdTestHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
   env: { WORLD_PUPPETEER_HOOK_DRY_RUN: '1' },
   input: JSON.stringify({
     hook_event_name: 'PostToolUse',
     tool_name: 'Write',
-    cwd: hxh.worldRoot,
+    cwd: editable.worldRoot,
     tool_input: { file_path: 'tests/correction-regression.cjs' },
   }),
 });
-const dryHxhCwdTestRoutes = parseJsonStdout(dryHxhCwdTestHook, 'hook dry-run for HxH-cwd regression test edit');
+const dryCwdTestRoutes = parseJsonStdout(dryCwdTestHook, 'hook dry-run for editable-world-cwd regression test edit');
 assert(
-  dryHxhCwdTestHook.status === 0 && dryHxhCwdTestRoutes.repositoryTooling === true,
-  'hook dry-run must classify tests/*.cjs from the HxH cwd as repository tooling'
+  dryCwdTestHook.status === 0 && dryCwdTestRoutes.repositoryTooling === true,
+  'hook dry-run must classify tests/*.cjs from the editable world cwd as repository tooling'
 );
 const dryRepoToolingHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
   env: { WORLD_PUPPETEER_HOOK_DRY_RUN: '1' },
@@ -364,14 +371,14 @@ assert(
   dryRepoToolingHook.status === 0 && dryRepoToolingRoutes.repositoryTooling === true,
   'hook dry-run must preserve existing repository tooling classification'
 );
-const unknownHxhPathHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
-  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: 'hxh_hunter_exam_campaign_rebuild/notes/scratch.txt' } }),
+const unknownPathHook = runNode(['.codex/scripts/post-edit-validate.cjs'], {
+  input: JSON.stringify({ hook_event_name: 'PostToolUse', tool_name: 'Write', tool_input: { file_path: `${editableRel}/notes/scratch.txt` } }),
 });
 assert(
-  unknownHxhPathHook.status === 0 &&
-    /"decision":"block"/.test(unknownHxhPathHook.stdout) &&
-    /could not be classified/.test(unknownHxhPathHook.stdout),
-  'unknown HxH paths must still block'
+  unknownPathHook.status === 0 &&
+    /"decision":"block"/.test(unknownPathHook.stdout) &&
+    /could not be classified/.test(unknownPathHook.stdout),
+  'unknown editable-world paths must still block'
 );
 
 const agentDir = path.join(repoRoot, '.codex', 'agents');
