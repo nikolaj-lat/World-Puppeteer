@@ -90,17 +90,36 @@ The balanced values below support this progression curve.
 | `abilityBonus` | `10` | Default bonus for AI-generated (learned) abilities; does not scale predefined abilities |
 | `npcDailyHealingAmount` | `999` | NPCs fully heal daily |
 
-### Character Progression (otherSettings)
+### NPC Health (otherSettings)
 
 | Field | Balanced Value | Notes |
 |-------|----------------|-------|
-| `startingCharacterLevelUpRequirement` | `500` | Base XP for first level |
-| `extraRequiredXPPerCharacterLevel` | `100` | +100 XP per level |
-| `maxCharacterLevel` | `999` | Effectively uncapped |
 | `npcHealthPerLevel` | `10` | NPC HP per level |
 | `npcMinHealth` | `0` | NPC base HP |
 
 > Player HP scaling lives on the health resource (`resourceSettings.health.maxValue` and `gainPerLevel`), not in `otherSettings`. See the ai-instructions skill for the Resource schema.
+
+### Character Progression (progressionSettings)
+
+Required section. Character XP and level-up configuration lives here (legacy configs with XP fields in `otherSettings` migrate automatically).
+
+| Field | Balanced Value | Notes |
+|-------|----------------|-------|
+| `startingCharacterLevelUpRequirement` | `500` | Base XP for first level |
+| `extraRequiredXPPerCharacterLevel` | `100` | +100 XP per level; `0` = flat curve (only field allowed to be 0) |
+| `maxCharacterLevel` | `999` | Effectively uncapped |
+| `abilityPointEveryLevels` | `1` | Grant ability points every N levels |
+| `abilityPointsPerGrant` | `1` | Ability points per grant (1/1 = one per level) |
+| `attributePointEveryLevels` | `5` | Grant attribute points every N levels |
+| `attributePointsPerGrant` | `1` | Attribute points per grant |
+| `maxAttributeValue` | `999` | Cap on attributes raised by spending points |
+| `traitPickEveryLevels` | `10` | Grant trait picks every N levels |
+| `traitPicksPerGrant` | `1` | Trait picks per grant |
+| `locationDiscoveryXP` | `10` | XP per party member on first entering an area |
+| `levelUpTraitPool` | `[]` | Trait names offered on level-up picks — **empty means no trait picks are ever granted**; entries must name existing traits (see the traits skill) |
+| `milestoneTitles` | defaults | `{ levelGranted, title }[]` — titles granted when a level is hit exactly; levels unique positive integers, titles non-blank |
+
+All numeric fields must be positive whole numbers except `extraRequiredXPPerCharacterLevel` (non-negative).
 
 ## World-Specific Fields
 
@@ -119,6 +138,7 @@ These must be configured per-world:
 | `itemSettings.itemSlots` | World-specific |
 | `combatSettings.damageTypes` | Types that fit world theme |
 | `characterCreationMusic` | Optional top-level field. `"fantasy"` or `"nonfantasy"` background music for the character-creation screen. Defaults to `"fantasy"` |
+| `imageModelSources` | Optional top-level field. Pins which platform-provided image model renders NPC portraits (`portrait`), location/area images (`location`), and region maps (`region`) for the world and its games. Omit fields to use the platform's current defaults |
 
 ## lowAttributeTraits Format
 
@@ -140,7 +160,9 @@ interface Settings {
   itemSettings: ItemSettings
   combatSettings: CombatSettings
   otherSettings: OtherSettings
+  progressionSettings: ProgressionSettings
   characterCreationMusic?: 'fantasy' | 'nonfantasy'
+  imageModelSources?: { portrait?: string, location?: string, region?: string }
 }
 ```
 

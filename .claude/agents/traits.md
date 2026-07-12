@@ -21,6 +21,6 @@ If referenced entities don't exist, spawn agents in parallel:
 
 ## Species Chaining
 
-When creating a trait that represents a **species**, you must also create corresponding NPC Type and World Lore entries with **identical** `description`/`quirk`/`text`. Spawn these agents in parallel:
+When creating a trait that represents a **species**, you must also create corresponding NPC Type and World Lore entries with **identical** `description`/`traitNarrativeEffects`/`text`. Spawn these agents in parallel:
 - **npc-types** agent - create species NPC type with identical `description`
 - **world-lore** agent - create species lore with identical `text`

@@ -136,7 +136,7 @@ Story-level configuration that applies across all narrative tasks.
 ```typescript
 storySettings: {
   worldBackground: string           // World background description (required)
-  questGenerationGuidance?: string  // Guidance for AI quest and arc generation (optional, max 5000 chars)
+  questGenerationGuidance?: string  // Guidance for AI quest and arc generation (optional)
 }
 ```
 

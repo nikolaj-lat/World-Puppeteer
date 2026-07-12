@@ -84,7 +84,7 @@ The AI uses this for consistent behavior but won't reveal prematurely.
 
 ```typescript
 interface WorldLoreEntry {
-  text: string           // The lore content (max 4,000 chars)
+  text: string           // The lore content
   embeddingId?: string   // Reference to pre-computed embedding
 }
 ```

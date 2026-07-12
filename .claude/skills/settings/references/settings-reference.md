@@ -112,15 +112,69 @@ interface CombatSettings {
 
 ```typescript
 interface OtherSettings {
-  startingCharacterLevelUpRequirement: number // ✅ Base XP for level 1 (balanced: 500)
-  extraRequiredXPPerCharacterLevel: number    // ✅ Additional XP per level (balanced: 100)
-  maxCharacterLevel: number                   // ✅ Maximum character level (balanced: 999)
   npcHealthPerLevel: number                   // ✅ NPC HP per level (balanced: 10)
   npcMinHealth: number                        // ✅ NPC base HP (balanced: 0)
 }
 ```
 
 Player HP scaling lives on the health resource in `resourceSettings` — `maxValue` is the level-1 maximum and `gainPerLevel` is the per-level growth. See the Resource schema in the ai-instructions reference.
+
+## ProgressionSettings Schema
+
+Required section controlling character XP, level-ups, and what each level-up grants. Validation surfaces errors for bad values; if an invalid value slips into a saved config anyway, the engine silently falls back to that field's default when the game loads.
+
+```typescript
+interface ProgressionSettings {
+  startingCharacterLevelUpRequirement: number // ✅ XP required to reach level 2 (balanced: 500)
+  extraRequiredXPPerCharacterLevel: number    // ✅ Additional XP added per subsequent level; 0 = flat curve (balanced: 100)
+  maxCharacterLevel: number                   // ✅ Leveling stops at this level (balanced: 999)
+  abilityPointEveryLevels: number             // ✅ Grant ability points every N levels (balanced: 1)
+  abilityPointsPerGrant: number               // ✅ Ability points per grant (balanced: 1)
+  attributePointEveryLevels: number           // ✅ Grant attribute points every N levels (balanced: 5)
+  attributePointsPerGrant: number             // ✅ Attribute points per grant (balanced: 1)
+  maxAttributeValue: number                   // ✅ Cap on any attribute raised by spending points (balanced: 999)
+  traitPickEveryLevels: number                // ✅ Grant trait picks every N levels (balanced: 10)
+  traitPicksPerGrant: number                  // ✅ Trait picks per grant (balanced: 1)
+  locationDiscoveryXP: number                 // ✅ XP each party member gains on first entering an area (balanced: 10)
+  levelUpTraitPool: string[]                  // ✅ Trait names offered on level-up trait picks (balanced: [])
+  milestoneTitles: MilestoneTitle[]           // ✅ Titles granted at exact levels (balanced: Initiate@1, Adept@10, Veteran@20, Expert@30, Master@40, Legend@50)
+}
+
+interface MilestoneTitle {
+  levelGranted: number                        // Level at which the title is granted (unique positive integer)
+  title: string                               // Displayed title (non-blank)
+}
+```
+
+### XP Curve
+
+Reaching level 2 requires `startingCharacterLevelUpRequirement` XP; each later level adds `extraRequiredXPPerCharacterLevel` on top of the previous requirement (`0` gives a flat curve — the only field allowed to be 0). Leveling stops entirely at `maxCharacterLevel`.
+
+### XP Sources
+
+Characters gain XP from quest completion, major story events (party-wide), skill level-ups, and location discovery — every party member gains `locationDiscoveryXP` the first time the party enters each area (scaled up in NG+).
+
+### Level-Up Grants
+
+On each level-up, the new level L is checked against each grant interval:
+
+- If L is a multiple of `abilityPointEveryLevels`, grant `abilityPointsPerGrant` ability points. The defaults (1/1) reproduce the classic one-ability-point-per-level behavior.
+- If L is a multiple of `attributePointEveryLevels`, grant `attributePointsPerGrant` attribute points — capped so banked points never exceed what could still be spent under `maxAttributeValue`.
+- If L is a multiple of `traitPickEveryLevels`, grant `traitPicksPerGrant` trait picks — capped by how many eligible pool traits remain.
+
+### Spending Points and Picks
+
+Players spend attribute points in the Stats tab (batch spend; the spend is rejected if any attribute would exceed `maxAttributeValue`), unlock traits from `levelUpTraitPool` in the Traits tab (the offered list is filtered by trait requirements, unlockedBy, and excludedBy; effects apply immediately, just like starting traits), and choose a displayed title.
+
+**GOTCHA**: an empty `levelUpTraitPool` (the default) means no trait picks are ever granted, regardless of `traitPickEveryLevels`. See the traits skill for authoring the pool traits themselves.
+
+### Milestone Titles
+
+Titles are granted only when a level is hit exactly — a skipped milestone level is not back-granted later. A newly earned title is auto-selected and the player is prompted about it. Removing a title from the config retroactively hides it from players who already earned it. `levelGranted` values must be unique positive integers and titles must be non-blank.
+
+### Constraints
+
+Every numeric field must be a positive whole number, except `extraRequiredXPPerCharacterLevel` which may be 0 (non-negative). `levelUpTraitPool` entries must name existing traits.
 
 ## characterCreationMusic
 
@@ -129,6 +183,18 @@ characterCreationMusic?: 'fantasy' | 'nonfantasy'  // ✅ Background music playe
 ```
 
 Sets which background music plays on the character-creation screen. `'fantasy'` (the default) or `'nonfantasy'`.
+
+## imageModelSources
+
+```typescript
+imageModelSources?: {
+  portrait?: string   // ✅ Image model used for NPC portraits
+  location?: string   // ✅ Image model used for location and area images
+  region?: string     // ✅ Image model used for region map images
+}
+```
+
+Optional top-level field that pins which image-generation model renders each image type for the world and games created from it. Values are image model names provided by the platform. Leave a field unset (or set to an unrecognized name) to fall back to the platform's current default model for that type.
 
 ## Skill Check Formula
 
@@ -175,8 +241,10 @@ These are engine constants, not configurable. They determine how fast players de
 ### NPC HP Formula
 
 ```
-NPC HP = (npcHealthPerLevel × level + npcMinHealth) × tierHPModifier
+NPC HP = (npcHealthPerLevel × level + npcMinHealth) × tierHPModifier × healthMultiplier × difficultyHealthMultiplier
 ```
+
+When an NPC has no authored `hpMax`, this is derived live whenever it's needed (not frozen at world load), so HP always reflects the game's current difficulty. An authored `hpMax` on an NPC with an authored `level` is used exactly as written; on a level-less NPC it only guarantees a minimum. See the npcs reference for details.
 
 | Tier | HP Modifier |
 |------|-------------|
@@ -296,14 +364,18 @@ With balanced values (50/50):
 
 ## Character Level XP Requirements
 
+Both fields live in `progressionSettings`:
+
 ```
-XP to reach character level N = startingCharacterLevelUpRequirement + (N - 1) * extraRequiredXPPerCharacterLevel
+XP to reach character level N = startingCharacterLevelUpRequirement + (N - 2) * extraRequiredXPPerCharacterLevel
 ```
 
 With balanced values (500/100):
 - Level 2: 500 XP
 - Level 5: 800 XP
 - Level 10: 1,300 XP
+
+Leveling stops at `maxCharacterLevel`.
 
 ## Power Level Success Rates
 
@@ -322,4 +394,5 @@ With balanced values (500/100):
 | `itemSettings.itemSlots[].category` | Must match `itemCategories` values |
 | `combatSettings.damageTypes` | Used by NPC vulnerabilities/resistances/immunities |
 | `attributeSettings.attributeNames` | Used in trait and skill attribute associations |
+| `progressionSettings.levelUpTraitPool` | Trait keys from `tabs/traits.json` (see the traits skill) |
 | `resourceSettings` keys | Used by ability and trait resource modifiers |

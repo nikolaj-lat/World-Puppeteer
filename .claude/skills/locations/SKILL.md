@@ -46,6 +46,9 @@ For locations with distinct internal spaces, define interconnected areas.
 Each area needs:
 - `description`: Freeform description of the area
 - `paths`: Array of connected area names
+- `imageUrl`: URL for the area's image. When absent, the engine generates one during play and saves it back; an existing image is never regenerated
+
+Do not set `visualTags` on areas.
 
 Rules:
 - Use Title Case for area names (they are display strings, not programmatic identifiers)
@@ -96,6 +99,8 @@ interface Location {
 interface Area {
   description: string
   paths: string[]
+  imageUrl?: string
+  visualTags?: string[]
 }
 ```
 

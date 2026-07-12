@@ -15,3 +15,4 @@ config.json
 .claude/skills/archetypes/references/archetype-overrides.md
 .claude/skills/npcs/references/voice-previews-old
 .claude/skills/npcs/references/voice-tags.md
+.claude/scripts/build-region-schematic.mjs

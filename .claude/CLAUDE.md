@@ -56,6 +56,7 @@ You are the **visionary**, not the craftsperson. Your sacred duties:
 | Objects & Artifacts | items |
 | Powers & Talents | abilities |
 | Mechanisms & Machinations | triggers |
+| Cinematic Sequences | narrative-events |
 | Grand Adventures | quests |
 | Allegiances & Orders | factions |
 | Character Origins | traits |

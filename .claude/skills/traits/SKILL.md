@@ -24,27 +24,33 @@ Category patterns:
 - **Single selection** (species): `maxSelections: 1`
 - **Multiple selection** (miscellaneous): `maxSelections: 3`
 
+
+Category selection at character creation ignores `requirements`, `unlockedBy`, and `excludedBy` — those only affect level-up trait picks (see below).
+
 ## Required Fields
 
 | Field | Requirement |
 |-------|-------------|
 | `name` | Must match object key exactly |
 | `description` | What the trait is — shown to players at character creation (full paragraph) |
-| `quirk` | The narrator's reference for portraying the trait. Usually the same as `description`; elaborate further or add hidden aspects the player shouldn't see |
+| `traitNarrativeEffects` | The narrator's reference for portraying the trait. Usually the same as `description`; elaborate further or add hidden aspects the player shouldn't see |
 | `attributes` | Array of attribute modifiers (can be empty `[]`) |
 | `skills` | Array of skill modifiers (can be empty `[]`) |
 | `resources` | Array of resource modifiers (can be empty `[]`) |
 | `startingItems` | Array of items granted (can be empty `[]`) |
 | `abilities` | Array of ability names granted (can be empty `[]`) |
-| `unlockedBy` | Leave empty `[]` - NOT YET IMPLEMENTED IN UI |
-| `excludedBy` | Leave empty `[]` - NOT YET IMPLEMENTED IN UI |
+| `requirements` | Array of requirement objects (can be empty `[]`). Only gates level-up trait picks — ignored at character creation |
+| `unlockedBy` | Trait prerequisites (OR logic). Only affects level-up trait picks — ignored at character creation |
+| `excludedBy` | Trait conflicts. Only affects level-up trait picks — ignored at character creation |
 
-## description and quirk
+## description and traitNarrativeEffects
 
 For **non-species traits**:
-- By default, `description` and `quirk` carry the **same content** — write both as full paragraphs.
-- `description` is shown to players at character creation. `quirk` is the narrator's reference during play.
-- Let them **diverge** only when: (a) the quirk holds hidden aspects the player shouldn't know, or (b) the description is a shorter summary and the quirk is the elaborated, fuller version.
+- By default, `description` and `traitNarrativeEffects` carry the **same content** — write both as full paragraphs.
+- `description` is shown to players at character creation. `traitNarrativeEffects` is the narrator's reference during play.
+- Let them **diverge** only when: (a) the narrative effects hold hidden aspects the player shouldn't know, or (b) the description is a shorter summary and `traitNarrativeEffects` is the elaborated, fuller version.
+
+Older configs used a field named `quirk` for this; it is auto-migrated to `traitNarrativeEffects` verbatim. Always write `traitNarrativeEffects` in new configs.
 
 For **species traits**, see the Species Traits section below.
 
@@ -57,6 +63,14 @@ For **species traits**, see the Species Traits section below.
 | `resources` (non-empty) | Traits that affect resource pools |
 | `startingItems` (non-empty) | Class/background traits with signature equipment 
 | `abilities` (non-empty) | Traits that unlock special perks or powers |
+| `requirements` (non-empty) | Traits in the level-up pool that should be gated behind stats, skills, other traits, or character level |
+| `vulnerabilities` / `resistances` / `immunities` | Traits that should change how much typed damage the player takes in combat (e.g. a fire-elemental species immune to fire). Values must match `combatSettings.damageTypes` |
+
+## Level-Up Trait Picks
+
+Traits can be offered as level-up rewards via `progressionSettings.levelUpTraitPool` in `tabs/settings.json` (default cadence: 1 pick every 10 levels). When a pick is pending, the player chooses from pool traits they don't already have whose `unlockedBy`/`excludedBy` conditions pass and whose `requirements` are met; the chosen trait applies immediately, exactly like a starting trait. An empty pool means no picks are ever granted.
+
+**Gotcha:** `requirements`, `unlockedBy`, and `excludedBy` do nothing at character creation — they only filter the level-up pick list. To keep a trait out of starting selection, leave it out of every trait category.
 
 ## TraitModifier Format
 
@@ -96,6 +110,18 @@ Every trait within a single traitCategory should be roughly equal.
 
 The `item` must reference a valid item key from `tabs/items.json`.
 
+## requirements Format
+
+Array of prerequisite checks. All must be met for the trait to appear as a level-up pick. Same format as ability requirements.
+
+```typescript
+{ type: 'skill', variable: 'skill name', amount: 3 }      // Skill level >= 3
+{ type: 'attribute', variable: 'strength', amount: 14 }   // Attribute value >= 14
+{ type: 'characterLevel', amount: 5 }                     // Character level >= 5 (no variable)
+{ type: 'resource', variable: 'mana', amount: 50 }        // Resource max >= 50
+{ type: 'trait', variable: 'fire affinity', amount: 1 }   // Has trait (amount ignored)
+```
+
 ## Schema
 
 ```typescript
@@ -108,15 +134,23 @@ interface TraitCategory {
 interface Trait {
   name: string
   description: string
-  quirk: string
+  traitNarrativeEffects: string
   attributes: Array<{attribute: string, modifier: number}>
   skills: Array<{skill: string, modifier: number}>
   resources: Array<{resource: string, modifier: number}>
   startingItems: Array<{item: string, quantity: number}>
   abilities: string[]
+  requirements: TraitRequirement[]
   unlockedBy: string[]
   excludedBy: string[]
+  vulnerabilities?: string[]
+  resistances?: string[]
+  immunities?: string[]
 }
+
+type TraitRequirement =
+  | { type: 'resource' | 'attribute' | 'skill' | 'trait'; variable: string; amount: number }
+  | { type: 'characterLevel'; amount: number }
 ```
 
 ## Species Traits
@@ -125,8 +159,8 @@ When creating a trait that represents a **species** (playable race):
 
 1. Must have corresponding NPC Type and World Lore entries
 2. The `description` contains lore paragraphs + skill blocks separated by `\n\n`
-3. The `quirk` contains lore paragraphs only (no skills)
-4. Lore paragraphs are identical across NPC Type `description`, Trait `description`, and Trait `quirk`
+3. The `traitNarrativeEffects` contains lore paragraphs only (no skills)
+4. Lore paragraphs are identical across NPC Type `description`, Trait `description`, and Trait `traitNarrativeEffects`
 5. Must include exactly **3 skills** that work as both player skills AND NPC abilities
 6. Skills should reflect innate species abilities or cultural training
 

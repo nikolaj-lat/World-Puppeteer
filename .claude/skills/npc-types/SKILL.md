@@ -57,7 +57,7 @@ interface NPCType {
 
 ## Species NPC Types
 
-When creating an NPC type that represents a **species** (playable race or sentient creature type), you must also create corresponding Trait and World Lore entries. The `description` contains lore paragraphs + skill blocks separated by `\n`. The lore paragraphs are shared identically with the Trait `description` and Trait `quirk`; the skill block format differs per field.
+When creating an NPC type that represents a **species** (playable race or sentient creature type), you must also create corresponding Trait and World Lore entries. The `description` contains lore paragraphs + skill blocks separated by `\n`. The lore paragraphs are shared identically with the Trait `description` and Trait `traitNarrativeEffects`; the skill block format differs per field.
 
 See [Species Consistency Rules](../species-rules.md) for the full requirements.
 

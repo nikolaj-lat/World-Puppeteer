@@ -26,8 +26,8 @@ Complete character and count limits for world configs.
 |-------|-------|
 | storySettings.worldBackground | 5,000 chars |
 | storySettings.questGenerationGuidance | 5,000 chars |
-| Individual AI instruction | 5,000 chars |
-| AI task instructions (combined) | 20,000 chars |
+| Individual AI instruction | 5,000 chars (8,000 for generateNPCIntents) |
+| AI task instructions (combined, per task) | 20,000 chars (40,000 for generateNPCIntents) |
 | narratorStyle | 2,000 chars |
 | abilities.[id].description | 2,000 chars |
 | Individual worldLore entry text | 4,000 chars |
@@ -70,12 +70,15 @@ Complete character and count limits for world configs.
 |---------|-----------|
 | Story starts | 100 |
 | Semantic triggers (story/action conditions) | 200 |
-| Mechanical triggers (all other conditions) | 500 |
+| Mechanical triggers (all other conditions) | 2,000 |
 | Abilities | 1,000 |
 | Trigger conditions (per trigger) | 5 |
-| Trigger effects (per trigger) | 5 |
+| Trigger effects (per trigger) | 10 |
 | Individual trigger size | 10,000 chars |
-| Ability requirements | 10 |
+| Ability requirements (per ability) | 10 |
+| Trait requirements (per trait) | 10 |
+| Starting trait selections (sum of trait category maxSelections) | 40 |
+| Premade character traits (per character) | 40 |
 | Premade characters | 100 |
 | Item categories | 40 |
 | Item slots | 60 |

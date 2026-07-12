@@ -43,6 +43,8 @@ type ComplexityType = 'simple' | 'complex' | 'wilderness'
 interface Area {
   description: string   // Brief description of the area
   paths: string[]       // Connected area names (must be bidirectional)
+  imageUrl?: string     //  URL for the area's image
+  visualTags?: string[] //  Engine-written cache of the tags used for the area's image prompt
 }
 ```
 

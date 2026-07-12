@@ -14,6 +14,6 @@ Read the npc-types skill for schema and creative guidance.
 
 ## Species Chaining
 
-When creating an NPC type that represents a **species**, you must also create corresponding Trait and World Lore entries with **identical** `description`/`quirk`/`text`. Spawn these agents in parallel:
-- **traits** agent - create species trait with identical `description` and `quirk`, plus 3 skills
+When creating an NPC type that represents a **species**, you must also create corresponding Trait and World Lore entries with **identical** `description`/`traitNarrativeEffects`/`text`. Spawn these agents in parallel:
+- **traits** agent - create species trait with identical `description` and `traitNarrativeEffects`, plus 3 skills
 - **world-lore** agent - create species lore with identical `text`

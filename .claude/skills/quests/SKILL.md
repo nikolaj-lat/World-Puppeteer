@@ -17,7 +17,7 @@ Edit `tabs/quests.json`.
 | `questSource` | Where the quest originates (NPC name, location, object) |
 | `questStatement` | One-sentence description of the situation |
 | `mainObjective` | What the player must accomplish (shown in quest log) |
-| `completionCondition` | Semantic query text for auto-trigger completion detection |
+| `completionCondition` | Object: `{ "type": "story", "query": "..." }` or `{ "type": "narrative-event-completed", "eventId": "..." }` |
 | `questDesignBrief` | 2-4 sentence internal design guidance for the AI — drives NPC, location, and trigger generation for this quest |
 | `detailType` | `basic` for AI-generated locations, `detailed` for specific locations |
 
@@ -28,6 +28,9 @@ Edit `tabs/quests.json`.
 | `spatialRelationship` | Required when `detailType: 'basic'` - defines where quest takes place |
 | `questLocation` | Required when `detailType: 'detailed'` - key from locations.json |
 | `questGiverNPC` | Only when a specific NPC gives the quest |
+| `objectives` | Only when the quest has an authored objective ladder, revealed/completed via trigger effects |
+| `activeObjectiveId` | Only to point at an objective authored with status `active` |
+| `nextStep` | Only for initial guidance - normally managed by objective and next-step trigger effects |
 
 ## Never Include
 
@@ -37,7 +40,7 @@ Omit these fields (auto-set or runtime-only):
 - `expiryTick`, `completedTick`, `abandonedTick`, `rejectedTick`
 - `startingArea`, `connectingAreaName`, `questAreas`
 - `questStepPhase`, `hasVisitedLocation`, `hasVisitedStartingArea`, `objectiveCompleted`
-- `offeredAtLocation`, `questGiverNPCKey`, `arcQuestOrdinal`
+- `offeredAtLocation`, `questGiverNPCKey`, `arcQuestOrdinal`, `contentOrigin`
 - `conclusive`, `arcId`, `arcEscalationAtCreation`
 
 ## detailType Selection
@@ -69,9 +72,14 @@ Format: "[Verb] the [target]" or "[Verb] [what] from/in/at [where]"
 
 ## completionCondition Format
 
-The semantic text the trigger system matches against the story to detect quest completion. Write as a natural-language description of what "done" looks like.
+An object with one of two forms:
 
-If left empty, no auto-trigger is generated.
+- `{ "type": "story", "query": "..." }` — the query is a natural-language description of what "done" looks like; the trigger system matches it semantically against the story. If the query is left empty, no auto-trigger is generated. (Legacy plain-string conditions are auto-converted to this form.)
+- `{ "type": "narrative-event-completed", "eventId": "..." }` — the quest completes when the referenced narrative event completes. No auto-trigger is generated. See the narrative-events skill.
+
+## Objectives and Next Steps
+
+Author `objectives` as a record keyed by objective id, typically with `status: 'hidden'`, and reveal/complete them via the `quest-objective-reveal` and `quest-objective-complete` trigger effects — objectives never advance on their own. An objective authored `active` is live from the start; point `activeObjectiveId` at it. `nextStep` is short imperative guidance shown on the quest UI and injected into prompts; it is normally managed automatically by objective effects and the `quest-next-step-set` / `quest-next-step-clear` effects, so only author it for initial guidance. See the reference doc and the triggers skill for full semantics.
 
 ## questStatement Format
 
@@ -117,7 +125,7 @@ Definition -> hidden -> available -> accepted -> completed
 
 When an `available` quest is offered, the player accepts or rejects it as a single step. An `available` quest expires when its expiry tick is reached (3 ticks after offer), the party leaves the location where the quest was offered, or the quest giver dies/leaves the scene.
 
-Detailed quests auto-generate a completion trigger from `completionCondition`. Basic quests need manual triggers. If `completionCondition` is empty, no auto-trigger is created for either type.
+Detailed quests with a `story`-type `completionCondition` auto-generate a completion trigger from the query. Basic quests need manual triggers. If the query is empty, no auto-trigger is created for either type. Quests with a `narrative-event-completed` condition get no auto-trigger — they complete (if accepted) when the referenced narrative event completes.
 
 ## Schema
 
@@ -127,12 +135,30 @@ interface QuestDefinition {
   questSource: string
   questStatement: string
   mainObjective: string
-  completionCondition: string
+  completionCondition: QuestCompletionCondition
   questDesignBrief?: string
   detailType: 'basic' | 'detailed'
-  spatialRelationship?: SpatialRelationship  // Required for basic
-  questLocation?: string                      // Required for detailed
+  spatialRelationship?: SpatialRelationship
+  questLocation?: string
   questGiverNPC?: string
+  objectives?: Record<string, QuestObjective>
+  activeObjectiveId?: string
+  nextStep?: QuestNextStep
+}
+
+type QuestCompletionCondition =
+  | { type: 'story'; query: string }
+  | { type: 'narrative-event-completed'; eventId: string }
+
+interface QuestObjective {
+  id: string
+  text: string
+  status: 'hidden' | 'active' | 'completed'
+}
+
+interface QuestNextStep {
+  text: string
+  source: 'objective' | 'narrative-event'
 }
 
 type SpatialRelationship =

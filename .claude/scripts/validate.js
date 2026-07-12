@@ -46,6 +46,8 @@ const VALID_TRIGGER_CONDITION_TYPES = [
   'read-number',
   'read-boolean',
   'read-array',
+  'quest-status',
+  'narrative-event-status',
 ];
 
 const VALID_TRIGGER_EFFECT_TYPES = [
@@ -63,7 +65,24 @@ const VALID_TRIGGER_EFFECT_TYPES = [
   'write-number',
   'write-boolean',
   'write-array',
+  'quest-objective-reveal',
+  'quest-objective-complete',
+  'quest-next-step-set',
+  'quest-next-step-clear',
+  'party-next-step-set',
+  'party-next-step-clear',
+  'quest-complete',
+  'narrative-event-start',
 ];
+
+// Known status values for quest-status / narrative-event-status conditions.
+// Unrecognized values only warn (engine compares raw strings).
+const VALID_QUEST_STATUSES = ['hidden', 'available', 'expired', 'accepted', 'completed', 'abandoned', 'rejected'];
+const VALID_NARRATIVE_EVENT_STATUSES = ['inactive', 'active', 'stopped', 'completed'];
+const VALID_QUEST_OBJECTIVE_STATUSES = ['hidden', 'active', 'completed'];
+const VALID_NEXT_STEP_SOURCES = ['objective', 'narrative-event'];
+const VALID_TRIGGER_SCOPES = ['party', 'player'];
+const VALID_EFFECT_TARGETS = ['allPlayers', 'satisfyingPlayers'];
 
 const VALID_NPC_TIERS = ['trivial', 'weak', 'average', 'strong', 'elite', 'boss', 'mythic'];
 
@@ -121,6 +140,7 @@ const REQUIRED_TOP_LEVEL = [
   'factions',
   'npcs',
   'quests',
+  'narrativeEvents',
   'attributeSettings',
   'skills',
   'skillSettings',
@@ -130,6 +150,7 @@ const REQUIRED_TOP_LEVEL = [
   'itemSettings',
   'combatSettings',
   'otherSettings',
+  'progressionSettings',
   'tipSettings',
   'resourceSettings',
   'death',
@@ -182,11 +203,24 @@ const REQUIRED_COMBAT_SETTINGS = [
 ];
 
 const REQUIRED_OTHER_SETTINGS = [
+  'npcHealthPerLevel',
+  'npcMinHealth',
+];
+
+const REQUIRED_PROGRESSION_SETTINGS = [
   'startingCharacterLevelUpRequirement',
   'extraRequiredXPPerCharacterLevel',
   'maxCharacterLevel',
-  'npcHealthPerLevel',
-  'npcMinHealth',
+  'abilityPointEveryLevels',
+  'abilityPointsPerGrant',
+  'attributePointEveryLevels',
+  'attributePointsPerGrant',
+  'maxAttributeValue',
+  'traitPickEveryLevels',
+  'traitPicksPerGrant',
+  'locationDiscoveryXP',
+  'levelUpTraitPool',
+  'milestoneTitles',
 ];
 
 const REQUIRED_LOCATION_SETTINGS = [
@@ -249,11 +283,13 @@ const LIMITS = {
   counts: {
     storyStarts: 100,
     semanticTriggers: 200,
-    mechanicalTriggers: 500,
+    mechanicalTriggers: 2_000,
     abilities: 1_000,
     triggerConditions: 5,
-    triggerEffects: 5,
+    triggerEffects: 10,
     abilityRequirements: 10,
+    traitRequirements: 10,
+    startingTraitSelections: 40,
     triggerSize: 10_000,
     premadeCharacters: 100,
     itemCategories: 40,
@@ -268,6 +304,9 @@ const LIMITS = {
     deathInstructions: 4_000,
     aiInstructionIndividual: 5_000,
     aiInstructionCombined: 20_000,
+    // generateNPCIntents gets a larger allowance than other AI tasks
+    aiInstructionIndividualNPCIntents: 8_000,
+    aiInstructionCombinedNPCIntents: 40_000,
     worldLoreEntry: 4_000,
     storyStartEntry: 8_000,
     itemDescription: 4_000,
@@ -375,6 +414,15 @@ function validateRequiredFields(config, errors) {
     }
   }
 
+  // progressionSettings subfields
+  if (config.progressionSettings) {
+    for (const field of REQUIRED_PROGRESSION_SETTINGS) {
+      if (config.progressionSettings[field] === undefined) {
+        errors.push(createError(`progressionSettings.${field}`, `Missing required field: progressionSettings.${field}`));
+      }
+    }
+  }
+
   // locationSettings subfields
   if (config.locationSettings) {
     for (const field of REQUIRED_LOCATION_SETTINGS) {
@@ -453,12 +501,12 @@ function validateRequiredFields(config, errors) {
 }
 
 function validateVersionFields(config, errors) {
-  if (config.configVersion !== undefined && config.configVersion !== 'V33') {
-    errors.push(createError('configVersion', `Invalid configVersion: ${config.configVersion} (expected 'V33')`));
+  if (config.configVersion !== undefined && config.configVersion !== 'V34') {
+    errors.push(createError('configVersion', `Invalid configVersion: ${config.configVersion} (expected 'V34')`));
   }
 
-  if (config.heroesVersion !== undefined && config.heroesVersion !== 33) {
-    errors.push(createError('heroesVersion', `Invalid heroesVersion: ${config.heroesVersion} (expected 33)`));
+  if (config.heroesVersion !== undefined && config.heroesVersion !== 34) {
+    errors.push(createError('heroesVersion', `Invalid heroesVersion: ${config.heroesVersion} (expected 34)`));
   }
 }
 
@@ -544,9 +592,93 @@ function validateReferenceIntegrity(config, errors) {
 
   // Quest references
   if (config.quests) {
+    const narrativeEventKeys = config.narrativeEvents ? new Set(Object.keys(config.narrativeEvents)) : new Set();
+
     for (const [questId, quest] of Object.entries(config.quests)) {
       if (quest.questLocation && !locationKeys.has(quest.questLocation)) {
         errors.push(createError(`quests.${questId}.questLocation`, `References non-existent location: ${quest.questLocation}`));
+      }
+
+      // completionCondition must be an object (union of two shapes):
+      //   { type: 'story', query: string } or { type: 'narrative-event-completed', eventId: string }
+      if (quest.completionCondition !== undefined) {
+        const cc = quest.completionCondition;
+        const ccPath = `quests.${questId}.completionCondition`;
+        if (typeof cc === 'string') {
+          errors.push(createError(ccPath, `Legacy string completionCondition - must be an object {type:'story',query} or {type:'narrative-event-completed',eventId}`));
+        } else if (!cc || typeof cc !== 'object' || Array.isArray(cc)) {
+          errors.push(createError(ccPath, `must be an object {type:'story',query} or {type:'narrative-event-completed',eventId}`));
+        } else if (cc.type === 'story') {
+          if (typeof cc.query !== 'string') {
+            errors.push(createError(`${ccPath}.query`, 'Missing required field: query'));
+          } else if (cc.query.trim() === '') {
+            errors.push(createError(`${ccPath}.query`, 'Empty completion condition query - quest will not auto-complete', 'warning'));
+          }
+        } else if (cc.type === 'narrative-event-completed') {
+          if (typeof cc.eventId !== 'string' || cc.eventId === '') {
+            errors.push(createError(`${ccPath}.eventId`, 'Missing required field: eventId'));
+          } else if (!narrativeEventKeys.has(cc.eventId)) {
+            errors.push(createError(`${ccPath}.eventId`, `References non-existent narrative event: ${cc.eventId}`));
+          }
+        } else {
+          errors.push(createError(`${ccPath}.type`, `Invalid completionCondition type: ${cc.type}. Valid: story, narrative-event-completed`));
+        }
+      }
+
+      // objectives - record of { id, text, status } keyed by objective id
+      if (quest.objectives !== undefined) {
+        if (!quest.objectives || typeof quest.objectives !== 'object' || Array.isArray(quest.objectives)) {
+          errors.push(createError(`quests.${questId}.objectives`, `Expected object, got ${Array.isArray(quest.objectives) ? 'array' : typeof quest.objectives}`));
+        } else {
+          for (const [objKey, objective] of Object.entries(quest.objectives)) {
+            const objPath = `quests.${questId}.objectives.${objKey}`;
+            if (!objective || typeof objective !== 'object' || Array.isArray(objective)) {
+              errors.push(createError(objPath, `Expected object with { id, text, status }, got ${Array.isArray(objective) ? 'array' : typeof objective}`));
+              continue;
+            }
+            if (objective.id === undefined) {
+              errors.push(createError(`${objPath}.id`, 'Missing required field: id'));
+            } else if (objective.id !== objKey) {
+              errors.push(createError(`${objPath}.id`, `Objective id "${objective.id}" does not match key "${objKey}"`, 'warning'));
+            }
+            if (typeof objective.text !== 'string' || objective.text === '') {
+              errors.push(createError(`${objPath}.text`, 'Missing required field: text'));
+            }
+            if (objective.status === undefined) {
+              errors.push(createError(`${objPath}.status`, 'Missing required field: status'));
+            } else if (!VALID_QUEST_OBJECTIVE_STATUSES.includes(objective.status)) {
+              errors.push(createError(`${objPath}.status`, `Invalid objective status: ${objective.status}. Valid: ${VALID_QUEST_OBJECTIVE_STATUSES.join(', ')}`));
+            }
+          }
+        }
+      }
+
+      // activeObjectiveId must reference an objectives key
+      if (quest.activeObjectiveId !== undefined) {
+        const objectiveKeys = quest.objectives && typeof quest.objectives === 'object' && !Array.isArray(quest.objectives)
+          ? new Set(Object.keys(quest.objectives))
+          : new Set();
+        if (!objectiveKeys.has(quest.activeObjectiveId)) {
+          errors.push(createError(`quests.${questId}.activeObjectiveId`, `References non-existent objective: ${quest.activeObjectiveId}`));
+        }
+      }
+
+      // nextStep - { text: string, source: 'objective' | 'narrative-event' }
+      if (quest.nextStep !== undefined) {
+        const ns = quest.nextStep;
+        const nsPath = `quests.${questId}.nextStep`;
+        if (!ns || typeof ns !== 'object' || Array.isArray(ns)) {
+          errors.push(createError(nsPath, `Expected object with { text, source }, got ${Array.isArray(ns) ? 'array' : typeof ns}`));
+        } else {
+          if (typeof ns.text !== 'string' || ns.text === '') {
+            errors.push(createError(`${nsPath}.text`, 'Missing required field: text'));
+          }
+          if (ns.source === undefined) {
+            errors.push(createError(`${nsPath}.source`, 'Missing required field: source'));
+          } else if (!VALID_NEXT_STEP_SOURCES.includes(ns.source)) {
+            errors.push(createError(`${nsPath}.source`, `Invalid source: ${ns.source}. Valid: ${VALID_NEXT_STEP_SOURCES.join(', ')}`));
+          }
+        }
       }
     }
   }
@@ -734,64 +866,77 @@ function validateReferenceIntegrity(config, errors) {
     }
   }
 
-  // Ability requirement reference validation and schema validation
+  // Requirement reference validation and schema validation, shared by
+  // abilities.*.requirements and traits.*.requirements.
   // Schema (union of two shapes):
   //   referenced:     { type: 'resource' | 'attribute' | 'skill' | 'trait', variable: string, amount: number }
   //   characterLevel: { type: 'characterLevel', amount: number }  // no variable
   // Note: variable is required for referenced types and must be omitted for characterLevel.
+  const requirementTraitKeys = config.traits ? new Set(Object.keys(config.traits)) : new Set();
+  const requirementResourceKeys = buildResourceKeySet(config);
+  const requirementAttributeNames = config.attributeSettings?.attributeNames
+    ? new Set(config.attributeSettings.attributeNames.map(a => a.toLowerCase()))
+    : new Set();
+
+  // Valid requirement types
+  const VALID_REQUIREMENT_TYPES = ['skill', 'trait', 'resource', 'attribute', 'characterLevel'];
+
+  const validateRequirementEntry = (reqPath, req) => {
+    // Validate requirement type
+    if (!req.type) {
+      errors.push(createError(`${reqPath}.type`, 'Missing required field: type'));
+    } else if (!VALID_REQUIREMENT_TYPES.includes(req.type)) {
+      errors.push(createError(`${reqPath}.type`, `Invalid requirement type: ${req.type}. Valid: ${VALID_REQUIREMENT_TYPES.join(', ')}`));
+    }
+
+    // amount is required on all requirement types
+    if (req.amount === undefined) {
+      errors.push(createError(`${reqPath}.amount`, 'Missing required field: amount'));
+    }
+    // variable is required for referenced types and must be omitted for characterLevel
+    if (req.type === 'characterLevel') {
+      if (req.variable !== undefined) {
+        errors.push(createError(`${reqPath}.variable`, 'characterLevel requirements must not include a variable'));
+      }
+    } else if (req.variable === undefined) {
+      errors.push(createError(`${reqPath}.variable`, 'Missing required field: variable'));
+    }
+
+    // Additional validation based on requirement type (reference checks)
+    if (req.type === 'skill' && req.variable !== undefined) {
+      if (!skillKeys.has(req.variable)) {
+        errors.push(createError(`${reqPath}.variable`, `References non-existent skill: ${req.variable}`));
+      }
+    } else if (req.type === 'trait' && req.variable !== undefined) {
+      if (!requirementTraitKeys.has(req.variable)) {
+        errors.push(createError(`${reqPath}.variable`, `References non-existent trait: ${req.variable}`));
+      }
+    } else if (req.type === 'resource' && req.variable !== undefined) {
+      if (!requirementResourceKeys.has(normalizeText(req.variable))) {
+        errors.push(createError(`${reqPath}.variable`, `References non-existent resource: ${req.variable}. Valid: ${Object.keys(config.resourceSettings || {}).join(', ')}`));
+      }
+    } else if (req.type === 'attribute' && req.variable !== undefined) {
+      if (!requirementAttributeNames.has(req.variable.toLowerCase())) {
+        errors.push(createError(`${reqPath}.variable`, `References non-existent attribute: ${req.variable}. Valid: ${config.attributeSettings?.attributeNames?.join(', ') || 'none'}`));
+      }
+    }
+  };
+
   if (config.abilities) {
-    const traitKeys = config.traits ? new Set(Object.keys(config.traits)) : new Set();
-    const resourceKeys = buildResourceKeySet(config);
-    const attributeNames = config.attributeSettings?.attributeNames
-      ? new Set(config.attributeSettings.attributeNames.map(a => a.toLowerCase()))
-      : new Set();
-
-    // Valid requirement types
-    const VALID_REQUIREMENT_TYPES = ['skill', 'trait', 'resource', 'attribute', 'characterLevel'];
-
     for (const [abilityId, ability] of Object.entries(config.abilities)) {
       if (ability.requirements && Array.isArray(ability.requirements)) {
         ability.requirements.forEach((req, idx) => {
-          const reqPath = `abilities.${abilityId}.requirements[${idx}]`;
+          validateRequirementEntry(`abilities.${abilityId}.requirements[${idx}]`, req);
+        });
+      }
+    }
+  }
 
-          // Validate requirement type
-          if (!req.type) {
-            errors.push(createError(`${reqPath}.type`, 'Missing required field: type'));
-          } else if (!VALID_REQUIREMENT_TYPES.includes(req.type)) {
-            errors.push(createError(`${reqPath}.type`, `Invalid requirement type: ${req.type}. Valid: ${VALID_REQUIREMENT_TYPES.join(', ')}`));
-          }
-
-          // amount is required on all requirement types
-          if (req.amount === undefined) {
-            errors.push(createError(`${reqPath}.amount`, 'Missing required field: amount'));
-          }
-          // variable is required for referenced types and must be omitted for characterLevel
-          if (req.type === 'characterLevel') {
-            if (req.variable !== undefined) {
-              errors.push(createError(`${reqPath}.variable`, 'characterLevel requirements must not include a variable'));
-            }
-          } else if (req.variable === undefined) {
-            errors.push(createError(`${reqPath}.variable`, 'Missing required field: variable'));
-          }
-
-          // Additional validation based on requirement type (reference checks)
-          if (req.type === 'skill' && req.variable !== undefined) {
-            if (!skillKeys.has(req.variable)) {
-              errors.push(createError(`${reqPath}.variable`, `References non-existent skill: ${req.variable}`));
-            }
-          } else if (req.type === 'trait' && req.variable !== undefined) {
-            if (!traitKeys.has(req.variable)) {
-              errors.push(createError(`${reqPath}.variable`, `References non-existent trait: ${req.variable}`));
-            }
-          } else if (req.type === 'resource' && req.variable !== undefined) {
-            if (!resourceKeys.has(normalizeText(req.variable))) {
-              errors.push(createError(`${reqPath}.variable`, `References non-existent resource: ${req.variable}. Valid: ${Object.keys(config.resourceSettings || {}).join(', ')}`));
-            }
-          } else if (req.type === 'attribute' && req.variable !== undefined) {
-            if (!attributeNames.has(req.variable.toLowerCase())) {
-              errors.push(createError(`${reqPath}.variable`, `References non-existent attribute: ${req.variable}. Valid: ${config.attributeSettings?.attributeNames?.join(', ') || 'none'}`));
-            }
-          }
+  if (config.traits) {
+    for (const [traitId, trait] of Object.entries(config.traits)) {
+      if (trait.requirements && Array.isArray(trait.requirements)) {
+        trait.requirements.forEach((req, idx) => {
+          validateRequirementEntry(`traits.${traitId}.requirements[${idx}]`, req);
         });
       }
     }
@@ -848,9 +993,122 @@ function validateReferenceIntegrity(config, errors) {
   }
 }
 
+// Reference key sets shared by trigger effect validation and narrative event
+// onCompleteEffects validation (same effect schema in both places).
+function buildQuestEventRefs(config) {
+  return {
+    questKeys: config.quests ? new Set(Object.keys(config.quests)) : new Set(),
+    narrativeEventKeys: config.narrativeEvents ? new Set(Object.keys(config.narrativeEvents)) : new Set(),
+  };
+}
+
+// Validates a single trigger effect (also used for narrativeEvents.*.onCompleteEffects).
+function validateTriggerEffect(effectPath, effect, refs, config, errors) {
+  if (!effect || typeof effect !== 'object' || Array.isArray(effect)) {
+    errors.push(createError(effectPath, `Expected effect object, got ${Array.isArray(effect) ? 'array' : typeof effect}`));
+    return;
+  }
+
+  // Type validation
+  if (effect.type && !VALID_TRIGGER_EFFECT_TYPES.includes(effect.type)) {
+    errors.push(createError(`${effectPath}.type`, `Invalid effect type: ${effect.type}. Valid: ${VALID_TRIGGER_EFFECT_TYPES.join(', ')}`));
+  }
+
+  // Instruction length
+  if (effect.instruction && effect.instruction.length > LIMITS.fields.triggerEffectInstruction) {
+    errors.push(createError(`${effectPath}.instruction`, `Instruction too long: ${effect.instruction.length} chars (max: ${LIMITS.fields.triggerEffectInstruction})`));
+  }
+
+  // Value length (if string)
+  if (effect.value && typeof effect.value === 'string' && effect.value.length > LIMITS.fields.triggerEffectValue) {
+    errors.push(createError(`${effectPath}.value`, `Value too long: ${effect.value.length} chars (max: ${LIMITS.fields.triggerEffectValue})`));
+  }
+
+  // Operator validation for write effects
+  if (effect.operator) {
+    const isNumberEffect = ['player-resource', 'write-number'].includes(effect.type);
+    const isBooleanEffect = ['write-boolean'].includes(effect.type);
+    const isArrayEffect = ['write-array'].includes(effect.type);
+
+    if (isNumberEffect && !VALID_NUMBER_EFFECT_OPERATORS.includes(effect.operator)) {
+      errors.push(createError(`${effectPath}.operator`, `Invalid operator for number effect: ${effect.operator}`));
+    } else if (isBooleanEffect && !VALID_BOOLEAN_EFFECT_OPERATORS.includes(effect.operator)) {
+      errors.push(createError(`${effectPath}.operator`, `Invalid operator for boolean effect: ${effect.operator}`));
+    } else if (isArrayEffect && !VALID_ARRAY_EFFECT_OPERATORS.includes(effect.operator)) {
+      errors.push(createError(`${effectPath}.operator`, `Invalid operator for array effect: ${effect.operator}`));
+    }
+  }
+
+  // Effects that require operator: "set" (party-location, party-area, party-region, party-realm)
+  const effectsRequiringSetOperator = ['party-location', 'party-area', 'party-region', 'party-realm'];
+  if (effectsRequiringSetOperator.includes(effect.type)) {
+    if (effect.operator === undefined) {
+      errors.push(createError(`${effectPath}.operator`, `Missing required operator: "set" for ${effect.type} effect`));
+    } else if (effect.operator !== 'set') {
+      errors.push(createError(`${effectPath}.operator`, `Invalid operator "${effect.operator}" for ${effect.type} effect (must be "set")`));
+    }
+  }
+
+  // target - optional, only meaningful on player-resource / player-traits effects
+  if (effect.target !== undefined && !VALID_EFFECT_TARGETS.includes(effect.target)) {
+    errors.push(createError(`${effectPath}.target`, `Invalid target: ${effect.target}. Valid: ${VALID_EFFECT_TARGETS.join(', ')}`));
+  }
+
+  // Quest / narrative-event effects: per-type required fields and references.
+  // None of these use operator/value.
+  const effectsRequiringQuestId = [
+    'quest-objective-reveal',
+    'quest-objective-complete',
+    'quest-next-step-set',
+    'quest-next-step-clear',
+    'quest-complete',
+  ];
+  if (effectsRequiringQuestId.includes(effect.type)) {
+    if (effect.questId === undefined) {
+      errors.push(createError(`${effectPath}.questId`, 'Missing required field: questId'));
+    } else if (!refs.questKeys.has(effect.questId)) {
+      errors.push(createError(`${effectPath}.questId`, `References non-existent quest: ${effect.questId}`));
+    }
+  }
+
+  if (['quest-objective-reveal', 'quest-objective-complete'].includes(effect.type)) {
+    if (effect.objectiveId === undefined) {
+      errors.push(createError(`${effectPath}.objectiveId`, 'Missing required field: objectiveId'));
+    } else if (typeof effect.questId === 'string' && refs.questKeys.has(effect.questId)) {
+      const quest = config.quests[effect.questId];
+      const objectiveKeys = quest?.objectives && typeof quest.objectives === 'object' && !Array.isArray(quest.objectives)
+        ? new Set(Object.keys(quest.objectives))
+        : new Set();
+      if (!objectiveKeys.has(effect.objectiveId)) {
+        errors.push(createError(`${effectPath}.objectiveId`, `References non-existent objective "${effect.objectiveId}" in quest "${effect.questId}"`));
+      }
+    }
+  }
+
+  if (['quest-next-step-set', 'party-next-step-set'].includes(effect.type)) {
+    if (typeof effect.text !== 'string' || effect.text === '') {
+      errors.push(createError(`${effectPath}.text`, 'Missing required field: text'));
+    }
+    if (effect.source === undefined) {
+      errors.push(createError(`${effectPath}.source`, 'Missing required field: source'));
+    } else if (!VALID_NEXT_STEP_SOURCES.includes(effect.source)) {
+      errors.push(createError(`${effectPath}.source`, `Invalid source: ${effect.source}. Valid: ${VALID_NEXT_STEP_SOURCES.join(', ')}`));
+    }
+  }
+
+  if (effect.type === 'narrative-event-start') {
+    if (effect.eventId === undefined) {
+      errors.push(createError(`${effectPath}.eventId`, 'Missing required field: eventId'));
+    } else if (!refs.narrativeEventKeys.has(effect.eventId)) {
+      errors.push(createError(`${effectPath}.eventId`, `References non-existent narrative event: ${effect.eventId}`));
+    }
+  }
+}
+
 function validateTriggers(config, errors) {
   if (!config.triggers) return;
 
+  const refs = buildQuestEventRefs(config);
   const isArrayForm = Array.isArray(config.triggers);
   const triggerEntries = isArrayForm
     ? config.triggers.map((t, i) => [i, t])
@@ -868,6 +1126,11 @@ function validateTriggers(config, errors) {
     const triggerSize = JSON.stringify(trigger).length;
     if (triggerSize > LIMITS.counts.triggerSize) {
       errors.push(createError(basePath, `Trigger exceeds ${LIMITS.counts.triggerSize} chars: ${triggerSize}`));
+    }
+
+    // Optional scope field
+    if (trigger.scope !== undefined && !VALID_TRIGGER_SCOPES.includes(trigger.scope)) {
+      errors.push(createError(`${basePath}.scope`, `Invalid scope: ${trigger.scope}. Valid: ${VALID_TRIGGER_SCOPES.join(', ')}`));
     }
 
     // Validate conditions
@@ -896,7 +1159,7 @@ function validateTriggers(config, errors) {
 
         // Operator validation based on condition type
         if (cond.operator) {
-          const isStringCondition = ['story-text', 'action-text', 'party-realm', 'party-region', 'party-location', 'party-area', 'read-string'].includes(cond.type);
+          const isStringCondition = ['story-text', 'action-text', 'party-realm', 'party-region', 'party-location', 'party-area', 'read-string', 'quest-status', 'narrative-event-status'].includes(cond.type);
           const isNumberCondition = ['player-level', 'game-tick', 'player-resource', 'read-number'].includes(cond.type);
           const isBooleanCondition = ['read-boolean'].includes(cond.type);
           const isArrayCondition = ['player-traits', 'quests-completed', 'read-array'].includes(cond.type);
@@ -911,6 +1174,30 @@ function validateTriggers(config, errors) {
             errors.push(createError(`${condPath}.operator`, `Invalid operator for array condition: ${cond.operator}`));
           }
         }
+
+        // quest-status conditions require a questId referencing an existing quest
+        if (cond.type === 'quest-status') {
+          if (cond.questId === undefined) {
+            errors.push(createError(`${condPath}.questId`, 'Missing required field: questId'));
+          } else if (!refs.questKeys.has(cond.questId)) {
+            errors.push(createError(`${condPath}.questId`, `References non-existent quest: ${cond.questId}`));
+          }
+          if (['equals', 'notEquals'].includes(cond.operator) && typeof cond.value === 'string' && !VALID_QUEST_STATUSES.includes(cond.value)) {
+            errors.push(createError(`${condPath}.value`, `Unrecognized quest status: ${cond.value}. Known statuses: ${VALID_QUEST_STATUSES.join(', ')}`, 'warning'));
+          }
+        }
+
+        // narrative-event-status conditions require an eventId referencing an existing narrative event
+        if (cond.type === 'narrative-event-status') {
+          if (cond.eventId === undefined) {
+            errors.push(createError(`${condPath}.eventId`, 'Missing required field: eventId'));
+          } else if (!refs.narrativeEventKeys.has(cond.eventId)) {
+            errors.push(createError(`${condPath}.eventId`, `References non-existent narrative event: ${cond.eventId}`));
+          }
+          if (['equals', 'notEquals'].includes(cond.operator) && typeof cond.value === 'string' && !VALID_NARRATIVE_EVENT_STATUSES.includes(cond.value)) {
+            errors.push(createError(`${condPath}.value`, `Unrecognized narrative event status: ${cond.value}. Known statuses: ${VALID_NARRATIVE_EVENT_STATUSES.join(', ')}`, 'warning'));
+          }
+        }
       });
     }
 
@@ -921,50 +1208,50 @@ function validateTriggers(config, errors) {
       }
 
       trigger.effects.forEach((effect, effectIdx) => {
-        const effectPath = `${basePath}.effects[${effectIdx}]`;
-
-        // Type validation
-        if (effect.type && !VALID_TRIGGER_EFFECT_TYPES.includes(effect.type)) {
-          errors.push(createError(`${effectPath}.type`, `Invalid effect type: ${effect.type}. Valid: ${VALID_TRIGGER_EFFECT_TYPES.join(', ')}`));
-        }
-
-        // Instruction length
-        if (effect.instruction && effect.instruction.length > LIMITS.fields.triggerEffectInstruction) {
-          errors.push(createError(`${effectPath}.instruction`, `Instruction too long: ${effect.instruction.length} chars (max: ${LIMITS.fields.triggerEffectInstruction})`));
-        }
-
-        // Value length (if string)
-        if (effect.value && typeof effect.value === 'string' && effect.value.length > LIMITS.fields.triggerEffectValue) {
-          errors.push(createError(`${effectPath}.value`, `Value too long: ${effect.value.length} chars (max: ${LIMITS.fields.triggerEffectValue})`));
-        }
-
-        // Operator validation for write effects
-        if (effect.operator) {
-          const isNumberEffect = ['player-resource', 'write-number'].includes(effect.type);
-          const isBooleanEffect = ['write-boolean'].includes(effect.type);
-          const isArrayEffect = ['write-array'].includes(effect.type);
-
-          if (isNumberEffect && !VALID_NUMBER_EFFECT_OPERATORS.includes(effect.operator)) {
-            errors.push(createError(`${effectPath}.operator`, `Invalid operator for number effect: ${effect.operator}`));
-          } else if (isBooleanEffect && !VALID_BOOLEAN_EFFECT_OPERATORS.includes(effect.operator)) {
-            errors.push(createError(`${effectPath}.operator`, `Invalid operator for boolean effect: ${effect.operator}`));
-          } else if (isArrayEffect && !VALID_ARRAY_EFFECT_OPERATORS.includes(effect.operator)) {
-            errors.push(createError(`${effectPath}.operator`, `Invalid operator for array effect: ${effect.operator}`));
-          }
-        }
-
-        // Effects that require operator: "set" (party-location, party-area, party-region, party-realm)
-        const effectsRequiringSetOperator = ['party-location', 'party-area', 'party-region', 'party-realm'];
-        if (effectsRequiringSetOperator.includes(effect.type)) {
-          if (effect.operator === undefined) {
-            errors.push(createError(`${effectPath}.operator`, `Missing required operator: "set" for ${effect.type} effect`));
-          } else if (effect.operator !== 'set') {
-            errors.push(createError(`${effectPath}.operator`, `Invalid operator "${effect.operator}" for ${effect.type} effect (must be "set")`));
-          }
-        }
+        validateTriggerEffect(`${basePath}.effects[${effectIdx}]`, effect, refs, config, errors);
       });
     }
   });
+}
+
+function validateNarrativeEvents(config, errors) {
+  if (!config.narrativeEvents) return;
+
+  const refs = buildQuestEventRefs(config);
+
+  for (const [eventId, event] of Object.entries(config.narrativeEvents)) {
+    const basePath = `narrativeEvents.${eventId}`;
+
+    if (!event || typeof event !== 'object' || Array.isArray(event)) {
+      errors.push(createError(basePath, `Expected object, got ${Array.isArray(event) ? 'array' : typeof event}`));
+      continue;
+    }
+
+    if (typeof event.title !== 'string' || event.title.trim() === '') {
+      errors.push(createError(`${basePath}.title`, 'Missing required field: title'));
+    }
+
+    if (typeof event.beats !== 'string' || event.beats.trim() === '') {
+      errors.push(createError(`${basePath}.beats`, 'Missing required field: beats'));
+    }
+
+    // targetTurns - optional positive whole number
+    if (event.targetTurns !== undefined &&
+        (typeof event.targetTurns !== 'number' || !Number.isInteger(event.targetTurns) || event.targetTurns < 1)) {
+      errors.push(createError(`${basePath}.targetTurns`, `targetTurns must be a positive whole number, got ${JSON.stringify(event.targetTurns)}`));
+    }
+
+    // onCompleteEffects - optional array validated like trigger effects
+    if (event.onCompleteEffects !== undefined) {
+      if (!Array.isArray(event.onCompleteEffects)) {
+        errors.push(createError(`${basePath}.onCompleteEffects`, `Expected array, got ${typeof event.onCompleteEffects}`));
+      } else {
+        event.onCompleteEffects.forEach((effect, idx) => {
+          validateTriggerEffect(`${basePath}.onCompleteEffects[${idx}]`, effect, refs, config, errors);
+        });
+      }
+    }
+  }
 }
 
 function validateDamageTypes(config, errors) {
@@ -979,6 +1266,25 @@ function validateDamageTypes(config, errors) {
           npc[field].forEach((type, idx) => {
             if (!validDamageTypes.includes(type)) {
               errors.push(createError(`npcs.${npcId}.${field}[${idx}]`, `Invalid damage type: ${type}. Valid: ${validDamageTypes.join(', ')}`));
+            }
+          });
+        }
+      };
+
+      checkDamageArray('vulnerabilities');
+      checkDamageArray('resistances');
+      checkDamageArray('immunities');
+    }
+  }
+
+  // Check trait damage types (vulnerabilities, resistances, immunities)
+  if (config.traits) {
+    for (const [traitId, trait] of Object.entries(config.traits)) {
+      const checkDamageArray = (field) => {
+        if (trait[field] && Array.isArray(trait[field])) {
+          trait[field].forEach((type, idx) => {
+            if (!validDamageTypes.includes(type)) {
+              errors.push(createError(`traits.${traitId}.${field}[${idx}]`, `Invalid damage type: ${type}. Valid: ${validDamageTypes.join(', ')}`));
             }
           });
         }
@@ -1114,12 +1420,19 @@ function validateCharacterLimits(config, errors, warnings) {
   // enforce the combined limit PER TASK (matches the engine).
   if (config.aiInstructions) {
     for (const [taskId, instructions] of Object.entries(config.aiInstructions)) {
+      // generateNPCIntents gets a larger allowance than other tasks
+      const individualLimit = taskId === 'generateNPCIntents'
+        ? LIMITS.fields.aiInstructionIndividualNPCIntents
+        : LIMITS.fields.aiInstructionIndividual;
+      const combinedLimit = taskId === 'generateNPCIntents'
+        ? LIMITS.fields.aiInstructionCombinedNPCIntents
+        : LIMITS.fields.aiInstructionCombined;
       let taskTotal = 0;
       const checkText = (label, text) => {
         if (typeof text === 'string' && text) {
           taskTotal += text.length;
-          if (text.length > LIMITS.fields.aiInstructionIndividual) {
-            errors.push(createError(label, `Instruction too long: ${text.length} chars (max: ${LIMITS.fields.aiInstructionIndividual})`));
+          if (text.length > individualLimit) {
+            errors.push(createError(label, `Instruction too long: ${text.length} chars (max: ${individualLimit})`));
           }
         }
       };
@@ -1131,8 +1444,8 @@ function validateCharacterLimits(config, errors, warnings) {
           checkText(`aiInstructions.${taskId}.${key}`, val);
         }
       }
-      if (taskTotal > LIMITS.fields.aiInstructionCombined) {
-        errors.push(createError(`aiInstructions.${taskId}`, `Combined task instructions too long: ${taskTotal} chars (max: ${LIMITS.fields.aiInstructionCombined})`));
+      if (taskTotal > combinedLimit) {
+        errors.push(createError(`aiInstructions.${taskId}`, `Combined task instructions too long: ${taskTotal} chars (max: ${combinedLimit})`));
       }
     }
   }
@@ -1224,6 +1537,32 @@ function validateCharacterLimits(config, errors, warnings) {
       }
     }
   }
+
+  // Trait requirements count
+  if (config.traits) {
+    for (const [traitId, trait] of Object.entries(config.traits)) {
+      if (trait.requirements?.length > LIMITS.counts.traitRequirements) {
+        errors.push(createError(`traits.${traitId}.requirements`, `Too many requirements: ${trait.requirements.length} (max: ${LIMITS.counts.traitRequirements})`));
+      }
+    }
+  }
+
+  // Starting trait selections: sum of maxSelections across all trait categories,
+  // and each premade character's traits array, must stay within the same cap.
+  if (config.traitCategories && typeof config.traitCategories === 'object') {
+    const totalSelections = Object.values(config.traitCategories).reduce((sum, category) => {
+      const n = category?.maxSelections;
+      return sum + (typeof n === 'number' && n > 0 ? n : 0);
+    }, 0);
+    if (totalSelections > LIMITS.counts.startingTraitSelections) {
+      errors.push(createError('traitCategories', `Too many starting trait selections: ${totalSelections} (max: ${LIMITS.counts.startingTraitSelections}, sum of maxSelections across all categories)`));
+    }
+  }
+  (config.premadeCharacters ?? []).forEach((pc, i) => {
+    if (Array.isArray(pc?.traits) && pc.traits.length > LIMITS.counts.startingTraitSelections) {
+      errors.push(createError(`premadeCharacters[${i}].traits`, `Too many traits: ${pc.traits.length} (max: ${LIMITS.counts.startingTraitSelections})`));
+    }
+  });
 }
 
 function validateTypeChecks(config, errors) {
@@ -1356,9 +1695,6 @@ function validateTypeChecks(config, errors) {
   // otherSettings
   if (config.otherSettings) {
     const os = config.otherSettings;
-    checkNumber('otherSettings.startingCharacterLevelUpRequirement', os.startingCharacterLevelUpRequirement);
-    checkNumber('otherSettings.extraRequiredXPPerCharacterLevel', os.extraRequiredXPPerCharacterLevel);
-    checkNumber('otherSettings.maxCharacterLevel', os.maxCharacterLevel);
     checkNumber('otherSettings.npcHealthPerLevel', os.npcHealthPerLevel);
     checkNumber('otherSettings.npcMinHealth', os.npcMinHealth);
   }
@@ -1462,6 +1798,16 @@ function validateTypeChecks(config, errors) {
       } else {
         checkArray(`traits.${traitId}.excludedBy`, trait.excludedBy);
       }
+      if (trait.traitNarrativeEffects === undefined) {
+        errors.push(createError(`traits.${traitId}.traitNarrativeEffects`, 'Missing required field: traitNarrativeEffects'));
+      } else {
+        checkString(`traits.${traitId}.traitNarrativeEffects`, trait.traitNarrativeEffects);
+      }
+      if (trait.requirements === undefined) {
+        errors.push(createError(`traits.${traitId}.requirements`, 'Missing required field: requirements (use empty array [] if none)'));
+      } else {
+        checkArray(`traits.${traitId}.requirements`, trait.requirements);
+      }
     }
   }
 
@@ -1488,6 +1834,86 @@ function validateTypeChecks(config, errors) {
           errors.push(createError(`storyStarts.${startId}.locationAreas`, `Expected array of strings, got ${typeof start.locationAreas}`));
         }
       }
+    }
+  }
+}
+
+function validateProgressionSettings(config, errors) {
+  if (!config.progressionSettings) return;
+  const ps = config.progressionSettings;
+
+  // All numeric fields must be positive whole numbers, except
+  // extraRequiredXPPerCharacterLevel which may be 0 (flat XP curve).
+  const positiveIntFields = [
+    'startingCharacterLevelUpRequirement',
+    'maxCharacterLevel',
+    'abilityPointEveryLevels',
+    'abilityPointsPerGrant',
+    'attributePointEveryLevels',
+    'attributePointsPerGrant',
+    'maxAttributeValue',
+    'traitPickEveryLevels',
+    'traitPicksPerGrant',
+    'locationDiscoveryXP',
+  ];
+  for (const field of positiveIntFields) {
+    const value = ps[field];
+    if (value !== undefined && (typeof value !== 'number' || !Number.isInteger(value) || value < 1)) {
+      errors.push(createError(`progressionSettings.${field}`, `Must be a positive whole number (>= 1), got ${JSON.stringify(value)}`));
+    }
+  }
+  const extraXP = ps.extraRequiredXPPerCharacterLevel;
+  if (extraXP !== undefined && (typeof extraXP !== 'number' || !Number.isInteger(extraXP) || extraXP < 0)) {
+    errors.push(createError('progressionSettings.extraRequiredXPPerCharacterLevel', `Must be a non-negative whole number (>= 0), got ${JSON.stringify(extraXP)}`));
+  }
+
+  // levelUpTraitPool - each entry must reference an existing trait (exact key match first, then name match)
+  if (ps.levelUpTraitPool !== undefined) {
+    if (!Array.isArray(ps.levelUpTraitPool)) {
+      errors.push(createError('progressionSettings.levelUpTraitPool', `Expected array, got ${typeof ps.levelUpTraitPool}`));
+    } else {
+      const traitKeys = config.traits ? new Set(Object.keys(config.traits)) : new Set();
+      const traitNames = config.traits
+        ? new Set(Object.values(config.traits).map((t) => t?.name).filter((n) => typeof n === 'string'))
+        : new Set();
+      ps.levelUpTraitPool.forEach((traitRef, idx) => {
+        if (typeof traitRef !== 'string') {
+          errors.push(createError(`progressionSettings.levelUpTraitPool[${idx}]`, `Expected string, got ${typeof traitRef}`));
+        } else if (!traitKeys.has(traitRef) && !traitNames.has(traitRef)) {
+          errors.push(createError(`progressionSettings.levelUpTraitPool[${idx}]`, `References non-existent trait: ${traitRef}`));
+        }
+      });
+    }
+  }
+
+  // milestoneTitles - array of { levelGranted, title } with unique levels
+  if (ps.milestoneTitles !== undefined) {
+    if (!Array.isArray(ps.milestoneTitles)) {
+      errors.push(createError('progressionSettings.milestoneTitles', `Expected array, got ${typeof ps.milestoneTitles}`));
+    } else {
+      const seenLevels = new Map();
+      ps.milestoneTitles.forEach((milestone, idx) => {
+        const milestonePath = `progressionSettings.milestoneTitles[${idx}]`;
+        if (!milestone || typeof milestone !== 'object' || Array.isArray(milestone)) {
+          errors.push(createError(milestonePath, `Expected object with { levelGranted, title }, got ${Array.isArray(milestone) ? 'array' : typeof milestone}`));
+          return;
+        }
+        const level = milestone.levelGranted;
+        if (level === undefined) {
+          errors.push(createError(`${milestonePath}.levelGranted`, 'Missing required field: levelGranted'));
+        } else if (typeof level !== 'number' || !Number.isInteger(level) || level < 1) {
+          errors.push(createError(`${milestonePath}.levelGranted`, `Must be a positive whole number (>= 1), got ${JSON.stringify(level)}`));
+        } else if (seenLevels.has(level)) {
+          errors.push(createError(`${milestonePath}.levelGranted`, `Duplicate levelGranted ${level} (also used at milestoneTitles[${seenLevels.get(level)}])`));
+        } else {
+          seenLevels.set(level, idx);
+        }
+        if (milestone.title === undefined) {
+          errors.push(createError(`${milestonePath}.title`, 'Missing required field: title'));
+        } else if (typeof milestone.title !== 'string' || milestone.title.trim() === '') {
+          errors.push(createError(`${milestonePath}.title`, 'title must be a non-empty string'));
+        }
+      });
     }
   }
 }
@@ -1529,8 +1955,9 @@ function validateUnknownFields(config, errors) {
       'name', 'attribute', 'type', 'description', 'startingItems',
     ]),
     traits: new Set([
-      'name', 'description', 'quirk', 'attributes', 'skills', 'resources',
-      'startingItems', 'abilities', 'unlockedBy', 'excludedBy',
+      'name', 'description', 'traitNarrativeEffects', 'attributes', 'skills', 'resources',
+      'startingItems', 'abilities', 'unlockedBy', 'excludedBy', 'requirements',
+      'vulnerabilities', 'resistances', 'immunities',
     ]),
     npcTypes: new Set([
       'name', 'description', 'vulnerabilities', 'resistances', 'immunities',
@@ -1538,6 +1965,7 @@ function validateUnknownFields(config, errors) {
     quests: new Set([
       'name', 'questType', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
       'questGiverNPC', 'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
+      'objectives', 'activeObjectiveId', 'nextStep',
     ]),
     storyStarts: new Set([
       'name', 'description', 'storyStart', 'locations', 'locationAreas',
@@ -1548,7 +1976,10 @@ function validateUnknownFields(config, errors) {
       'text', 'embeddingId',
     ]),
     triggers: new Set([
-      'name', 'conditions', 'effects', 'recurring', 'script', 'embeddingId',
+      'name', 'conditions', 'effects', 'recurring', 'script', 'embeddingId', 'scope',
+    ]),
+    narrativeEvents: new Set([
+      'title', 'beats', 'targetTurns', 'onCompleteEffects',
     ]),
   };
 
@@ -1580,9 +2011,14 @@ function validateUnknownFields(config, errors) {
       'npcDailyHealingAmount', 'damageTypes',
     ]),
     otherSettings: new Set([
-      'startingCharacterLevelUpRequirement', 'extraRequiredXPPerCharacterLevel',
-      'maxCharacterLevel',
       'npcHealthPerLevel', 'npcMinHealth',
+    ]),
+    progressionSettings: new Set([
+      'startingCharacterLevelUpRequirement', 'extraRequiredXPPerCharacterLevel',
+      'maxCharacterLevel', 'abilityPointEveryLevels', 'abilityPointsPerGrant',
+      'attributePointEveryLevels', 'attributePointsPerGrant', 'maxAttributeValue',
+      'traitPickEveryLevels', 'traitPicksPerGrant', 'locationDiscoveryXP',
+      'levelUpTraitPool', 'milestoneTitles',
     ]),
     storySettings: new Set([
       'worldBackground', 'questGenerationGuidance',
@@ -1629,9 +2065,9 @@ function validateUnknownFields(config, errors) {
     // Skill XP rewards
     skillXPRewards: new Set(['small', 'medium', 'large', 'huge']),
     // Trigger conditions (union of all condition types)
-    triggerCondition: new Set(['type', 'operator', 'value', 'query', 'embeddingId', 'resource', 'entity', 'key']),
+    triggerCondition: new Set(['type', 'operator', 'value', 'query', 'embeddingId', 'resource', 'entity', 'key', 'questId', 'eventId']),
     // Trigger effects (union of all effect types)
-    triggerEffect: new Set(['type', 'operator', 'value', 'instruction', 'questId', 'resource', 'entity', 'key']),
+    triggerEffect: new Set(['type', 'operator', 'value', 'instruction', 'questId', 'resource', 'entity', 'key', 'objectiveId', 'text', 'source', 'eventId', 'target']),
     // Attribute stat modifier entries
     attrStatModifier: new Set(['variable', 'amount']),
     // Game mode entries
@@ -1746,6 +2182,17 @@ function validateUnknownFields(config, errors) {
       if (Array.isArray(trig.effects)) {
         trig.effects.forEach((eff, i) => {
           checkNested(`triggers.${trigKey}.effects[${i}]`, eff, KNOWN_NESTED.triggerEffect);
+        });
+      }
+    }
+  }
+
+  // Narrative event onCompleteEffects (same shape as trigger effects)
+  if (config.narrativeEvents) {
+    for (const [eventKey, event] of Object.entries(config.narrativeEvents)) {
+      if (Array.isArray(event?.onCompleteEffects)) {
+        event.onCompleteEffects.forEach((eff, i) => {
+          checkNested(`narrativeEvents.${eventKey}.onCompleteEffects[${i}]`, eff, KNOWN_NESTED.triggerEffect);
         });
       }
     }
@@ -2037,9 +2484,11 @@ function validate(config) {
   validateRequiredFields(config, errors);
   validateReferenceIntegrity(config, errors);
   validateTriggers(config, errors);
+  validateNarrativeEvents(config, errors);
   validateDamageTypes(config, errors);
   validateCharacterLimits(config, errors, warnings);
   validateTypeChecks(config, errors);
+  validateProgressionSettings(config, errors);
   validateNameKeyMatch(config, errors);
   validateLocationRequiredFields(config, errors);
   validateRealmRequiredFields(config, errors);

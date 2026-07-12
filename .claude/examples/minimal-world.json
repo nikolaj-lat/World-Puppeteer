@@ -1,7 +1,6 @@
 {
-  "configVersion": "V33",
-  "heroesVersion": 33,
-
+  "configVersion": "V34",
+  "heroesVersion": 34,
   "aiInstructions": {
     "generateStory": {
       "Victory and Downtime": "",
@@ -40,14 +39,17 @@
       "custom": ""
     }
   },
-  "storySettings": { "worldBackground": "", "questGenerationGuidance": "" },
+  "storySettings": {
+    "worldBackground": "",
+    "questGenerationGuidance": ""
+  },
   "narratorStyle": "",
   "gameModes": {},
   "characterCreationMusic": "nonfantasy",
   "worldLore": {},
   "embeddings": {},
   "triggers": {},
-
+  "narrativeEvents": {},
   "storyStarts": {
     "Start": {
       "name": "Start",
@@ -59,7 +61,6 @@
       "questGenerationGuidance": ""
     }
   },
-
   "abilities": {},
   "npcTypes": {},
   "items": {},
@@ -72,7 +73,6 @@
   "skills": {},
   "traits": {},
   "traitCategories": {},
-
   "premadeCharacters": [],
   "mods": [],
   "authorSeeds": {},
@@ -80,8 +80,10 @@
   "locationArchetypes": {},
   "regionArchetypes": {},
   "encounterElements": {},
-  "randomNames": { "male": [], "female": [] },
-
+  "randomNames": {
+    "male": [],
+    "female": []
+  },
   "attributeSettings": {
     "attributeNames": [],
     "startingAttributeValue": 0,
@@ -94,10 +96,14 @@
     "lowAttributeTraits": {},
     "attributeBonusModifier": 2.5
   },
-
   "skillSettings": {
     "trainingCooldown": 10,
-    "skillXPRewards": { "small": 50, "medium": 100, "large": 150, "huge": 200 },
+    "skillXPRewards": {
+      "small": 50,
+      "medium": 100,
+      "large": 150,
+      "huge": 200
+    },
     "skillBonusModifier": 1,
     "xpFromNewSkill": 200,
     "maxSkillLevel": 999,
@@ -111,7 +117,6 @@
     "skillTypeDifficultyBonus": {},
     "newSkillGenerationEnabled": true
   },
-
   "locationSettings": {
     "regionSize": 100,
     "simpleRadius": 5,
@@ -124,14 +129,14 @@
     "encountersEnabled": false,
     "regionMapBorderFeatheringEnabled": true
   },
-
   "itemSettings": {
     "currencyName": "",
-    "itemCategories": ["Consumable"],
+    "itemCategories": [
+      "Consumable"
+    ],
     "itemSlots": [],
     "startingItems": []
   },
-
   "combatSettings": {
     "minCombatXP": 50,
     "baseCombatXP": 200,
@@ -140,15 +145,25 @@
     "npcDailyHealingAmount": 999,
     "damageTypes": []
   },
-
   "otherSettings": {
-    "startingCharacterLevelUpRequirement": 500,
-    "extraRequiredXPPerCharacterLevel": 100,
-    "maxCharacterLevel": 999,
     "npcHealthPerLevel": 10,
     "npcMinHealth": 0
   },
-
+  "progressionSettings": {
+    "startingCharacterLevelUpRequirement": 500,
+    "extraRequiredXPPerCharacterLevel": 100,
+    "maxCharacterLevel": 999,
+    "abilityPointEveryLevels": 1,
+    "abilityPointsPerGrant": 1,
+    "attributePointEveryLevels": 5,
+    "attributePointsPerGrant": 1,
+    "maxAttributeValue": 999,
+    "traitPickEveryLevels": 10,
+    "traitPicksPerGrant": 1,
+    "locationDiscoveryXP": 10,
+    "levelUpTraitPool": [],
+    "milestoneTitles": []
+  },
   "tipSettings": {
     "tips": [],
     "tipDisplayEnabled": false,
@@ -156,7 +171,6 @@
     "tipMinimumTurns": 1,
     "tipMaximumTurns": 50
   },
-
   "resourceSettings": {
     "health": {
       "name": "health",
@@ -170,11 +184,9 @@
       "usageInstructions": ""
     }
   },
-
   "death": {
     "permadeath": false,
     "instructions": ""
   },
-
   "nameFilterSettings": {}
 }

@@ -11,7 +11,7 @@ Write a character profile in two parts: background and appearance.
 
 Use the World Foundation as the main setting context. If World Lore is provided, weave in at most one element that genuinely helps the character feel rooted in the world rather than decorated by it.
 
-Use the Character Foundation as your main guide to who this person is. Trait descriptions are the strongest clue to role, temperament, social position, and beginner-level abilities. Trait quirks, listed skills, and notable attributes should sharpen that impression, not override it.
+Use the Character Foundation as your main guide to who this person is. Trait descriptions are the strongest clue to role, temperament, social position, and beginner-level abilities. Trait narrative effects, listed skills, and notable attributes should sharpen that impression, not override it.
 
 If Creative Direction is provided, treat it as player-authored intent. Preserve its core ideas unless they directly conflict with the world.
 

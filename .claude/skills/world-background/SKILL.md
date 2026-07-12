@@ -71,7 +71,7 @@ Format: "This is a [genre] world where [unique premise]. [Current situation]. [A
 ```typescript
 interface StorySettings {
   storySettings: {
-    worldBackground: string  // Main world setting description (5,000 char limit)
+    worldBackground: string  // Main world setting description
   }
 }
 ```

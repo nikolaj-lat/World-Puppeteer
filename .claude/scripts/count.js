@@ -68,12 +68,14 @@ const ENTRY_LIMITS = {
 const COUNT_LIMITS = {
   storyStarts: 100,
   semanticTriggers: 200, // triggers with story/action conditions
-  mechanicalTriggers: 500, // triggers without story/action conditions
+  mechanicalTriggers: 2_000, // triggers without story/action conditions
   abilities: 1_000,
   triggerConditions: 5, // per trigger
-  triggerEffects: 5, // per trigger
+  triggerEffects: 10, // per trigger
   triggerSize: 10_000, // per trigger
   abilityRequirements: 10, // per ability
+  traitRequirements: 10, // per trait
+  startingTraitSelections: 40, // sum of traitCategories[].maxSelections
   premadeCharacters: 100,
   itemCategories: 40,
   itemSlots: 60,
@@ -92,9 +94,11 @@ const SETTINGS_ENTRY_LIMITS = {
   premadeCharacter: 20_000, // per-character JSON length
 };
 
-// AI instruction limits
+// AI instruction limits (per task; generateNPCIntents gets a larger allowance)
 const AI_INSTRUCTION_INDIVIDUAL_LIMIT = 5_000;
 const AI_INSTRUCTION_COMBINED_LIMIT = 20_000;
+const AI_INSTRUCTION_INDIVIDUAL_LIMIT_NPC_INTENTS = 8_000;
+const AI_INSTRUCTION_COMBINED_LIMIT_NPC_INTENTS = 40_000;
 
 // Game mode field limits (per mode)
 const GAME_MODE_FIELD_LIMITS = {
@@ -156,7 +160,7 @@ function analyzeConfig(config) {
     counts: {},
     aiInstructions: {
       individual: [],
-      combinedTotal: 0,
+      perTask: [],
     },
     triggers: {
       oversizedConditions: [],
@@ -294,6 +298,15 @@ function analyzeConfig(config) {
     result.counts.attributeNames = { used: config.attributeSettings.attributeNames.length, limit: COUNT_LIMITS.attributeNames };
   }
 
+  // Starting trait selections (sum of traitCategories[].maxSelections)
+  if (config.traitCategories && typeof config.traitCategories === 'object') {
+    const totalSelections = Object.values(config.traitCategories).reduce((sum, category) => {
+      const n = category?.maxSelections;
+      return sum + (typeof n === 'number' && n > 0 ? n : 0);
+    }, 0);
+    result.counts.startingTraitSelections = { used: totalSelections, limit: COUNT_LIMITS.startingTraitSelections };
+  }
+
   // Settings list per-entry character limits
   const pushSettingsEntry = (path, used, limit) => {
     if (used > limit) result.settingsEntries.oversized.push({ path, used, limit });
@@ -391,39 +404,48 @@ function analyzeConfig(config) {
     }
   }
 
-  // AI Instructions analysis
+  // AI Instructions analysis (limits are per task; generateNPCIntents gets a larger allowance)
   if (config.aiInstructions) {
-    let combinedTotal = 0;
     for (const [taskId, taskInstructions] of Object.entries(config.aiInstructions)) {
+      const individualLimit = taskId === 'generateNPCIntents'
+        ? AI_INSTRUCTION_INDIVIDUAL_LIMIT_NPC_INTENTS
+        : AI_INSTRUCTION_INDIVIDUAL_LIMIT;
+      const combinedLimit = taskId === 'generateNPCIntents'
+        ? AI_INSTRUCTION_COMBINED_LIMIT_NPC_INTENTS
+        : AI_INSTRUCTION_COMBINED_LIMIT;
+      let taskTotal = 0;
       if (Array.isArray(taskInstructions)) {
         for (let i = 0; i < taskInstructions.length; i++) {
           const instr = taskInstructions[i];
           if (typeof instr === 'string') {
             const len = instr.length;
-            combinedTotal += len;
-            if (len > AI_INSTRUCTION_INDIVIDUAL_LIMIT) {
+            taskTotal += len;
+            if (len > individualLimit) {
               result.aiInstructions.individual.push({
                 path: `aiInstructions.${taskId}[${i}]`,
                 used: len,
-                limit: AI_INSTRUCTION_INDIVIDUAL_LIMIT,
+                limit: individualLimit,
               });
             }
           } else if (instr && typeof instr === 'object' && instr.instruction) {
             const len = instr.instruction.length;
-            combinedTotal += len;
-            if (len > AI_INSTRUCTION_INDIVIDUAL_LIMIT) {
+            taskTotal += len;
+            if (len > individualLimit) {
               result.aiInstructions.individual.push({
                 path: `aiInstructions.${taskId}[${i}].instruction`,
                 used: len,
-                limit: AI_INSTRUCTION_INDIVIDUAL_LIMIT,
+                limit: individualLimit,
               });
             }
           }
         }
       }
+      result.aiInstructions.perTask.push({
+        path: `aiInstructions.${taskId}`,
+        used: taskTotal,
+        limit: combinedLimit,
+      });
     }
-    result.aiInstructions.combinedTotal = combinedTotal;
-    result.aiInstructions.combinedLimit = AI_INSTRUCTION_COMBINED_LIMIT;
   }
 
   // Game mode field analysis
@@ -585,6 +607,20 @@ function analyzeConfig(config) {
     }
   }
 
+  // Trait requirements count
+  if (config.traits) {
+    for (const [traitId, trait] of Object.entries(config.traits)) {
+      if (trait.requirements && trait.requirements.length > COUNT_LIMITS.traitRequirements) {
+        result.entries.oversized.push({
+          path: `traits.${traitId}.requirements`,
+          used: trait.requirements.length,
+          limit: COUNT_LIMITS.traitRequirements,
+          type: 'count',
+        });
+      }
+    }
+  }
+
   return result;
 }
 
@@ -636,12 +672,16 @@ function printReport(result, inputPath) {
     }
   }
 
-  // AI Instructions
-  if (result.aiInstructions.combinedTotal > 0) {
-    console.log('\n🤖 AI INSTRUCTIONS');
+  // AI Instructions (combined limit is per task)
+  const aiTasksWithContent = result.aiInstructions.perTask.filter((task) => task.used > 0);
+  if (aiTasksWithContent.length > 0) {
+    console.log('\n🤖 AI INSTRUCTIONS (combined per task)');
     console.log('─'.repeat(50));
-    const status = getStatus(result.aiInstructions.combinedTotal, result.aiInstructions.combinedLimit);
-    console.log(`  Combined total: ${formatNumber(result.aiInstructions.combinedTotal)} / ${formatNumber(result.aiInstructions.combinedLimit)}  ${status}`);
+    for (const task of aiTasksWithContent) {
+      const status = getStatus(task.used, task.limit);
+      const pct = formatPercent(task.used, task.limit);
+      console.log(`  ${task.path.padEnd(40)} ${formatNumber(task.used).padStart(7)} / ${formatNumber(task.limit).padStart(7)}  ${pct.padStart(7)}  ${status}`);
+    }
     if (result.aiInstructions.individual.length > 0) {
       console.log('\n  Individual instructions over limit:');
       for (const item of result.aiInstructions.individual) {
@@ -759,7 +799,7 @@ function printReport(result, inputPath) {
     result.imagePrompts.oversized.length +
     (result.imagePrompts.total !== null && result.imagePrompts.total.used > result.imagePrompts.total.limit ? 1 : 0) +
     result.settingsEntries.oversized.length +
-    (result.aiInstructions.combinedTotal > result.aiInstructions.combinedLimit ? 1 : 0) +
+    result.aiInstructions.perTask.filter((task) => task.used > task.limit).length +
     result.aiInstructions.individual.length;
 
   if (totalIssues === 0) {
@@ -848,7 +888,7 @@ function main() {
     result.imagePrompts.oversized.length > 0 ||
     (result.imagePrompts.total !== null && result.imagePrompts.total.used > result.imagePrompts.total.limit) ||
     result.settingsEntries.oversized.length > 0 ||
-    result.aiInstructions.combinedTotal > result.aiInstructions.combinedLimit ||
+    result.aiInstructions.perTask.some((task) => task.used > task.limit) ||
     result.aiInstructions.individual.length > 0;
 
   process.exit(hasViolations ? 1 : 0);

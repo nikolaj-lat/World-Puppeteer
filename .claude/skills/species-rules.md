@@ -9,7 +9,7 @@ Every species requires:
 | Component | File | Key Fields |
 |-----------|------|------------|
 | **NPC Type** | `tabs/npc-types.json` | `description` |
-| **Trait** | `tabs/traits.json` | `description`, `quirk` |
+| **Trait** | `tabs/traits.json` | `description`, `traitNarrativeEffects` |
 | **World Lore** | `tabs/world-lore.json` | `text` |
 
 ## Description Alignment
@@ -18,7 +18,7 @@ Each field serves a different purpose and has a **different format**, but all sh
 
 ### Lore Paragraphs (Shared Base)
 
-The lore paragraphs are identical across NPC Type `description`, Trait `description`, and Trait `quirk`. They follow this structure:
+The lore paragraphs are identical across NPC Type `description`, Trait `description`, and Trait `traitNarrativeEffects`. They follow this structure:
 
 1. **Origin sentence** - How the species comes into being (transformation, born as yokai, made through ritual, etc.)
 2. **Physical features** - Concrete sensory details of their appearance
@@ -31,7 +31,7 @@ The lore paragraphs are identical across NPC Type `description`, Trait `descript
 |-------|---------|
 | **NPC Type `description`** | Lore paragraphs + skills (single `\n` between blocks) |
 | **Trait `description`** | Lore paragraphs + skills (double `\n\n` between blocks) |
-| **Trait `quirk`** | Lore paragraphs only, no skills |
+| **Trait `traitNarrativeEffects`** | Lore paragraphs only, no skills |
 | **World Lore `text`** | Narrative prose format (flowing sentence with semicolons) |
 
 ### NPC Type Description Format
@@ -120,7 +120,7 @@ Every species trait must include all of these fields:
 |-------|-------------|
 | `name` | Must match object key exactly |
 | `description` | Lore paragraphs + skill blocks (double newline separated) |
-| `quirk` | Lore paragraphs only (no skills) |
+| `traitNarrativeEffects` | Lore paragraphs only (no skills) |
 | `attributes` | Array of attribute modifiers |
 | `skills` | Array of exactly 3 Innate skill modifiers |
 | `resources` | Array of resource modifiers (can be empty `[]`) |
@@ -134,10 +134,10 @@ Every species trait must include all of these fields:
 - [ ] Create NPC Type with `description` (lore paragraphs + `\n` skill blocks)
 - [ ] Create Trait with all required fields (including `unlockedBy: []` and `excludedBy: []`)
 - [ ] Set Trait `description` (lore paragraphs + `\n\n` skill blocks)
-- [ ] Set Trait `quirk` (lore paragraphs only, no skills)
+- [ ] Set Trait `traitNarrativeEffects` (lore paragraphs only, no skills)
 - [ ] Include exactly 3 Innate skills in the Trait
 - [ ] Create World Lore entry with `text` (narrative prose format)
-- [ ] Verify lore paragraphs are identical across NPC Type, Trait description, and Trait quirk
+- [ ] Verify lore paragraphs are identical across NPC Type, Trait description, and Trait traitNarrativeEffects
 - [ ] Verify skills exist in `tabs/skills.json` with type `"Innate"`
 - [ ] Verify skill descriptions follow the 3-sentence standard
 
@@ -145,7 +145,7 @@ Every species trait must include all of these fields:
 
 - [ ] Update the NPC Type `description` first (canonical source for lore paragraphs)
 - [ ] Derive Trait `description` (same lore + `\n\n` skill blocks)
-- [ ] Derive Trait `quirk` (same lore, no skills)
+- [ ] Derive Trait `traitNarrativeEffects` (same lore, no skills)
 - [ ] Update World Lore `text` (narrative prose format)
 - [ ] Verify no em dashes, uses "three signature arts"
 

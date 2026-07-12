@@ -37,7 +37,7 @@ For every triggered trigger in the phase:
    b. Run the script to completion (or until it exceeds the remaining budget).
    c. Read back `skip`, `storage`, `triggers`, `effects` from the VM.
 3. If `skip === true`, this trigger's effects are cleared for the turn AND the trigger is **not** counted as fired — non-recurring triggers with `skip = true` re-fire next turn. Storage and trigger-set writes still persist.
-4. Otherwise, filter `effects` through the Effect schema and cap at 5 effects, then apply them. This filter+cap also defends against malformed effects produced by script writeback.
+4. Otherwise, filter `effects` through the Effect schema, drop any effects beyond the per-trigger cap, then apply them. This filter+cap also defends against malformed effects produced by script writeback.
 5. After all triggers in the phase complete, validate mutated `triggers` via the trigger-limits rules; if any limit is violated, **all** trigger mutations for the phase are discarded. Storage writes are validated via JSON round-trip and reverted if non-serializable.
 
 ### Per-phase budget
@@ -149,8 +149,8 @@ Later scripts in the same turn see earlier scripts' storage writes immediately. 
 Mutations are buffered until all scripts in the phase complete, then validated against the same trigger limits enforced at publish time. If **any** check fails, the entire buffer is discarded and a `trigger-script-error` log entry is written. See [triggers-reference.md](triggers-reference.md) for the full trigger-limits table.
 
 Validation catches include:
-- Semantic trigger count > 200, mechanical > 500
-- More than 5 conditions or 5 effects on a single trigger
+- Semantic or mechanical trigger counts exceeding their caps
+- More conditions or effects on a single trigger than the caps allow
 - Whole-trigger JSON > 10 000 chars
 - Condition query > 1 000 chars, effect instruction > 1 000 chars
 - Any condition or effect value > 100 chars (stringified)
@@ -183,7 +183,7 @@ effects = effects.filter((e) => e.type !== "party-realm")
 
 After readback:
 - Malformed effects (unknown type, non-object, primitive) are silently dropped.
-- The first 5 valid effects apply; the rest are discarded.
+- The first 10 valid effects apply; the rest are discarded.
 
 If `skip = true`, the entire effect array is cleared regardless of what the script wrote.
 
@@ -323,7 +323,7 @@ These are complete trigger objects in the JSON shape that goes in `triggers/`. U
 A `story` effect that fires on **game-tick 0 does NOT change the initial story** the player sees. Put opening narration in the **story-start text**, or fire it at **tick >= 1** (add a `game-tick greaterThanOrEqual 1` condition, or `skip` in the script when `check({ type: 'game-tick' }) === 0`). Tick-0 triggers are still correct for *initializing state* (write-number/string, resource setup) — just not for narration.
 
 ### Effect types a script may push (do NOT invent new JS effect/condition types)
-Scripts live ONLY in the top-level `script` field. The effect `type`s a script (or declarative effect) may use: `story` (`{instruction}`); `quest-init` / `quest-progress` (`{questId}` or `{value}`); `party-realm` / `party-region` / `party-location` / `party-area` (`{operator:'set', value}`); `player-resource` (`{resource, operator: add|subtract|multiply|divide|set, value}`); `player-traits` (`{operator: add|remove|set, value}`); `known-entity` (`{entity, operator: set|toggle, value}`); and storage writes `write-string` / `write-number` / `write-boolean` / `write-array` (`write-number` uses `add`/`subtract`/`multiply`/`divide`/`set`; `write-boolean` uses `set`/`toggle`; `write-array` uses `set`/`add`/`remove`).
+Scripts live ONLY in the top-level `script` field. The effect `type`s a script (or declarative effect) may use: `story` (`{instruction}`); `quest-init` / `quest-progress` / `quest-complete` (`{questId}` or `{value}`); `quest-objective-reveal` / `quest-objective-complete` (`{questId, objectiveId}`); `quest-next-step-set` (`{questId, text, source}`) / `quest-next-step-clear` (`{questId}`); `party-next-step-set` (`{text, source}`) / `party-next-step-clear`; `narrative-event-start` (`{eventId}`); `party-realm` / `party-region` / `party-location` / `party-area` (`{operator:'set', value}`); `player-resource` (`{resource, operator: add|subtract|multiply|divide|set, value}`); `player-traits` (`{operator: add|remove|set, value}`); `known-entity` (`{entity, operator: set|toggle, value}`); and storage writes `write-string` / `write-number` / `write-boolean` / `write-array` (`write-number` uses `add`/`subtract`/`multiply`/`divide`/`set`; `write-boolean` uses `set`/`toggle`; `write-array` uses `set`/`add`/`remove`). Full field docs for every effect are in [triggers-reference.md](triggers-reference.md).
 
 ### Quick firing rules
 - A trigger with **no conditions fires every turn**.

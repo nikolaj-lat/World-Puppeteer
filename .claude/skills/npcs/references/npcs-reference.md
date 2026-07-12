@@ -20,9 +20,9 @@ interface NPC {
   abilities?: string[]            // ✅ Prose descriptions of abilities
   aliases?: string[]              // ✅ Alternate names/titles (e.g. "the captain", "Reed") used only to match input/dialogue to this NPC; never sent to the AI
   level?: number                  // ⚠️ Set explicitly for any NPC that should be stronger; an explicit level is used as-is. If omitted, the engine rolls a level near the party average when the NPC first becomes visible (so it reflects the party's level at that moment), then clamps it into the npcLevelRange of the NPC's location (or, if the location has none, its region). Each NPC level adds +2 to base damage
-  hpMax?: number                  // ⚠️ Calculated from level + tier if undefined
-  hpCurrent?: number              // ⚠️ Defaults to hpMax if undefined
-  healthMultiplier?: number       // ✅ Scales calculated max HP. 1 is normal, 10 is ten times normal, 0.5 is half. Clamped to 0.1–100. Ignored when hpMax is set explicitly
+  hpMax?: number                  // ⚠️ Used exactly as written on NPCs with an authored level. If undefined, derived live from level, tier, healthMultiplier, and difficulty. Set 0 (with hpCurrent 0) to spawn the NPC dead/dying
+  hpCurrent?: number              // ⚠️ Defaults to hpMax if undefined; clamped to the final hpMax
+  healthMultiplier?: number       // ✅ Scales calculated max HP. 1 is normal, 10 is ten times normal, 0.5 is half. Clamped to 0.1–100 (non-numeric values are treated as 1)
   tier?: 'trivial' | 'weak' | 'average' | 'strong' | 'elite' | 'boss' | 'mythic'                  // ✅ Affects HP calculation AND combat intent complexity.
   vulnerabilities?: string[]      // ✅ 1.5× damage from these types. Unions with npc-type's vulnerabilities
   resistances?: string[]          // ✅ 0.5× damage from these types. Unions with npc-type's resistances
@@ -85,7 +85,16 @@ Static resistances and buff resistances stack: 0.5× (static) × 0.5× (buff) = 
 | boss | 1.7 | +70% HP |
 | mythic | 1.85 | +85% HP |
 
-Formula: `(npcHealthPerLevel × level + npcMinHealth) × tierHPModifier`
+Formula: `(npcHealthPerLevel × level + npcMinHealth) × tierHPModifier × healthMultiplier × difficultyHealthMultiplier`
+
+### How HP Is Calculated
+
+An authored `hpMax` on an NPC with an authored `level` is used **exactly as written** — the formula above and the game's difficulty never modify it.
+
+When `hpMax` is not authored, HP is derived **live** from the formula each time it's needed — it is not frozen at world load. (Previously the medium-difficulty value could get baked in at load; now the NPC's HP always reflects the game's actual difficulty.)
+
+On an NPC with **no authored `level`**, level and HP resolve lazily when the NPC first becomes visible (level from the location's level range, HP from the formula). Only in this lazy path does an authored `hpMax` act as a **floor**: the engine takes the higher of the authored and calculated values. An authored `hpCurrent` is always clamped to the final `hpMax`; authoring `hpCurrent: 0` deliberately spawns the NPC dead/dying.
+
 
 ### Damage Multipliers
 

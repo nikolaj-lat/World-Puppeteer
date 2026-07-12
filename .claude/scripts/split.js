@@ -10,7 +10,7 @@
  *   node split.js my-world.json ./sections/
  *
  * Creates these files (granular split for easier editing):
- *   - settings.json       (game balance: attributes, skills, combat, items)
+ *   - settings.json       (game balance: attributes, skills, combat, items, progression)
  *   - realms.json         (realm definitions)
  *   - regions.json        (region definitions)
  *   - locations.json      (location definitions with areas)
@@ -23,6 +23,7 @@
  *   - abilities.json      (ability definitions)
  *   - story-starts.json   (story start scenarios)
  *   - triggers.json       (trigger definitions)
+ *   - narrative-events.json (narrative event definitions)
  *   - quests.json         (quest definitions)
  *   - world-lore.json     (worldLore entries)
  *   - world-background.json (storySettings with worldBackground)
@@ -46,7 +47,9 @@ const SECTIONS = {
     'itemSettings',
     'combatSettings',
     'otherSettings',
+    'progressionSettings',
     'characterCreationMusic',
+    'imageModelSources',
   ],
   realms: ['realms'],
   regions: ['regions'],
@@ -60,6 +63,7 @@ const SECTIONS = {
   abilities: ['abilities'],
   'story-starts': ['storyStarts'],
   triggers: ['triggers'],
+  'narrative-events': ['narrativeEvents'],
   quests: ['quests'],
   'world-lore': ['worldLore'],
   'world-background': ['worldBackground'],
@@ -105,6 +109,7 @@ function main() {
     console.error('  - abilities.json       (ability definitions)');
     console.error('  - story-starts.json    (story start scenarios)');
     console.error('  - triggers.json        (trigger definitions)');
+    console.error('  - narrative-events.json (narrative event definitions)');
     console.error('  - quests.json          (quest definitions)');
     console.error('  - world-lore.json      (worldLore entries)');
     console.error('  - world-background.json (storySettings with worldBackground)');
