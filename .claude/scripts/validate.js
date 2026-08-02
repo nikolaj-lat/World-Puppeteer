@@ -48,6 +48,8 @@ const VALID_TRIGGER_CONDITION_TYPES = [
   'read-array',
   'quest-status',
   'narrative-event-status',
+  'npc-relationship',
+  'npc-relationship-stage',
 ];
 
 const VALID_TRIGGER_EFFECT_TYPES = [
@@ -73,6 +75,12 @@ const VALID_TRIGGER_EFFECT_TYPES = [
   'party-next-step-clear',
   'quest-complete',
   'narrative-event-start',
+  'npc-relationship',
+  'win-game',
+  'lose-game',
+  'end-game',
+  'music-track-set',
+  'music-track-clear',
 ];
 
 // Known status values for quest-status / narrative-event-status conditions.
@@ -163,6 +171,10 @@ const REQUIRED_TOP_LEVEL = [
   'encounterElements',
   'randomNames',
   'mods',
+  'heroesVersion',
+  'characterCreationSettings',
+  'endGame',
+  'gameplayMusicSettings',
 ];
 
 const REQUIRED_ATTRIBUTE_SETTINGS = [
@@ -265,25 +277,27 @@ const REQUIRED_RESOURCE_FIELDS = [
 // ============================================================================
 
 const LIMITS = {
-  total: 10_000_000,
+  total: 12_500_000,
   sections: {
-    worldLore: 500_000,
-    npcs: 1_000_000,
-    locations: 1_000_000,
+    worldLore: 1_000_000,
+    npcs: 2_000_000,
+    locations: 2_000_000,
     npcTypes: 500_000,
-    itemTypes: 100_000,
+    itemTypes: 250_000,
     factions: 100_000,
     regions: 500_000,
     realms: 100_000,
     traitCategories: 100_000,
+    traits: 1_750_000,
+    gameModes: 100_000,
     itemSettings: 5_000,
     nameFilterSettings: 150_000,
   },
   counts: {
     storyStarts: 100,
-    semanticTriggers: 200,
-    mechanicalTriggers: 2_000,
-    abilities: 1_000,
+    semanticTriggers: 500,
+    mechanicalTriggers: 4_000,
+    abilities: 1_500,
     triggerConditions: 5,
     triggerEffects: 10,
     abilityRequirements: 10,
@@ -305,7 +319,12 @@ const LIMITS = {
     aiInstructionCombined: 20_000,
     // generateNPCIntents gets a larger allowance than other AI tasks
     aiInstructionIndividualNPCIntents: 8_000,
-    aiInstructionCombinedNPCIntents: 40_000,
+    // Per-task combined allowances that differ from aiInstructionCombined
+    aiInstructionCombinedByTask: {
+      generateStory: 30_000,
+      generateNPCIntents: 40_000,
+      generateNPCUpdates: 24_000,
+    },
     worldLoreEntry: 4_000,
     storyStartEntry: 8_000,
     itemDescription: 4_000,
@@ -369,6 +388,9 @@ const OPTIONAL_TOP_LEVEL = [
   'characterCreationMusic',
   'imagePromptConfiguration',
   'imageModelSources',
+  // Required by the V35 schema, but the engine falls back to its own defaults
+  // when omitted, and stages must cover -100..100 with no gap when present.
+  'relationshipStages',
   // Top-level in the merged tabs shape (tabs/world-background.json); build.js
   // hoists it into storySettings.worldBackground in the compiled config.
   'worldBackground',
@@ -1454,13 +1476,12 @@ function validateCharacterLimits(config, errors, warnings) {
   // enforce the combined limit PER TASK (matches the engine).
   if (config.aiInstructions) {
     for (const [taskId, instructions] of Object.entries(config.aiInstructions)) {
-      // generateNPCIntents gets a larger allowance than other tasks
+      // Some tasks get a larger allowance than the standard per-task limit
       const individualLimit = taskId === 'generateNPCIntents'
         ? LIMITS.fields.aiInstructionIndividualNPCIntents
         : LIMITS.fields.aiInstructionIndividual;
-      const combinedLimit = taskId === 'generateNPCIntents'
-        ? LIMITS.fields.aiInstructionCombinedNPCIntents
-        : LIMITS.fields.aiInstructionCombined;
+      const combinedLimit = LIMITS.fields.aiInstructionCombinedByTask[taskId]
+        ?? LIMITS.fields.aiInstructionCombined;
       let taskTotal = 0;
       const checkText = (label, text) => {
         if (typeof text === 'string' && text) {
@@ -2042,7 +2063,7 @@ function validateUnknownFields(config, errors) {
     ]),
     combatSettings: new Set([
       'baseCombatXP', 'minCombatXP', 'abilityCooldown', 'abilityBonus',
-      'npcDailyHealingAmount', 'damageTypes',
+      'npcDailyHealingAmount', 'damageTypes', 'damageTypePresentation',
     ]),
     otherSettings: new Set([
       'npcHealthPerLevel', 'npcMinHealth',

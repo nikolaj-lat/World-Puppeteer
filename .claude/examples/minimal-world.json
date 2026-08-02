@@ -1,4 +1,5 @@
 {
+  "heroesVersion": 35,
   "aiInstructions": {
     "generateStory": {
       "Victory and Downtime": "",
@@ -44,6 +45,10 @@
   "narratorStyle": "",
   "gameModes": {},
   "characterCreationMusic": "nonfantasy",
+  "gameplayMusicSettings": {
+    "characterCreationTrackId": "",
+    "tracks": {}
+  },
   "worldLore": {},
   "triggers": {},
   "questTriggers": {},
@@ -69,6 +74,20 @@
   "npcs": {},
   "quests": {},
   "arcs": {},
+  "endGame": {
+    "win": {
+      "endCondition": "win",
+      "instructions": ""
+    },
+    "lose": {
+      "endCondition": "lose",
+      "instructions": ""
+    },
+    "end": {
+      "endCondition": "end",
+      "instructions": ""
+    }
+  },
   "skills": {},
   "traits": {},
   "traitCategories": {},
@@ -142,7 +161,8 @@
     "abilityCooldown": 0,
     "abilityBonus": 10,
     "npcDailyHealingAmount": 999,
-    "damageTypes": []
+    "damageTypes": [],
+    "damageTypePresentation": {}
   },
   "otherSettings": {
     "npcHealthPerLevel": 10,
@@ -162,6 +182,9 @@
     "locationDiscoveryXP": 10,
     "levelUpTraitPool": [],
     "milestoneTitles": []
+  },
+  "characterCreationSettings": {
+    "customizationEnabled": true
   },
   "tipSettings": {
     "tips": [],
