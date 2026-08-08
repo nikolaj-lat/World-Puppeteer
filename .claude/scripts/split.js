@@ -10,7 +10,8 @@
  *   node split.js my-world.json ./sections/
  *
  * Creates these files (granular split for easier editing):
- *   - settings.json       (game balance: attributes, skills, combat, items, progression)
+ *   - settings.json       (game balance: attributes, skills, combat, items, progression,
+ *                          music, character creation, relationship stages)
  *   - realms.json         (realm definitions)
  *   - regions.json        (region definitions)
  *   - locations.json      (location definitions with areas)
@@ -27,11 +28,11 @@
  *   - quests.json         (quest + arc definitions)
  *   - world-lore.json     (worldLore entries)
  *   - world-background.json (storySettings with worldBackground)
- *   - ai-instructions.json (aiInstructions, narratorStyle, resourceSettings, death)
+ *   - ai-instructions.json (aiInstructions, narratorStyle, resourceSettings, death, endGame)
  *   - archetypes.json (authorSeeds, characterArchetypes, locationArchetypes,
  *                            regionArchetypes, encounterElements)
  *   - premade-characters.json (premadeCharacters)
- *   - meta.json           (tipSettings, nameFilterSettings, randomNames, mods)
+ *   - meta.json           (tipSettings, nameFilterSettings, randomNames, mods, heroesVersion)
  */
 
 const fs = require('fs');
@@ -48,6 +49,9 @@ const SECTIONS = {
     'otherSettings',
     'progressionSettings',
     'characterCreationMusic',
+    'gameplayMusicSettings',
+    'characterCreationSettings',
+    'relationshipStages',
     'imageModelSources',
   ],
   realms: ['realms'],
@@ -66,7 +70,7 @@ const SECTIONS = {
   quests: ['quests', 'arcs'],
   'world-lore': ['worldLore'],
   'world-background': ['worldBackground'],
-  'ai-instructions': ['aiInstructions', 'narratorStyle', 'gameModes', 'imagePromptConfiguration', 'death', 'resourceSettings', 'storySettings'],
+  'ai-instructions': ['aiInstructions', 'narratorStyle', 'gameModes', 'imagePromptConfiguration', 'death', 'endGame', 'resourceSettings', 'storySettings'],
   'archetypes': [
     'authorSeeds',
     'characterArchetypes',
@@ -80,6 +84,7 @@ const SECTIONS = {
     'nameFilterSettings',
     'randomNames',
     'mods',
+    'heroesVersion',
   ],
 };
 

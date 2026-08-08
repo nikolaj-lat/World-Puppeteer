@@ -6,15 +6,16 @@ Complete character and count limits for world configs.
 
 | Section | Limit |
 |---------|-------|
-| Total config | 10,000,000 chars |
-| worldLore | 500,000 chars |
-| npcs | 1,000,000 chars |
-| locations | 1,000,000 chars |
+| Total config | 12,500,000 chars |
+| worldLore | 1,000,000 chars |
+| npcs | 2,000,000 chars |
+| locations | 2,000,000 chars |
 | npcTypes | 500,000 chars |
-| itemTypes | 100,000 chars |
+| itemTypes | 250,000 chars |
 | factions | 100,000 chars |
 | regions | 500,000 chars |
 | realms | 100,000 chars |
+| traits | 1,750,000 chars |
 | traitCategories | 100,000 chars |
 | itemSettings | 5,000 chars |
 | gameModes | 100,000 chars |
@@ -27,7 +28,7 @@ Complete character and count limits for world configs.
 | storySettings.worldBackground | 5,000 chars |
 | storySettings.questGenerationGuidance | 5,000 chars |
 | Individual AI instruction | 5,000 chars (8,000 for generateNPCIntents) |
-| AI task instructions (combined, per task) | 20,000 chars (40,000 for generateNPCIntents) |
+| AI task instructions (combined, per task) | 20,000 chars (30,000 for generateStory, 40,000 for generateNPCIntents, 24,000 for generateNPCUpdates) |
 | narratorStyle | 2,000 chars |
 | abilities.[id].description | 2,000 chars |
 | Individual worldLore entry text | 4,000 chars |
@@ -69,9 +70,9 @@ Complete character and count limits for world configs.
 | Element | Max Count |
 |---------|-----------|
 | Story starts | 100 |
-| Semantic triggers (story/action conditions) | 200 |
-| Mechanical triggers (all other conditions) | 2,000 |
-| Abilities | 1,000 |
+| Semantic triggers (story/action conditions) | 500 |
+| Mechanical triggers (all other conditions) | 4,000 |
+| Abilities | 1,500 |
 | Trigger conditions (per trigger) | 5 |
 | Trigger effects (per trigger) | 10 |
 | Individual trigger size | 10,000 chars |
