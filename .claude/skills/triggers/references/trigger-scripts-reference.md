@@ -238,12 +238,36 @@ if (triggers['intro-cutscene']) {
 }
 ```
 
+### Randomness
+
+`Math.random()` works in trigger scripts. Use it directly for random outcomes:
+
+```javascript
+const weather = ['clear skies', 'heavy rain', 'thick fog', 'bitter wind']
+const pick = weather[Math.floor(Math.random() * weather.length)]
+effects.push({ type: 'story', instruction: 'The day breaks with ' + pick + '.' })
+```
+
+To shuffle, use a Fisher-Yates loop. A destructuring swap (`[a[i], a[j]] = [a[j], a[i]]`) is valid script syntax, but a line that starts with `[` merges into the previous statement when that line has no semicolon — a standard JavaScript pitfall that silently corrupts the swap. A temp variable avoids the trap entirely:
+
+```javascript
+for (let i = order.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1))
+  const temp = order[i]
+  order[i] = order[j]
+  order[j] = temp
+}
+```
+
+Randomized narration must fire at **tick >= 1** — a `story` effect on tick 0 never reaches the opening (see the tick-0 gotcha). Persist the result in `storage` if later turns need to stay consistent with it.
+
 ## Anti-Patterns
 
 - **Don't busy-wait or poll**: the per-phase budget is small and shared. A `while(true)` will exhaust it and suppress other triggers in that phase.
 - **Don't rely on exact timing**: scripts may run in either async or sync mode. Don't branch on which one.
 - **Don't store functions, BigInts, or non-JSON values** in `storage` — they're lost or cause the whole phase's writes to revert.
 - **Don't use `operator: 'regex'` via `check()`** — it returns `undefined`. Use JS regex directly.
+- **Don't start a line with `[` in semicolon-free code** — destructuring swaps like `[a[i], a[j]] = [a[j], a[i]]` merge into the previous statement and silently corrupt the result (plain JavaScript ASI, not a script restriction). Use a temp variable, or end the previous line with `;`.
 - **Don't write huge storage objects**: the 16 MB memory ceiling includes storage copy-in on every script.
 - **Don't mutate `triggers` without knowing the limits** — one violation discards every mutation for the phase.
 
