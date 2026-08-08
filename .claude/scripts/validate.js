@@ -122,6 +122,10 @@ const VALID_NUMBER_OPERATORS = [
 const VALID_BOOLEAN_OPERATORS = ['equals', 'notEquals'];
 const VALID_ARRAY_OPERATORS = ['contains', 'notContains'];
 
+// win-game / lose-game / end-game optional fields
+const VALID_END_GAME_SCOPES = ['game', 'players'];
+const VALID_END_GAME_OUTCOMES = ['won', 'lost', 'ended'];
+
 const VALID_NUMBER_EFFECT_OPERATORS = ['add', 'subtract', 'multiply', 'divide', 'set'];
 const VALID_BOOLEAN_EFFECT_OPERATORS = ['set', 'toggle'];
 const VALID_ARRAY_EFFECT_OPERATORS = ['set', 'add', 'remove'];
@@ -1055,7 +1059,7 @@ function validateTriggerEffect(effectPath, effect, refs, config, errors) {
 
   // Operator validation for write effects
   if (effect.operator) {
-    const isNumberEffect = ['player-resource', 'write-number'].includes(effect.type);
+    const isNumberEffect = ['player-resource', 'write-number', 'npc-relationship'].includes(effect.type);
     const isBooleanEffect = ['write-boolean'].includes(effect.type);
     const isArrayEffect = ['write-array'].includes(effect.type);
 
@@ -1132,12 +1136,123 @@ function validateTriggerEffect(effectPath, effect, refs, config, errors) {
       errors.push(createError(`${effectPath}.eventId`, `References non-existent narrative event: ${effect.eventId}`));
     }
   }
+
+  if (effect.type === 'npc-relationship') {
+    if (typeof effect.npc !== 'string' || effect.npc === '') {
+      errors.push(createError(`${effectPath}.npc`, 'Missing required field: npc'));
+    }
+  }
+
+  if (effect.type === 'music-track-set') {
+    if (typeof effect.trackId !== 'string' || effect.trackId === '') {
+      errors.push(createError(`${effectPath}.trackId`, 'Missing required field: trackId'));
+    } else {
+      const tracks = config.gameplayMusicSettings?.tracks;
+      const trackKeys = tracks && typeof tracks === 'object' && !Array.isArray(tracks)
+        ? Object.keys(tracks)
+        : [];
+      if (!trackKeys.includes(effect.trackId)) {
+        errors.push(createError(`${effectPath}.trackId`, `References non-existent music track: ${effect.trackId} (not in gameplayMusicSettings.tracks)`));
+      }
+    }
+  }
+
+  if (['win-game', 'lose-game', 'end-game'].includes(effect.type)) {
+    if (effect.endScope !== undefined && !VALID_END_GAME_SCOPES.includes(effect.endScope)) {
+      errors.push(createError(`${effectPath}.endScope`, `Invalid endScope: ${effect.endScope}. Valid: ${VALID_END_GAME_SCOPES.join(', ')}`));
+    }
+    if (effect.othersOutcome !== undefined && !VALID_END_GAME_OUTCOMES.includes(effect.othersOutcome)) {
+      errors.push(createError(`${effectPath}.othersOutcome`, `Invalid othersOutcome: ${effect.othersOutcome}. Valid: ${VALID_END_GAME_OUTCOMES.join(', ')}`));
+    }
+  }
 }
 
 function validateTriggers(config, errors) {
   const refs = buildQuestEventRefs(config);
   validateTriggerSection('triggers', config.triggers, refs, config, errors);
   validateTriggerSection('questTriggers', config.questTriggers, refs, config, errors);
+}
+
+// When relationshipStages is present it must cover every score from -100 to 100 with
+// no gaps or overlaps; omitting the section entirely uses the engine defaults instead.
+function validateRelationshipStages(config, errors) {
+  const stages = config.relationshipStages;
+  if (stages === undefined) return;
+
+  if (!Array.isArray(stages)) {
+    errors.push(createError('relationshipStages', `Expected array, got ${typeof stages}`));
+    return;
+  }
+
+  if (stages.length === 0) {
+    errors.push(createError('relationshipStages', 'Relationship stages must cover every score from -100 to 100. Omit the section entirely to use the engine defaults.'));
+    return;
+  }
+
+  const validStages = [];
+  const names = new Set();
+
+  stages.forEach((stage, index) => {
+    const path = `relationshipStages[${index}]`;
+    if (!stage || typeof stage !== 'object' || Array.isArray(stage)) {
+      errors.push(createError(path, `Expected object, got ${Array.isArray(stage) ? 'array' : typeof stage}`));
+      return;
+    }
+
+    const label = typeof stage.name === 'string' && stage.name.trim() ? `"${stage.name}"` : `${index + 1}`;
+
+    if (typeof stage.name !== 'string' || stage.name.trim() === '') {
+      errors.push(createError(`${path}.name`, `Relationship stage ${index + 1} must have a non-empty name`));
+    } else {
+      const normalizedName = stage.name.trim().toLowerCase();
+      if (names.has(normalizedName)) {
+        errors.push(createError(`${path}.name`, `Relationship stage name "${stage.name}" is duplicated`));
+      }
+      names.add(normalizedName);
+    }
+
+    if (typeof stage.minScore !== 'number' || typeof stage.maxScore !== 'number' ||
+        !Number.isFinite(stage.minScore) || !Number.isFinite(stage.maxScore)) {
+      errors.push(createError(path, `Relationship stage ${label} must use finite numeric minScore and maxScore values`));
+      return;
+    }
+
+    if (!Number.isInteger(stage.minScore) || !Number.isInteger(stage.maxScore)) {
+      errors.push(createError(path, `Relationship stage ${label} must use whole-number minScore and maxScore values`));
+      return;
+    }
+
+    if (stage.minScore < -100 || stage.maxScore > 100) {
+      errors.push(createError(path, `Relationship stage ${label} must stay within -100 to 100`));
+    }
+
+    if (stage.minScore > stage.maxScore) {
+      errors.push(createError(path, `Relationship stage ${label} minScore must be less than or equal to maxScore`));
+      return;
+    }
+
+    if (typeof stage.name === 'string' && stage.name.trim()) {
+      validStages.push({ index, name: stage.name, minScore: stage.minScore, maxScore: stage.maxScore });
+    }
+  });
+
+  if (validStages.length === 0) return;
+
+  const sortedStages = [...validStages].sort((left, right) => left.minScore - right.minScore);
+  let expectedMinScore = -100;
+  for (const stage of sortedStages) {
+    if (stage.minScore < expectedMinScore) {
+      errors.push(createError(`relationshipStages[${stage.index}]`, `Relationship stage "${stage.name}" overlaps another stage`));
+    } else if (stage.minScore > expectedMinScore) {
+      errors.push(createError(`relationshipStages[${stage.index}].minScore`, `Relationship stages must cover every score from -100 to 100. Missing ${expectedMinScore} to ${stage.minScore - 1}`));
+    }
+    expectedMinScore = Math.max(expectedMinScore, stage.maxScore + 1);
+  }
+
+  if (expectedMinScore <= 100) {
+    const lastStage = sortedStages[sortedStages.length - 1];
+    errors.push(createError(`relationshipStages[${lastStage.index}].maxScore`, `Relationship stages must cover every score from -100 to 100. Missing ${expectedMinScore} to 100`));
+  }
 }
 
 function validateTriggerSection(section, triggersValue, refs, config, errors) {
@@ -1193,8 +1308,8 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
 
         // Operator validation based on condition type
         if (cond.operator) {
-          const isStringCondition = ['story-text', 'action-text', 'party-realm', 'party-region', 'party-location', 'party-area', 'read-string', 'quest-status', 'narrative-event-status'].includes(cond.type);
-          const isNumberCondition = ['player-level', 'game-tick', 'player-resource', 'read-number'].includes(cond.type);
+          const isStringCondition = ['story-text', 'action-text', 'party-realm', 'party-region', 'party-location', 'party-area', 'read-string', 'quest-status', 'narrative-event-status', 'npc-relationship-stage'].includes(cond.type);
+          const isNumberCondition = ['player-level', 'game-tick', 'player-resource', 'read-number', 'npc-relationship'].includes(cond.type);
           const isBooleanCondition = ['read-boolean'].includes(cond.type);
           const isArrayCondition = ['player-traits', 'quests-completed', 'read-array'].includes(cond.type);
 
@@ -1230,6 +1345,13 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
           }
           if (['equals', 'notEquals'].includes(cond.operator) && typeof cond.value === 'string' && !VALID_NARRATIVE_EVENT_STATUSES.includes(cond.value)) {
             errors.push(createError(`${condPath}.value`, `Unrecognized narrative event status: ${cond.value}. Known statuses: ${VALID_NARRATIVE_EVENT_STATUSES.join(', ')}`, 'warning'));
+          }
+        }
+
+        // npc-relationship / npc-relationship-stage conditions require an npc name
+        if (['npc-relationship', 'npc-relationship-stage'].includes(cond.type)) {
+          if (typeof cond.npc !== 'string' || cond.npc === '') {
+            errors.push(createError(`${condPath}.npc`, 'Missing required field: npc'));
           }
         }
       });
@@ -1621,6 +1743,11 @@ function validateCharacterLimits(config, errors, warnings) {
 }
 
 function validateTypeChecks(config, errors) {
+  // The V35 schema only accepts the literal 35
+  if (config.heroesVersion !== undefined && config.heroesVersion !== 35) {
+    errors.push(createError('heroesVersion', `Invalid heroesVersion: ${JSON.stringify(config.heroesVersion)} (must be the number 35)`));
+  }
+
   // Basic type checks for settings fields
 
   const checkNumber = (path, value) => {
@@ -2120,9 +2247,9 @@ function validateUnknownFields(config, errors) {
     // Skill XP rewards
     skillXPRewards: new Set(['small', 'medium', 'large', 'huge']),
     // Trigger conditions (union of all condition types)
-    triggerCondition: new Set(['type', 'operator', 'value', 'query', 'embeddingId', 'resource', 'entity', 'key', 'questId', 'eventId']),
+    triggerCondition: new Set(['type', 'operator', 'value', 'query', 'embeddingId', 'resource', 'entity', 'key', 'questId', 'eventId', 'npc']),
     // Trigger effects (union of all effect types)
-    triggerEffect: new Set(['type', 'operator', 'value', 'instruction', 'questId', 'resource', 'entity', 'key', 'objectiveId', 'text', 'source', 'eventId', 'target']),
+    triggerEffect: new Set(['type', 'operator', 'value', 'instruction', 'questId', 'resource', 'entity', 'key', 'objectiveId', 'text', 'source', 'eventId', 'target', 'npc', 'trackId', 'endScope', 'othersOutcome']),
     // Attribute stat modifier entries
     attrStatModifier: new Set(['variable', 'amount']),
     // Game mode entries
@@ -2540,6 +2667,7 @@ function validate(config) {
   validateRequiredFields(config, errors);
   validateReferenceIntegrity(config, errors);
   validateTriggers(config, errors);
+  validateRelationshipStages(config, errors);
   validateNarrativeEvents(config, errors);
   validateArcs(config, errors);
   validateDamageTypes(config, errors);
