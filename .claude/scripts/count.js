@@ -23,14 +23,15 @@ const path = require('path');
 
 // Section character limits (from validation.md)
 const SECTION_LIMITS = {
-  worldLore: 500_000,
-  npcs: 1_000_000,
-  locations: 1_000_000,
+  worldLore: 1_000_000,
+  npcs: 2_000_000,
+  locations: 2_000_000,
   npcTypes: 500_000,
-  itemTypes: 100_000,
+  itemTypes: 250_000,
   factions: 100_000,
   regions: 500_000,
   realms: 100_000,
+  traits: 1_750_000,
   traitCategories: 100_000,
   itemSettings: 5_000,
   gameModes: 100_000,
@@ -38,7 +39,7 @@ const SECTION_LIMITS = {
 };
 
 // Total config limit
-const TOTAL_CONFIG_LIMIT = 10_000_000;
+const TOTAL_CONFIG_LIMIT = 12_500_000;
 
 // Field character limits
 const FIELD_LIMITS = {
@@ -67,9 +68,9 @@ const ENTRY_LIMITS = {
 // Count limits
 const COUNT_LIMITS = {
   storyStarts: 100,
-  semanticTriggers: 200, // triggers with story/action conditions
-  mechanicalTriggers: 2_000, // triggers without story/action conditions
-  abilities: 1_000,
+  semanticTriggers: 500, // triggers with story/action conditions
+  mechanicalTriggers: 4_000, // triggers without story/action conditions
+  abilities: 1_500,
   triggerConditions: 5, // per trigger
   triggerEffects: 10, // per trigger
   triggerSize: 10_000, // per trigger
@@ -94,11 +95,15 @@ const SETTINGS_ENTRY_LIMITS = {
   premadeCharacter: 20_000, // per-character JSON length
 };
 
-// AI instruction limits (per task; generateNPCIntents gets a larger allowance)
+// AI instruction limits (per task; some tasks get larger combined allowances)
 const AI_INSTRUCTION_INDIVIDUAL_LIMIT = 5_000;
 const AI_INSTRUCTION_COMBINED_LIMIT = 20_000;
 const AI_INSTRUCTION_INDIVIDUAL_LIMIT_NPC_INTENTS = 8_000;
-const AI_INSTRUCTION_COMBINED_LIMIT_NPC_INTENTS = 40_000;
+const AI_INSTRUCTION_COMBINED_LIMIT_BY_TASK = {
+  generateStory: 30_000,
+  generateNPCIntents: 40_000,
+  generateNPCUpdates: 24_000,
+};
 
 // Game mode field limits (per mode)
 const GAME_MODE_FIELD_LIMITS = {
@@ -410,9 +415,8 @@ function analyzeConfig(config) {
       const individualLimit = taskId === 'generateNPCIntents'
         ? AI_INSTRUCTION_INDIVIDUAL_LIMIT_NPC_INTENTS
         : AI_INSTRUCTION_INDIVIDUAL_LIMIT;
-      const combinedLimit = taskId === 'generateNPCIntents'
-        ? AI_INSTRUCTION_COMBINED_LIMIT_NPC_INTENTS
-        : AI_INSTRUCTION_COMBINED_LIMIT;
+      const combinedLimit = AI_INSTRUCTION_COMBINED_LIMIT_BY_TASK[taskId]
+        ?? AI_INSTRUCTION_COMBINED_LIMIT;
       let taskTotal = 0;
       if (Array.isArray(taskInstructions)) {
         for (let i = 0; i < taskInstructions.length; i++) {
