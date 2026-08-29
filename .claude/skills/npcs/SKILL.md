@@ -15,16 +15,16 @@ Edit `tabs/npcs.json`.
 |-------|-------------|
 | `name` | Must match object key exactly |
 | `type` | Use existing npcType when it fits, otherwise `""` for unique NPCs |
-| `currentLocation` | Use a fitting existing location, or invent one |
-| `currentArea` | Use `""` if not relevant, or a valid area from the location |
+| `currentLocation` | Use a fitting existing location, or invent one. Matching ignores casing and whitespace |
+| `currentArea` | A location with areas needs both `currentLocation` and `currentArea`; an area-less location places by location only (use `""`) |
 | `gender` | Always set - aim for distribution: 40% male, 40% female, 20% non-binary |
 | `basicInfo` | Three-sentence structure (see format below) |
 | `personality` | Four traits using personality psychology (see format below) |
 | `hiddenInfo` | Full paragraph - mix of narrative secrets and gameplay-useful information |
 | `abilities` | At least five abilities + fighting style summary (see format below) |
 | `tier` | Always set to `mythic` for combat NPCs (determines intent complexity) |
-| `level` | Always set - each level adds +2 to an NPC's base damage (see guidelines below) |
-| `hpMax` | Always set - see HP guidelines below |
+| `level` | Always set to 1 or higher - each level adds +2 to an NPC's base damage (see guidelines below). Omitting it or setting `0` means the NPC scales from the party's level when first seen |
+| `hpMax` | Always set - see HP guidelines below. Used exactly as written |
 | `known` | Always set to `true` |
 | `voiceTag` | Voice tag for speech synthesis (see [voice-previews](references/voice-previews/voice-previews.md)) |
 
@@ -35,11 +35,13 @@ Edit `tabs/npcs.json`.
 | `faction` | Only for major plot-relevant faction membership |
 | `aliases` | Include when NPC is commonly referred to by title, epithet, or nickname in the story (e.g. `"the captain"`, `"Reed"`). Only list exact strings the narrator or other NPCs would literally speak — these are matched verbatim during dialogue speaker attribution |
 | `properName` | Set when an NPC starts under a placeholder `name` (e.g. `"Hooded Stranger"`) but has a true identity revealed later. `name` is the current display name; `properName` is the true name. The identity counts as revealed once the two match — a reveal flips `name` to `properName`. Omit when the NPC is known from the start |
+| `worldVoiceId` | Key from the world's `worldVoices` catalog. Overrides the generic `voiceTag` pick for this NPC. Include when the world defines a curated voice for the character |
+| `vulnerabilities`, `resistances`, `immunities` | Damage types from `combatSettings.damageTypes`. Include only when the NPC should take modified damage from specific types; they union with the npcType's lists |
+| `portraitFocusX`, `portraitFocusY`, `portraitZoom` | Optional crop/focus adjustments for an authored `portraitUrl`. Focus x/y run 0..100 (defaults x 50, y 0: top-centered), zoom 100..300 (100 = no zoom). Generated portraits ignore these |
 
 ## Never Include
 
 Omit these fields (auto-set or unused):
-- `vulnerabilities`, `resistances`, `immunities`
 - `visualDescription`, `visualTags`
 - `detailType`, `hpCurrent`, `activeBuffs`
 - `currentCoordinates`, `embeddingId`, `embedding`, `portraitUrl`
@@ -47,6 +49,8 @@ Omit these fields (auto-set or unused):
 - `lastSeenLocation`, `lastSeenArea`, `playerNotes`
 - `needsDetailGeneration`, `deathXPAwarded`
 - `healthMultiplier`
+
+`status` is reset to `""` by the engine. Near death, dying, and dead are a runtime incapacitation counter (1 = near death, 2 = dying, 3 = dead) that creators never set. To spawn an NPC already down, use `hpMax: 0` with `hpCurrent: 0` instead.
 
 ## basicInfo Format
 
@@ -135,6 +139,10 @@ interface NPC {
   healthMultiplier?: number
   known?: boolean
   voiceTag?: string
+  worldVoiceId?: string
+  portraitFocusX?: number
+  portraitFocusY?: number
+  portraitZoom?: number
   vulnerabilities?: string[]
   resistances?: string[]
   immunities?: string[]

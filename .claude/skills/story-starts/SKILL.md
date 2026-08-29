@@ -26,9 +26,14 @@ Edit `tabs/story-starts.json`.
 | `startingQuests` | When the story has immediate objectives for the player |
 | `firstQuest` | When you want AI-generated quest details on turn 0 |
 | `startingPartyNPCs` | When the player begins with companions |
-| `isDefault` | Set `true` on exactly one story start to pre-select it |
+| `isDefault` | Set `true` on exactly one story start. It is the start used when the host does not pick one; without it, the first entry is used |
 | `questGenerationGuidance` | When this story start needs quest tone/scope distinct from the rest of the world |
 | `startingItems` | Optional. Items granted on top of trait- and settings-based starting gear, for items specific to this story start. Usually leave to traits and settings and keep story starts narrative-focused |
+
+## Never Include
+
+Omit these fields (engine-controlled):
+- `allowPlayerInput` — the engine deletes it from every story start except the built-in one named exactly "Write Your Own", where it is forced on with an empty `storyStart`
 
 ## description Format
 
@@ -80,6 +85,7 @@ interface StoryStart {
   startingItems?: Array<{ item: string; quantity: number }>
   isDefault?: boolean
   questGenerationGuidance?: string
+  allowPlayerInput?: boolean
 }
 ```
 

@@ -16,8 +16,10 @@ Traits must be organized into categories in `tabs/traits.json` under `traitCateg
 | Field | Description |
 |-------|-------------|
 | `name` | Display name for the category |
-| `maxSelections` | How many traits player can pick. 0 means none can be picked — don't use it |
+| `maxSelections` | How many traits player can pick. 0 means none can be picked — don't use it. Applies to the whole category, subcategories included |
 | `traits` | Array of trait keys in this category |
+| `description` | Optional player-facing text explaining what the category represents |
+| `subcategories` | Optional groups within the category: `{ name, traits, description? }`. In character creation, subcategory traits are listed first, then the ungrouped root `traits` |
 
 Category patterns:
 - **Single selection** (class/background): `maxSelections: 1`
@@ -71,6 +73,8 @@ For **species traits**, see the Species Traits section below.
 Traits can be offered as level-up rewards via `progressionSettings.levelUpTraitPool` in `tabs/settings.json` (default cadence: 1 pick every 10 levels). When a pick is pending, the player chooses from pool traits they don't already have whose `unlockedBy`/`excludedBy` conditions pass and whose `requirements` are met; the chosen trait applies immediately, exactly like a starting trait. An empty pool means no picks are ever granted.
 
 **Gotcha:** `requirements`, `unlockedBy`, and `excludedBy` do nothing at character creation — they only filter the level-up pick list. To keep a trait out of starting selection, leave it out of every trait category.
+
+**Trigger-granted traits:** a trait added by a `player-traits` trigger effect applies its modifiers and abilities but does NOT grant its `startingItems`. Only permanent acquisition paths (character creation, level-up picks) hand out starting items. Trait bonuses are reconciled as net deltas, so swapping traits never double-applies a modifier.
 
 ## TraitModifier Format
 
@@ -129,6 +133,14 @@ interface TraitCategory {
   name: string
   maxSelections: number
   traits: string[]
+  description?: string
+  subcategories?: TraitSubcategory[]
+}
+
+interface TraitSubcategory {
+  name: string
+  traits: string[]
+  description?: string
 }
 
 interface Trait {

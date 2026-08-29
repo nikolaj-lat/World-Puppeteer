@@ -12,6 +12,10 @@ interface ItemDefinition {
   bonuses: ItemBonus[]                         // ✅ Stat bonuses, can be empty []
   slot?: string                                // ✅ Equipment slot from itemSettings.itemSlots
   mediaContent?: string                        // ✅ Text content for readable items (books, scrolls)
+  imageUrl?: string                            // ✅ URL for the item's image
+  imageFocusX?: number                         // ✅ Horizontal crop focus for the image
+  imageFocusY?: number                         // ✅ Vertical crop focus for the image
+  imageZoom?: number                           // ✅ Zoom level for the image crop
 }
 ```
 
@@ -32,6 +36,10 @@ interface ItemInstance {
   bonuses: ItemBonus[]            // ⚠️ From ItemDefinition.bonuses or []
   slot?: string                   // ✅ From ItemDefinition.slot
   mediaContent?: string           // ✅ From ItemDefinition.mediaContent
+  imageUrl?: string               // ✅ From ItemDefinition.imageUrl
+  imageFocusX?: number            // ✅ From ItemDefinition.imageFocusX
+  imageFocusY?: number            // ✅ From ItemDefinition.imageFocusY
+  imageZoom?: number              // ✅ From ItemDefinition.imageZoom
 
   // === GENERATED AT CREATION ===
   uuid: string                    // ❌ Always generated (getHeroesUuid())
@@ -78,6 +86,14 @@ When the AI generates items (loot, rewards, shop inventory), it uses explicit ad
 
 **Key difference**: Predefined items are fully authored — their bonuses are exactly as specified. AI-generated items are constrained by the AI's judgment of what fits the current situation.
 
+Narrator-created items must use a slot defined in `itemSettings.itemSlots` for their category; an item naming an unknown slot for that category is rejected. Define every slot the world should be able to hand out, or rely on a catch-all slot (see Slot matching rules).
+
+## Item Images
+
+Authored item images are retained through item creation and carried onto spawned inventory items, along with the `imageFocusX` / `imageFocusY` / `imageZoom` crop settings.
+
+When an item has no authored image, the engine can generate one from the item's name, category, slot, and description, plus the world's item image-prompt instructions.
+
 ## Equipment Slots
 
 Slots are defined in `itemSettings.itemSlots`:
@@ -94,6 +110,11 @@ When equipping:
 1. Check if slot is valid for item's `slot` and `category`
 2. If slot is full, first item is unequipped
 3. Bonuses applied on equip, removed on unequip
+
+**Slot matching rules:**
+- An authored item's `slot` must belong to an `itemSlots` entry with the same `category` as the item
+- A slot whose name equals its category acts as a catch-all: it accepts any item of that category, even if the item names a different slot
+- Slot and category matching is case- and whitespace-insensitive
 
 ## Currency Stacking
 

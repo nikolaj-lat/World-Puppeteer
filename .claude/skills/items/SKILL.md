@@ -24,6 +24,8 @@ Edit `tabs/items.json`.
 |-------|-----------------|
 | `slot` | Required for equippable items |
 | `mediaContent` | Required for readable items - the text content to display |
+| `imageUrl` | Optional URL for the item's image |
+| `imageFocusX`, `imageFocusY`, `imageZoom` | Optional crop/focus adjustments for the item's image |
 
 ## Never Include
 
@@ -72,6 +74,10 @@ interface ItemDefinition {
   bonuses: ItemBonus[]
   slot?: string
   mediaContent?: string
+  imageUrl?: string
+  imageFocusX?: number
+  imageFocusY?: number
+  imageZoom?: number
 }
 
 interface ItemBonus {

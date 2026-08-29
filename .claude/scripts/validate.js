@@ -178,7 +178,6 @@ const REQUIRED_TOP_LEVEL = [
   'heroesVersion',
   'characterCreationSettings',
   'endGame',
-  'gameplayMusicSettings',
 ];
 
 const REQUIRED_ATTRIBUTE_SETTINGS = [
@@ -243,7 +242,6 @@ const REQUIRED_LOCATION_SETTINGS = [
   'simpleRadius',
   'complexRadius',
   'regionLocationCount',
-  'regionFactionCount',
   'avgTravelDistance',
   'minTravelDistance',
   'encountersEnabled',
@@ -298,7 +296,8 @@ const LIMITS = {
     nameFilterSettings: 150_000,
   },
   counts: {
-    storyStarts: 100,
+    // The engine only fails when the count exceeds 101
+    storyStarts: 101,
     semanticTriggers: 500,
     mechanicalTriggers: 4_000,
     abilities: 1_500,
@@ -313,6 +312,8 @@ const LIMITS = {
     itemSlots: 60,
     damageTypes: 40,
     attributeNames: 30,
+    // Engine keeps only the first 32 voices in the catalog
+    worldVoices: 32,
   },
   fields: {
     worldBackground: 5_000,
@@ -328,7 +329,13 @@ const LIMITS = {
       generateStory: 30_000,
       generateNPCIntents: 40_000,
       generateNPCUpdates: 24_000,
+      generateNPCDetails: 26_000,
     },
+    gameModeNpcIntentInstructions: 5_000,
+    // worldVoices entries are sanitized (truncated/clamped) by the engine, never rejected
+    worldVoiceLabel: 64,
+    worldVoiceTag: 256,
+    worldVoiceInstructions: 1_000,
     worldLoreEntry: 4_000,
     storyStartEntry: 8_000,
     itemDescription: 4_000,
@@ -341,7 +348,9 @@ const LIMITS = {
     locationBasicInfo: 4_000,
     locationHiddenInfo: 4_000,
     areaDescription: 4_000,
-    traitDescription: 4_000,
+    // Combined budget over description + traitNarrativeEffects per trait; creators
+    // decide how to split it between the two fields
+    traitTextTotal: 6_000,
     abilityDescription: 2_000,
     realmBasicInfo: 100_000,
     triggerConditionQuery: 1_000,
@@ -383,18 +392,60 @@ function createError(path, message, severity = 'error') {
 }
 
 function getJsonLength(obj) {
-  // Use pretty-printing (2-space indent) to match how world configs are stored
-  return JSON.stringify(obj, null, 2).length;
+  // Compact JSON: the platform measures every size limit against compact serialization
+  return JSON.stringify(obj).length;
+}
+
+// Per-task charged baselines for AI instructions: content up to the checkpoint is
+// exempt from the per-task and total size caps ("free growth"). generateNPCDetails
+// additionally protects a fixed allowance above its checkpoint.
+const AI_TASK_CHARGED_BASELINES = {
+  generateStory: 13_069,
+  generateInitialStart: 1_434,
+  generateActionInfo: 13,
+  generateCharacterBackground: 1_815,
+  generateNPCIntents: 11_031,
+  generateNewNPC: 13,
+  generateNPCDetails: 13,
+  generateNPCUpdates: 1_861,
+  generateLocationDetails: 13,
+  generateRegionDetails: 13,
+  generateEncounters: 13,
+  ItemGenerationAndUsage: 13,
+  summarization: 13,
+  generateLearnedAbilities: 13,
+};
+const AI_TASK_PROTECTED_BASELINES = {
+  generateNPCDetails: 13 + 6_000,
+};
+
+function getTaskFreeAiGrowth(taskId, actualLength) {
+  const charged = AI_TASK_CHARGED_BASELINES[taskId] ?? 0;
+  const protectedBaseline = Math.max(AI_TASK_PROTECTED_BASELINES[taskId] ?? charged, charged);
+  return Math.max(0, Math.min(actualLength, protectedBaseline) - charged);
+}
+
+function getFreeAiInstructionsGrowth(config) {
+  let total = 0;
+  for (const [taskId, instructions] of Object.entries(config.aiInstructions ?? {})) {
+    total += getTaskFreeAiGrowth(taskId, getJsonLength(instructions));
+  }
+  return total;
 }
 
 const OPTIONAL_TOP_LEVEL = [
   'gameModes',
   'characterCreationMusic',
   'imagePromptConfiguration',
-  'imageModelSources',
-  // Required by the V35 schema, but the engine falls back to its own defaults
+  'imageModelSource',
+  // Authored voice catalog referenced by npcs[].worldVoiceId / premadeCharacters[].worldVoiceId
+  'worldVoices',
+  // Required by the V36 schema, but the engine falls back to its own defaults
   // when omitted, and stages must cover -100..100 with no gap when present.
   'relationshipStages',
+  // Same omit-for-defaults shape, and stricter: the platform REJECTS an empty
+  // catalog (the section merges atomically), so present-but-empty is never valid.
+  'gameplayMusicSettings',
   // Top-level in the merged tabs shape (tabs/world-background.json); build.js
   // hoists it into storySettings.worldBackground in the compiled config.
   'worldBackground',
@@ -551,10 +602,14 @@ function validateReferenceIntegrity(config, errors) {
   const npcTypeKeys = config.npcTypes ? new Set(Object.keys(config.npcTypes)) : new Set();
   const abilityKeys = config.abilities ? new Set(Object.keys(config.abilities)) : new Set();
   const skillKeys = config.skills ? new Set(Object.keys(config.skills)) : new Set();
+  const worldVoiceKeys = config.worldVoices && typeof config.worldVoices === 'object' && !Array.isArray(config.worldVoices)
+    ? new Set(Object.keys(config.worldVoices))
+    : new Set();
 
   // Get valid item categories and slots from itemSettings
   const validCategories = new Set(config.itemSettings?.itemCategories || []);
-  const validSlots = new Set((config.itemSettings?.itemSlots || []).map((s) => s.slot));
+  const itemSlotDefs = Array.isArray(config.itemSettings?.itemSlots) ? config.itemSettings.itemSlots : [];
+  const validSlots = new Set(itemSlotDefs.map((s) => s.slot));
 
   // NPC references
   if (config.npcs) {
@@ -586,8 +641,20 @@ function validateReferenceIntegrity(config, errors) {
       if (npc.tier && !VALID_NPC_TIERS.includes(npc.tier)) {
         errors.push(createError(`npcs.${npcId}.tier`, `Invalid NPC tier: ${npc.tier}. Valid values: ${VALID_NPC_TIERS.join(', ')}`));
       }
+
+      // worldVoiceId must be a key of the worldVoices catalog
+      if (npc.worldVoiceId !== undefined && !worldVoiceKeys.has(npc.worldVoiceId)) {
+        errors.push(createError(`npcs.${npcId}.worldVoiceId`, `References non-existent world voice: ${npc.worldVoiceId}${worldVoiceKeys.size === 0 ? ' (worldVoices is missing)' : ''}`));
+      }
     }
   }
+
+  // Premade character voice references
+  (Array.isArray(config.premadeCharacters) ? config.premadeCharacters : []).forEach((pc, i) => {
+    if (pc && typeof pc === 'object' && pc.worldVoiceId !== undefined && !worldVoiceKeys.has(pc.worldVoiceId)) {
+      errors.push(createError(`premadeCharacters[${i}].worldVoiceId`, `References non-existent world voice: ${pc.worldVoiceId}${worldVoiceKeys.size === 0 ? ' (worldVoices is missing)' : ''}`));
+    }
+  });
 
   // npcLevelRange invariants: min/max must be positive whole numbers and min <= max
   const isPositiveWholeNumber = (v) => typeof v === 'number' && Number.isInteger(v) && v > 0;
@@ -609,6 +676,11 @@ function validateReferenceIntegrity(config, errors) {
       if (location.region && !regionKeys.has(location.region)) {
         errors.push(createError(`locations.${locId}.region`, `References non-existent region: ${location.region}`));
       }
+      (Array.isArray(location.factions) ? location.factions : []).forEach((faction, i) => {
+        if (!factionKeys.has(faction)) {
+          errors.push(createError(`locations.${locId}.factions[${i}]`, `References non-existent faction: ${faction}`));
+        }
+      });
       validateNpcLevelRange('locations', locId, location.npcLevelRange);
     }
   }
@@ -619,6 +691,11 @@ function validateReferenceIntegrity(config, errors) {
       if (region.realm && !realmKeys.has(region.realm)) {
         errors.push(createError(`regions.${regionId}.realm`, `References non-existent realm: ${region.realm}`));
       }
+      (Array.isArray(region.factions) ? region.factions : []).forEach((faction, i) => {
+        if (!factionKeys.has(faction)) {
+          errors.push(createError(`regions.${regionId}.factions[${i}]`, `References non-existent faction: ${faction}`));
+        }
+      });
       validateNpcLevelRange('regions', regionId, region.npcLevelRange);
     }
   }
@@ -731,11 +808,31 @@ function validateReferenceIntegrity(config, errors) {
         });
       }
 
+      // startingPartyNPCs must reference authored NPCs
+      if (start.startingPartyNPCs && Array.isArray(start.startingPartyNPCs)) {
+        const npcKeys = config.npcs ? new Set(Object.keys(config.npcs)) : new Set();
+        start.startingPartyNPCs.forEach((npcName, npcIdx) => {
+          if (!npcKeys.has(npcName)) {
+            errors.push(createError(`${basePath}.startingPartyNPCs[${npcIdx}]`, `References non-existent NPC: ${npcName}`));
+          }
+        });
+      }
+
+      // allowPlayerInput only survives on the built-in "Write Your Own" story start
+      if (start.allowPlayerInput !== undefined && start.name !== 'Write Your Own') {
+        errors.push(createError(`${basePath}.allowPlayerInput`, 'allowPlayerInput is reserved for the built-in Write Your Own story start and is dropped otherwise', 'warning'));
+      }
+
       // locationAreas - validate it's an array of area name strings
       if (start.locationAreas !== undefined) {
         if (!Array.isArray(start.locationAreas)) {
           errors.push(createError(`${basePath}.locationAreas`, `Expected array of area names, got ${typeof start.locationAreas}`));
         } else {
+          // One area per location at most: the engine pairs areas with locations by index
+          const startLocationCount = Array.isArray(start.locations) ? start.locations.length : 0;
+          if (start.locationAreas.length > startLocationCount) {
+            errors.push(createError(`${basePath}.locationAreas`, `Has ${start.locationAreas.length} entries but the story start only lists ${startLocationCount} locations (locationAreas must not exceed locations)`));
+          }
           // Validate each area name in the array
           start.locationAreas.forEach((areaName, areaIdx) => {
             if (typeof areaName !== 'string') {
@@ -776,6 +873,12 @@ function validateReferenceIntegrity(config, errors) {
       // slot
       if (item.slot && validSlots.size > 0 && !validSlots.has(item.slot)) {
         errors.push(createError(`itemTypes.${itemId}.slot`, `Invalid item slot: ${item.slot}. Valid: ${[...validSlots].join(', ')}`));
+      } else if (item.slot && item.category && validSlots.has(item.slot)) {
+        // A slot belongs to one category; the engine rejects items whose slot is defined for another category
+        const slotCategories = itemSlotDefs.filter((s) => s.slot === item.slot).map((s) => s.category);
+        if (!slotCategories.includes(item.category)) {
+          errors.push(createError(`itemTypes.${itemId}.slot`, `Slot "${item.slot}" is defined for category ${slotCategories.map((c) => `"${c}"`).join(', ')}, not "${item.category}"`, 'warning'));
+        }
       }
     }
   }
@@ -788,7 +891,18 @@ function validateReferenceIntegrity(config, errors) {
       ? new Set(config.attributeSettings.attributeNames.map(a => a.toLowerCase()))
       : new Set();
 
+    const traitKeys = new Set(Object.keys(config.traits));
+
     for (const [traitId, trait] of Object.entries(config.traits)) {
+      // unlockedBy / excludedBy reference other traits by key
+      for (const field of ['unlockedBy', 'excludedBy']) {
+        (Array.isArray(trait[field]) ? trait[field] : []).forEach((ref, idx) => {
+          if (!traitKeys.has(ref)) {
+            errors.push(createError(`traits.${traitId}.${field}[${idx}]`, `References non-existent trait: ${ref}`, 'warning'));
+          }
+        });
+      }
+
       // abilities
       if (trait.abilities && Array.isArray(trait.abilities)) {
         trait.abilities.forEach((abilityId, idx) => {
@@ -1173,6 +1287,191 @@ function validateTriggers(config, errors) {
   validateTriggerSection('questTriggers', config.questTriggers, refs, config, errors);
 }
 
+// Structural rules for the authored gameplay music catalog. The section merges
+// atomically on the platform, so when present it must be complete and valid on its own.
+const GAMEPLAY_MUSIC_LIMITS = {
+  catalogJsonLength: 250_000,
+  families: 48,
+  familyKeyLength: 128,
+  variantsPerFamily: 12,
+  matchTagsPerFamily: 24,
+  matchTagLength: 64,
+  urlLength: 2_048,
+  characterCreationTrackIdLength: 128,
+};
+const VALID_GAMEPLAY_MUSIC_CUES = [
+  'character-creation', 'combat', 'travel', 'near-death', 'dying', 'dead', 'recovery',
+];
+
+function validateGameplayMusicSettings(config, errors) {
+  const settings = config.gameplayMusicSettings;
+  if (settings === undefined) return;
+  if (!settings || typeof settings !== 'object' || Array.isArray(settings)) {
+    errors.push(createError('gameplayMusicSettings', `Expected object, got ${Array.isArray(settings) ? 'array' : typeof settings}`));
+    return;
+  }
+
+  const catalogLength = getJsonLength(settings);
+  if (catalogLength > GAMEPLAY_MUSIC_LIMITS.catalogJsonLength) {
+    errors.push(createError('gameplayMusicSettings', `Catalog too large: ${catalogLength.toLocaleString()} chars (max: ${GAMEPLAY_MUSIC_LIMITS.catalogJsonLength.toLocaleString()})`));
+  }
+
+  const tracks = settings.tracks;
+  if (!tracks || typeof tracks !== 'object' || Array.isArray(tracks)) {
+    errors.push(createError('gameplayMusicSettings.tracks', 'Missing required field: tracks (object of track families)'));
+  } else {
+    const familyKeys = Object.keys(tracks);
+    if (familyKeys.length === 0) {
+      errors.push(createError('gameplayMusicSettings.tracks', 'Catalog must contain at least one track family (or omit gameplayMusicSettings entirely to use the engine defaults)'));
+    }
+    if (familyKeys.length > GAMEPLAY_MUSIC_LIMITS.families) {
+      errors.push(createError('gameplayMusicSettings.tracks', `Too many track families: ${familyKeys.length} (max: ${GAMEPLAY_MUSIC_LIMITS.families})`));
+    }
+    for (const [familyKey, family] of Object.entries(tracks)) {
+      const path = `gameplayMusicSettings.tracks.${familyKey}`;
+      if (familyKey.trim() === '') {
+        errors.push(createError(path, 'Track family key must be non-empty'));
+      }
+      if (familyKey.length > GAMEPLAY_MUSIC_LIMITS.familyKeyLength) {
+        errors.push(createError(path, `Family key too long: ${familyKey.length} chars (max: ${GAMEPLAY_MUSIC_LIMITS.familyKeyLength})`));
+      }
+      if (!family || typeof family !== 'object' || Array.isArray(family)) {
+        errors.push(createError(path, `Expected object, got ${Array.isArray(family) ? 'array' : typeof family}`));
+        continue;
+      }
+      const variants = family.variants;
+      if (!Array.isArray(variants) || variants.length === 0) {
+        errors.push(createError(`${path}.variants`, 'Each track family needs at least one variant'));
+      } else {
+        if (variants.length > GAMEPLAY_MUSIC_LIMITS.variantsPerFamily) {
+          errors.push(createError(`${path}.variants`, `Too many variants: ${variants.length} (max: ${GAMEPLAY_MUSIC_LIMITS.variantsPerFamily})`));
+        }
+        variants.forEach((variant, i) => {
+          if (!variant || typeof variant !== 'object') return;
+          const urls = ['url', 'narrationUrl', 'gameplayUrl'].map((k) => variant[k]).filter((u) => typeof u === 'string' && u !== '');
+          if (urls.length === 0) {
+            errors.push(createError(`${path}.variants[${i}]`, 'Variant needs at least one of url, narrationUrl, gameplayUrl'));
+          }
+          urls.forEach((url) => {
+            if (url.length > GAMEPLAY_MUSIC_LIMITS.urlLength) {
+              errors.push(createError(`${path}.variants[${i}]`, `URL too long: ${url.length} chars (max: ${GAMEPLAY_MUSIC_LIMITS.urlLength})`));
+            }
+            let parsed;
+            try { parsed = new URL(url); } catch { parsed = undefined; }
+            if (!parsed || parsed.protocol !== 'https:' || !parsed.hostname) {
+              errors.push(createError(`${path}.variants[${i}]`, `Variant URLs must be https: ${url}`));
+            }
+          });
+        });
+      }
+      const matchTags = family.matchTags;
+      if (matchTags !== undefined) {
+        if (!Array.isArray(matchTags)) {
+          errors.push(createError(`${path}.matchTags`, `Expected array, got ${typeof matchTags}`));
+        } else {
+          if (matchTags.length > GAMEPLAY_MUSIC_LIMITS.matchTagsPerFamily) {
+            errors.push(createError(`${path}.matchTags`, `Too many match tags: ${matchTags.length} (max: ${GAMEPLAY_MUSIC_LIMITS.matchTagsPerFamily})`));
+          }
+          matchTags.forEach((tag, i) => {
+            if (typeof tag !== 'string' || tag.trim() === '') {
+              errors.push(createError(`${path}.matchTags[${i}]`, 'Match tags must be non-empty strings'));
+            } else if (tag.length > GAMEPLAY_MUSIC_LIMITS.matchTagLength) {
+              errors.push(createError(`${path}.matchTags[${i}]`, `Match tag too long: ${tag.length} chars (max: ${GAMEPLAY_MUSIC_LIMITS.matchTagLength})`));
+            }
+          });
+        }
+      }
+      const cues = family.cues;
+      if (cues !== undefined && Array.isArray(cues)) {
+        cues.forEach((cue, i) => {
+          if (!VALID_GAMEPLAY_MUSIC_CUES.includes(cue)) {
+            errors.push(createError(`${path}.cues[${i}]`, `Invalid cue: ${cue}. Valid: ${VALID_GAMEPLAY_MUSIC_CUES.join(', ')}`));
+          }
+        });
+      }
+    }
+    const trackId = settings.characterCreationTrackId;
+    if (typeof trackId !== 'string') {
+      errors.push(createError('gameplayMusicSettings.characterCreationTrackId', 'Missing required field: characterCreationTrackId'));
+    } else {
+      if (trackId.length > GAMEPLAY_MUSIC_LIMITS.characterCreationTrackIdLength) {
+        errors.push(createError('gameplayMusicSettings.characterCreationTrackId', `Too long: ${trackId.length} chars (max: ${GAMEPLAY_MUSIC_LIMITS.characterCreationTrackIdLength})`));
+      }
+      if (trackId !== '' && !Object.hasOwn(tracks ?? {}, trackId)) {
+        errors.push(createError('gameplayMusicSettings.characterCreationTrackId', `References non-existent track family: ${trackId}`));
+      }
+    }
+  }
+}
+
+// When customization is disabled, players can only pick premade characters, so the
+// world must actually ship usable premades.
+function validateCharacterCreationSettings(config, errors) {
+  if (config.characterCreationSettings?.customizationEnabled !== false) return;
+
+  const premades = Array.isArray(config.premadeCharacters) ? config.premadeCharacters : [];
+  if (premades.length === 0) {
+    errors.push(createError('premadeCharacters', 'customizationEnabled is false, so at least one premade character is required'));
+    return;
+  }
+  const seenNames = new Set();
+  premades.forEach((pc, i) => {
+    const name = typeof pc?.name === 'string' ? pc.name.trim() : '';
+    if (!name) {
+      errors.push(createError(`premadeCharacters[${i}].name`, 'customizationEnabled is false, so every premade character needs a name'));
+      return;
+    }
+    const normalized = name.toLowerCase();
+    if (seenNames.has(normalized)) {
+      errors.push(createError(`premadeCharacters[${i}].name`, `Duplicate premade character name: ${pc.name}`));
+    }
+    seenNames.add(normalized);
+  });
+}
+
+// Trait category entries: subcategory shape plus reference integrity of trait lists
+function validateTraitCategories(config, errors) {
+  if (!config.traitCategories || typeof config.traitCategories !== 'object') return;
+  const traitKeys = config.traits ? new Set(Object.keys(config.traits)) : new Set();
+
+  for (const [categoryId, category] of Object.entries(config.traitCategories)) {
+    if (!category || typeof category !== 'object' || Array.isArray(category)) continue;
+    const basePath = `traitCategories.${categoryId}`;
+
+    (Array.isArray(category.traits) ? category.traits : []).forEach((traitName, i) => {
+      if (!traitKeys.has(traitName)) {
+        errors.push(createError(`${basePath}.traits[${i}]`, `References non-existent trait: ${traitName}`));
+      }
+    });
+
+    if (category.subcategories !== undefined) {
+      if (!Array.isArray(category.subcategories)) {
+        errors.push(createError(`${basePath}.subcategories`, `Expected array, got ${typeof category.subcategories}`));
+        continue;
+      }
+      category.subcategories.forEach((sub, i) => {
+        const subPath = `${basePath}.subcategories[${i}]`;
+        if (!sub || typeof sub !== 'object' || Array.isArray(sub)) {
+          errors.push(createError(subPath, `Expected object, got ${Array.isArray(sub) ? 'array' : typeof sub}`));
+          return;
+        }
+        if (typeof sub.name !== 'string' || sub.name.trim() === '') {
+          errors.push(createError(`${subPath}.name`, 'Missing required field: name'));
+        }
+        if (!Array.isArray(sub.traits)) {
+          errors.push(createError(`${subPath}.traits`, 'Missing required field: traits (array of trait names)'));
+        } else {
+          sub.traits.forEach((traitName, j) => {
+            if (!traitKeys.has(traitName)) {
+              errors.push(createError(`${subPath}.traits[${j}]`, `References non-existent trait: ${traitName}`));
+            }
+          });
+        }
+      });
+    }
+  }
+}
+
 // When relationshipStages is present it must cover every score from -100 to 100 with
 // no gaps or overlaps; omitting the section entirely uses the engine defaults instead.
 function validateRelationshipStages(config, errors) {
@@ -1476,8 +1775,12 @@ function validateDamageTypes(config, errors) {
 }
 
 function validateCharacterLimits(config, errors, warnings) {
-  // Total config size
-  const totalSize = getJsonLength(config);
+  // Total config size. The platform exempts growth in engine-default AI instructions
+  // ("free growth"), so the same credit is subtracted here; the platform is additionally
+  // slightly more lenient because it also credits base-instruction growth shipped after
+  // these checkpoints.
+  const freeAiGrowth = getFreeAiInstructionsGrowth(config);
+  const totalSize = getJsonLength(config) - freeAiGrowth;
   if (totalSize > LIMITS.total) {
     errors.push(createError('(total)', `Config too large: ${totalSize.toLocaleString()} chars (max: ${LIMITS.total.toLocaleString()})`));
   }
@@ -1621,8 +1924,12 @@ function validateCharacterLimits(config, errors, warnings) {
           checkText(`aiInstructions.${taskId}.${key}`, val);
         }
       }
-      if (taskTotal > combinedLimit) {
-        errors.push(createError(`aiInstructions.${taskId}`, `Combined task instructions too long: ${taskTotal} chars (max: ${combinedLimit})`));
+      // The combined cap is measured on compact JSON of the whole task map, minus the
+      // engine-default free-growth credit
+      const taskJsonLength = getJsonLength(instructions);
+      const chargedLength = taskJsonLength - getTaskFreeAiGrowth(taskId, taskJsonLength);
+      if (chargedLength > combinedLimit) {
+        errors.push(createError(`aiInstructions.${taskId}`, `Combined task instructions too long: ${chargedLength} chars (max: ${combinedLimit})`));
       }
     }
   }
@@ -1668,7 +1975,17 @@ function validateCharacterLimits(config, errors, warnings) {
   checkEntryField('regions', config.regions, 'hiddenInfo', LIMITS.fields.regionHiddenInfo);
   checkEntryField('locations', config.locations, 'basicInfo', LIMITS.fields.locationBasicInfo);
   checkEntryField('locations', config.locations, 'hiddenInfo', LIMITS.fields.locationHiddenInfo);
-  checkEntryField('traits', config.traits, 'description', LIMITS.fields.traitDescription);
+  if (config.traits && typeof config.traits === 'object') {
+    for (const [traitId, trait] of Object.entries(config.traits)) {
+      if (!trait || typeof trait !== 'object') continue;
+      const descLen = typeof trait.description === 'string' ? trait.description.length : 0;
+      const effectsLen = typeof trait.traitNarrativeEffects === 'string' ? trait.traitNarrativeEffects.length : 0;
+      const combined = descLen + effectsLen;
+      if (combined > LIMITS.fields.traitTextTotal) {
+        errors.push(createError(`traits.${traitId}`, `Combined description and traitNarrativeEffects too long: ${combined} chars (max: ${LIMITS.fields.traitTextTotal})`));
+      }
+    }
+  }
   checkEntryField('abilities', config.abilities, 'description', LIMITS.fields.abilityDescription);
 
   // Realm basicInfo
@@ -1743,9 +2060,14 @@ function validateCharacterLimits(config, errors, warnings) {
 }
 
 function validateTypeChecks(config, errors) {
-  // The V35 schema only accepts the literal 35
-  if (config.heroesVersion !== undefined && config.heroesVersion !== 35) {
-    errors.push(createError('heroesVersion', `Invalid heroesVersion: ${JSON.stringify(config.heroesVersion)} (must be the number 35)`));
+  // The V36 schema only accepts the literal 36
+  if (config.heroesVersion !== undefined && config.heroesVersion !== 36) {
+    errors.push(createError('heroesVersion', `Invalid heroesVersion: ${JSON.stringify(config.heroesVersion)} (must be the number 36)`));
+  }
+
+  // imageModelSource replaced the old imageModelSources object; it is a plain string id
+  if (config.imageModelSource !== undefined && typeof config.imageModelSource !== 'string') {
+    errors.push(createError('imageModelSource', `Expected string, got ${Array.isArray(config.imageModelSource) ? 'array' : typeof config.imageModelSource}`));
   }
 
   // Basic type checks for settings fields
@@ -1879,6 +2201,7 @@ function validateTypeChecks(config, errors) {
     const os = config.otherSettings;
     checkNumber('otherSettings.npcHealthPerLevel', os.npcHealthPerLevel);
     checkNumber('otherSettings.npcMinHealth', os.npcMinHealth);
+    checkBoolean('otherSettings.visualNovelModeByDefault', os.visualNovelModeByDefault);
   }
 
   // locationSettings
@@ -1888,7 +2211,6 @@ function validateTypeChecks(config, errors) {
     checkNumber('locationSettings.simpleRadius', ls.simpleRadius);
     checkNumber('locationSettings.complexRadius', ls.complexRadius);
     checkNumber('locationSettings.regionLocationCount', ls.regionLocationCount);
-    checkNumber('locationSettings.regionFactionCount', ls.regionFactionCount);
     checkNumber('locationSettings.avgTravelDistance', ls.avgTravelDistance);
     checkNumber('locationSettings.minTravelDistance', ls.minTravelDistance);
   }
@@ -2110,16 +2432,17 @@ function validateUnknownFields(config, errors) {
       'resistances', 'immunities', 'activeBuffs', 'known', 'lastSeenLocation',
       'lastSeenArea', 'currentCoordinates', 'detailType', 'voiceTag',
       'questOriginArcId', 'questOriginQuestId', 'embedding',
-      'embeddingId', 'portraitUrl', 'needsDetailGeneration', 'deathXPAwarded',
+      'embeddingId', 'portraitUrl', 'portraitFocusX', 'portraitFocusY', 'portraitZoom',
+      'needsDetailGeneration', 'deathXPAwarded', 'worldVoiceId',
     ]),
     locations: new Set([
       'name', 'basicInfo', 'x', 'y', 'radius', 'region', 'complexityType',
-      'detailType', 'areas', 'factions', 'hiddenInfo', 'visualTags', 'imageUrl',
+      'detailType', 'areas', 'factions', 'hiddenInfo', 'visualTags', 'images',
       'embeddingId', 'known', 'npcLevelRange', 'visited', 'lastVisitedTick', 'visitedAreas',
       'questOriginArcId', 'questOriginQuestId',
     ]),
     regions: new Set([
-      'name', 'basicInfo', 'x', 'y', 'realm', 'factions', 'hiddenInfo', 'known', 'npcLevelRange', 'imageUrl',
+      'name', 'basicInfo', 'x', 'y', 'realm', 'factions', 'hiddenInfo', 'known', 'npcLevelRange', 'images',
     ]),
     realms: new Set([
       'name', 'basicInfo', 'known',
@@ -2129,6 +2452,7 @@ function validateUnknownFields(config, errors) {
     ]),
     itemTypes: new Set([
       'name', 'category', 'description', 'bonuses', 'slot', 'mediaContent',
+      'imageUrl', 'imageFocusX', 'imageFocusY', 'imageZoom',
     ]),
     abilities: new Set([
       'name', 'description', 'requirements', 'bonus', 'cooldown',
@@ -2152,7 +2476,7 @@ function validateUnknownFields(config, errors) {
     storyStarts: new Set([
       'name', 'description', 'storyStart', 'locations', 'locationAreas',
       'startingQuests', 'firstQuest', 'startingItems', 'startingPartyNPCs', 'isDefault',
-      'questGenerationGuidance',
+      'questGenerationGuidance', 'allowPlayerInput',
     ]),
     worldLore: new Set([
       'text', 'embeddingId',
@@ -2182,7 +2506,7 @@ function validateUnknownFields(config, errors) {
     ]),
     locationSettings: new Set([
       'regionSize', 'simpleRadius', 'complexRadius', 'regionLocationCount',
-      'regionFactionCount', 'avgTravelDistance', 'minTravelDistance', 'newRegionGenerationEnabled', 'encountersEnabled',
+      'avgTravelDistance', 'minTravelDistance', 'newRegionGenerationEnabled', 'encountersEnabled',
       'regionMapBorderFeatheringEnabled',
     ]),
     itemSettings: new Set([
@@ -2193,7 +2517,7 @@ function validateUnknownFields(config, errors) {
       'npcDailyHealingAmount', 'damageTypes', 'damageTypePresentation',
     ]),
     otherSettings: new Set([
-      'npcHealthPerLevel', 'npcMinHealth',
+      'npcHealthPerLevel', 'npcMinHealth', 'visualNovelModeByDefault',
     ]),
     progressionSettings: new Set([
       'startingCharacterLevelUpRequirement', 'extraRequiredXPPerCharacterLevel',
@@ -2228,7 +2552,20 @@ function validateUnknownFields(config, errors) {
   // Check nested structures within entities
   const KNOWN_NESTED = {
     // Location areas
-    locationArea: new Set(['name', 'description', 'paths']),
+    locationArea: new Set(['name', 'description', 'paths', 'images', 'visualTags']),
+    // Scene images: { crop: { focus: { x, y }, zoom }, imageUrl? } keyed by shot name
+    locationImages: new Set(['establishingShot']),
+    regionImages: new Set(['map']),
+    sceneImage: new Set(['crop', 'imageUrl']),
+    // Premade characters (array entries)
+    premadeCharacter: new Set([
+      'name', 'gender', 'description', 'attributes', 'traits', 'backstory', 'portraitUrl',
+      'portraitFocusX', 'portraitFocusY', 'portraitZoom', 'replacesNpc',
+      'generatedBackground', 'generatedAppearance', 'voiceTag', 'worldVoiceId',
+    ]),
+    // World voices (label, not name: ids are referenced from NPCs and premades)
+    worldVoice: new Set(['label', 'voiceTag', 'instructions', 'speed', 'effects', 'exposeInCharacterCreation']),
+    worldVoiceEffects: new Set(['pitch', 'reverb', 'echo', 'eq', 'distortion', 'output']),
     // Ability requirements
     abilityRequirement: new Set(['type', 'variable', 'amount']),
     // Item bonuses
@@ -2253,9 +2590,9 @@ function validateUnknownFields(config, errors) {
     // Attribute stat modifier entries
     attrStatModifier: new Set(['variable', 'amount']),
     // Game mode entries
-    gameMode: new Set(['name', 'description', 'instructions', 'difficulty', 'askTheNarratorPrompt']),
+    gameMode: new Set(['name', 'description', 'instructions', 'difficulty', 'askTheNarratorPrompt', 'npcIntentInstructions']),
     // Image prompt configuration (per entity type)
-    imagePromptConfiguration: new Set(['npcs', 'locations', 'areas', 'regions', 'characterLoraEnabled', 'locationLoraEnabled']),
+    imagePromptConfiguration: new Set(['npcs', 'locations', 'areas', 'regions', 'items']),
   };
 
   function checkNested(parentPath, obj, knownSet) {
@@ -2270,13 +2607,156 @@ function validateUnknownFields(config, errors) {
     }
   }
 
+  // Scene images ({ crop: { focus: { x, y }, zoom }, imageUrl? }) on locations, areas, regions.
+  // The old flat imageUrl/imageFocusX/imageFocusY/imageZoom fields only survive on itemTypes.
+  const LEGACY_IMAGE_FIELDS = ['imageUrl', 'imageFocusX', 'imageFocusY', 'imageZoom'];
+  const warnRange = (path, value, min, max) => {
+    if (typeof value === 'number' && (value < min || value > max)) {
+      errors.push(createError(path, `Value ${value} is outside ${min}..${max} and will be clamped by the engine`, 'warning'));
+    }
+  };
+  const checkSceneImage = (path, image) => {
+    if (!image || typeof image !== 'object' || Array.isArray(image)) {
+      errors.push(createError(path, `Expected object with { crop: { focus: { x, y }, zoom }, imageUrl? }, got ${Array.isArray(image) ? 'array' : typeof image}`));
+      return;
+    }
+    checkNested(path, image, KNOWN_NESTED.sceneImage);
+    const crop = image.crop;
+    if (!crop || typeof crop !== 'object' || Array.isArray(crop)) {
+      errors.push(createError(`${path}.crop`, 'Missing required field: crop ({ focus: { x, y }, zoom })'));
+    } else {
+      checkNested(`${path}.crop`, crop, new Set(['focus', 'zoom']));
+      const focus = crop.focus;
+      if (!focus || typeof focus !== 'object' || Array.isArray(focus)) {
+        errors.push(createError(`${path}.crop.focus`, 'Missing required field: focus ({ x, y })'));
+      } else {
+        checkNested(`${path}.crop.focus`, focus, new Set(['x', 'y']));
+        for (const axis of ['x', 'y']) {
+          if (typeof focus[axis] !== 'number') {
+            errors.push(createError(`${path}.crop.focus.${axis}`, `Expected number, got ${typeof focus[axis]}`));
+          } else {
+            warnRange(`${path}.crop.focus.${axis}`, focus[axis], 0, 100);
+          }
+        }
+      }
+      if (typeof crop.zoom !== 'number') {
+        errors.push(createError(`${path}.crop.zoom`, `Expected number, got ${typeof crop.zoom}`));
+      } else {
+        warnRange(`${path}.crop.zoom`, crop.zoom, 100, 300);
+      }
+    }
+    if (image.imageUrl !== undefined && typeof image.imageUrl !== 'string') {
+      errors.push(createError(`${path}.imageUrl`, `Expected string, got ${typeof image.imageUrl}`));
+    }
+  };
+  const checkImages = (path, entity, knownShots, hint) => {
+    for (const legacy of LEGACY_IMAGE_FIELDS) {
+      if (entity[legacy] !== undefined) {
+        errors.push(createError(`${path}.${legacy}`, `"${legacy}" was removed - use ${hint} = { crop: { focus: { x, y }, zoom }, imageUrl } instead`));
+      }
+    }
+    if (entity.images === undefined) return;
+    if (!entity.images || typeof entity.images !== 'object' || Array.isArray(entity.images)) {
+      errors.push(createError(`${path}.images`, `Expected object, got ${Array.isArray(entity.images) ? 'array' : typeof entity.images}`));
+      return;
+    }
+    for (const [shot, image] of Object.entries(entity.images)) {
+      if (!knownShots.has(shot)) {
+        errors.push(createError(`${path}.images.${shot}`, `Unknown image key "${shot}" - valid: ${[...knownShots].join(', ')}`, 'warning'));
+        continue;
+      }
+      checkSceneImage(`${path}.images.${shot}`, image);
+    }
+  };
+
   // Location areas
   if (config.locations) {
     for (const [locKey, loc] of Object.entries(config.locations)) {
+      if (!loc || typeof loc !== 'object') continue;
+      checkImages(`locations.${locKey}`, loc, KNOWN_NESTED.locationImages, 'images.establishingShot');
       if (loc.areas && typeof loc.areas === 'object') {
         for (const [areaKey, area] of Object.entries(loc.areas)) {
           if (area && typeof area === 'object') {
             checkNested(`locations.${locKey}.areas.${areaKey}`, area, KNOWN_NESTED.locationArea);
+            checkImages(`locations.${locKey}.areas.${areaKey}`, area, KNOWN_NESTED.locationImages, 'images.establishingShot');
+          }
+        }
+      }
+    }
+  }
+  if (config.regions) {
+    for (const [regionKey, region] of Object.entries(config.regions)) {
+      if (!region || typeof region !== 'object') continue;
+      checkImages(`regions.${regionKey}`, region, KNOWN_NESTED.regionImages, 'images.map');
+    }
+  }
+
+  // Portrait crop fields share the scene-image ranges (focus 0..100, zoom 100..300)
+  const checkPortraitCrop = (path, entity) => {
+    warnRange(`${path}.portraitFocusX`, entity.portraitFocusX, 0, 100);
+    warnRange(`${path}.portraitFocusY`, entity.portraitFocusY, 0, 100);
+    warnRange(`${path}.portraitZoom`, entity.portraitZoom, 100, 300);
+  };
+  if (config.npcs) {
+    for (const [npcKey, npc] of Object.entries(config.npcs)) {
+      if (npc && typeof npc === 'object') checkPortraitCrop(`npcs.${npcKey}`, npc);
+    }
+  }
+
+  // Premade characters
+  if (Array.isArray(config.premadeCharacters)) {
+    config.premadeCharacters.forEach((pc, i) => {
+      if (!pc || typeof pc !== 'object') return;
+      checkNested(`premadeCharacters[${i}]`, pc, KNOWN_NESTED.premadeCharacter);
+      checkPortraitCrop(`premadeCharacters[${i}]`, pc);
+    });
+  }
+
+  // World voices: sanitized by the engine (truncate/clamp/drop), so limit overruns are warnings
+  if (config.worldVoices !== undefined) {
+    const voices = config.worldVoices;
+    if (!voices || typeof voices !== 'object' || Array.isArray(voices)) {
+      errors.push(createError('worldVoices', `Expected object keyed by voice id, got ${Array.isArray(voices) ? 'array' : typeof voices}`));
+    } else {
+      const voiceEntries = Object.entries(voices);
+      if (voiceEntries.length > LIMITS.counts.worldVoices) {
+        errors.push(createError('worldVoices', `Too many voices: ${voiceEntries.length} (max: ${LIMITS.counts.worldVoices}); the engine keeps only the first ${LIMITS.counts.worldVoices}`, 'warning'));
+      }
+      const warnLength = (path, value, limit) => {
+        if (typeof value === 'string' && value.length > limit) {
+          errors.push(createError(path, `Too long: ${value.length} chars (max: ${limit}); the engine truncates it`, 'warning'));
+        }
+      };
+      for (const [voiceId, voice] of voiceEntries) {
+        const path = `worldVoices.${voiceId}`;
+        if (!voice || typeof voice !== 'object' || Array.isArray(voice)) {
+          errors.push(createError(path, `Expected object, got ${Array.isArray(voice) ? 'array' : typeof voice}`));
+          continue;
+        }
+        checkNested(path, voice, KNOWN_NESTED.worldVoice);
+        for (const field of ['label', 'voiceTag']) {
+          if (typeof voice[field] !== 'string' || voice[field].trim() === '') {
+            errors.push(createError(`${path}.${field}`, `Missing required field: ${field}`));
+          }
+        }
+        warnLength(`${path}.label`, voice.label, LIMITS.fields.worldVoiceLabel);
+        warnLength(`${path}.voiceTag`, voice.voiceTag, LIMITS.fields.worldVoiceTag);
+        if (voice.instructions !== undefined && typeof voice.instructions !== 'string') {
+          errors.push(createError(`${path}.instructions`, `Expected string, got ${typeof voice.instructions}`));
+        }
+        warnLength(`${path}.instructions`, voice.instructions, LIMITS.fields.worldVoiceInstructions);
+        if (voice.speed !== undefined && typeof voice.speed !== 'number') {
+          errors.push(createError(`${path}.speed`, `Expected number, got ${typeof voice.speed}`));
+        }
+        warnRange(`${path}.speed`, voice.speed, 0.5, 2);
+        if (voice.exposeInCharacterCreation !== undefined && typeof voice.exposeInCharacterCreation !== 'boolean') {
+          errors.push(createError(`${path}.exposeInCharacterCreation`, `Expected boolean, got ${typeof voice.exposeInCharacterCreation}`));
+        }
+        if (voice.effects !== undefined) {
+          if (!voice.effects || typeof voice.effects !== 'object' || Array.isArray(voice.effects)) {
+            errors.push(createError(`${path}.effects`, `Expected object, got ${Array.isArray(voice.effects) ? 'array' : typeof voice.effects}`));
+          } else {
+            checkNested(`${path}.effects`, voice.effects, KNOWN_NESTED.worldVoiceEffects);
           }
         }
       }
@@ -2430,6 +2910,13 @@ function validateUnknownFields(config, errors) {
       if (mode.difficulty !== undefined && !VALID_GAME_MODE_DIFFICULTIES.includes(mode.difficulty)) {
         errors.push(createError(`gameModes.${modeKey}.difficulty`, `Invalid difficulty: ${mode.difficulty}. Valid: ${VALID_GAME_MODE_DIFFICULTIES.join(', ')}`, 'warning'));
       }
+      if (mode.npcIntentInstructions !== undefined) {
+        if (typeof mode.npcIntentInstructions !== 'string') {
+          errors.push(createError(`gameModes.${modeKey}.npcIntentInstructions`, `Expected string, got ${typeof mode.npcIntentInstructions}`));
+        } else if (mode.npcIntentInstructions.length > LIMITS.fields.gameModeNpcIntentInstructions) {
+          errors.push(createError(`gameModes.${modeKey}.npcIntentInstructions`, `Too long: ${mode.npcIntentInstructions.length} chars (max: ${LIMITS.fields.gameModeNpcIntentInstructions})`));
+        }
+      }
     }
   }
 
@@ -2439,7 +2926,7 @@ function validateUnknownFields(config, errors) {
     const MAX_IMAGE_PROMPT_INSTRUCTION = 5_000;
     const MAX_IMAGE_PROMPT_TOTAL = 15_000;
     let imagePromptTotal = 0;
-    for (const entityType of ['npcs', 'locations', 'areas', 'regions']) {
+    for (const entityType of ['npcs', 'locations', 'areas', 'regions', 'items']) {
       const prompt = config.imagePromptConfiguration[entityType];
       if (typeof prompt !== 'string') continue;
       imagePromptTotal += prompt.length;
@@ -2548,6 +3035,13 @@ function validateLocationRequiredFields(config, errors) {
     }
     if (location.radius !== undefined && typeof location.radius !== 'number') {
       errors.push(createError(`locations.${locId}.radius`, `Expected number, got ${typeof location.radius}`));
+    } else if (typeof location.radius === 'number' && !(location.radius > 0)) {
+      errors.push(createError(`locations.${locId}.radius`, `Radius must be greater than 0, got ${location.radius}`));
+    }
+    for (const axis of ['x', 'y']) {
+      if (typeof location[axis] === 'number' && !Number.isFinite(location[axis])) {
+        errors.push(createError(`locations.${locId}.${axis}`, `Coordinate must be a finite number, got ${location[axis]}`));
+      }
     }
 
     // Validate areas have required paths field
@@ -2596,19 +3090,32 @@ function validateLocationCoordinates(config, errors) {
       continue; // Skip - other validation will catch missing required fields
     }
 
-    // Check bounds: location + radius must stay within -halfSize to halfSize
-    if (x - radius < -halfSize || x + radius > halfSize) {
+    // Check bounds: the engine invariant is on the center only (|x|, |y| <= regionSize / 2)
+    // and is reported as a warning, not a rejection
+    if (Math.abs(x) > halfSize) {
       errors.push(createError(
         `locations.${locId}.x`,
-        `Location x (${x}) with radius (${radius}) exceeds region bounds (-${halfSize} to ${halfSize})`
+        `Location x (${x}) exceeds region bounds (-${halfSize} to ${halfSize})`,
+        'warning'
       ));
     }
 
-    if (y - radius < -halfSize || y + radius > halfSize) {
+    if (Math.abs(y) > halfSize) {
       errors.push(createError(
         `locations.${locId}.y`,
-        `Location y (${y}) with radius (${radius}) exceeds region bounds (-${halfSize} to ${halfSize})`
+        `Location y (${y}) exceeds region bounds (-${halfSize} to ${halfSize})`,
+        'warning'
       ));
+    }
+  }
+
+  // Region coordinates must be finite numbers
+  for (const [regionId, region] of Object.entries(config.regions ?? {})) {
+    if (!region || typeof region !== 'object') continue;
+    for (const axis of ['x', 'y']) {
+      if (region[axis] !== undefined && (typeof region[axis] !== 'number' || !Number.isFinite(region[axis]))) {
+        errors.push(createError(`regions.${regionId}.${axis}`, `Coordinate must be a finite number, got ${JSON.stringify(region[axis])}`));
+      }
     }
   }
 
@@ -2668,6 +3175,9 @@ function validate(config) {
   validateReferenceIntegrity(config, errors);
   validateTriggers(config, errors);
   validateRelationshipStages(config, errors);
+  validateGameplayMusicSettings(config, errors);
+  validateCharacterCreationSettings(config, errors);
+  validateTraitCategories(config, errors);
   validateNarrativeEvents(config, errors);
   validateArcs(config, errors);
   validateDamageTypes(config, errors);
@@ -2680,7 +3190,11 @@ function validate(config) {
   validateLocationCoordinates(config, errors);
   validateUnknownFields(config, errors);
 
-  return { errors, warnings };
+  // Checks tagged with severity 'warning' mirror engine sanitization (clamp/truncate/drop)
+  // rather than rejection, so they must not fail validation.
+  const hardErrors = errors.filter((e) => e.severity !== 'warning');
+  const softWarnings = [...warnings, ...errors.filter((e) => e.severity === 'warning')];
+  return { errors: hardErrors, warnings: softWarnings };
 }
 
 function printReport(result, inputPath, verbose) {

@@ -15,7 +15,12 @@ interface Region {
   hiddenInfo?: string       // ✅ Unused — region secrets belong in location or NPC entries
   known?: boolean           // ✅ Defaults to true; set false to hide at game start
   npcLevelRange?: { min: number, max: number }  // ✅ Optional level band for NPCs generated in this region, used when the location has no band of its own. NPCs with no explicit level are rolled near party level, then clamped into this band. NPCs with an explicit level ignore it
-  imageUrl?: string         // ✅ URL for the region's map image
+  images?: { map?: SceneImage }  // ✅ Region map image with its crop. When imageUrl is absent, the engine generates a map during play and saves it back; an existing map is never regenerated
+}
+
+interface SceneImage {
+  crop: { focus: { x: number, y: number }, zoom: number }  // ✅ Required whenever the image object is present. focus x/y run 0..100 (50 = centered, the default); zoom runs 100..300 (100 = no zoom, the default). Out-of-range values are clamped
+  imageUrl?: string                                        // ✅ Image URL. Optional; generated during play when absent
 }
 ```
 
@@ -108,11 +113,13 @@ locations: {
   "thornhaven": {
     name: "Thornhaven",
     region: "central-plains",
-    x: 45.5,    // Position within region (0 to regionSize)
+    x: 45.5,    // Position within region (-regionSize/2 to regionSize/2)
     y: 32.0
   }
 }
 ```
+
+Locations sit within half the region size of the center in either direction, with a positive `radius`.
 
 A region typically contains 3-8 locations, though this varies by world design.
 

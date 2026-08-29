@@ -52,10 +52,17 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 { type: '...', operator: 'equals' | 'notEquals' | 'contains' | 'notContains' | 'regex', value: 'string' }
 ```
 
-**Number conditions** (`player-level`, `game-tick`, `player-resource`):
+**Number conditions** (`player-level`, `game-tick`, `player-resource`, `npc-relationship`):
 ```typescript
 { type: '...', operator: 'equals' | 'notEquals' | 'greaterThan' | 'lessThan' | 'greaterThanOrEqual' | 'lessThanOrEqual', value: number }
 // For player-resource, also include: resource: 'resourceName'
+// For npc-relationship, also include: npc: 'npcName' — compares the NPC's relationship score
+```
+
+**NPC relationship stage condition** (`npc-relationship-stage`):
+```typescript
+{ type: 'npc-relationship-stage', npc: 'npcName', operator: 'equals' | 'notEquals' | 'contains' | 'notContains' | 'regex', value: 'stage name' }
+// Compares against the NPC's current stage name from the world's relationshipStages; a score matching no stage reads as 'Neutral'
 ```
 
 **Boolean conditions** (`known-entity`):
@@ -106,7 +113,7 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 ```typescript
 { type: 'quest-next-step-set', questId: 'questKey', text: 'guidance', source: 'objective' | 'narrative-event' }
 { type: 'quest-next-step-clear', questId: 'questKey' }
-{ type: 'party-next-step-set', text: 'guidance', source: 'objective' | 'narrative-event' }  // Party-wide guidance shown when no quest is active
+{ type: 'party-next-step-set', text: 'guidance', source: 'objective' | 'narrative-event' }  // Party-wide guidance; with source 'objective' it only applies when there is an accepted active quest
 { type: 'party-next-step-clear' }
 ```
 
@@ -127,6 +134,7 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 ```typescript
 { type: 'player-resource', resource: 'resourceName', operator: 'set' | 'add' | 'subtract' | 'multiply' | 'divide', value: number }
 // Optional: target: 'allPlayers' | 'satisfyingPlayers' — which players the effect applies to
+// Healing a living near-death or dying player clears that state. In permadeath games a dead player cannot be revived this way (health is forced back to 0)
 ```
 
 ### Entity Knowledge Effects
@@ -140,6 +148,30 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 ```typescript
 { type: 'player-traits', operator: 'set' | 'add' | 'remove', value: 'traitName' | ['trait1', 'trait2'] }
 // Optional: target: 'allPlayers' | 'satisfyingPlayers' — which players the effect applies to
+// Applies the trait's modifiers and abilities, but does NOT grant the trait's startingItems
+```
+
+### NPC Relationship Effect
+
+```typescript
+{ type: 'npc-relationship', npc: 'npcName', operator: 'set' | 'add' | 'subtract' | 'multiply' | 'divide', value: number }
+// Result clamps to -100..100 and rounds to a whole number; a missing NPC is a silent no-op
+```
+
+### Music Effects
+
+```typescript
+{ type: 'music-track-set', trackId: 'trackId' }  // Overrides music with a track from gameplayMusicSettings.tracks
+{ type: 'music-track-clear' }  // Clears the override, returning music to AI selection
+```
+
+### Game Ending Effects
+
+```typescript
+{ type: 'win-game' | 'lose-game' | 'end-game', endScope?: 'game' | 'players', othersOutcome?: 'won' | 'lost' | 'ended' }
+// Ends the game with outcome won/lost/ended. endScope 'players' ends only the players who satisfy the trigger; default 'game' ends the whole game
+// othersOutcome (game scope only): outcome for everyone who did NOT satisfy the trigger
+// With endScope 'players', players whose game already ended are skipped and the trigger's fire count is not used up, so it can still fire for other players later
 ```
 
 ### Write Effects (to triggerWritable)
@@ -171,6 +203,8 @@ Firing itself is unchanged: a mechanical player condition still fires when at le
 
 - **Turn 0**: `story` effects on tick 0 do NOT affect initial story. Use `storyStart` text or tick 1+ triggers
 - **Recurring**: Without `recurring: true`, triggers fire only once ever
+- **Identical story instructions deduplicate**: two triggers firing with the same `story` instruction text produce ONE instruction to the AI — duplicating an effect for emphasis does not work
+- **Host / DM input**: `action` and `action-text` conditions only evaluate real player inputs — host and DM story directions are ignored
 
 ## Schema
 

@@ -9,13 +9,15 @@ agent: factions
 
 Edit `tabs/factions.json`.
 
+The factions authored here are the world's complete roster: the engine uses them as fixed context during play and reveals them as the story names them.
+
 ## Required Fields
 
 | Field | Requirement |
 |-------|-------------|
 | `name` | Must match object key exactly |
 | `basicInfo` | Three-sentence structure (see format below) |
-| `factionType` | `"minor"` for local groups, `"major"` for influential organizations |
+| `factionType` | `"major"` if the faction should span into newly generated regions, `"minor"` if not |
 | `hiddenInfo` | Full paragraph of secrets (see guidelines below) |
 
 ## Conditional Fields
@@ -51,18 +53,11 @@ Write a full paragraph revealing what is not publicly known. Mix different types
 
 Both narrative depth AND gameplay-useful information should be included.
 
-## factionType Selection
-
-| Type | Use When |
-|------|----------|
-| `minor` | Local militia, small guilds, neighborhood groups, single-location organizations |
-| `major` | Kingdom-spanning guilds, religious orders, noble houses, crime syndicates |
-
-Minor factions get details generated more aggressively than major factions.
-
 ## Discovery Mechanics
 
-Factions default to `known: true` at runtime unless the config explicitly sets `known: false`. Use `known: false` for secret organizations, hidden cults, or factions the player must discover through gameplay. Triggers can also reveal or hide factions dynamically using the `known-entity` effect.
+Factions default to `known: true` at runtime unless the config explicitly sets `known: false`. Use `known: false` for secret organizations, hidden cults, or factions the player must discover through gameplay.
+
+A hidden faction becomes known when the latest story text contains its full `name` as a whole word (case and spacing insensitive), or when a `known-entity` trigger effect sets `known`. Give hidden factions distinctive names that can plausibly appear verbatim in narration.
 
 ## Schema
 

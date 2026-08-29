@@ -60,14 +60,14 @@ const ENTRY_LIMITS = {
   npcs: { combined: 8_000 },
   regions: { basicInfo: 4_000, hiddenInfo: 4_000 },
   locations: { basicInfo: 4_000, hiddenInfo: 4_000 },
-  traits: { description: 4_000 },
+  traits: { textTotal: 6_000 }, // description + traitNarrativeEffects combined
   abilities: { description: 2_000 },
   realms: { basicInfo: 100_000 },
 };
 
 // Count limits
 const COUNT_LIMITS = {
-  storyStarts: 100,
+  storyStarts: 101,
   semanticTriggers: 500, // triggers with story/action conditions
   mechanicalTriggers: 4_000, // triggers without story/action conditions
   abilities: 1_500,
@@ -103,6 +103,7 @@ const AI_INSTRUCTION_COMBINED_LIMIT_BY_TASK = {
   generateStory: 30_000,
   generateNPCIntents: 40_000,
   generateNPCUpdates: 24_000,
+  generateNPCDetails: 26_000,
 };
 
 // Game mode field limits (per mode)
@@ -111,6 +112,7 @@ const GAME_MODE_FIELD_LIMITS = {
   description: 500,
   instructions: 5_000,
   askTheNarratorPrompt: 1_000,
+  npcIntentInstructions: 5_000,
 };
 
 // Image prompt configuration limits
@@ -379,9 +381,31 @@ function analyzeConfig(config) {
         }
       }
 
+      // Check trait text total (description + traitNarrativeEffects share one budget)
+      if (section === 'traits' && limits.textTotal) {
+        const description = typeof entry.description === 'string' ? entry.description : '';
+        const narrativeEffects = typeof entry.traitNarrativeEffects === 'string' ? entry.traitNarrativeEffects : '';
+        const total = description.length + narrativeEffects.length;
+        const traitPath = `${section}.${id} (description + traitNarrativeEffects)`;
+        if (total > limits.textTotal) {
+          result.entries.oversized.push({
+            path: traitPath,
+            used: total,
+            limit: limits.textTotal,
+            type: 'combined',
+          });
+        } else if (total > limits.textTotal * 0.9) {
+          result.entries.warnings.push({
+            path: traitPath,
+            used: total,
+            limit: limits.textTotal,
+          });
+        }
+      }
+
       // Check individual fields
       for (const [field, limit] of Object.entries(limits)) {
-        if (field === 'combined') continue;
+        if (field === 'combined' || field === 'textTotal') continue;
         if (entry[field] && typeof entry[field] === 'string') {
           const len = entry[field].length;
           if (len > limit) {
@@ -472,7 +496,7 @@ function analyzeConfig(config) {
   // Image prompt configuration analysis
   if (config.imagePromptConfiguration && typeof config.imagePromptConfiguration === 'object') {
     let imagePromptTotal = 0;
-    for (const entityType of ['npcs', 'locations', 'areas', 'regions']) {
+    for (const entityType of ['npcs', 'locations', 'areas', 'regions', 'items']) {
       const prompt = config.imagePromptConfiguration[entityType];
       if (typeof prompt !== 'string') continue;
       imagePromptTotal += prompt.length;

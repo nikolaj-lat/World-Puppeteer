@@ -60,18 +60,19 @@ interface SkillXPRewards {
 
 ```typescript
 interface LocationSettings {
-  regionSize: number                          // ✅ Region size in km (balanced: 100)
+  regionSize: number                          // ✅ Region size in km (balanced: 100). Location x/y must stay within half this value of the origin; farther placements are flagged as off the map
   simpleRadius: number                        // ✅ Simple interaction radius in km (balanced: 5)
   complexRadius: number                       // ✅ Complex interaction radius in km (balanced: 10)
   regionLocationCount: number                 // ✅ Locations per region (world-specific)
-  regionFactionCount: number                  // ✅ Factions per region (world-specific)
   avgTravelDistance: number                   // ✅ Average distance between locations (balanced: 40)
   minTravelDistance: number                   // ✅ Minimum distance between locations (balanced: 20)
   newRegionGenerationEnabled: boolean         // ✅ Whether the engine pre-generates adjacent regions as players approach boundaries (default: true). Set false to keep the world bounded to predefined regions only.
   encountersEnabled: boolean                  // ✅ Whether random wilderness encounters can interrupt travel between locations (default: false)
-  regionMapBorderFeatheringEnabled?: boolean  // ✅ Whether region map images use the feathered border and rounded frame treatment (default: true)
+  regionMapBorderFeatheringEnabled?: boolean  // ✅ Whether region map images use the feathered border and rounded frame treatment (default: false)
 }
 ```
+
+Removed: `regionFactionCount`. The engine no longer generates factions (see the factions skill), so nothing reads this field; drop it from existing configs.
 
 ## ItemSettings Schema
 
@@ -105,6 +106,11 @@ interface CombatSettings {
   abilityBonus: number                        // ✅ Default bonus given to AI-generated (learned) abilities. Does NOT scale predefined abilities, which use their own authored bonus (balanced: 10)
   npcDailyHealingAmount: number               // ✅ NPC healing per day (balanced: 999)
   damageTypes: string[]                       // ✅ Available damage types (world-specific). Use lowercase ASCII — matching against vulnerabilities/resistances/immunities is case-sensitive and unnormalized, so "Fire" ≠ "fire" and mismatches fail silently
+  damageTypePresentation: Record<string, DamageTypePresentation>  // ✅ UI presentation per damage type, keyed by a damageTypes entry (required; use {} for none)
+}
+
+interface DamageTypePresentation {
+  emoji?: string                              // ✅ Emoji shown next to the damage type in combat UI. Emoji characters only; text is rejected
 }
 ```
 
@@ -114,6 +120,7 @@ interface CombatSettings {
 interface OtherSettings {
   npcHealthPerLevel: number                   // ✅ NPC HP per level (balanced: 10)
   npcMinHealth: number                        // ✅ NPC base HP (balanced: 0)
+  visualNovelModeByDefault?: boolean          // ✅ Applied once when a player first enters the game; unset lets the player's own device preference decide
 }
 ```
 
@@ -184,17 +191,65 @@ characterCreationMusic?: 'fantasy' | 'nonfantasy'  // ✅ Background music playe
 
 Sets which background music plays on the character-creation screen. `'fantasy'` (the default) or `'nonfantasy'`.
 
-## imageModelSources
+## imageModelSource
 
 ```typescript
-imageModelSources?: {
-  portrait?: string   // ✅ Image model used for NPC portraits
-  location?: string   // ✅ Image model used for location and area images
-  region?: string     // ✅ Image model used for region map images
+imageModelSource?: string  // ✅ Image model used for every generated image (portraits, location/area images, region maps). One of: 'falai-gpt-image-2-low' | 'falai-gpt-image-2' | 'google-nano-banana-lite' | 'google-nano-banana-pro' | 'falai-flux-2-dev'
+```
+
+Optional top-level field that pins which image-generation model renders the world's images while editing it. Games created from the world start with this choice as their default, but each game can be created with its own image-model selection. Leave it unset (or set to an unrecognized name) to fall back to the platform's current default model.
+
+## worldVoices
+
+```typescript
+worldVoices?: Record<string, WorldVoice>  // ✅ Voice presets keyed by an id you choose; referenced by npcs[].worldVoiceId and premadeCharacters[].worldVoiceId
+
+interface WorldVoice {
+  label: string                               // ✅ Display name shown to players (required). Use `label`, not `name`
+  voiceTag: string                            // ✅ One of the character voice tags, e.g. 'male gravelly ancient' (required; trimmed). Picks the base voice
+  instructions?: string                       // ✅ Free-text delivery guidance layered on the base voice
+  speed?: number                              // ✅ Playback speed; clamped to 0.5-2, omit for the base voice default
+  effects?: VoiceEffects                      // ✅ Audio effects chain; omit any sub-effect you do not use
+  exposeInCharacterCreation?: boolean         // ✅ true lets players pick this preset for their own character at character creation. NPC and premade assignment works either way
+}
+
+interface VoiceEffects {
+  pitch?: { enabled: boolean, semitones: number }                         // ✅ Pitch shift, -12..12 semitones
+  reverb?: { enabled: boolean, space: 'room' | 'hall' | 'cavern', mix: number }  // ✅ mix is the wet/dry balance 0-1
+  echo?: { enabled: boolean, delayMs: number, feedback: number, mix: number }    // ✅ delayMs 40-1000, feedback 0-0.85, mix 0-1
+  eq?: {                                                                  // ✅ Six fixed bands: cuts outside, shelves inside, two bells in the middle
+    enabled: boolean
+    highPass: { enabled: boolean, frequency: number }
+    lowShelf: { enabled: boolean, frequency: number, gainDb: number }
+    bell1: { enabled: boolean, frequency: number, gainDb: number, q: number }
+    bell2: { enabled: boolean, frequency: number, gainDb: number, q: number }
+    highShelf: { enabled: boolean, frequency: number, gainDb: number }
+    lowPass: { enabled: boolean, frequency: number }
+  }                                                                       // ✅ Band gainDb -15..15, q 0.3-8
+  distortion?: { enabled: boolean, drive: number }                        // ✅ drive 0 (clean) to 1
+  output?: { enabled: boolean, gainDb: number, compressor: boolean }      // ✅ gainDb -12..12
 }
 ```
 
-Optional top-level field that pins which image-generation model renders each image type while editing the world. Games created from the world start with these choices as their default, but each game can be created with its own image-model selection. Values are image model names provided by the platform. Leave a field unset (or set to an unrecognized name) to fall back to the platform's current default model for that type.
+A catalog of reusable voice presets. NPCs and premade characters reference a preset with `worldVoiceId`; the id must exist in `worldVoices`. Only presets with `exposeInCharacterCreation: true` appear as choices when players build their own character.
+
+The engine sanitizes every preset on load: `label` and `voiceTag` are trimmed, `speed` and every effect parameter are clamped into the ranges above, a missing or non-numeric parameter falls back to its default rather than failing, and an effect with `enabled: false` is kept but inactive. The catalog size is capped, so keep it to voices the world actually uses.
+
+Example:
+```json
+{
+  "gravel-elder": {
+    "label": "Gravel Elder",
+    "voiceTag": "male gravelly ancient",
+    "instructions": "Slow, weary, every sentence costs effort.",
+    "speed": 0.9,
+    "effects": {
+      "reverb": { "enabled": true, "space": "hall", "mix": 0.2 }
+    },
+    "exposeInCharacterCreation": false
+  }
+}
+```
 
 ## Skill Check Formula
 
@@ -392,7 +447,8 @@ Leveling stops at `maxCharacterLevel`.
 |-------|------------|
 | `itemSettings.itemCategories` | Used by `tabs/items.json` category field |
 | `itemSettings.itemSlots[].category` | Must match `itemCategories` values |
-| `combatSettings.damageTypes` | Used by NPC vulnerabilities/resistances/immunities |
+| `combatSettings.damageTypes` | Used by NPC vulnerabilities/resistances/immunities and as the keys of `combatSettings.damageTypePresentation` |
+| `worldVoices` keys | Referenced by `npcs[].worldVoiceId` and `premadeCharacters[].worldVoiceId` |
 | `attributeSettings.attributeNames` | Used in trait and skill attribute associations |
 | `progressionSettings.levelUpTraitPool` | Trait keys from `tabs/traits.json` (see the traits skill) |
 | `resourceSettings` keys | Used by ability and trait resource modifiers |

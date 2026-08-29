@@ -28,6 +28,11 @@ Edit `tabs/ai-instructions.json`.
 {
   "aiInstructions": {
     "generateStory": {
+      "How to Use the Narrator": "...",
+      "Turn Structure": "...",
+      "Turn Boundaries and Endings": "...",
+      "Player Agency": "...",
+      "Combat Narration": "...",
       "Victory and Downtime": "...",
       "Character Behavior": "...",
       "Style Principles": "...",
@@ -43,14 +48,40 @@ Edit `tabs/ai-instructions.json`.
       "prompt": "...",
       "custom": "..."
     },
-    "generateNPCDetails": { "custom": "..." },
+    "generateNPCIntents": {
+      "core_principles": "...",
+      "when_to_generate": "...",
+      "what_is_not_action": "...",
+      "description_economy": "...",
+      "summary_established_beats": "...",
+      "action_format": "...",
+      "story_driver": "...",
+      "custom": "..."
+    },
+    "generateNewNPC": { "custom": "..." },
+    "generateNPCDetails": {
+      "character_creator_instructions": "...",
+      "personality_archetype_information": "...",
+      "style": "...",
+      "cliche_avoidance": "...",
+      "hidden_info": "...",
+      "personality": "...",
+      "faction_affiliation": "...",
+      "abilities": "...",
+      "basic_info": "...",
+      "custom": "..."
+    },
+    "generateNPCUpdates": {
+      "relationship_change_updates": "...",
+      "party_management": "...",
+      "custom": "..."
+    },
     "generateLocationDetails": { "custom": "..." },
     "generateRegionDetails": { "custom": "..." },
-    "generateFactionDetails": { "custom": "..." },
     "generateEncounters": { "custom": "..." },
-    "generateNPCIntents": { "custom": "..." },
-    "generateNewNPC": { "custom": "..." },
-    "ItemGenerationAndUsage": { "custom": "..." }
+    "ItemGenerationAndUsage": { "custom": "..." },
+    "summarization": { "custom": "..." },
+    "generateLearnedAbilities": { "custom": "..." }
   },
   "narratorStyle": "..."
 }
@@ -60,20 +91,28 @@ Edit `tabs/ai-instructions.json`.
 
 | Task | Editable Keys |
 |------|---------------|
-| `generateStory` | `Victory and Downtime`, `Character Behavior`, `Style Principles`, `custom` |
+| `generateStory` | `How to Use the Narrator`, `Turn Structure`, `Turn Boundaries and Endings`, `Player Agency`, `Combat Narration`, `Victory and Downtime`, `Character Behavior`, `Style Principles`, `custom` |
 | `generateInitialStart` | `Opening Structure`, `Style Principles`, `custom` |
 | `generateActionInfo` | `custom` |
 | `generateCharacterBackground` | `prompt`, `custom` |
-| `generateNPCDetails` | `custom` |
+| `generateNPCIntents` | `core_principles`, `when_to_generate`, `what_is_not_action`, `description_economy`, `summary_established_beats`, `action_format`, `story_driver`, `custom` |
+| `generateNewNPC` | `custom` |
+| `generateNPCDetails` | `character_creator_instructions`, `personality_archetype_information`, `style`, `cliche_avoidance`, `hidden_info`, `personality`, `faction_affiliation`, `abilities`, `basic_info`, `custom` |
+| `generateNPCUpdates` | `relationship_change_updates`, `party_management`, `custom` |
 | `generateLocationDetails` | `custom` |
 | `generateRegionDetails` | `custom` |
-| `generateFactionDetails` | `custom` |
 | `generateEncounters` | `custom` |
-| `generateNPCIntents` | `custom` |
-| `generateNewNPC` | `custom` |
 | `ItemGenerationAndUsage` | `custom` |
+| `summarization` | `custom` |
+| `generateLearnedAbilities` | `custom` |
 
-Add any key to any task to append additional guidance. For `generateCharacterBackground`, an undefined `prompt` falls back to the built-in default. Set `prompt` to `" "` (single space) to disable the default without replacing it.
+Add any other key to a task to append additional guidance after the built-in sections. Three rules govern how a key is applied:
+
+1. **Editable key set** replaces that built-in section with your text.
+2. **Editable key set to `""`** blanks the section entirely. It no longer falls back to the default, so use `""` (not a single space) when you want a built-in section gone. An undefined key keeps the default.
+3. **Key matching a reserved engine section** (one the engine writes itself and does not list above) is stripped on save and never reaches the prompt. If a custom key disappears after saving, it collided with a reserved name: pick a different key name.
+
+For `generateCharacterBackground`, note that `prompt` now produces a portrait-only `appearance` (what the image generator needs); anything about appearance that matters in play belongs in the background text.
 
 ## generateActionInfo
 
@@ -88,7 +127,11 @@ Controls NPC intent generation — what NPCs decide to do each turn in combat an
 
 ## generateNPCDetails
 
-Controls how the engine fills in details for generated NPCs — hiddenInfo content and abilities.
+Controls how the engine fills in details for generated NPCs — hiddenInfo content and abilities. Every built-in section is editable (`character_creator_instructions`, `personality_archetype_information`, `style`, `cliche_avoidance`, `hidden_info`, `personality`, `faction_affiliation`, `abilities`, `basic_info`); override only the sections you need and use `custom` for world-specific additions.
+
+## generateNPCUpdates
+
+Controls how NPC state changes are applied after each turn. Two sections are editable: `relationship_change_updates` (how relationship values move in response to the story) and `party_management` (when NPCs join, leave, or follow the party). Use `custom` for world-specific rules.
 
 ## generateNewNPC
 
@@ -104,11 +147,11 @@ Single string defining the overall narrator voice. Applies to all narrative outp
 
 ## gameModes
 
-Optional player-selectable modes. Each is keyed by an id and has `name`, `description`, and `instructions` (required) plus optional `difficulty` and `askTheNarratorPrompt`. The mode the player picks at character creation layers its `instructions` on top of `narratorStyle` for the whole game. `difficulty` (one of `very easy`/`easy`/`medium`/`hard`/`very hard`) presets the mechanical game difficulty for that mode. Add modes only when a world genuinely wants distinct ways to play (e.g. action-focused vs. pure roleplay vs. hardcore); otherwise omit `gameModes` and the narrator uses default behavior. See the reference for the full schema and an example.
+Optional player-selectable modes. Each is keyed by an id and has `name`, `description`, and `instructions` (required) plus optional `difficulty`, `askTheNarratorPrompt`, and `npcIntentInstructions`. The mode the player picks at character creation layers its `instructions` on top of `narratorStyle` for the whole game. `difficulty` (one of `very easy`/`easy`/`medium`/`hard`/`very hard`) presets the mechanical game difficulty for that mode. `npcIntentInstructions` layers mode-specific guidance onto NPC intent generation the same way `instructions` does for narration (e.g. a hardcore mode where NPCs press every advantage). Add modes only when a world genuinely wants distinct ways to play (e.g. action-focused vs. pure roleplay vs. hardcore); otherwise omit `gameModes` and the narrator uses default behavior. See the reference for the full schema and an example.
 
 ## imagePromptConfiguration
 
-Optional. Per-entity-type art-direction instructions (`npcs`, `locations`, `areas`, `regions`) injected into Voyage's in-game image generation — the image equivalent of `narratorStyle`. Set a field to lock a consistent art style for that entity type; omit it to use the defaults. Two optional booleans, `characterLoraEnabled` and `locationLoraEnabled`, toggle the built-in Voyage art style for character images and for location/area images respectively (both default to `true`); set either to `false` to opt a world out of the house style. See the reference for the schema and an example.
+Optional. Per-entity-type art-direction instructions (`npcs`, `locations`, `areas`, `regions`, `items`) injected into Voyage's in-game image generation — the image equivalent of `narratorStyle`. Set a field to lock a consistent art style for that entity type; omit it to use the defaults. See the reference for the schema and an example.
 
 ## Starting Templates
 

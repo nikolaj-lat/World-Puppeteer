@@ -1,7 +1,12 @@
 {
-  "heroesVersion": 35,
+  "heroesVersion": 36,
   "aiInstructions": {
     "generateStory": {
+      "How to Use the Narrator": "",
+      "Turn Structure": "",
+      "Turn Boundaries and Endings": "",
+      "Player Agency": "",
+      "Combat Narration": "",
       "Victory and Downtime": "",
       "Character Behavior": "",
       "Style Principles": "",
@@ -20,15 +25,21 @@
       "custom": ""
     },
     "generateNPCDetails": {
+      "character_creator_instructions": "",
+      "personality_archetype_information": "",
+      "style": "",
+      "cliche_avoidance": "",
+      "hidden_info": "",
+      "personality": "",
+      "faction_affiliation": "",
+      "abilities": "",
+      "basic_info": "",
       "custom": ""
     },
     "generateLocationDetails": {
       "custom": ""
     },
     "generateRegionDetails": {
-      "custom": ""
-    },
-    "generateFactionDetails": {
       "custom": ""
     },
     "generateEncounters": {
@@ -44,11 +55,8 @@
   },
   "narratorStyle": "",
   "gameModes": {},
+  "worldVoices": {},
   "characterCreationMusic": "nonfantasy",
-  "gameplayMusicSettings": {
-    "characterCreationTrackId": "",
-    "tracks": {}
-  },
   "worldLore": {},
   "triggers": {},
   "questTriggers": {},
@@ -140,7 +148,6 @@
     "simpleRadius": 5,
     "complexRadius": 10,
     "regionLocationCount": 0,
-    "regionFactionCount": 0,
     "avgTravelDistance": 40,
     "minTravelDistance": 20,
     "newRegionGenerationEnabled": false,
@@ -166,7 +173,8 @@
   },
   "otherSettings": {
     "npcHealthPerLevel": 10,
-    "npcMinHealth": 0
+    "npcMinHealth": 0,
+    "visualNovelModeByDefault": false
   },
   "progressionSettings": {
     "startingCharacterLevelUpRequirement": 500,

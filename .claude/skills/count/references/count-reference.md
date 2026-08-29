@@ -28,7 +28,7 @@ Complete character and count limits for world configs.
 | storySettings.worldBackground | 5,000 chars |
 | storySettings.questGenerationGuidance | 5,000 chars |
 | Individual AI instruction | 5,000 chars (8,000 for generateNPCIntents) |
-| AI task instructions (combined, per task) | 20,000 chars (30,000 for generateStory, 40,000 for generateNPCIntents, 24,000 for generateNPCUpdates) |
+| AI task instructions (combined, per task) | 20,000 chars (30,000 for generateStory, 40,000 for generateNPCIntents, 24,000 for generateNPCUpdates, 26,000 for generateNPCDetails) |
 | narratorStyle | 2,000 chars |
 | abilities.[id].description | 2,000 chars |
 | Individual worldLore entry text | 4,000 chars |
@@ -43,7 +43,7 @@ Complete character and count limits for world configs.
 | locations.[id].basicInfo | 4,000 chars |
 | locations.[id].hiddenInfo | 4,000 chars |
 | locations.[id].areas.[areaId].description | 4,000 chars |
-| traits.[id].description | 4,000 chars |
+| traits.[id] description + traitNarrativeEffects (combined) | 6,000 chars |
 | realms.[id].basicInfo | 100,000 chars |
 | death.instructions | 4,000 chars |
 | itemSettings.currencyName | 64 chars |
@@ -58,7 +58,8 @@ Complete character and count limits for world configs.
 | gameModes.[id].description | 500 chars |
 | gameModes.[id].instructions | 5,000 chars |
 | gameModes.[id].askTheNarratorPrompt | 1,000 chars |
-| imagePromptConfiguration.[npcs/locations/regions] | 5,000 chars each |
+| gameModes.[id].npcIntentInstructions | 5,000 chars |
+| imagePromptConfiguration.[npcs/locations/areas/regions/items] | 5,000 chars each |
 | imagePromptConfiguration (all combined) | 15,000 chars |
 | Trigger condition query | 1,000 chars |
 | Trigger effect instruction | 1,000 chars |
@@ -69,7 +70,7 @@ Complete character and count limits for world configs.
 
 | Element | Max Count |
 |---------|-----------|
-| Story starts | 100 |
+| Story starts | 101 |
 | Semantic triggers (story/action conditions) | 500 |
 | Mechanical triggers (all other conditions) | 4,000 |
 | Abilities | 1,500 |

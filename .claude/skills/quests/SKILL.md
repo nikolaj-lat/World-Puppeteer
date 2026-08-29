@@ -17,7 +17,7 @@ Edit `tabs/quests.json`.
 | `questSource` | Where the quest originates (NPC name, location, object) |
 | `questStatement` | One-sentence description of the situation |
 | `mainObjective` | What the player must accomplish (shown in quest log) |
-| `completionCondition` | Object: `{ "type": "story", "query": "..." }` or `{ "type": "narrative-event-completed", "eventId": "..." }` |
+| `completionCondition` | Object: `{ "type": "story", "query": "..." }` or `{ "type": "narrative-event-completed", "eventId": "..." }`. If omitted it defaults to a story condition with an empty query, which generates no auto-trigger, so always author it |
 | `questDesignBrief` | 2-4 sentence internal design guidance for the AI — drives NPC, location, and trigger generation for this quest |
 | `detailType` | `basic` for AI-generated locations, `detailed` for specific locations |
 
@@ -52,6 +52,12 @@ Omit these fields (auto-set or runtime-only):
 
 Use `detailed` for hand-crafted narrative quests. Use `basic` for procedural or emergent quests.
 
+A `basic` quest whose `questLocation` is blank counts as "already at the location" and advances straight to objectives instead of waiting for travel.
+
+## Gating Travel to Quest Locations
+
+Travel to a quest location is treated as simple by default. The narrator only makes it **impossible** when the destination's text explicitly establishes a lock: a boss guarding it, sealed access, a required access item, or authority clearance. A destination that is merely unestablished or dangerous costs at most a skill check. If a quest is meant to gate an area, write the lock into the location or area text (and the quest's `questDesignBrief`) rather than relying on the quest alone.
+
 ## spatialRelationship Values
 
 For `basic` quests only - defines where the AI generates the quest location:
@@ -74,7 +80,7 @@ Format: "[Verb] the [target]" or "[Verb] [what] from/in/at [where]"
 
 An object with one of two forms:
 
-- `{ "type": "story", "query": "..." }` — the query is a natural-language description of what "done" looks like; the trigger system matches it semantically against the story. If the query is left empty, no auto-trigger is generated. (Legacy plain-string conditions are auto-converted to this form.)
+- `{ "type": "story", "query": "..." }` — the query is a natural-language description of what "done" looks like; the trigger system matches it semantically against the story. If the query is left empty, no auto-trigger is generated. (Legacy plain-string conditions are auto-converted to this form; an omitted condition becomes this form with an empty query.)
 - `{ "type": "narrative-event-completed", "eventId": "..." }` — the quest completes when the referenced narrative event completes. No auto-trigger is generated. See the narrative-events skill.
 
 ## Objectives and Next Steps

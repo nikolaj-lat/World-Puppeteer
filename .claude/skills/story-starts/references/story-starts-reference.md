@@ -15,25 +15,29 @@ interface StoryStart {
   firstQuest?: string               // ✅ Freeform instruction for AI quest generation on turn 0
   startingItems?: InventoryDefinition[]  // ✅ Additional starting items
   startingPartyNPCs?: string[]      // ✅ NPC keys that join party at start
-  isDefault?: boolean               // ✅ Pre-selected in character creation
+  isDefault?: boolean               // ✅ Used when the host does not pick a start (otherwise the first entry)
   questGenerationGuidance?: string  // ✅ Per-story-start quest generation guidance
+  allowPlayerInput?: boolean        // ❌ Deleted from every start except the built-in "Write Your Own", where it is forced on
 }
 ```
 
 ### Legend
 
 - ✅ **Predefine-able**: Can be set in config, preserved via spread
+- ❌ **Always overwritten**: Set by initialization regardless of what exists in config
+
+`allowPlayerInput` is engine-controlled: only the built-in story start named exactly "Write Your Own" keeps it (forced on, with an empty `storyStart`). Do not set it on authored starts.
 
 ## InventoryDefinition Schema
 
 ```typescript
 interface InventoryDefinition {
-  item: string         // Item name from items.json
-  quantity: number     // Number of items to grant
+  item: string         // Item key or name from items.json
+  quantity: number     // Whole number of items to grant
 }
 ```
 
-Used by `startingItems` to specify additional inventory items.
+Used by `startingItems` to specify additional inventory items. Entries resolve against the world's item definitions by key or by name. Quantities must be whole numbers; fractional or absurdly large quantities are silently dropped.
 
 ## Initialization Lifecycle
 
@@ -71,6 +75,9 @@ locations array provided?
 - Empty `[]` or omitted: ALL areas in the location are valid
 - Non-empty array: Only listed areas (that exist in location) are candidates
 - One area is randomly selected from valid candidates
+- `locationAreas` cannot have more entries than `locations`
+
+**Default start:** when the host does not pick a story start, the entry with `isDefault: true` is used; if none is flagged, the first entry is used.
 
 ### 3. Party NPC Setup
 
@@ -90,7 +97,7 @@ Items are added in priority order (all sources combined):
 3. Story start `startingItems` - Story-specific items
 4. Skill `startingItems` - From learned skills
 
-All items are automatically equipped if valid slots are available.
+All items are automatically equipped if valid slots are available. Late-joining players receive starting items too, in the same order.
 
 ### 5. Party State
 
@@ -133,5 +140,5 @@ Use this when one story-start has a distinctly different tone, scope, or quest c
 | `locationAreas` | `areas` object within referenced locations |
 | `startingQuests` | `tabs/quests.json` (quest names) |
 | `firstQuest` | Freeform text (no reference) |
-| `startingItems[].item` | `tabs/items.json` (item names) |
+| `startingItems[].item` | `tabs/items.json` (item keys or names) |
 | `startingPartyNPCs` | `tabs/npcs.json` (keys, not names) |

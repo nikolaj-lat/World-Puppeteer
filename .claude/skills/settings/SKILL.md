@@ -64,15 +64,14 @@ The balanced values below support this progression curve.
 
 | Field | Balanced Value | Notes |
 |-------|----------------|-------|
-| `regionSize` | `100` | 100km regions |
+| `regionSize` | `100` | 100km regions. Every location's `x`/`y` must sit within half the region size of the origin (within 50km at the balanced value) |
 | `simpleRadius` | `5` | 5km simple interaction radius |
 | `complexRadius` | `10` | 10km complex interaction radius |
 | `avgTravelDistance` | `40` | 40km average between locations |
 | `minTravelDistance` | `20` | 20km minimum between locations |
 | `regionLocationCount` | `0` | Designer defines per world |
-| `regionFactionCount` | `0` | Designer defines per world |
 | `encountersEnabled` | `false` | Enable random wilderness encounters during travel |
-| `regionMapBorderFeatheringEnabled` | `true` | Feathered border / rounded frame treatment on region map images |
+| `regionMapBorderFeatheringEnabled` | `false` | Feathered border / rounded frame treatment on region map images. Defaults to `false`; set `true` to enable |
 
 ### Item Settings
 
@@ -137,8 +136,17 @@ These must be configured per-world:
 | `itemSettings.itemCategories` | Always include `"Armor"`, `"Consumable"`, plus world-specific |
 | `itemSettings.itemSlots` | World-specific |
 | `combatSettings.damageTypes` | Types that fit world theme |
+| `combatSettings.damageTypePresentation` | Required (use `{}` for none). Keyed by damage type, each entry `{ emoji }` sets the emoji shown for that damage type in the UI. Emoji characters only, no text |
+| `otherSettings.visualNovelModeByDefault` | Optional. `true`/`false` sets visual novel mode once when a player first enters the game. Leave unset to let each player's own device preference decide |
 | `characterCreationMusic` | Optional top-level field. `"fantasy"` or `"nonfantasy"` background music for the character-creation screen. Defaults to `"fantasy"` |
-| `imageModelSources` | Optional top-level field. Pins which platform-provided image model renders NPC portraits (`portrait`), location/area images (`location`), and region maps (`region`) while editing the world; games created from it start with these as their default but can pick their own. Omit fields to use the platform's current defaults |
+| `imageModelSource` | Optional top-level field. Pins which platform-provided image model renders all generated images (portraits, location/area images, region maps) while editing the world; games created from it start with this as their default but can pick their own. One of `falai-gpt-image-2-low`, `falai-gpt-image-2`, `google-nano-banana-lite`, `google-nano-banana-pro`, `falai-flux-2-dev`. Omit to use the platform's current default |
+| `worldVoices` | Optional top-level field. Catalog of reusable voice presets (see worldVoices below) that NPCs and premade characters reference by `worldVoiceId` |
+
+## worldVoices
+
+Optional record of voice presets keyed by an id you choose. Each preset pairs a display `label` with one of the character voice tags (`voiceTag`), plus optional delivery `instructions`, a `speed`, and audio `effects`. NPCs and premade characters point at a preset with `worldVoiceId`; the id must exist in `worldVoices`. Set `exposeInCharacterCreation: true` on presets players may pick for their own character at character creation; presets without it can still be assigned to NPCs and premades.
+
+`effects` is a partial object of sub-effects (`pitch`, `reverb`, `echo`, `eq`, `distortion`, `output`), each with an `enabled` flag plus its own parameters. Omit any sub-effect you do not use. The engine trims labels and tags and clamps out-of-range values (speed to 0.5-2, pitch to -12..12 semitones, mixes to 0-1, and so on), and the catalog size is capped, so keep the list to voices the world actually uses.
 
 ## lowAttributeTraits Format
 
@@ -162,7 +170,38 @@ interface Settings {
   otherSettings: OtherSettings
   progressionSettings: ProgressionSettings
   characterCreationMusic?: 'fantasy' | 'nonfantasy'
-  imageModelSources?: { portrait?: string, location?: string, region?: string }
+  imageModelSource?: 'falai-gpt-image-2-low' | 'falai-gpt-image-2' | 'google-nano-banana-lite' | 'google-nano-banana-pro' | 'falai-flux-2-dev'
+  worldVoices?: Record<string, WorldVoice>
+}
+
+interface OtherSettings {
+  npcHealthPerLevel: number
+  npcMinHealth: number
+  visualNovelModeByDefault?: boolean
+}
+
+interface WorldVoice {
+  label: string
+  voiceTag: string
+  instructions?: string
+  speed?: number
+  effects?: {
+    pitch?: { enabled: boolean, semitones: number }
+    reverb?: { enabled: boolean, space: 'room' | 'hall' | 'cavern', mix: number }
+    echo?: { enabled: boolean, delayMs: number, feedback: number, mix: number }
+    eq?: {
+      enabled: boolean
+      highPass: { enabled: boolean, frequency: number }
+      lowShelf: { enabled: boolean, frequency: number, gainDb: number }
+      bell1: { enabled: boolean, frequency: number, gainDb: number, q: number }
+      bell2: { enabled: boolean, frequency: number, gainDb: number, q: number }
+      highShelf: { enabled: boolean, frequency: number, gainDb: number }
+      lowPass: { enabled: boolean, frequency: number }
+    }
+    distortion?: { enabled: boolean, drive: number }
+    output?: { enabled: boolean, gainDb: number, compressor: boolean }
+  }
+  exposeInCharacterCreation?: boolean
 }
 ```
 

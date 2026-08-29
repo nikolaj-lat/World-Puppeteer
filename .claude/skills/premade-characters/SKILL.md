@@ -13,6 +13,8 @@ Premade characters are ready-to-play character options shown during character cr
 
 Unlike every other tab, `premadeCharacters` is a **JSON array** (not a keyed object), because display order matters in character creation.
 
+When the world disables character customization (`characterCreationSettings.customizationEnabled: false`), at least one premade character is required, and every premade must have a unique `name`.
+
 ## Required Fields
 
 | Field | Requirement |
@@ -28,6 +30,10 @@ Unlike every other tab, `premadeCharacters` is a **JSON array** (not a keyed obj
 | Field | When to Include |
 |-------|-----------------|
 | `replacesNpc` | Name of an NPC in `tabs/npcs.json` — when this premade is selected, that NPC is removed from the world |
+| `worldVoiceId` | Key from the world's `worldVoices` catalog. Include when the world defines a curated voice for this character; it overrides the generic `voiceTag` pick |
+| `voiceTag` | Voice tag for speech synthesis when no `worldVoiceId` applies (see the NPC voice previews) |
+| `portraitFocusX`, `portraitFocusY`, `portraitZoom` | Optional crop/focus adjustments for an authored `portraitUrl`. Focus x/y run 0..100 (defaults x 50, y 0: top-centered), zoom 100..300 (100 = no zoom). Generated portraits ignore these |
+| `generatedBackground`, `generatedAppearance` | AI-written background and portrait-only appearance text, as produced by the character generator. Include only when carrying over a previously generated profile; otherwise author `description` yourself |
 
 ## Never Include
 
@@ -62,14 +68,21 @@ Write in third person. Any length. This is both the selection-UI text AND the ch
 
 ```typescript
 interface PremadeCharacter {
-  name: string                           // Character name + identifier
-  gender: string                         // Normalized to "male" | "female" | "non-binary"
-  description: string                    // Full background — shown in selection UI and sent to story AI as Background:
-  attributes?: Record<string, number>    // See "Never Include" — shape via traits instead
-  traits?: string[]                      // Trait names from tabs/traits.json
-  backstory?: string                     // See "Never Include" — redundant with description
-  portraitUrl?: string                   // Image URL; player generates if absent
-  replacesNpc?: string                   // NPC name from tabs/npcs.json
+  name: string
+  gender: string
+  description: string
+  attributes?: Record<string, number>
+  traits?: string[]
+  backstory?: string
+  portraitUrl?: string
+  portraitFocusX?: number
+  portraitFocusY?: number
+  portraitZoom?: number
+  generatedBackground?: string
+  generatedAppearance?: string
+  voiceTag?: string
+  worldVoiceId?: string
+  replacesNpc?: string
 }
 ```
 

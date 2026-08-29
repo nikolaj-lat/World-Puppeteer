@@ -74,6 +74,26 @@ interface NumberCondition {
 }
 ```
 
+### NPC Relationship Conditions
+
+```typescript
+interface NpcRelationshipCondition {
+  type: 'npc-relationship'
+  npc: string                       // NPC name from tabs/npcs.json
+  operator: 'equals' | 'notEquals' | 'greaterThan' | 'lessThan' | 'greaterThanOrEqual' | 'lessThanOrEqual'
+  value: number
+}
+
+interface NpcRelationshipStageCondition {
+  type: 'npc-relationship-stage'
+  npc: string                       // NPC name from tabs/npcs.json
+  operator: 'equals' | 'notEquals' | 'contains' | 'notContains' | 'regex'
+  value: string                     // Compared against the NPC's current relationship stage NAME
+}
+```
+
+`npc-relationship` compares the NPC's numeric relationship score. An NPC with no score yet reads as `0`; naming an NPC that doesn't exist never matches. `npc-relationship-stage` compares the stage name the NPC's score currently resolves to from the world's `relationshipStages` names (or the engine's default ladder when the world doesn't author one); a score that matches no stage falls back to `Neutral`.
+
 ### Boolean Conditions
 
 ```typescript
@@ -118,6 +138,8 @@ interface StoryEffect {
   instruction: string               // Injected into story generation context
 }
 ```
+
+Identical instruction text is deduplicated: when two triggers fire with the same `story` instruction, the AI receives it once. Duplicating an effect for emphasis does not work — write a stronger instruction instead.
 
 ### Quest Effects
 
@@ -187,7 +209,7 @@ interface PartyNextStepClearEffect {
 ```
 
 - `quest-next-step-set` / `quest-next-step-clear` directly set or clear a quest's next-step guidance. Setting also updates the party-wide next step when that quest is the accepted active quest.
-- `party-next-step-set` / `party-next-step-clear` set or clear the party-wide guidance shown when no quest is active — useful for steering the player before any quest is visible.
+- `party-next-step-set` / `party-next-step-clear` set or clear the party-wide guidance shown when no quest is active — useful for steering the player before any quest is visible. With `source: 'objective'`, `party-next-step-set` writes only to the accepted active quest and is a no-op when there is none; use `source: 'narrative-event'` for guidance that should show before any quest is accepted.
 
 ### Narrative Event Effects
 
@@ -228,6 +250,8 @@ interface ResourceEffect {
 }
 ```
 
+Resource effects interact with the death model: positive healing on a living near-death or dying player clears that state. In permadeath games a dead player cannot be revived by a resource effect; health is forced back to 0. Outside permadeath, a resource effect that raises health above 0 counts as explicit healing and revives the player.
+
 ### Entity Knowledge Effects
 
 ```typescript
@@ -250,7 +274,54 @@ interface TraitEffect {
 }
 ```
 
-When adding/removing traits, the trait's attribute/skill/resource modifiers are automatically applied/removed. If a granted trait has skill modifiers for a skill the player doesn't have yet, that skill is created on the player so the bonus always takes effect.
+When adding/removing traits, the trait's attribute/skill/resource modifiers are automatically applied/removed. If a granted trait has skill modifiers for a skill the player doesn't have yet, that skill is created on the player so the bonus always takes effect. Trigger-granted traits do NOT grant the trait's `startingItems`; only permanent acquisition paths (character creation, level-up picks) hand out starting items, so trigger traits can be toggled freely. Modifiers are reconciled as net deltas, so repeated add/remove never double-applies.
+
+### NPC Relationship Effect
+
+```typescript
+interface NpcRelationshipEffect {
+  type: 'npc-relationship'
+  npc: string                       // NPC name from tabs/npcs.json
+  operator: 'set' | 'add' | 'subtract' | 'multiply' | 'divide'
+  value: number
+}
+```
+
+Adjusts the NPC's relationship score. The result is clamped to -100..100 and rounded to a whole number. Naming an NPC that doesn't exist is a silent no-op. Pair with `npc-relationship` / `npc-relationship-stage` conditions to gate content on the resulting score or stage.
+
+### Music Effects
+
+```typescript
+interface MusicTrackSetEffect {
+  type: 'music-track-set'
+  trackId: string                   // Track id from the world's gameplay music settings
+}
+
+interface MusicTrackClearEffect {
+  type: 'music-track-clear'
+}
+```
+
+`music-track-set` sets a music override to that track family from the world's gameplay music settings. The override beats AI-selected music until cleared — by `music-track-clear` or by another `music-track-set`. The effect only applies when `trackId` exists in `gameplayMusicSettings.tracks`; an unknown id is ignored.
+
+### Game Ending Effects
+
+```typescript
+interface GameEndingEffect {
+  type: 'win-game' | 'lose-game' | 'end-game'
+  endScope?: 'game' | 'players'     // Default 'game'
+  othersOutcome?: 'won' | 'lost' | 'ended'
+}
+```
+
+Terminal effects that end the game with outcome `won` (`win-game`), `lost` (`lose-game`), or `ended` (`end-game`).
+
+- **Game scope** (default): the whole game ends. With `othersOutcome`, the players satisfying the trigger get the effect's outcome and everyone else gets `othersOutcome`; without it, everyone shares the effect's outcome.
+- **Player scope** (`endScope: 'players'`): only the players satisfying the trigger end; the rest keep playing. When every party player has a personal outcome, the game auto-ends — with the shared outcome if unanimous, otherwise `ended`.
+- **First to land wins**: once a terminal effect has applied, later ending effects are ignored.
+- **Player-scoped ending triggers** skip players who already ended, don't fire at all if no eligible player remains, and do NOT consume the trigger's global fire count — so a non-recurring per-player ending trigger can still fire for remaining players on later turns.
+- **After ending**: ended players can't act, can't be resurrected, and don't block others' turns. A game-wide ending stops the world accepting turns.
+- **Closing narration** is guided by the world's authored win/lose/end game instructions — paraphrased, not quoted verbatim. If story generation fails, a terse one-line fallback is shown.
 
 ### Write Effects (to triggerWritable)
 
@@ -275,6 +346,8 @@ Triggers evaluate in exactly one phase based on their conditions:
 |------------------------------------------|-------|--------|
 | Yes | Planning | After player acts, before story generation |
 | No | State | After story is generated |
+
+`action` / `action-text` conditions only evaluate real player inputs. Host and DM story directions are ignored by them.
 
 ## Evaluation Flow
 
@@ -314,6 +387,7 @@ Triggers named `{questId}_objective` or `{questId}_objective_N` are automaticall
 |-------|------------|
 | `conditions[].entity` (known-entity) | `tabs/npcs.json`, `tabs/factions.json`, `tabs/realms.json`, `tabs/regions.json`, `tabs/locations.json` |
 | `conditions[].value` (party-*) | `tabs/realms.json`, `tabs/regions.json`, `tabs/locations.json` |
+| `conditions[].npc` (npc-relationship, npc-relationship-stage) | `tabs/npcs.json` |
 | `conditions[].resource` | `resourceSettings.resources` in `tabs/settings.json` |
 | `conditions[].value` (player-traits) | `tabs/traits.json` |
 | `conditions[].value` (quests-completed) | `tabs/quests.json` |
@@ -325,5 +399,7 @@ Triggers named `{questId}_objective` or `{questId}_objective_N` are automaticall
 | `effects[].value` (quest-init) | `tabs/quests.json` |
 | `effects[].entity` | `tabs/npcs.json`, `tabs/factions.json`, `tabs/realms.json`, `tabs/regions.json`, `tabs/locations.json` |
 | `effects[].value` (party-*) | `tabs/realms.json`, `tabs/regions.json`, `tabs/locations.json` |
+| `effects[].npc` (npc-relationship) | `tabs/npcs.json` |
+| `effects[].trackId` (music-track-set) | `gameplayMusicSettings.tracks` in `tabs/settings.json` (validated) |
 | `effects[].resource` | `resourceSettings.resources` in `tabs/settings.json` |
 | `effects[].value` (player-traits) | `tabs/traits.json` |

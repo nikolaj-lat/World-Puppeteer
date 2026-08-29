@@ -11,7 +11,8 @@
  *
  * Creates these files (granular split for easier editing):
  *   - settings.json       (game balance: attributes, skills, combat, items, progression,
- *                          music, character creation, relationship stages)
+ *                          music, character creation, relationship stages,
+ *                          imageModelSource, worldVoices)
  *   - realms.json         (realm definitions)
  *   - regions.json        (region definitions)
  *   - locations.json      (location definitions with areas)
@@ -52,7 +53,8 @@ const SECTIONS = {
     'gameplayMusicSettings',
     'characterCreationSettings',
     'relationshipStages',
-    'imageModelSources',
+    'imageModelSource',
+    'worldVoices',
   ],
   realms: ['realms'],
   regions: ['regions'],
@@ -97,7 +99,7 @@ function main() {
     console.error('Splits a world config into granular section files.');
     console.error('Output defaults to tabs/ directory if not specified.');
     console.error('');
-    console.error('  - settings.json        (attributes, skills, combat, items)');
+    console.error('  - settings.json        (attributes, skills, combat, items, music, image model source, world voices)');
     console.error('  - realms.json          (realm definitions)');
     console.error('  - regions.json         (region definitions)');
     console.error('  - locations.json       (location definitions)');

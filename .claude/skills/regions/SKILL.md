@@ -18,7 +18,7 @@ Edit `tabs/regions.json`.
 | `x` | Integer grid coordinate - must be adjacent to other regions in the same realm |
 | `y` | Integer grid coordinate - must be adjacent to other regions in the same realm |
 | `realm` | Which realm this region belongs to |
-| `imageUrl` | URL for the region's map image |
+| `images.map` | The region's map image: `{ crop: { focus: { x, y }, zoom }, imageUrl }`. `crop` (focus x/y and zoom) is required whenever the image object is present; `imageUrl` is optional. Focus x/y run 0..100 (50 = centered), zoom 100..300 (100 = no zoom); out-of-range values are clamped. When `imageUrl` is absent, the engine generates a map during play and saves it back; an existing map is never regenerated |
 
 ## Conditional Fields
 
@@ -88,6 +88,12 @@ interface Region {
   hiddenInfo?: string
   factions?: string[]
   npcLevelRange?: { min: number; max: number }
+  images?: { map?: SceneImage }
+}
+
+interface SceneImage {
+  crop: { focus: { x: number; y: number }; zoom: number }
+  imageUrl?: string
 }
 ```
 

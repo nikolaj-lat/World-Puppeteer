@@ -15,6 +15,13 @@ interface PremadeCharacter {
   traits?: string[]                      // ✅ Trait names from tabs/traits.json
   backstory?: string                     // ✅ Hand-written backstory; becomes the character's "Background" in every story turn. Falls back to description if absent
   portraitUrl?: string                   // ✅ Image URL for the character portrait (player generates if absent)
+  portraitFocusX?: number                // ✅ Horizontal crop focus for an authored portrait. 0..100, defaults to 50 (centered). Generated portraits ignore it
+  portraitFocusY?: number                // ✅ Vertical crop focus for an authored portrait. 0..100, defaults to 0 (top). Generated portraits ignore it
+  portraitZoom?: number                  // ✅ Zoom level for the portrait crop. 100..300, defaults to 100 (no zoom). Generated portraits ignore it
+  generatedBackground?: string           // ✅ AI-written background text from the character generator, carried over when the premade was built from a generated profile
+  generatedAppearance?: string           // ✅ AI-written portrait-only appearance prompt from the character generator; gameplay-relevant appearance belongs in the background
+  voiceTag?: string                      // ✅ Voice tag for speech synthesis when no worldVoiceId applies
+  worldVoiceId?: string                  // ✅ Key from the world's worldVoices catalog; overrides the generic voiceTag pick. Works whether or not the voice is exposed in character creation
   replacesNpc?: string                   // ✅ NPC name from tabs/npcs.json; NPC removed on selection
 }
 ```
@@ -22,6 +29,10 @@ interface PremadeCharacter {
 ### Legend
 
 - ✅ **Predefine-able**: Can be set in config, used directly
+
+## Required When Customization Is Disabled
+
+When `characterCreationSettings.customizationEnabled` is `false`, players can only pick a premade, so the array must contain at least one entry and every premade must have a unique `name`.
 
 ## replacesNpc Behavior
 
@@ -57,7 +68,7 @@ When a player selects a premade character:
 
 ### 1. Authorization
 
-`resolveAuthorizedReplacementNpc` validates the claim against `worldConfig.premadeCharacters`.
+The engine checks the selection against the world's `premadeCharacters`; a claim that does not match an authored premade is rejected.
 
 ### 2. Character Creation
 
@@ -115,3 +126,4 @@ The new player character is added to `gameState.characters` and appended to `par
 | `attributes` keys | `attributeSettings.attributeNames` in `tabs/settings.json` |
 | `traits` | `tabs/traits.json` (trait names) |
 | `replacesNpc` | `tabs/npcs.json` (NPC name) |
+| `worldVoiceId` | `worldVoices` keys in `tabs/settings.json` |

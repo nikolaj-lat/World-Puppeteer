@@ -12,11 +12,11 @@ interface Trait {
   attributes: Array<{attribute: string, modifier: number}>   // ✅ Additive attribute modifiers
   skills: Array<{skill: string, modifier: number}>           // ✅ Additive skill level modifiers
   resources: Array<{resource: string, modifier: number}>     // ✅ Additive resource max modifiers
-  startingItems: InventoryDefinition[]                       // ✅ Items granted on trait application
+  startingItems: InventoryDefinition[]                       // ✅ Items granted on permanent trait acquisition (not via triggers); item must be an existing item key
   abilities: string[]             // ✅ Ability names unlocked (deduplicated if multiple sources)
   requirements: TraitRequirement[] // ⚠️ Prerequisites for level-up trait picks (defaults to [] if omitted)
-  unlockedBy: string[]            // ✅ Trait prerequisites (OR logic) — level-up picks only
-  excludedBy: string[]            // ✅ Trait conflicts — level-up picks only
+  unlockedBy: string[]            // ✅ Trait prerequisites (OR logic), existing trait keys — level-up picks only
+  excludedBy: string[]            // ✅ Trait conflicts, existing trait keys — level-up picks only
   vulnerabilities?: string[]      // ✅ Damage types that deal 1.5x damage to the player (can be empty [])
   resistances?: string[]          // ✅ Damage types that deal 0.5x damage to the player (can be empty [])
   immunities?: string[]           // ✅ Damage types that deal 0x damage to the player (can be empty [])
@@ -114,12 +114,20 @@ These fields give the **player character** typed-damage modifiers in combat, the
 ```typescript
 interface TraitCategory {
   name: string                    // ✅ Display name shown to player
-  maxSelections: number           // ✅ Maximum traits player can select. 0 blocks all selection in the category
-  traits: string[]                // ✅ Array of trait keys (not display names)
+  maxSelections: number           // ✅ Maximum traits player can select across the whole category, subcategories included. 0 blocks all selection in the category
+  traits: string[]                // ✅ Array of trait keys (not display names); ungrouped root traits
+  description?: string            // ✅ Player-facing text explaining the category
+  subcategories?: TraitSubcategory[]  // ✅ Optional groups shown inside the category
+}
+
+interface TraitSubcategory {
+  name: string                    // ✅ Display name for the group
+  traits: string[]                // ✅ Array of trait keys in this group
+  description?: string            // ✅ Player-facing text explaining the group
 }
 ```
 
-Categories group traits and limit selections during character creation. Players must select between 0 and `maxSelections` traits from each category.
+Categories group traits and limit selections during character creation. Players must select between 0 and `maxSelections` traits from each category; the limit applies to the category as a whole, however its traits are grouped. In character creation, subcategory traits are listed first, then the ungrouped root `traits`.
 
 
 Category selection at character creation ignores `requirements`, `unlockedBy`, and `excludedBy` — those fields only affect level-up trait picks.
@@ -200,6 +208,8 @@ Triggers can add/remove traits via `player-traits` effect:
 }
 ```
 
+A trigger-granted trait applies its attribute/skill/resource modifiers and abilities but does NOT grant its `startingItems`; only permanent acquisition paths (character creation and level-up picks) hand out starting items. Trait bonuses are reconciled as net deltas, so toggling or swapping traits never double-applies a modifier.
+
 ## Cross-References
 
 | Field | References |
@@ -207,14 +217,15 @@ Triggers can add/remove traits via `player-traits` effect:
 | `attributes[].attribute` | `attributeSettings.attributes` in `tabs/settings.json` |
 | `skills[].skill` | `tabs/skills.json` |
 | `resources[].resource` | `resourceSettings.resources` in `tabs/settings.json` |
-| `startingItems[].item` | `tabs/items.json` |
+| `startingItems[].item` | `tabs/items.json` (validated against item keys) |
 | `abilities[]` | `tabs/abilities.json` |
 | `requirements[].variable` (resource) | `resourceSettings.resources` in `tabs/settings.json` |
 | `requirements[].variable` (attribute) | `attributeSettings.attributes` in `tabs/settings.json` |
 | `requirements[].variable` (skill) | `tabs/skills.json` |
 | `requirements[].variable` (trait) | Keys from `traits` in same file |
 | `vulnerabilities[]`, `resistances[]`, `immunities[]` | `combatSettings.damageTypes` in `tabs/settings.json` |
-| `unlockedBy[]` | Keys from `traits` in same file |
-| `excludedBy[]` | Keys from `traits` in same file |
+| `unlockedBy[]` | Keys from `traits` in same file (validated) |
+| `excludedBy[]` | Keys from `traits` in same file (validated) |
 | `traitCategories[].traits[]` | Keys from `traits` in same file |
+| `traitCategories[].subcategories[].traits[]` | Keys from `traits` in same file |
 | `progressionSettings.levelUpTraitPool` (in `tabs/settings.json`) | Keys from `traits` in same file |

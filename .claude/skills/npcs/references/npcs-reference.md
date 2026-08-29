@@ -8,8 +8,8 @@ Complete documentation for `tabs/npcs.json`.
 interface NPC {
   name: string                    // ✅ Display name, must match object key
   type: string                    // ✅ Key from npc-types.json or ""
-  currentLocation: string         // ✅ Key from locations.json or ""
-  currentArea: string             // ✅ Area within location or ""
+  currentLocation: string         // ✅ Key from locations.json or "". Matching ignores casing and whitespace
+  currentArea: string             // ✅ Area within location or "". A location with areas needs both currentLocation and currentArea; an area-less location places by location only
   gender?: string                 // ✅ "male", "female", or "non-binary"
   faction?: string                // ✅ Key from factions.json
   basicInfo?: string              // ✅ Immediately available info
@@ -19,11 +19,11 @@ interface NPC {
   personality?: string[]          // ✅ Prose descriptions of personality traits
   abilities?: string[]            // ✅ Prose descriptions of abilities
   aliases?: string[]              // ✅ Alternate names/titles (e.g. "the captain", "Reed") used only to match input/dialogue to this NPC; never sent to the AI
-  level?: number                  // ⚠️ Set explicitly for any NPC that should be stronger; an explicit level is used as-is. If omitted, the engine rolls a level near the party average when the NPC first becomes visible (so it reflects the party's level at that moment), then clamps it into the npcLevelRange of the NPC's location (or, if the location has none, its region). Each NPC level adds +2 to base damage
-  hpMax?: number                  // ⚠️ Used exactly as written on NPCs with an authored level. If undefined, derived live from level, tier, healthMultiplier, and difficulty. Set 0 (with hpCurrent 0) to spawn the NPC dead/dying
+  level?: number                  // ⚠️ Set explicitly (1 or higher) for any NPC that should be stronger; an explicit level is used as-is. If omitted or set to 0, the engine rolls a level near the party average when the NPC first becomes visible (so it reflects the party's level at that moment), then clamps it into the npcLevelRange of the NPC's location (or, if the location has none, its region). Each NPC level adds +2 to base damage
+  hpMax?: number                  // ⚠️ Used exactly as written when authored; the engine never raises it to its own calculation. If undefined, derived live from level, tier, healthMultiplier, and difficulty. Set 0 (with hpCurrent 0) to spawn the NPC dead/dying
   hpCurrent?: number              // ⚠️ Defaults to hpMax if undefined; clamped to the final hpMax
   healthMultiplier?: number       // ✅ Scales calculated max HP. 1 is normal, 10 is ten times normal, 0.5 is half. Clamped to 0.1–100 (non-numeric values are treated as 1)
-  tier?: 'trivial' | 'weak' | 'average' | 'strong' | 'elite' | 'boss' | 'mythic'                  // ✅ Affects HP calculation AND combat intent complexity.
+  tier?: 'trivial' | 'weak' | 'average' | 'strong' | 'elite' | 'boss' | 'mythic'                  // ⚠️ Defaults to 'average' if omitted. Affects HP calculation AND combat intent complexity. Named NPCs the story introduces keep their generated tier
   vulnerabilities?: string[]      // ✅ 1.5× damage from these types. Unions with npc-type's vulnerabilities
   resistances?: string[]          // ✅ 0.5× damage from these types. Unions with npc-type's resistances
   immunities?: string[]           // ✅ 0× damage from these types. Unions with npc-type's immunities
@@ -34,6 +34,10 @@ interface NPC {
   currentCoordinates?: number[]   // ✅ [x, y] for wilderness positioning
   detailType?: 'basic' | 'detailed'  // ⚠️ Defaults to 'detailed' if undefined. If 'detailed', generateNPCDetails won't run
   voiceTag?: string               // ✅ Voice tag for speech synthesis (see voice-tags.md)
+  worldVoiceId?: string           // ✅ Key from the world's worldVoices catalog. Overrides the generic voiceTag pick for this NPC; works whether or not the voice is exposed in character creation
+  portraitFocusX?: number         // ✅ Horizontal crop focus for an authored portrait. 0..100, defaults to 50 (centered). Generated portraits ignore it
+  portraitFocusY?: number         // ✅ Vertical crop focus for an authored portrait. 0..100, defaults to 0 (top). Generated portraits ignore it
+  portraitZoom?: number           // ✅ Zoom level for the portrait crop. 100..300, defaults to 100 (no zoom). Generated portraits ignore it
   questOriginArcId?: string       // ✅ Auto-generated for quest-spawned NPCs. Links to the arc that spawned this NPC; provides arc theme/secrets to AI detail generation
   questOriginQuestId?: string     // ✅ Auto-generated for quest-spawned NPCs. Links to the quest that spawned this NPC; provides quest design brief to AI detail generation
   embedding?: number[]            // ✅ Auto-generated
@@ -42,7 +46,7 @@ interface NPC {
   needsDetailGeneration?: boolean // ✅ Flag to async trigger  generateNPCDetails
   deathXPAwarded?: boolean        // ✅ Whether XP will be given on death
   properName?: string             // ⚠️ The NPC's true name. Defaults to name if omitted. Set it (different from name) for a hidden-identity NPC: name is the current display name, properName is revealed later. The identity counts as revealed once the two match, and a reveal flips name to properName
-  status: '' | 'near death' | 'dying' | 'dead'      // ❌ Always set to ''
+  status: string                  // ❌ Always set to ''. Free-form runtime text; mortality is no longer encoded here (see Death Countdown below)
   relationship: number            // ❌ Always set to 0
   lastSeenTick: number            // ❌ Always set to -1. Value of -1 means immune to cleanup until first seen
 }
@@ -89,11 +93,11 @@ Formula: `(npcHealthPerLevel × level + npcMinHealth) × tierHPModifier × healt
 
 ### How HP Is Calculated
 
-An authored `hpMax` on an NPC with an authored `level` is used **exactly as written** — the formula above and the game's difficulty never modify it.
+An authored `hpMax` is used **exactly as written** — the formula above and the game's difficulty never modify it, and the engine never raises it to its own calculation. Only missing HP is computed.
 
-When `hpMax` is not authored, HP is derived **live** from the formula each time it's needed — it is not frozen at world load. (Previously the medium-difficulty value could get baked in at load; now the NPC's HP always reflects the game's actual difficulty.)
+When `hpMax` is not authored, HP is derived **live** from the formula each time it's needed — it is not frozen at world load, so the NPC's HP always reflects the game's actual difficulty.
 
-On an NPC with **no authored `level`**, level and HP resolve lazily when the NPC first becomes visible (level from the location's level range, HP from the formula). Only in this lazy path does an authored `hpMax` act as a **floor**: the engine takes the higher of the authored and calculated values. An authored `hpCurrent` is always clamped to the final `hpMax`; authoring `hpCurrent: 0` deliberately spawns the NPC dead/dying.
+On an NPC with **no authored `level`** (or `level: 0`), level and HP resolve lazily when the NPC first becomes visible (level near the party average, clamped to the location's or region's level range; HP from the formula unless authored). An authored `hpCurrent` is always clamped to the final `hpMax`; authoring `hpCurrent: 0` deliberately spawns the NPC dead/dying.
 
 
 ### Damage Multipliers
@@ -123,15 +127,22 @@ Tier determines how many intents an NPC generates in combat and their tactical s
 
 ### Death Countdown (Major NPCs)
 
-NPCs with tier `elite`, `boss`, or `mythic` (and party member NPCs) use a 3-turn death countdown when they reach 0 HP:
+NPCs with tier `elite`, `boss`, or `mythic` (and party member NPCs) use a 3-turn death countdown when they reach 0 HP. The countdown is a runtime incapacitation counter that creators never set (it is not stored in `status`):
 
-| Turn | Status | Description |
-|------|--------|-------------|
-| 1 | `near death` | Just went down, can be healed |
-| 2 | `dying` | Slipping closer to death |
-| 3 | `dead` | Permanently dead, cannot be revived |
+| Counter | State | Description |
+|---------|-------|-------------|
+| 1 | near death | Just went down, can be healed |
+| 2 | dying | Slipping closer to death |
+| 3 | dead | Dead; revivable only as described below |
 
 Standard-tier NPCs (`trivial`, `weak`, `average`, `strong`) die instantly at 0 HP.
+
+### Death and Healing
+
+- Positive healing clears near death and dying.
+- A dead character is revived only by explicit healing (an NPC, a player action, an item, a spell, or a story event) in non-permadeath games. Passive recharge and ordinary rest never revive.
+- Under permadeath, a dead character cannot be revived.
+- Recover and Revive restore 35% of max health.
 
 ### Party-Member Promotion
 
@@ -158,3 +169,4 @@ Reads `basicInfo` and generates: personality, hiddenInfo, faction, abilities, de
 | `currentLocation`, `currentArea` | `tabs/locations.json` |
 | `faction` | `tabs/factions.json` |
 | `vulnerabilities`, `resistances`, `immunities` | `combatSettings.damageTypes` in `tabs/settings.json`|
+| `worldVoiceId` | `worldVoices` keys in `tabs/settings.json` |

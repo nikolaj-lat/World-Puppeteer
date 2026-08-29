@@ -12,7 +12,7 @@ interface QuestBaseDefinition {
   questSource: string             // ✅ Where quest originates (NPC, location, etc.)
   questStatement: string          // ✅ One-sentence quest description
   mainObjective: string           // ✅ Primary goal text shown in quest log
-  completionCondition: QuestCompletionCondition  // ✅ How quest completion is detected (see below)
+  completionCondition: QuestCompletionCondition  // ⚠️ How quest completion is detected (see below); defaults to a story condition with an empty query if omitted
   questGiverNPC?: string          // ✅ Key from npcs.json
   questDesignBrief?: string       // ✅ Free-form design guidance for AI quest generation
   conclusive?: boolean            // ⚠️ Whether completing this quest concludes its parent arc (default: false)
@@ -62,7 +62,7 @@ interface DetailedQuestDefinition extends QuestBaseDefinition {
 | `{ "type": "story", "query": "..." }` | The query is a natural-language description of what "done" looks like, matched semantically against the story. Drives the auto-generated completion trigger (see below). |
 | `{ "type": "narrative-event-completed", "eventId": "..." }` | The quest completes (if accepted) when the referenced narrative event reaches completed status. `eventId` references the `narrativeEvents` world section (see the narrative-events skill). |
 
-Legacy plain-string completion conditions are auto-converted to the `story` form (`{ "type": "story", "query": "<the string>" }`).
+Legacy plain-string completion conditions are auto-converted to the `story` form (`{ "type": "story", "query": "<the string>" }`). An omitted `completionCondition` defaults to `{ "type": "story", "query": "" }`, which produces no auto-trigger, so the quest can then only complete through manually authored trigger effects.
 
 ## Quest Runtime Schema
 
@@ -73,7 +73,7 @@ interface Quest {
   questSource: string             // ✅ From definition
   questStatement?: string         // ✅ From definition
   mainObjective?: string          // ✅ From definition
-  completionCondition: QuestCompletionCondition  // ✅ From definition (legacy strings auto-converted to story form)
+  completionCondition: QuestCompletionCondition  // ⚠️ From definition (legacy strings auto-converted to story form; empty-query story form if omitted)
   questGiverNPC?: string          // ✅ From definition
   spatialRelationship?: SpatialRelationship  // ✅ From definition (basic only)
   questDesignBrief?: string       // ✅ From definition
@@ -184,6 +184,12 @@ Phase auto-advances when the player reaches the required location or area.
 
 **Note:** Quest phases and tracking fields are runtime-only. Do not manually set `questStepPhase`, `hasVisitedLocation`, or `hasVisitedStartingArea` in quest definitions - the game engine initializes these automatically based on the quest's `spatialRelationship`.
 
+An authored `basic` quest with a blank `questLocation` counts as already at the location: it skips the travel phases and advances to `completeObjectives` immediately.
+
+### Travel Difficulty and Movement Locks
+
+Travel to a quest location is simple by default. The narrator treats a move as **impossible** only when the destination's text explicitly establishes a lock: a boss guarding it, sealed access, a required access item, or authority clearance. Otherwise a move costs at most a skill check (when the party is restrained, in combat, or the destination is not yet established). A quest does not gate travel by itself; to make a quest location gated, state the lock in the location or area text and echo it in `questDesignBrief`.
+
 ## Objectives and Next Steps
 
 `objectives` is an authored objective ladder. Objectives advance **exclusively through trigger effects** — no AI decides when an objective is revealed or completed:
@@ -290,7 +296,7 @@ Triggers can manipulate quests through these effects (full semantics in the trig
 
 The `quest-status` condition (`questId`, `operator`, `value`) compares against the quest's status (`hidden`, `available`, `expired`, `accepted`, `completed`, `abandoned`, `rejected`).
 
-`questId` references resolve by quest key first, then by unique quest name.
+`questId` references (in quest effects and the `quest-status` condition) resolve by quest record key first, then by unique quest name.
 
 ## Interaction with Narrative Events
 
