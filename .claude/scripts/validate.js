@@ -523,9 +523,6 @@ const OPTIONAL_TOP_LEVEL = [
   'characterCreationMusic',
   'imagePromptConfiguration',
   'imageModelSource',
-  // System-managed: the engine stamps the schema version itself and strips any
-  // creator-authored value on save. Keeping it in a world file is harmless but unnecessary.
-  'heroesVersion',
   // Authored voice catalog referenced by npcs[].worldVoiceId / premadeCharacters[].worldVoiceId
   'worldVoices',
   // Required by the V36 schema, but the engine falls back to its own defaults
@@ -2427,11 +2424,6 @@ function validateCharacterLimits(config, errors, warnings) {
 
 function validateTypeChecks(config, errors) {
   // The V36 schema only accepts the literal 36
-  // heroesVersion is system-managed: the engine stamps it and strips any authored
-  // value on save. A stale value only signals the world file predates a schema bump.
-  if (config.heroesVersion !== undefined && config.heroesVersion !== 36) {
-    errors.push(createError('heroesVersion', `Unexpected heroesVersion: ${JSON.stringify(config.heroesVersion)} (current schema is 36; the engine stamps this itself and ignores authored values)`, 'warning'));
-  }
 
   // imageModelSource replaced the old imageModelSources object; it is a plain string id
   if (config.imageModelSource !== undefined && typeof config.imageModelSource !== 'string') {

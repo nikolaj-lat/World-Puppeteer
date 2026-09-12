@@ -33,7 +33,7 @@
  *   - archetypes.json (authorSeeds, characterArchetypes, locationArchetypes,
  *                            regionArchetypes, encounterElements)
  *   - premade-characters.json (premadeCharacters)
- *   - meta.json           (tipSettings, nameFilterSettings, randomNames, mods, heroesVersion)
+ *   - meta.json           (tipSettings, nameFilterSettings, randomNames, mods)
  */
 
 const fs = require('fs');
@@ -88,7 +88,6 @@ const SECTIONS = {
     'nameFilterSettings',
     'randomNames',
     'mods',
-    'heroesVersion',
   ],
 };
 
