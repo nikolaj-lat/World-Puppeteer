@@ -104,15 +104,21 @@ The AI judges the event each turn it is active:
 
 ## onCompleteEffects
 
-`onCompleteEffects` takes the same effect objects as trigger effects — every effect type and its fields are documented in the triggers reference. They do NOT count against a trigger's effect cap.
+`onCompleteEffects` takes the same effect objects as trigger effects, sharing the full trigger effect vocabulary: every effect type and its fields are documented in the triggers reference (see the triggers skill), so consult that rather than duplicating semantics here. They do NOT count against a trigger's effect cap.
+
+An event's `onCompleteEffects` is a plain effect list; trigger-style conditions have no counterpart here. NPC and player effects follow the same rules as in triggers: the `npc` field takes a specific NPC name or the `allSceneNPCs` / `allPartyNPCs` selectors, `npc-portrait` takes a name only, `npc-portrait` URLs must use official Latitude image hosting, and `npc-placement` with `moveTo` requires both `location` and `area`.
 
 Common uses:
 
-- `quest-objective-reveal` / `quest-objective-complete` — advance a quest as the event resolves
-- `quest-next-step-set` / `party-next-step-set` — point the player at what comes next
-- `player-resource` / `player-traits` — grant rewards or consequences
-- `narrative-event-start` — chain into a follow-up event (only starts if no other event is active)
-- `quest-init` — make a follow-up quest available
+- `quest-objective-reveal` / `quest-objective-complete`: advance a quest as the event resolves
+- `quest-next-step-set` / `party-next-step-set`: point the player at what comes next
+- `player-resource` / `player-traits`: grant rewards or consequences
+- `player-level` / `player-experience` / `player-skill` / `player-attribute`: progression rewards
+- `npc-health` / `npc-in-party` / `npc-portrait` / `npc-placement`: change NPC state as the event resolves
+- `narrative-event-start`: chain into a follow-up event (only starts if no other event is active)
+- `quest-plan`: reserve a follow-up quest's storyline (invisible, shapes AI quest generation)
+- `quest-init`: put a follow-up quest on offer (moves it from hidden or planned to available)
+- `quest-accept`: accept a follow-up predefined quest outright
 
 ## Interactions with Quests and Triggers
 

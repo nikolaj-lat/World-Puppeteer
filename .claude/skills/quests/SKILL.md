@@ -17,7 +17,6 @@ Edit `tabs/quests.json`.
 | `questSource` | Where the quest originates (NPC name, location, object) |
 | `questStatement` | One-sentence description of the situation |
 | `mainObjective` | What the player must accomplish (shown in quest log) |
-| `completionCondition` | Object: `{ "type": "story", "query": "..." }` or `{ "type": "narrative-event-completed", "eventId": "..." }`. If omitted it defaults to a story condition with an empty query, which generates no auto-trigger, so always author it |
 | `questDesignBrief` | 2-4 sentence internal design guidance for the AI — drives NPC, location, and trigger generation for this quest |
 | `detailType` | `basic` for AI-generated locations, `detailed` for specific locations |
 
@@ -25,18 +24,21 @@ Edit `tabs/quests.json`.
 
 | Field | When to Include |
 |-------|-----------------|
+| `completionCondition` | When the quest should complete off story matching or a narrative event: `{ "type": "story", "query": "..." }` or `{ "type": "narrative-event-completed", "eventId": "..." }`. Omit for trigger-driven quests that complete only through explicit `quest-progress` / `quest-complete` effects |
+| `initialStatus` | When the quest should start the story as `planned`, `available`, or `accepted` instead of the default `hidden` |
 | `spatialRelationship` | Required when `detailType: 'basic'` - defines where quest takes place |
-| `questLocation` | Required when `detailType: 'detailed'` - key from locations.json |
+| `questLocation` | For `detailed` quests with a specific location - key from locations.json. Omit for a locationless detailed quest that starts directly in objective mode |
 | `questGiverNPC` | Only when a specific NPC gives the quest |
 | `objectives` | Only when the quest has an authored objective ladder, revealed/completed via trigger effects |
 | `activeObjectiveId` | Only to point at an objective authored with status `active` |
 | `nextStep` | Only for initial guidance - normally managed by objective and next-step trigger effects |
+| `onCompleteEffects` | When completing the quest should change game state. Same effect objects as triggers, applied once when the quest completes |
 
 ## Never Include
 
 Omit these fields (auto-set or runtime-only):
 - `questType`
-- `id`, `creationTick`, `status`, `detectionTick`, `acceptedTick`
+- `id`, `definitionKey`, `creationTick`, `status`, `detectionTick`, `acceptedTick`
 - `expiryTick`, `completedTick`, `abandonedTick`, `rejectedTick`
 - `startingArea`, `connectingAreaName`, `questAreas`
 - `questStepPhase`, `hasVisitedLocation`, `hasVisitedStartingArea`, `objectiveCompleted`
@@ -52,7 +54,7 @@ Omit these fields (auto-set or runtime-only):
 
 Use `detailed` for hand-crafted narrative quests. Use `basic` for procedural or emergent quests.
 
-A `basic` quest whose `questLocation` is blank counts as "already at the location" and advances straight to objectives instead of waiting for travel.
+A `basic` quest whose `questLocation` is blank counts as "already at the location" and advances straight to objectives instead of waiting for travel. A `detailed` quest without a `questLocation` skips travel the same way: it starts directly in objective mode with its `mainObjective` as the current step, and no location is revealed on accept.
 
 ## Gating Travel to Quest Locations
 
@@ -78,10 +80,12 @@ Format: "[Verb] the [target]" or "[Verb] [what] from/in/at [where]"
 
 ## completionCondition Format
 
-An object with one of two forms:
+An optional object with one of two forms:
 
-- `{ "type": "story", "query": "..." }` — the query is a natural-language description of what "done" looks like; the trigger system matches it semantically against the story. If the query is left empty, no auto-trigger is generated. (Legacy plain-string conditions are auto-converted to this form; an omitted condition becomes this form with an empty query.)
+- `{ "type": "story", "query": "..." }` — the query is a natural-language description of what "done" looks like; the trigger system matches it semantically against the story. If the query is left empty, no auto-trigger is generated. (Legacy plain-string conditions are auto-converted to this form.)
 - `{ "type": "narrative-event-completed", "eventId": "..." }` — the quest completes when the referenced narrative event completes. No auto-trigger is generated. See the narrative-events skill.
+
+Omitting `completionCondition` is a first-class choice for trigger-driven quests: the quest then completes only through explicit effects (`quest-progress` reaching completion, or `quest-complete`) fired by triggers, narrative events, or another quest's `onCompleteEffects`.
 
 ## Objectives and Next Steps
 
@@ -93,9 +97,18 @@ One sentence describing the situation that creates the quest.
 
 Format: "[Subject] [situation that creates urgency or motivation]"
 
-## Making Quests Available
+## Starting Statuses and Making Quests Available
 
-Quests always start as `hidden`. To make them available:
+Quests start `hidden` unless `initialStatus` sets a different starting status, applied at world start:
+
+| `initialStatus` | At world start |
+|-----------------|----------------|
+| `hidden` (default) | Invisible; activate later via story start or triggers |
+| `planned` | Invisible, but reserves its storyline against duplicate AI quest generation |
+| `available` | On offer from turn 0 |
+| `accepted` | Fully accepted at turn 0 (location revealed, party guidance active) |
+
+The AI quest generator avoids duplicating `planned` and `available` quests. To reserve a future quest's storyline, author it `planned` (via `initialStatus` or a `quest-plan` effect); `hidden` keeps it purely invisible.
 
 **Via Story Start** (recommended for starting quests):
 ```json
@@ -105,6 +118,8 @@ Quests always start as `hidden`. To make them available:
   }
 }
 ```
+
+`startingQuests` entries resolve by quest file id or unique name. Hidden quests are promoted to `available` at start; quests already accepted are skipped.
 
 Note: `firstQuest` is a separate freeform text field for AI quest generation - it doesn't reference predefined quests. See the story-starts skill for details.
 
@@ -118,18 +133,22 @@ Note: `firstQuest` is a separate freeform text field for AI quest generation - i
 }
 ```
 
+Status-moving effects: `quest-plan` (hidden to planned), `quest-init` (hidden or planned to available), `quest-accept` (hidden, planned, or available to accepted; predefined quests only). See the reference doc and the triggers skill.
+
 ## Quest Lifecycle
 
 ```
-Definition -> hidden -> available -> accepted -> completed
-                            |  \         |
-                            |   rejected |
-                            |       abandoned
-                            |
-                         expired
+Definition -> hidden -> planned -> available -> accepted -> completed
+                                       |  \         |
+                                       |   rejected |
+                                       |       abandoned
+                                       |
+                                    expired
 ```
 
-When an `available` quest is offered, the player accepts or rejects it as a single step. An `available` quest expires when its expiry tick is reached (3 ticks after offer), the party leaves the location where the quest was offered, or the quest giver dies/leaves the scene.
+`quest-accept` can move a `hidden` or `planned` quest straight to `accepted`. Re-accepting a concluded quest (`completed`, `abandoned`, `rejected`, `expired`) starts a fresh run: objectives reset to hidden and the previous outcome is cleared, while progress made before first acceptance is kept. Hidden and planned quests can accumulate objective progress silently.
+
+When an `available` quest is offered, the player accepts or rejects it as a single step. An `available` quest with an expiry lapses to `expired` when its expiry tick is reached, the party leaves the location where the quest was offered, or the quest giver dies/leaves the scene. A standing offer without an expiry stays valid indefinitely and keeps discouraging duplicate AI generation.
 
 Detailed quests with a `story`-type `completionCondition` auto-generate a completion trigger from the query. Basic quests need manual triggers. If the query is empty, no auto-trigger is created for either type. Quests with a `narrative-event-completed` condition get no auto-trigger — they complete (if accepted) when the referenced narrative event completes.
 
@@ -141,7 +160,8 @@ interface QuestDefinition {
   questSource: string
   questStatement: string
   mainObjective: string
-  completionCondition: QuestCompletionCondition
+  completionCondition?: QuestCompletionCondition
+  initialStatus?: 'hidden' | 'planned' | 'available' | 'accepted'
   questDesignBrief?: string
   detailType: 'basic' | 'detailed'
   spatialRelationship?: SpatialRelationship
@@ -150,6 +170,7 @@ interface QuestDefinition {
   objectives?: Record<string, QuestObjective>
   activeObjectiveId?: string
   nextStep?: QuestNextStep
+  onCompleteEffects?: Effect[]
 }
 
 type QuestCompletionCondition =

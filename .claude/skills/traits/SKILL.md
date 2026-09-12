@@ -27,7 +27,7 @@ Category patterns:
 - **Multiple selection** (miscellaneous): `maxSelections: 3`
 
 
-Category selection at character creation ignores `requirements`, `unlockedBy`, and `excludedBy` — those only affect level-up trait picks (see below).
+Category selection at character creation ignores `requirements` (level-up picks only). `unlockedBy` and `excludedBy` do constrain creation choices: see Trait Dependencies below.
 
 ## Required Fields
 
@@ -42,8 +42,8 @@ Category selection at character creation ignores `requirements`, `unlockedBy`, a
 | `startingItems` | Array of items granted (can be empty `[]`) |
 | `abilities` | Array of ability names granted (can be empty `[]`) |
 | `requirements` | Array of requirement objects (can be empty `[]`). Only gates level-up trait picks — ignored at character creation |
-| `unlockedBy` | Trait prerequisites (OR logic). Only affects level-up trait picks — ignored at character creation |
-| `excludedBy` | Trait conflicts. Only affects level-up trait picks — ignored at character creation |
+| `unlockedBy` | Prerequisites (OR logic): trait keys or story start ids. Affects level-up picks and character creation (see Trait Dependencies) |
+| `excludedBy` | Conflicts: trait keys or story start ids. Affects level-up picks and character creation (see Trait Dependencies) |
 
 ## description and traitNarrativeEffects
 
@@ -72,7 +72,11 @@ For **species traits**, see the Species Traits section below.
 
 Traits can be offered as level-up rewards via `progressionSettings.levelUpTraitPool` in `tabs/settings.json` (default cadence: 1 pick every 10 levels). When a pick is pending, the player chooses from pool traits they don't already have whose `unlockedBy`/`excludedBy` conditions pass and whose `requirements` are met; the chosen trait applies immediately, exactly like a starting trait. An empty pool means no picks are ever granted.
 
-**Gotcha:** `requirements`, `unlockedBy`, and `excludedBy` do nothing at character creation — they only filter the level-up pick list. To keep a trait out of starting selection, leave it out of every trait category.
+**Gotcha:** `requirements` does nothing at character creation, it only filters the level-up pick list. To keep a trait out of starting selection everywhere, leave it out of every trait category.
+
+## Trait Dependencies (unlockedBy and excludedBy)
+
+Both fields list trait keys or story start ids: a trait can require, or be blocked by, other traits or specific story starts. At character creation, categories are evaluated in `traitCategories` order after the story start is chosen. A story start dependency always takes effect; a trait dependency only constrains choices in categories after the referenced trait's own category. A dependency that is neither an earlier-category trait nor a story start leaves the trait unconditionally unlocked. Changing an earlier selection removes later selections that are no longer eligible. Both fields also filter level-up trait picks.
 
 **Trigger-granted traits:** a trait added by a `player-traits` trigger effect applies its modifiers and abilities but does NOT grant its `startingItems`. Only permanent acquisition paths (character creation, level-up picks) hand out starting items. Trait bonuses are reconciled as net deltas, so swapping traits never double-applies a modifier.
 

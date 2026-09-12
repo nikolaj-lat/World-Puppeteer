@@ -23,6 +23,7 @@ Edit `tabs/triggers.json`.
 |-------|-----------------|
 | `recurring` | Set to `true` only when trigger should fire every turn conditions are met |
 | `scope` | Set to `'player'` only when effects should target the specific players who satisfy the conditions (multiplayer). Omit for normal party-wide triggers |
+| `phase` | Set to `'planning'` only on a purely mechanical trigger whose effects must land before this turn's story (react to combat damage or skill-check results in the same turn's narration). Omit otherwise |
 | `script` | Only when declarative conditions/effects can't express the logic (branching, derived math, cross-trigger coordination). See [trigger-scripts-reference.md](references/trigger-scripts-reference.md) |
 
 **Trigger-script gotchas:** a `story` effect on **tick 0 does not change the opening** — put opening narration in the story-start text or fire at tick >= 1. Scripts go only in the top-level `script` field; never invent JS condition/effect types. Full details in the reference.
@@ -47,16 +48,25 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 
 ### Mechanical Conditions (Code-Evaluated)
 
-**String conditions** (`party-realm`, `party-region`, `party-location`, `party-area`, `story-text`, `action-text`):
+**String conditions** (`party-realm`, `party-region`, `party-location`, `party-area`, `story-text`, `action-text`, `npc-realm`, `npc-region`, `npc-location`, `npc-area`):
 ```typescript
 { type: '...', operator: 'equals' | 'notEquals' | 'contains' | 'notContains' | 'regex', value: 'string' }
+// For npc-*, also include: npc. An off-stage or unresolved NPC matches no operator, notEquals/notContains included
 ```
 
-**Number conditions** (`player-level`, `game-tick`, `player-resource`, `npc-relationship`):
+**Number conditions** (`player-level`, `game-tick`, `player-resource`, `npc-relationship`, `skill-value`, `npc-health`, `npc-health-percent`):
 ```typescript
 { type: '...', operator: 'equals' | 'notEquals' | 'greaterThan' | 'lessThan' | 'greaterThanOrEqual' | 'lessThanOrEqual', value: number }
 // For player-resource, also include: resource: 'resourceName'
-// For npc-relationship, also include: npc: 'npcName' — compares the NPC's relationship score
+// For npc-relationship, npc-health, npc-health-percent, also include: npc
+// For skill-value, also include: skill (id or display name). Compares skill level; a character without the skill matches nothing
+// npc-health is absolute current HP (equals 0 = the death check); npc-health-percent is current/max as 0-100, unrounded
+```
+
+**Action outcome condition** (`action-success-level`):
+```typescript
+{ type: 'action-success-level', operator: 'equals' | 'notEquals' | 'greaterThan' | 'lessThan' | 'greaterThanOrEqual' | 'lessThanOrEqual', value: 'impossible' | 'critical failure' | 'failure' | 'mixed results' | 'basic success' | 'success' | 'great success' | 'critical success' }
+// Ordinal over that worst-to-best order, per player, this turn's action. Simple actions and players with no evaluated action match nothing, notEquals included. Rejected alongside story / story-text conditions: put the story check on a separate trigger
 ```
 
 **NPC relationship stage condition** (`npc-relationship-stage`):
@@ -65,10 +75,13 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 // Compares against the NPC's current stage name from the world's relationshipStages; a score matching no stage reads as 'Neutral'
 ```
 
-**Boolean conditions** (`known-entity`):
+**Boolean conditions** (`known-entity`, `npc-in-scene`, `npc-in-party`):
 ```typescript
 { type: 'known-entity', operator: 'equals' | 'notEquals', value: boolean, entity: 'entityName' }
+{ type: 'npc-in-scene' | 'npc-in-party', operator: 'equals' | 'notEquals', value: boolean, npc: 'npcName' }
 ```
+
+**NPC selectors:** every `npc` field takes an authored NPC name, or `anySceneNPC` / `anyPartyNPC` in conditions (passes if any NPC in the set matches) and `allSceneNPCs` / `allPartyNPCs` in effects (fans out; `npc-portrait` takes a name only). A wrong-slot selector resolves to nothing; avoid giving NPCs those four names.
 
 **Array conditions** (`player-traits`, `quests-completed`):
 ```typescript
@@ -83,7 +96,7 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 **Status conditions** (`quest-status`, `narrative-event-status`):
 ```typescript
 { type: 'quest-status', questId: 'questKey', operator: 'equals' | 'notEquals' | 'contains' | 'notContains' | 'regex', value: 'string' }
-// Quest statuses: hidden | available | expired | accepted | completed | abandoned | rejected
+// Quest statuses: hidden | planned | available | expired | accepted | completed | abandoned | rejected
 // questId resolves by quest key first, then by unique quest name
 
 { type: 'narrative-event-status', eventId: 'eventKey', operator: 'equals' | 'notEquals' | 'contains' | 'notContains' | 'regex', value: 'string' }
@@ -103,7 +116,9 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 ```typescript
 { type: 'quest-progress', questId: 'questKey' }  // Marks main objective satisfied, shows a status line
 { type: 'quest-complete', questId: 'questKey' }  // Same, but silent — no player-visible status line
-{ type: 'quest-init', operator: 'set', value: 'Quest Name' }  // Makes quest available
+{ type: 'quest-init', operator: 'set', value: 'Quest Name' }  // Makes a hidden or planned quest available
+{ type: 'quest-accept', operator: 'set', value: 'Quest Name' }  // Accepts an authored quest (hidden/planned/available) as the party's active quest
+{ type: 'quest-plan', operator: 'set', value: 'Quest Name' }  // Moves a hidden quest to planned: invisible, reserved against AI quest generation
 { type: 'quest-objective-reveal', questId: 'questKey', objectiveId: 'objectiveKey' }  // Activates an authored objective, makes it the active objective
 { type: 'quest-objective-complete', questId: 'questKey', objectiveId: 'objectiveKey' }  // Completes the objective, advances next step
 ```
@@ -151,11 +166,31 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 // Applies the trait's modifiers and abilities, but does NOT grant the trait's startingItems
 ```
 
+### Player Progression Effects
+
+```typescript
+{ type: 'player-level' | 'player-experience', operator: 'add' | 'subtract' | 'set', value: number }
+{ type: 'player-skill', skill: 'skillIdOrName', operator: 'add' | 'subtract' | 'set', value: number }
+{ type: 'player-attribute', attribute: 'attributeName', operator: 'add' | 'subtract' | 'set', value: number }
+// value: whole number >= 0. Optional: target: 'allPlayers' | 'satisfyingPlayers'
+// Levels/skills/attributes clamp to the world's ranges; player-skill updates a skill the character already has; player-attribute applies as a bonus to existing attributes
+```
+
 ### NPC Relationship Effect
 
 ```typescript
 { type: 'npc-relationship', npc: 'npcName', operator: 'set' | 'add' | 'subtract' | 'multiply' | 'divide', value: number }
 // Result clamps to -100..100 and rounds to a whole number; a missing NPC is a silent no-op
+```
+
+### NPC State Effects
+
+```typescript
+{ type: 'npc-health', npc: 'npcName', operator: 'set' | 'add' | 'subtract' | 'multiply' | 'divide', value: number }  // Clamps 0..max HP; healing revives the downed; set 0 kills
+{ type: 'npc-in-party', npc: 'npcName', operator: 'set' | 'toggle', value?: boolean }  // set without value means true; a downed or dead NPC stays out
+{ type: 'npc-portrait', npc: 'npcName', operator: 'set', value: 'httpsImageUrl' }  // Latitude-hosted https image URL only; named NPC only
+{ type: 'npc-placement', npc: 'npcName', operation: 'moveHere' | 'moveAway' }  // Into the party's scene / off-stage (last-seen recorded)
+{ type: 'npc-placement', npc: 'npcName', operation: 'moveTo', location: 'name', area: 'name' }  // moveTo requires both location and area
 ```
 
 ### Music Effects
@@ -182,19 +217,24 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 
 ## Phase Partitioning
 
-Triggers evaluate in exactly one phase based on conditions:
+Each trigger evaluates in exactly one phase; first matching row wins:
 
-| Has `action` or `action-text` condition? | Phase |
-|------------------------------------------|-------|
-| Yes | Planning (before story) |
-| No | State (after story) |
+| Trigger has | Phase |
+|-------------|-------|
+| `action` or `action-text` condition | Planning (with the actions, before story) |
+| `story` or `story-text` condition | State (after story) |
+| `action-success-level` condition | Planning (mechanics: after outcomes and combat damage, before story) |
+| `phase: 'planning'` | Planning (mechanics, before story) |
+| Anything else | State (after story) |
+
+Planning-phase `story` effects reach this turn's narration; State effects shape the next turn. `phase: 'planning'` requires a purely mechanical trigger (`story-text` / `action-text` count as mechanical); mixing it with semantic `story` / `action` conditions is rejected. Details in the reference.
 
 ## Per-Player Scoping
 
 Omitting `scope` (or setting `'party'`) keeps the legacy behavior: effects apply to every player. With `scope: 'player'`:
 
-- The engine works out which players individually satisfy the player-scoped mechanical conditions (`player-level`, `player-resource`, `player-traits`); for semantic conditions the AI attributes which players the story text supports
-- `player-resource` / `player-traits` effects apply only to those players (unless `target: 'allPlayers'` is set); story effects address them by name
+- The engine works out which players individually satisfy the player-scoped mechanical conditions (`player-level`, `player-resource`, `player-traits`, `action-success-level`); for semantic conditions the AI attributes which players the story text supports
+- `player-resource` / `player-traits` and the player progression effects apply only to those players (unless `target: 'allPlayers'` is set); story effects address them by name
 - If the trigger fired but no players are targetable, it is suppressed — no effects run and a one-shot trigger keeps its slot
 
 Firing itself is unchanged: a mechanical player condition still fires when at least one player satisfies it.
@@ -205,6 +245,8 @@ Firing itself is unchanged: a mechanical player condition still fires when at le
 - **Recurring**: Without `recurring: true`, triggers fire only once ever
 - **Identical story instructions deduplicate**: two triggers firing with the same `story` instruction text produce ONE instruction to the AI — duplicating an effect for emphasis does not work
 - **Host / DM input**: `action` and `action-text` conditions only evaluate real player inputs — host and DM story directions are ignored
+- **Missing subjects match nothing**: an NPC condition whose NPC is absent, off-stage, or unresolved, a `skill-value` check on a character without the skill, and `action-success-level` on a simple or unevaluated action all match no operator, `notEquals` included
+- **Reserved names**: trigger names starting `__generated_quest_progress__/` belong to engine-generated quest progress and cannot be authored
 
 ## Schema
 
@@ -215,6 +257,7 @@ interface Trigger {
   effects: TriggerEffect[]
   recurring?: boolean
   scope?: 'party' | 'player'
+  phase?: 'planning' | 'state'
   script?: string
 }
 ```

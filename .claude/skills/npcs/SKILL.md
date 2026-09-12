@@ -15,8 +15,8 @@ Edit `tabs/npcs.json`.
 |-------|-------------|
 | `name` | Must match object key exactly |
 | `type` | Use existing npcType when it fits, otherwise `""` for unique NPCs |
-| `currentLocation` | Use a fitting existing location, or invent one. Matching ignores casing and whitespace |
-| `currentArea` | A location with areas needs both `currentLocation` and `currentArea`; an area-less location places by location only (use `""`) |
+| `currentLocation` | Use a fitting existing location, or invent one. Matching ignores casing and whitespace. `""` keeps the NPC off-stage until a trigger places them |
+| `currentArea` | `""` means somewhere in this location: the NPC can appear in any area there. Set an area only when the NPC should be pinned to it; in a location with areas, treat a blank `currentArea` as an explicit choice |
 | `gender` | Always set - aim for distribution: 40% male, 40% female, 20% non-binary |
 | `basicInfo` | Three-sentence structure (see format below) |
 | `personality` | Four traits using personality psychology (see format below) |
@@ -33,10 +33,14 @@ Edit `tabs/npcs.json`.
 | Field | When to Include |
 |-------|-----------------|
 | `faction` | Only for major plot-relevant faction membership |
+| `relationship` | Set -100 to 100 to fix the starting attitude toward the player (0 is genuinely Neutral). Omit to let the AI infer it from the rest of the record on the NPC's first scene |
 | `aliases` | Include when NPC is commonly referred to by title, epithet, or nickname in the story (e.g. `"the captain"`, `"Reed"`). Only list exact strings the narrator or other NPCs would literally speak — these are matched verbatim during dialogue speaker attribution |
 | `properName` | Set when an NPC starts under a placeholder `name` (e.g. `"Hooded Stranger"`) but has a true identity revealed later. `name` is the current display name; `properName` is the true name. The identity counts as revealed once the two match — a reveal flips `name` to `properName`. Omit when the NPC is known from the start |
 | `worldVoiceId` | Key from the world's `worldVoices` catalog. Overrides the generic `voiceTag` pick for this NPC. Include when the world defines a curated voice for the character |
 | `vulnerabilities`, `resistances`, `immunities` | Damage types from `combatSettings.damageTypes`. Include only when the NPC should take modified damage from specific types; they union with the npcType's lists |
+| `successBonus` | Only for NPCs that should roll better or worse than normal: 25 points shifts every roll one success tier; a negative value lets an NPC fumble |
+| `damageModifier` | Percent change to outgoing damage (100 doubles it, -100 removes it). Only for NPCs whose hits should land harder or softer than level and tier imply |
+| `damageReductionModifier` | Percent reduction to incoming damage (100 is true immunity). Only for unusually tough or untouchable NPCs |
 | `portraitFocusX`, `portraitFocusY`, `portraitZoom` | Optional crop/focus adjustments for an authored `portraitUrl`. Focus x/y run 0..100 (defaults x 50, y 0: top-centered), zoom 100..300 (100 = no zoom). Generated portraits ignore these |
 
 ## Never Include
@@ -45,12 +49,16 @@ Omit these fields (auto-set or unused):
 - `visualDescription`, `visualTags`
 - `detailType`, `hpCurrent`, `activeBuffs`
 - `currentCoordinates`, `embeddingId`, `embedding`, `portraitUrl`
-- `status`, `relationship`, `lastSeenTick`
+- `status`, `lastSeenTick`
 - `lastSeenLocation`, `lastSeenArea`, `playerNotes`
 - `needsDetailGeneration`, `deathXPAwarded`
 - `healthMultiplier`
 
 `status` is reset to `""` by the engine. Near death, dying, and dead are a runtime incapacitation counter (1 = near death, 2 = dying, 3 = dead) that creators never set. To spawn an NPC already down, use `hpMax: 0` with `hpCurrent: 0` instead.
+
+## Naming
+
+Avoid naming an NPC (key, `name`, or `properName`) `allSceneNPCs`, `anySceneNPC`, `allPartyNPCs`, or `anyPartyNPC`: these are reserved trigger selector tokens. Keys and display names match interchangeably (case-insensitively) and display names are not unique, so keep names unique when triggers or effects need precise targeting.
 
 ## basicInfo Format
 
@@ -129,6 +137,7 @@ interface NPC {
   tier?: 'trivial' | 'weak' | 'average' | 'strong' | 'elite' | 'boss' | 'mythic'
   gender?: string
   faction?: string
+  relationship?: number
   basicInfo?: string
   hiddenInfo?: string
   personality?: string[]
@@ -146,6 +155,9 @@ interface NPC {
   vulnerabilities?: string[]
   resistances?: string[]
   immunities?: string[]
+  successBonus?: number
+  damageModifier?: number
+  damageReductionModifier?: number
 }
 ```
 

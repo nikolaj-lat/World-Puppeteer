@@ -51,12 +51,15 @@ aiInstructions: {
 |------|---------------|
 | `generateStory` | `How to Use the Narrator`, `Turn Structure`, `Turn Boundaries and Endings`, `Player Agency`, `Combat Narration`, `Victory and Downtime`, `Character Behavior`, `Style Principles`, `custom` |
 | `generateInitialStart` | `Opening Structure`, `Style Principles`, `custom` |
-| `generateActionInfo` | `custom` |
+| `generateActionInfo` | `impact`, `custom` |
 | `generateCharacterBackground` | `prompt`, `custom` |
+| `generateDialogue` | `Style, Tone, and Length`, `custom` |
+| `generateConversationStarters` | `Conversation Starter Guidance`, `custom` |
+| `generateNpcChatSummary` | `Summary Guidance`, `custom` |
 | `generateNPCIntents` | `core_principles`, `when_to_generate`, `what_is_not_action`, `description_economy`, `summary_established_beats`, `action_format`, `story_driver`, `custom` |
 | `generateNewNPC` | `custom` |
 | `generateNPCDetails` | `character_creator_instructions`, `personality_archetype_information`, `style`, `cliche_avoidance`, `hidden_info`, `personality`, `faction_affiliation`, `abilities`, `basic_info`, `custom` |
-| `generateNPCUpdates` | `relationship_change_updates`, `party_management`, `custom` |
+| `generateNPCUpdates` | `relationship_initialization`, `relationship_change_updates`, `party_management`, `custom` |
 | `generateLocationDetails` | `custom` |
 | `generateRegionDetails` | `custom` |
 | `generateEncounters` | `custom` |
@@ -102,6 +105,13 @@ The engine keeps the opening calm on its own (it will not raise the stakes or fo
 
 Assesses action difficulty and determines skill checks.
 
+| Key | Purpose |
+|-----|---------|
+| `impact` | How to rate an action's impact, which the engine uses as a damage multiplier for the action's outcome |
+| `custom` | World-specific additions |
+
+The default `impact` text describes 50-90 as low impact, 100 as normal, 120-150 as high, and 150-200 as extreme. The engine honors impact values up to 600 (a 6x multiplier), so a world that wants truly devastating actions can override this section to rate them beyond the default text's range.
+
 ### generateCharacterBackground
 
 Generates character backstory and appearance during character creation. An undefined `prompt` falls back to the built-in default. Set `prompt` to `""` (empty string) to blank the default without replacing it.
@@ -112,6 +122,37 @@ The generated `appearance` is a portrait-only prompt: it exists to feed the imag
 |-----|---------|
 | `prompt` | The full character profile generator prompt — covers overall guidance, background, the portrait-only appearance, style, structure, context use, and any final notes in one block. Replaces the built-in default when set. |
 | `custom` | World-specific additions (appended after `prompt`) |
+
+### NPC chat tasks
+
+Players can open a direct chat with an NPC in the scene. Three tasks power that chat. Creator text for them merges per section like every other task, so only the keys listed below (plus `custom`) persist on save.
+
+### generateDialogue
+
+Writes the NPC's replies in a direct chat.
+
+| Key | Purpose |
+|-----|---------|
+| `Style, Tone, and Length` | How the NPC's chat replies should read: voice, tone, and how long each reply runs |
+| `custom` | World-specific additions |
+
+### generateConversationStarters
+
+Writes the two short suggested openers shown when a chat begins, grounded in the recent story.
+
+| Key | Purpose |
+|-----|---------|
+| `Conversation Starter Guidance` | What kinds of openers to suggest and how to phrase them |
+| `custom` | World-specific additions |
+
+### generateNpcChatSummary
+
+Writes the summary spliced into the story when a chat ends.
+
+| Key | Purpose |
+|-----|---------|
+| `Summary Guidance` | What the end-of-chat summary should capture and how it should read. Default: 2-3 concise third-person past-tense sentences focusing on key information exchanged and notable moments |
+| `custom` | World-specific additions |
 
 ### generateNPCDetails
 
@@ -136,6 +177,7 @@ Applies NPC state changes after each turn: relationship shifts, party joins and 
 
 | Key | Purpose |
 |-----|---------|
+| `relationship_initialization` | How the AI picks an absolute starting relationship (-100 to 100) for an NPC whose definition omits `relationship`, inferred from background, personality, faction, history, and the current story. Authored `relationship` values stay exactly as written |
 | `relationship_change_updates` | When and how far relationship values move in response to what happened |
 | `party_management` | When NPCs join, follow, or leave the party |
 | `custom` | World-specific additions |

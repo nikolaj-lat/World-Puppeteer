@@ -101,6 +101,10 @@ Players can train skills between uses:
 - Cooldown: `trainingCooldown` (10) ticks between sessions
 - Training improves skill XP directly
 
+## Triggers and Skills
+
+Trigger conditions can test a character's skill level (the `skill-value` condition), and trigger effects can set or shift it (the `player-skill` effect, which resets the skill's in-progress XP and only updates skills the character already has). Full semantics live in the triggers reference.
+
 ## Type Difficulty Bonuses
 
 Skill types are defined per-world in `skillTypeDifficultyBonus`. Each type can grant different difficulty bonuses to skill checks.

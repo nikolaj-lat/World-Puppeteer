@@ -50,6 +50,16 @@ const VALID_TRIGGER_CONDITION_TYPES = [
   'narrative-event-status',
   'npc-relationship',
   'npc-relationship-stage',
+  'action-success-level',
+  'skill-value',
+  'npc-health',
+  'npc-health-percent',
+  'npc-in-scene',
+  'npc-in-party',
+  'npc-realm',
+  'npc-region',
+  'npc-location',
+  'npc-area',
 ];
 
 const VALID_TRIGGER_EFFECT_TYPES = [
@@ -81,16 +91,84 @@ const VALID_TRIGGER_EFFECT_TYPES = [
   'end-game',
   'music-track-set',
   'music-track-clear',
+  'player-level',
+  'player-experience',
+  'player-skill',
+  'player-attribute',
+  'npc-health',
+  'npc-in-party',
+  'npc-portrait',
+  'npc-placement',
+  'quest-accept',
+  'quest-plan',
 ];
 
 // Known status values for quest-status / narrative-event-status conditions.
 // Unrecognized values only warn (engine compares raw strings).
-const VALID_QUEST_STATUSES = ['hidden', 'available', 'expired', 'accepted', 'completed', 'abandoned', 'rejected'];
+const VALID_QUEST_STATUSES = ['hidden', 'planned', 'available', 'expired', 'accepted', 'completed', 'abandoned', 'rejected'];
+// Creator-authorable subset used by quests[].initialStatus (terminal statuses are runtime history)
+const VALID_QUEST_INITIAL_STATUSES = ['hidden', 'planned', 'available', 'accepted'];
 const VALID_NARRATIVE_EVENT_STATUSES = ['inactive', 'active', 'stopped', 'completed'];
 const VALID_QUEST_OBJECTIVE_STATUSES = ['hidden', 'active', 'completed'];
 const VALID_NEXT_STEP_SOURCES = ['objective', 'narrative-event'];
 const VALID_TRIGGER_SCOPES = ['party', 'player'];
 const VALID_EFFECT_TARGETS = ['allPlayers', 'satisfyingPlayers'];
+// 'planning' evaluates after combat damage resolves but before the story is written;
+// 'state' is accepted by the schema but never read (legacy routing applies)
+const VALID_TRIGGER_PHASES = ['planning', 'state'];
+
+// Ordered action outcomes for the action-success-level condition (worst to best).
+// The engine's "simple" outcome and a missing outcome never match any operator.
+const VALID_ACTION_SUCCESS_LEVELS = [
+  'impossible',
+  'critical failure',
+  'failure',
+  'mixed results',
+  'basic success',
+  'success',
+  'great success',
+  'critical success',
+];
+
+// Reserved NPC selector tokens for the npc field of NPC conditions/effects.
+// Conditions take the any* pair, effects take the all* pair; npc-portrait takes a name only.
+// A real NPC answering to one of these names wins the token, disabling that selector.
+const TRIGGER_NPC_CONDITION_SELECTORS = ['anySceneNPC', 'anyPartyNPC'];
+const TRIGGER_NPC_EFFECT_SELECTORS = ['allSceneNPCs', 'allPartyNPCs'];
+const TRIGGER_NPC_SELECTORS = [...TRIGGER_NPC_EFFECT_SELECTORS, ...TRIGGER_NPC_CONDITION_SELECTORS];
+
+// NPC-referencing condition/effect types (the npc companion field)
+const NPC_CONDITION_TYPES = [
+  'npc-relationship', 'npc-relationship-stage', 'npc-health', 'npc-health-percent',
+  'npc-in-scene', 'npc-in-party', 'npc-realm', 'npc-region', 'npc-location', 'npc-area',
+];
+const NPC_EFFECT_TYPES = ['npc-relationship', 'npc-health', 'npc-in-party', 'npc-portrait', 'npc-placement'];
+
+// Engine-generated quest progress triggers live under this reserved name prefix
+const RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX = '__generated_quest_progress__/';
+
+// Default relationship stage names, used for npc-relationship-stage value checks
+// when the world omits relationshipStages (engine defaults apply)
+const DEFAULT_RELATIONSHIP_STAGE_NAMES = [
+  'Nemesis', 'Antagonist', 'Hostile', 'Unfriendly', 'Cold', 'Neutral',
+  'Warm', 'Friendly', 'Confidant', 'Ally', 'Devoted',
+];
+
+// npc-portrait values must be https URLs on official Latitude image infrastructure
+function isOfficialImageHostingUrl(value) {
+  let url;
+  try {
+    url = new URL(String(value));
+  } catch {
+    return false;
+  }
+  if (url.protocol !== 'https:') return false;
+  const host = url.hostname.toLowerCase();
+  if (host === 'imagedelivery.net') return url.pathname.startsWith('/DPSHeCXswmvoQXsmqJ-mDA/');
+  const officialHosts = ['images.aidungeon.com', 'latitude-standard-pull-zone-1.b-cdn.net'];
+  if (!officialHosts.includes(host)) return false;
+  return ['/generated_content/', '/user_content/', '/site_assets/'].some((prefix) => url.pathname.startsWith(prefix));
+}
 
 const VALID_NPC_TIERS = ['trivial', 'weak', 'average', 'strong', 'elite', 'boss', 'mythic'];
 
@@ -129,6 +207,11 @@ const VALID_END_GAME_OUTCOMES = ['won', 'lost', 'ended'];
 const VALID_NUMBER_EFFECT_OPERATORS = ['add', 'subtract', 'multiply', 'divide', 'set'];
 const VALID_BOOLEAN_EFFECT_OPERATORS = ['set', 'toggle'];
 const VALID_ARRAY_EFFECT_OPERATORS = ['set', 'add', 'remove'];
+// player-level / player-experience / player-skill / player-attribute: no multiply/divide,
+// and the value must be a whole number >= 0
+const VALID_PLAYER_VALUE_EFFECT_OPERATORS = ['add', 'subtract', 'set'];
+const PLAYER_VALUE_EFFECT_TYPES = ['player-level', 'player-experience', 'player-skill', 'player-attribute'];
+const VALID_NPC_PLACEMENT_OPERATIONS = ['moveHere', 'moveAway', 'moveTo'];
 
 // ============================================================================
 // REQUIRED FIELDS
@@ -175,7 +258,6 @@ const REQUIRED_TOP_LEVEL = [
   'encounterElements',
   'randomNames',
   'mods',
-  'heroesVersion',
   'characterCreationSettings',
   'endGame',
 ];
@@ -402,12 +484,15 @@ function getJsonLength(obj) {
 const AI_TASK_CHARGED_BASELINES = {
   generateStory: 13_069,
   generateInitialStart: 1_434,
-  generateActionInfo: 13,
+  generateActionInfo: 153,
   generateCharacterBackground: 1_815,
+  generateConversationStarters: 322,
+  generateDialogue: 1_734,
+  generateNpcChatSummary: 192,
   generateNPCIntents: 11_031,
   generateNewNPC: 13,
-  generateNPCDetails: 13,
-  generateNPCUpdates: 1_861,
+  generateNPCDetails: 5_218,
+  generateNPCUpdates: 2_281,
   generateLocationDetails: 13,
   generateRegionDetails: 13,
   generateEncounters: 13,
@@ -438,6 +523,9 @@ const OPTIONAL_TOP_LEVEL = [
   'characterCreationMusic',
   'imagePromptConfiguration',
   'imageModelSource',
+  // System-managed: the engine stamps the schema version itself and strips any
+  // creator-authored value on save. Keeping it in a world file is harmless but unnecessary.
+  'heroesVersion',
   // Authored voice catalog referenced by npcs[].worldVoiceId / premadeCharacters[].worldVoiceId
   'worldVoices',
   // Required by the V36 schema, but the engine falls back to its own defaults
@@ -464,6 +552,20 @@ function validateRequiredFields(config, errors) {
   for (const field of Object.keys(config)) {
     if (!knownTopLevel.has(field)) {
       errors.push(createError(field, `Unknown field: ${field} — remove it`));
+    }
+  }
+
+  // unassignedAreas is a Studio holding pen for draft areas; a world cannot save or
+  // publish while any area remains unassigned. Assign areas to locations instead.
+  if (config.unassignedAreas !== undefined) {
+    const draftAreaIds = config.unassignedAreas && typeof config.unassignedAreas === 'object'
+      ? Object.keys(config.unassignedAreas)
+      : [];
+    for (const areaId of draftAreaIds) {
+      errors.push(createError(`unassignedAreas.${areaId}`, `Area "${areaId}" has no Location. Assign it to a location's areas record and remove it from unassignedAreas`));
+    }
+    if (draftAreaIds.length === 0) {
+      errors.push(createError('unassignedAreas', 'unassignedAreas is a Studio draft holding pen; leave it out entirely', 'warning'));
     }
   }
 
@@ -646,6 +748,36 @@ function validateReferenceIntegrity(config, errors) {
       if (npc.worldVoiceId !== undefined && !worldVoiceKeys.has(npc.worldVoiceId)) {
         errors.push(createError(`npcs.${npcId}.worldVoiceId`, `References non-existent world voice: ${npc.worldVoiceId}${worldVoiceKeys.size === 0 ? ' (worldVoices is missing)' : ''}`));
       }
+
+      // relationship must stay within -100 to 100 when authored
+      if (npc.relationship !== undefined
+          && (typeof npc.relationship !== 'number' || !Number.isFinite(npc.relationship)
+              || npc.relationship < -100 || npc.relationship > 100)) {
+        errors.push(createError(`npcs.${npcId}.relationship`, `relationship must stay within -100 to 100, got ${JSON.stringify(npc.relationship)}`));
+      }
+
+      // Combat tuning fields: out-of-range values save but the engine clamps them at read time
+      const warnClamp = (field, value, min, max) => {
+        if (value !== undefined && typeof value === 'number' && (value < min || value > max)) {
+          errors.push(createError(`npcs.${npcId}.${field}`, `Value ${value} is outside ${min}..${max} and will be clamped by the engine`, 'warning'));
+        }
+      };
+      warnClamp('successBonus', npc.successBonus, -1000, 1000);
+      warnClamp('damageModifier', npc.damageModifier, -100, 10000);
+      warnClamp('damageReductionModifier', npc.damageReductionModifier, 0, 100);
+    }
+
+    // Reserved trigger selector tokens: an NPC answering to one (key, name, or
+    // properName) takes over the token, disabling that selector in this world
+    for (const selector of TRIGGER_NPC_SELECTORS) {
+      const normalizedSelector = normalizeText(selector);
+      for (const [npcId, npc] of Object.entries(config.npcs)) {
+        const answers = normalizeText(npcId) === normalizedSelector
+          || (npc && typeof npc === 'object' && (normalizeText(npc.name) === normalizedSelector || (npc.properName !== undefined && normalizeText(npc.properName) === normalizedSelector)));
+        if (answers) {
+          errors.push(createError(`npcs.${npcId}`, `NPC "${npcId}" answers to reserved trigger selector name "${selector}"; triggers naming it target this NPC, so that selector cannot be used in this world`, 'warning'));
+        }
+      }
     }
   }
 
@@ -703,8 +835,29 @@ function validateReferenceIntegrity(config, errors) {
   // Quest references
   if (config.quests) {
     const narrativeEventKeys = config.narrativeEvents ? new Set(Object.keys(config.narrativeEvents)) : new Set();
+    const questEffectRefs = buildQuestEventRefs(config);
 
     for (const [questId, quest] of Object.entries(config.quests)) {
+      // initialStatus - creator-authorable subset of quest statuses
+      if (quest.initialStatus !== undefined && !VALID_QUEST_INITIAL_STATUSES.includes(quest.initialStatus)) {
+        errors.push(createError(`quests.${questId}.initialStatus`, `Invalid initialStatus: ${JSON.stringify(quest.initialStatus)}. Valid: ${VALID_QUEST_INITIAL_STATUSES.join(', ')}`));
+      }
+
+      // onCompleteEffects - optional array validated like trigger effects
+      if (quest.onCompleteEffects !== undefined) {
+        if (!Array.isArray(quest.onCompleteEffects)) {
+          errors.push(createError(`quests.${questId}.onCompleteEffects`, `Expected array, got ${typeof quest.onCompleteEffects}`));
+        } else {
+          // The platform does not reject over-cap quest completion effects, but the
+          // engine silently drops effects beyond the per-trigger cap at apply time
+          if (quest.onCompleteEffects.length > LIMITS.counts.triggerEffects) {
+            errors.push(createError(`quests.${questId}.onCompleteEffects`, `Too many effects: ${quest.onCompleteEffects.length} (max: ${LIMITS.counts.triggerEffects}; effects beyond the cap are dropped at apply time)`, 'warning'));
+          }
+          quest.onCompleteEffects.forEach((effect, idx) => {
+            validateTriggerEffect(`quests.${questId}.onCompleteEffects[${idx}]`, effect, questEffectRefs, config, errors);
+          });
+        }
+      }
       if (quest.questLocation && !locationKeys.has(quest.questLocation)) {
         errors.push(createError(`quests.${questId}.questLocation`, `References non-existent location: ${quest.questLocation}`));
       }
@@ -818,6 +971,19 @@ function validateReferenceIntegrity(config, errors) {
         });
       }
 
+      // startingQuests resolve by quest file id (or unique quest name)
+      if (start.startingQuests && Array.isArray(start.startingQuests)) {
+        const questKeys = config.quests ? new Set(Object.keys(config.quests)) : new Set();
+        const questNames = new Set(Object.values(config.quests ?? {})
+          .map((q) => (q && typeof q.name === 'string' ? q.name : ''))
+          .filter(Boolean));
+        start.startingQuests.forEach((questRef, questIdx) => {
+          if (!questKeys.has(questRef) && !questNames.has(questRef)) {
+            errors.push(createError(`${basePath}.startingQuests[${questIdx}]`, `References non-existent quest: ${questRef}`, 'warning'));
+          }
+        });
+      }
+
       // allowPlayerInput only survives on the built-in "Write Your Own" story start
       if (start.allowPlayerInput !== undefined && start.name !== 'Write Your Own') {
         errors.push(createError(`${basePath}.allowPlayerInput`, 'allowPlayerInput is reserved for the built-in Write Your Own story start and is dropped otherwise', 'warning'));
@@ -894,11 +1060,14 @@ function validateReferenceIntegrity(config, errors) {
     const traitKeys = new Set(Object.keys(config.traits));
 
     for (const [traitId, trait] of Object.entries(config.traits)) {
-      // unlockedBy / excludedBy reference other traits by key
+      // unlockedBy / excludedBy reference other traits or story starts by key
+      const storyStartKeys = config.storyStarts && typeof config.storyStarts === 'object' && !Array.isArray(config.storyStarts)
+        ? new Set(Object.keys(config.storyStarts))
+        : new Set();
       for (const field of ['unlockedBy', 'excludedBy']) {
         (Array.isArray(trait[field]) ? trait[field] : []).forEach((ref, idx) => {
-          if (!traitKeys.has(ref)) {
-            errors.push(createError(`traits.${traitId}.${field}[${idx}]`, `References non-existent trait: ${ref}`, 'warning'));
+          if (!traitKeys.has(ref) && !storyStartKeys.has(ref)) {
+            errors.push(createError(`traits.${traitId}.${field}[${idx}]`, `References non-existent trait or story start: ${ref}`, 'warning'));
           }
         });
       }
@@ -1143,10 +1312,57 @@ function validateReferenceIntegrity(config, errors) {
 // Reference key sets shared by trigger effect validation and narrative event
 // onCompleteEffects validation (same effect schema in both places).
 function buildQuestEventRefs(config) {
+  const npcs = config.npcs && typeof config.npcs === 'object' && !Array.isArray(config.npcs) ? config.npcs : {};
+  // NPCs answer to their record key, name, or properName (case-insensitively)
+  const npcNameOwners = new Set();
+  for (const [npcKey, npc] of Object.entries(npcs)) {
+    npcNameOwners.add(normalizeText(npcKey));
+    if (npc && typeof npc === 'object') {
+      if (typeof npc.name === 'string') npcNameOwners.add(normalizeText(npc.name));
+      if (typeof npc.properName === 'string') npcNameOwners.add(normalizeText(npc.properName));
+    }
+  }
+  const areaKeys = new Set();
+  const locations = config.locations && typeof config.locations === 'object' ? config.locations : {};
+  for (const location of Object.values(locations)) {
+    if (location && typeof location === 'object' && location.areas && typeof location.areas === 'object') {
+      for (const areaKey of Object.keys(location.areas)) areaKeys.add(areaKey);
+    }
+  }
+  const authoredStageNames = Array.isArray(config.relationshipStages) && config.relationshipStages.length > 0
+    ? config.relationshipStages.map((s) => (s && typeof s.name === 'string' ? s.name : '')).filter(Boolean)
+    : DEFAULT_RELATIONSHIP_STAGE_NAMES;
   return {
     questKeys: config.quests ? new Set(Object.keys(config.quests)) : new Set(),
     narrativeEventKeys: config.narrativeEvents ? new Set(Object.keys(config.narrativeEvents)) : new Set(),
+    npcNameOwners,
+    realmKeys: config.realms ? new Set(Object.keys(config.realms)) : new Set(),
+    regionKeys: config.regions ? new Set(Object.keys(config.regions)) : new Set(),
+    locationKeys: config.locations ? new Set(Object.keys(config.locations)) : new Set(),
+    areaKeys,
+    skillKeys: config.skills ? new Set(Object.keys(config.skills)) : new Set(),
+    attributeNames: new Set((config.attributeSettings?.attributeNames ?? []).filter((a) => typeof a === 'string').map(normalizeText)),
+    relationshipStageNames: new Set(authoredStageNames.map(normalizeText)),
   };
+}
+
+// Shared check for the npc companion field of NPC conditions/effects: required,
+// selector tokens only in their legal slot, otherwise it must name an authored NPC
+// (record key, name, or properName). A real NPC always wins a selector-shaped name.
+function validateTriggerNpcField(fieldPath, npcRef, usage, itemType, refs, errors) {
+  if (typeof npcRef !== 'string' || npcRef === '') {
+    errors.push(createError(fieldPath, 'Missing required field: npc'));
+    return;
+  }
+  if (refs.npcNameOwners.has(normalizeText(npcRef))) return;
+  if (TRIGGER_NPC_SELECTORS.includes(npcRef)) {
+    const allowedSelectors = usage === 'condition' ? TRIGGER_NPC_CONDITION_SELECTORS : TRIGGER_NPC_EFFECT_SELECTORS;
+    if (itemType === 'npc-portrait' || !allowedSelectors.includes(npcRef)) {
+      errors.push(createError(fieldPath, `${usage} "${itemType}" cannot use "${npcRef}"; conditions take ${TRIGGER_NPC_CONDITION_SELECTORS.join(' or ')} and effects take ${TRIGGER_NPC_EFFECT_SELECTORS.join(' or ')}${itemType === 'npc-portrait' ? ' (npc-portrait takes a name only)' : ''}`));
+    }
+    return;
+  }
+  errors.push(createError(fieldPath, `References non-existent NPC: ${npcRef}`, 'warning'));
 }
 
 // Validates a single trigger effect (also used for narrativeEvents.*.onCompleteEffects).
@@ -1173,8 +1389,8 @@ function validateTriggerEffect(effectPath, effect, refs, config, errors) {
 
   // Operator validation for write effects
   if (effect.operator) {
-    const isNumberEffect = ['player-resource', 'write-number', 'npc-relationship'].includes(effect.type);
-    const isBooleanEffect = ['write-boolean'].includes(effect.type);
+    const isNumberEffect = ['player-resource', 'write-number', 'npc-relationship', 'npc-health'].includes(effect.type);
+    const isBooleanEffect = ['write-boolean', 'npc-in-party'].includes(effect.type);
     const isArrayEffect = ['write-array'].includes(effect.type);
 
     if (isNumberEffect && !VALID_NUMBER_EFFECT_OPERATORS.includes(effect.operator)) {
@@ -1186,8 +1402,8 @@ function validateTriggerEffect(effectPath, effect, refs, config, errors) {
     }
   }
 
-  // Effects that require operator: "set" (party-location, party-area, party-region, party-realm)
-  const effectsRequiringSetOperator = ['party-location', 'party-area', 'party-region', 'party-realm'];
+  // Effects that require operator: "set"
+  const effectsRequiringSetOperator = ['party-location', 'party-area', 'party-region', 'party-realm', 'npc-portrait', 'quest-accept', 'quest-plan'];
   if (effectsRequiringSetOperator.includes(effect.type)) {
     if (effect.operator === undefined) {
       errors.push(createError(`${effectPath}.operator`, `Missing required operator: "set" for ${effect.type} effect`));
@@ -1196,7 +1412,41 @@ function validateTriggerEffect(effectPath, effect, refs, config, errors) {
     }
   }
 
-  // target - optional, only meaningful on player-resource / player-traits effects
+  // player-level / player-experience / player-skill / player-attribute: restricted
+  // operator set, and the value must be a whole number >= 0
+  if (PLAYER_VALUE_EFFECT_TYPES.includes(effect.type)) {
+    if (effect.operator === undefined) {
+      errors.push(createError(`${effectPath}.operator`, `Missing required operator for ${effect.type} effect. Valid: ${VALID_PLAYER_VALUE_EFFECT_OPERATORS.join(', ')}`));
+    } else if (!VALID_PLAYER_VALUE_EFFECT_OPERATORS.includes(effect.operator)) {
+      errors.push(createError(`${effectPath}.operator`, `Invalid operator "${effect.operator}" for ${effect.type} effect. Valid: ${VALID_PLAYER_VALUE_EFFECT_OPERATORS.join(', ')}`));
+    }
+    if (effect.value === undefined) {
+      errors.push(createError(`${effectPath}.value`, 'Missing required field: value'));
+    } else if (typeof effect.value !== 'number' || !Number.isInteger(effect.value) || effect.value < 0) {
+      errors.push(createError(`${effectPath}.value`, `Value for ${effect.type} must be a whole number >= 0, got ${JSON.stringify(effect.value)}`));
+    }
+  }
+
+  // player-skill requires a skill referencing an authored skill
+  if (effect.type === 'player-skill') {
+    if (typeof effect.skill !== 'string' || effect.skill === '') {
+      errors.push(createError(`${effectPath}.skill`, 'Missing required field: skill'));
+    } else if (!refs.skillKeys.has(effect.skill)) {
+      errors.push(createError(`${effectPath}.skill`, `References non-existent skill: ${effect.skill}`, 'warning'));
+    }
+  }
+
+  // player-attribute requires an attribute from attributeSettings.attributeNames
+  if (effect.type === 'player-attribute') {
+    if (typeof effect.attribute !== 'string' || effect.attribute === '') {
+      errors.push(createError(`${effectPath}.attribute`, 'Missing required field: attribute'));
+    } else if (refs.attributeNames.size > 0 && !refs.attributeNames.has(normalizeText(effect.attribute))) {
+      errors.push(createError(`${effectPath}.attribute`, `References non-existent attribute: ${effect.attribute}`, 'warning'));
+    }
+  }
+
+  // target - optional, only meaningful on player-* effects (player-resource,
+  // player-traits, player-level, player-experience, player-skill, player-attribute)
   if (effect.target !== undefined && !VALID_EFFECT_TARGETS.includes(effect.target)) {
     errors.push(createError(`${effectPath}.target`, `Invalid target: ${effect.target}. Valid: ${VALID_EFFECT_TARGETS.join(', ')}`));
   }
@@ -1251,9 +1501,62 @@ function validateTriggerEffect(effectPath, effect, refs, config, errors) {
     }
   }
 
-  if (effect.type === 'npc-relationship') {
-    if (typeof effect.npc !== 'string' || effect.npc === '') {
-      errors.push(createError(`${effectPath}.npc`, 'Missing required field: npc'));
+  // NPC effects: npc must name an authored NPC or an effect-legal selector
+  // (npc-portrait takes a name only)
+  if (NPC_EFFECT_TYPES.includes(effect.type)) {
+    validateTriggerNpcField(`${effectPath}.npc`, effect.npc, 'effect', effect.type, refs, errors);
+  }
+
+  // npc-portrait values must be https URLs on official Latitude image hosting;
+  // anything else is ignored at apply time
+  if (effect.type === 'npc-portrait') {
+    if (typeof effect.value !== 'string' || effect.value === '') {
+      errors.push(createError(`${effectPath}.value`, 'Missing required field: value (image URL)'));
+    } else if (!isOfficialImageHostingUrl(effect.value)) {
+      errors.push(createError(`${effectPath}.value`, 'npc-portrait must use an official Latitude image-hosting URL (https, on Latitude image infrastructure)'));
+    }
+  }
+
+  // npc-placement: operation is required; moveTo also requires location and area
+  if (effect.type === 'npc-placement') {
+    if (effect.operation === undefined) {
+      errors.push(createError(`${effectPath}.operation`, `Missing required field: operation. Valid: ${VALID_NPC_PLACEMENT_OPERATIONS.join(', ')}`));
+    } else if (!VALID_NPC_PLACEMENT_OPERATIONS.includes(effect.operation)) {
+      errors.push(createError(`${effectPath}.operation`, `Invalid operation: ${effect.operation}. Valid: ${VALID_NPC_PLACEMENT_OPERATIONS.join(', ')}`));
+    } else if (effect.operation === 'moveTo') {
+      const hasLocation = typeof effect.location === 'string' && effect.location !== '';
+      const hasArea = typeof effect.area === 'string' && effect.area !== '';
+      if (!hasLocation) {
+        errors.push(createError(`${effectPath}.location`, 'Missing required field: location (moveTo requires both location and area)'));
+      }
+      if (!hasArea) {
+        errors.push(createError(`${effectPath}.area`, 'Missing required field: area (moveTo requires both location and area)'));
+      }
+      // Destination must resolve: an authored location (or Wilderness), and when the
+      // location defines areas the area must be one of them. An area-less location
+      // mirrors its own name as the area label, so any area string is accepted there.
+      if (hasLocation && normalizeText(effect.location) !== 'wilderness') {
+        const locationEntry = Object.entries(config.locations ?? {})
+          .find(([key, loc]) => key === effect.location || normalizeText(loc?.name) === normalizeText(effect.location));
+        if (!locationEntry) {
+          errors.push(createError(`${effectPath}.location`, `npc-placement destination is unusable: location "${effect.location}" not found`));
+        } else if (hasArea) {
+          const areas = locationEntry[1]?.areas;
+          const areaKeys = areas && typeof areas === 'object' ? Object.keys(areas) : [];
+          if (areaKeys.length > 0 && !areaKeys.some((key) => key === effect.area || normalizeText(key) === normalizeText(effect.area))) {
+            errors.push(createError(`${effectPath}.area`, `npc-placement destination is unusable: area "${effect.area}" not found in location "${effect.location}"`));
+          }
+        }
+      }
+    }
+  }
+
+  // quest-init / quest-accept / quest-plan values reference a quest by file id (or unique name)
+  if (['quest-init', 'quest-accept', 'quest-plan'].includes(effect.type)) {
+    if (typeof effect.value !== 'string' || effect.value === '') {
+      errors.push(createError(`${effectPath}.value`, 'Missing required field: value (quest id)'));
+    } else if (!refs.questKeys.has(effect.value)) {
+      errors.push(createError(`${effectPath}.value`, `References non-existent quest: ${effect.value}`, 'warning'));
     }
   }
 
@@ -1570,6 +1873,13 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
       errors.push(createError(`${basePath}.name`, `Trigger name "${trigger.name}" does not match key "${key}"`));
     }
 
+    // Names under the engine-generated quest progress prefix are reserved
+    const triggerName = typeof trigger.name === 'string' ? trigger.name : String(key);
+    if (triggerName.startsWith(RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX)
+        || (!isArrayForm && String(key).startsWith(RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX))) {
+      errors.push(createError(`${basePath}.name`, `Trigger names beginning "${RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX}" are reserved for engine-generated quest progress and cannot be authored`));
+    }
+
     // Validate individual trigger size
     const triggerSize = JSON.stringify(trigger).length;
     if (triggerSize > LIMITS.counts.triggerSize) {
@@ -1579,6 +1889,25 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
     // Optional scope field
     if (trigger.scope !== undefined && !VALID_TRIGGER_SCOPES.includes(trigger.scope)) {
       errors.push(createError(`${basePath}.scope`, `Invalid scope: ${trigger.scope}. Valid: ${VALID_TRIGGER_SCOPES.join(', ')}`));
+    }
+
+    // Optional phase field
+    if (trigger.phase !== undefined && !VALID_TRIGGER_PHASES.includes(trigger.phase)) {
+      errors.push(createError(`${basePath}.phase`, `Invalid phase: ${trigger.phase}. Valid: ${VALID_TRIGGER_PHASES.join(', ')}`));
+    }
+
+    // Trigger composition invariants tied to phase routing
+    const conditionTypes = Array.isArray(trigger.conditions)
+      ? trigger.conditions.map((c) => c?.type).filter(Boolean)
+      : [];
+    if (conditionTypes.includes('action-success-level')
+        && conditionTypes.some((t) => t === 'story' || t === 'story-text')) {
+      errors.push(createError(`${basePath}.conditions`, `Trigger "${key}" cannot combine action-success-level with story or story-text. Put the story check on a separate trigger`));
+    }
+    // phase "planning" triggers must be purely mechanical (story-text / action-text are mechanical and allowed)
+    if (trigger.phase === 'planning'
+        && conditionTypes.some((t) => t === 'story' || t === 'action')) {
+      errors.push(createError(`${basePath}.phase`, `Trigger "${key}" sets phase "planning" but has a story or action condition; planning triggers must be purely mechanical`));
     }
 
     // Validate conditions
@@ -1607,9 +1936,10 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
 
         // Operator validation based on condition type
         if (cond.operator) {
-          const isStringCondition = ['story-text', 'action-text', 'party-realm', 'party-region', 'party-location', 'party-area', 'read-string', 'quest-status', 'narrative-event-status', 'npc-relationship-stage'].includes(cond.type);
-          const isNumberCondition = ['player-level', 'game-tick', 'player-resource', 'read-number', 'npc-relationship'].includes(cond.type);
-          const isBooleanCondition = ['read-boolean'].includes(cond.type);
+          const isStringCondition = ['story-text', 'action-text', 'party-realm', 'party-region', 'party-location', 'party-area', 'read-string', 'quest-status', 'narrative-event-status', 'npc-relationship-stage', 'npc-realm', 'npc-region', 'npc-location', 'npc-area'].includes(cond.type);
+          // action-success-level uses the number-operator set (ordinal comparison over its enum)
+          const isNumberCondition = ['player-level', 'game-tick', 'player-resource', 'read-number', 'npc-relationship', 'skill-value', 'npc-health', 'npc-health-percent', 'action-success-level'].includes(cond.type);
+          const isBooleanCondition = ['read-boolean', 'npc-in-scene', 'npc-in-party'].includes(cond.type);
           const isArrayCondition = ['player-traits', 'quests-completed', 'read-array'].includes(cond.type);
 
           if (isStringCondition && !VALID_STRING_OPERATORS.includes(cond.operator)) {
@@ -1620,6 +1950,24 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
             errors.push(createError(`${condPath}.operator`, `Invalid operator for boolean condition: ${cond.operator}`));
           } else if (isArrayCondition && !VALID_ARRAY_OPERATORS.includes(cond.operator)) {
             errors.push(createError(`${condPath}.operator`, `Invalid operator for array condition: ${cond.operator}`));
+          }
+        }
+
+        // action-success-level: value must be one of the ordered outcome literals
+        if (cond.type === 'action-success-level') {
+          if (cond.value === undefined) {
+            errors.push(createError(`${condPath}.value`, 'Missing required field: value'));
+          } else if (!VALID_ACTION_SUCCESS_LEVELS.includes(cond.value)) {
+            errors.push(createError(`${condPath}.value`, `Invalid action success level: ${JSON.stringify(cond.value)}. Valid: ${VALID_ACTION_SUCCESS_LEVELS.join(', ')}`));
+          }
+        }
+
+        // skill-value: requires a skill referencing an authored skill
+        if (cond.type === 'skill-value') {
+          if (typeof cond.skill !== 'string' || cond.skill === '') {
+            errors.push(createError(`${condPath}.skill`, 'Missing required field: skill'));
+          } else if (config.skills && !Object.keys(config.skills).includes(cond.skill)) {
+            errors.push(createError(`${condPath}.skill`, `References non-existent skill: ${cond.skill}`, 'warning'));
           }
         }
 
@@ -1647,10 +1995,28 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
           }
         }
 
-        // npc-relationship / npc-relationship-stage conditions require an npc name
-        if (['npc-relationship', 'npc-relationship-stage'].includes(cond.type)) {
-          if (typeof cond.npc !== 'string' || cond.npc === '') {
-            errors.push(createError(`${condPath}.npc`, 'Missing required field: npc'));
+        // NPC conditions: npc must name an authored NPC or a condition-legal selector
+        if (NPC_CONDITION_TYPES.includes(cond.type)) {
+          validateTriggerNpcField(`${condPath}.npc`, cond.npc, 'condition', cond.type, refs, errors);
+        }
+
+        // npc-relationship-stage values reference relationship stage names
+        if (cond.type === 'npc-relationship-stage' && typeof cond.value === 'string' && cond.value !== ''
+            && !refs.relationshipStageNames.has(normalizeText(cond.value))) {
+          errors.push(createError(`${condPath}.value`, `References non-existent relationship stage: ${cond.value}`, 'warning'));
+        }
+
+        // npc location-chain condition values reference the matching catalog
+        const NPC_PLACE_CONDITION_TARGETS = {
+          'npc-realm': ['realmKeys', 'realm'],
+          'npc-region': ['regionKeys', 'region'],
+          'npc-location': ['locationKeys', 'location'],
+          'npc-area': ['areaKeys', 'area'],
+        };
+        if (NPC_PLACE_CONDITION_TARGETS[cond.type] && typeof cond.value === 'string' && cond.value !== '') {
+          const [refSet, label] = NPC_PLACE_CONDITION_TARGETS[cond.type];
+          if (!refs[refSet].has(cond.value)) {
+            errors.push(createError(`${condPath}.value`, `References non-existent ${label}: ${cond.value}`, 'warning'));
           }
         }
       });
@@ -2061,8 +2427,10 @@ function validateCharacterLimits(config, errors, warnings) {
 
 function validateTypeChecks(config, errors) {
   // The V36 schema only accepts the literal 36
+  // heroesVersion is system-managed: the engine stamps it and strips any authored
+  // value on save. A stale value only signals the world file predates a schema bump.
   if (config.heroesVersion !== undefined && config.heroesVersion !== 36) {
-    errors.push(createError('heroesVersion', `Invalid heroesVersion: ${JSON.stringify(config.heroesVersion)} (must be the number 36)`));
+    errors.push(createError('heroesVersion', `Unexpected heroesVersion: ${JSON.stringify(config.heroesVersion)} (current schema is 36; the engine stamps this itself and ignores authored values)`, 'warning'));
   }
 
   // imageModelSource replaced the old imageModelSources object; it is a plain string id
@@ -2434,6 +2802,7 @@ function validateUnknownFields(config, errors) {
       'questOriginArcId', 'questOriginQuestId', 'embedding',
       'embeddingId', 'portraitUrl', 'portraitFocusX', 'portraitFocusY', 'portraitZoom',
       'needsDetailGeneration', 'deathXPAwarded', 'worldVoiceId',
+      'relationship', 'successBonus', 'damageModifier', 'damageReductionModifier',
     ]),
     locations: new Set([
       'name', 'basicInfo', 'x', 'y', 'radius', 'region', 'complexityType',
@@ -2471,7 +2840,7 @@ function validateUnknownFields(config, errors) {
     quests: new Set([
       'name', 'questType', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
       'questGiverNPC', 'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
-      'objectives', 'activeObjectiveId', 'nextStep',
+      'objectives', 'activeObjectiveId', 'nextStep', 'initialStatus', 'onCompleteEffects',
     ]),
     storyStarts: new Set([
       'name', 'description', 'storyStart', 'locations', 'locationAreas',
@@ -2482,7 +2851,10 @@ function validateUnknownFields(config, errors) {
       'text', 'embeddingId',
     ]),
     triggers: new Set([
-      'name', 'conditions', 'effects', 'recurring', 'script', 'embeddingId', 'scope',
+      'name', 'conditions', 'effects', 'recurring', 'script', 'embeddingId', 'scope', 'phase',
+    ]),
+    questTriggers: new Set([
+      'name', 'conditions', 'effects', 'recurring', 'script', 'embeddingId', 'scope', 'phase',
     ]),
     narrativeEvents: new Set([
       'title', 'beats', 'targetTurns', 'onCompleteEffects',
@@ -2584,9 +2956,9 @@ function validateUnknownFields(config, errors) {
     // Skill XP rewards
     skillXPRewards: new Set(['small', 'medium', 'large', 'huge']),
     // Trigger conditions (union of all condition types)
-    triggerCondition: new Set(['type', 'operator', 'value', 'query', 'embeddingId', 'resource', 'entity', 'key', 'questId', 'eventId', 'npc']),
+    triggerCondition: new Set(['type', 'operator', 'value', 'query', 'embeddingId', 'resource', 'entity', 'key', 'questId', 'eventId', 'npc', 'skill']),
     // Trigger effects (union of all effect types)
-    triggerEffect: new Set(['type', 'operator', 'value', 'instruction', 'questId', 'resource', 'entity', 'key', 'objectiveId', 'text', 'source', 'eventId', 'target', 'npc', 'trackId', 'endScope', 'othersOutcome']),
+    triggerEffect: new Set(['type', 'operator', 'value', 'instruction', 'questId', 'resource', 'entity', 'key', 'objectiveId', 'text', 'source', 'eventId', 'target', 'npc', 'trackId', 'endScope', 'othersOutcome', 'skill', 'attribute', 'operation', 'location', 'area']),
     // Attribute stat modifier entries
     attrStatModifier: new Set(['variable', 'amount']),
     // Game mode entries
@@ -2833,28 +3205,39 @@ function validateUnknownFields(config, errors) {
     }
   }
 
-  // Trigger conditions and effects
-  if (config.triggers) {
-    for (const [trigKey, trig] of Object.entries(config.triggers)) {
+  // Trigger conditions and effects (triggers and questTriggers share the schema)
+  for (const section of ['triggers', 'questTriggers']) {
+    if (!config[section] || typeof config[section] !== 'object') continue;
+    for (const [trigKey, trig] of Object.entries(config[section])) {
+      if (!trig || typeof trig !== 'object') continue;
       if (Array.isArray(trig.conditions)) {
         trig.conditions.forEach((cond, i) => {
-          checkNested(`triggers.${trigKey}.conditions[${i}]`, cond, KNOWN_NESTED.triggerCondition);
+          checkNested(`${section}.${trigKey}.conditions[${i}]`, cond, KNOWN_NESTED.triggerCondition);
         });
       }
       if (Array.isArray(trig.effects)) {
         trig.effects.forEach((eff, i) => {
-          checkNested(`triggers.${trigKey}.effects[${i}]`, eff, KNOWN_NESTED.triggerEffect);
+          checkNested(`${section}.${trigKey}.effects[${i}]`, eff, KNOWN_NESTED.triggerEffect);
         });
       }
     }
   }
 
-  // Narrative event onCompleteEffects (same shape as trigger effects)
+  // Narrative event and quest onCompleteEffects (same shape as trigger effects)
   if (config.narrativeEvents) {
     for (const [eventKey, event] of Object.entries(config.narrativeEvents)) {
       if (Array.isArray(event?.onCompleteEffects)) {
         event.onCompleteEffects.forEach((eff, i) => {
           checkNested(`narrativeEvents.${eventKey}.onCompleteEffects[${i}]`, eff, KNOWN_NESTED.triggerEffect);
+        });
+      }
+    }
+  }
+  if (config.quests) {
+    for (const [questKey, quest] of Object.entries(config.quests)) {
+      if (Array.isArray(quest?.onCompleteEffects)) {
+        quest.onCompleteEffects.forEach((eff, i) => {
+          checkNested(`quests.${questKey}.onCompleteEffects[${i}]`, eff, KNOWN_NESTED.triggerEffect);
         });
       }
     }

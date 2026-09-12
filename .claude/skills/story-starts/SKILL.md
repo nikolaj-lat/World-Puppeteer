@@ -13,7 +13,7 @@ Edit `tabs/story-starts.json`.
 
 | Field | Requirement |
 |-------|-------------|
-| `name` | Must match object key exactly |
+| `name` | Must match object key exactly. Keep names unique: a story start referenced by a name shared with another definition resolves to nothing, an exact id always resolves |
 | `description` | One compelling sentence shown during character creation |
 | `storyStart` | Opening narrative prompt for the AI (see format below) |
 | `locations` | Array of valid location keys - use one for specific starts, multiple for variety |
@@ -65,7 +65,7 @@ Three-part structure:
 ## Quest Integration
 
 **startingQuests vs firstQuest:**
-- `startingQuests`: Array of quest names from `tabs/quests.json` - sets them to `'available'` status at game start
+- `startingQuests`: Array of quest ids or unique quest names from `tabs/quests.json` - at game start, hidden quests are promoted to `'available'`; quests already accepted (e.g. via a quest's `initialStatus`) keep their status
 - `firstQuest`: Freeform text instruction - on turn 0, forces AI to generate a quest matching this description
 
 These are independent systems. Use `startingQuests` for predefined quests, use `firstQuest` for AI-generated opening quests.

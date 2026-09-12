@@ -15,7 +15,7 @@
  *                          imageModelSource, worldVoices)
  *   - realms.json         (realm definitions)
  *   - regions.json        (region definitions)
- *   - locations.json      (location definitions with areas)
+ *   - locations.json      (location definitions with areas, plus any unassignedAreas drafts)
  *   - npcs.json           (NPC definitions)
  *   - npc-types.json      (NPC type templates)
  *   - factions.json       (faction definitions)
@@ -58,7 +58,9 @@ const SECTIONS = {
   ],
   realms: ['realms'],
   regions: ['regions'],
-  locations: ['locations'],
+  // unassignedAreas is a Studio draft holding pen (worlds cannot save/publish with
+  // entries in it); kept beside locations so drafts stay next to their destination
+  locations: ['locations', 'unassignedAreas'],
   npcs: ['npcs'],
   'npc-types': ['npcTypes'],
   factions: ['factions'],

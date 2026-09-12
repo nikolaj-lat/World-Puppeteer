@@ -1,5 +1,4 @@
 {
-  "heroesVersion": 36,
   "aiInstructions": {
     "generateStory": {
       "How to Use the Narrator": "",
@@ -18,10 +17,23 @@
       "custom": ""
     },
     "generateActionInfo": {
+      "impact": "",
       "custom": ""
     },
     "generateCharacterBackground": {
       "prompt": "",
+      "custom": ""
+    },
+    "generateConversationStarters": {
+      "Conversation Starter Guidance": "",
+      "custom": ""
+    },
+    "generateDialogue": {
+      "Style, Tone, and Length": "",
+      "custom": ""
+    },
+    "generateNpcChatSummary": {
+      "Summary Guidance": "",
       "custom": ""
     },
     "generateNPCDetails": {
@@ -34,6 +46,12 @@
       "faction_affiliation": "",
       "abilities": "",
       "basic_info": "",
+      "custom": ""
+    },
+    "generateNPCUpdates": {
+      "relationship_initialization": "",
+      "relationship_change_updates": "",
+      "party_management": "",
       "custom": ""
     },
     "generateLocationDetails": {
@@ -152,7 +170,7 @@
     "minTravelDistance": 20,
     "newRegionGenerationEnabled": false,
     "encountersEnabled": false,
-    "regionMapBorderFeatheringEnabled": true
+    "regionMapBorderFeatheringEnabled": false
   },
   "itemSettings": {
     "currencyName": "",

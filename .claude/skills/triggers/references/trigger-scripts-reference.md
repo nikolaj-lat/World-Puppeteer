@@ -20,10 +20,10 @@ Prefer declarative conditions and effects when they suffice — they're cheaper,
 
 ### Phase routing
 
-Scripts run in one of two phases per turn, decided by the trigger's conditions:
+Scripts run in one of two phases per turn, decided by the trigger's routing (see Phase Partitioning in triggers-reference.md):
 
-- **Planning phase**: triggers with at least one `action` or `action-text` condition.
-- **State phase**: every other trigger (semantic story conditions, mechanical conditions, no conditions, etc.).
+- **Planning phase**: triggers with at least one `action` or `action-text` condition, triggers with an `action-success-level` condition, and purely mechanical triggers with `phase: 'planning'`.
+- **State phase**: every other trigger (semantic story conditions, other mechanical conditions, no conditions, etc.).
 
 Each phase has its **own independent** budget. A turn that uses both phases gets two separate budgets — they do not share or combine.
 
@@ -85,6 +85,23 @@ For every triggered trigger in the phase:
 | `read-number` | `number` — falls back to `0` |
 | `read-boolean` | `boolean` — falls back to `false` |
 | `read-array` | `unknown[]` — falls back to `[]` |
+
+### NPC conditions and selectors in check()
+
+Every condition type from triggers-reference.md works through `check()` with the same semantics as its declarative form, `action-success-level`, `skill-value`, and the `npc-*` family included. For NPC conditions, the raw-value shape depends on the `npc` field:
+
+- A **named** NPC returns a bare scalar, or `undefined` when no NPC matches.
+- A **selector** (`anySceneNPC` / `anyPartyNPC`) returns an object keyed by NPC record key, not display name, since display names are not unique. Use `Object.values(...)` unless you need to tell NPCs apart.
+- Conditions take `anySceneNPC` / `anyPartyNPC` in scripts too; the effect selectors `allSceneNPCs` / `allPartyNPCs` resolve to nothing in a condition slot.
+
+```javascript
+// One NPC: bare scalar (or undefined if the NPC is missing)
+const bossHp = check({ type: 'npc-health', npc: 'Bandit King' })
+
+// Selector: object keyed by NPC record key
+const sceneHp = check({ type: 'npc-health-percent', npc: 'anySceneNPC' })
+const lowest = Math.min(...Object.values(sceneHp || {}))
+```
 
 ### Examples
 
@@ -151,9 +168,9 @@ Mutations are buffered until all scripts in the phase complete, then validated a
 Validation catches include:
 - Semantic or mechanical trigger counts exceeding their caps
 - More conditions or effects on a single trigger than the caps allow
-- Whole-trigger JSON > 10 000 chars
-- Condition query > 1 000 chars, effect instruction > 1 000 chars
-- Any condition or effect value > 100 chars (stringified)
+- Whole-trigger JSON exceeding the size cap
+- A condition query or effect instruction exceeding its length cap
+- Any condition or effect value exceeding its length cap (stringified)
 - Trigger name not matching its object key
 - Non-serializable trigger shape
 
@@ -183,7 +200,7 @@ effects = effects.filter((e) => e.type !== "party-realm")
 
 After readback:
 - Malformed effects (unknown type, non-object, primitive) are silently dropped.
-- The first 10 valid effects apply; the rest are discarded.
+- Valid effects apply up to the per-trigger effect cap; the rest are discarded.
 
 If `skip = true`, the entire effect array is cleared regardless of what the script wrote.
 
@@ -273,7 +290,7 @@ Randomized narration must fire at **tick >= 1** — a `story` effect on tick 0 n
 
 ## Size and Placement
 
-The `script` field counts toward the 10 000-char whole-trigger JSON limit enforced at publish time — so scripts longer than roughly 9 KB will fail validation before they ever run.
+The `script` field counts toward the whole-trigger JSON size cap enforced at publish time, so a long script can fail validation before it ever runs.
 
 There's no separate `script`-specific size limit. Keep scripts short; put shared logic in multiple coordinating triggers rather than one giant script.
 
@@ -347,7 +364,7 @@ These are complete trigger objects in the JSON shape that goes in `triggers/`. U
 A `story` effect that fires on **game-tick 0 does NOT change the initial story** the player sees. Put opening narration in the **story-start text**, or fire it at **tick >= 1** (add a `game-tick greaterThanOrEqual 1` condition, or `skip` in the script when `check({ type: 'game-tick' }) === 0`). Tick-0 triggers are still correct for *initializing state* (write-number/string, resource setup) — just not for narration.
 
 ### Effect types a script may push (do NOT invent new JS effect/condition types)
-Scripts live ONLY in the top-level `script` field. The effect `type`s a script (or declarative effect) may use: `story` (`{instruction}`); `quest-init` / `quest-progress` / `quest-complete` (`{questId}` or `{value}`); `quest-objective-reveal` / `quest-objective-complete` (`{questId, objectiveId}`); `quest-next-step-set` (`{questId, text, source}`) / `quest-next-step-clear` (`{questId}`); `party-next-step-set` (`{text, source}`) / `party-next-step-clear`; `narrative-event-start` (`{eventId}`); `party-realm` / `party-region` / `party-location` / `party-area` (`{operator:'set', value}`); `player-resource` (`{resource, operator: add|subtract|multiply|divide|set, value}`); `player-traits` (`{operator: add|remove|set, value}`); `known-entity` (`{entity, operator: set|toggle, value}`); `npc-relationship` (`{npc, operator: add|subtract|multiply|divide|set, value}`); `music-track-set` (`{trackId}`) / `music-track-clear`; `win-game` / `lose-game` / `end-game` (optional `{endScope, othersOutcome}`); and storage writes `write-string` / `write-number` / `write-boolean` / `write-array` (`write-number` uses `add`/`subtract`/`multiply`/`divide`/`set`; `write-boolean` uses `set`/`toggle`; `write-array` uses `set`/`add`/`remove`). Full field docs for every effect are in [triggers-reference.md](triggers-reference.md).
+Scripts live ONLY in the top-level `script` field. The effect `type`s a script (or declarative effect) may use: `story` (`{instruction}`); `quest-init` / `quest-accept` / `quest-plan` (`{operator:'set', value}`); `quest-progress` / `quest-complete` (`{questId}`); `quest-objective-reveal` / `quest-objective-complete` (`{questId, objectiveId}`); `quest-next-step-set` (`{questId, text, source}`) / `quest-next-step-clear` (`{questId}`); `party-next-step-set` (`{text, source}`) / `party-next-step-clear`; `narrative-event-start` (`{eventId}`); `party-realm` / `party-region` / `party-location` / `party-area` (`{operator:'set', value}`); `player-resource` (`{resource, operator: add|subtract|multiply|divide|set, value}`); `player-traits` (`{operator: add|remove|set, value}`); `player-level` / `player-experience` (`{operator: add|subtract|set, value}`); `player-skill` (`{skill, operator: add|subtract|set, value}`); `player-attribute` (`{attribute, operator: add|subtract|set, value}`); `known-entity` (`{entity, operator: set|toggle, value}`); `npc-relationship` (`{npc, operator: add|subtract|multiply|divide|set, value}`); `npc-health` (`{npc, operator: add|subtract|multiply|divide|set, value}`); `npc-in-party` (`{npc, operator: set|toggle, value?}`); `npc-portrait` (`{npc, operator:'set', value}`: named NPC, Latitude-hosted https image URL); `npc-placement` (`{npc, operation: moveHere|moveAway}` or `{npc, operation:'moveTo', location, area}`); `music-track-set` (`{trackId}`) / `music-track-clear`; `win-game` / `lose-game` / `end-game` (optional `{endScope, othersOutcome}`); and storage writes `write-string` / `write-number` / `write-boolean` / `write-array` (`write-number` uses `add`/`subtract`/`multiply`/`divide`/`set`; `write-boolean` uses `set`/`toggle`; `write-array` uses `set`/`add`/`remove`). Full field docs for every effect are in [triggers-reference.md](triggers-reference.md).
 
 ### Quick firing rules
 - A trigger with **no conditions fires every turn**.

@@ -43,9 +43,24 @@ Edit `tabs/ai-instructions.json`.
       "Style Principles": "...",
       "custom": "..."
     },
-    "generateActionInfo": { "custom": "..." },
+    "generateActionInfo": {
+      "impact": "...",
+      "custom": "..."
+    },
     "generateCharacterBackground": {
       "prompt": "...",
+      "custom": "..."
+    },
+    "generateDialogue": {
+      "Style, Tone, and Length": "...",
+      "custom": "..."
+    },
+    "generateConversationStarters": {
+      "Conversation Starter Guidance": "...",
+      "custom": "..."
+    },
+    "generateNpcChatSummary": {
+      "Summary Guidance": "...",
       "custom": "..."
     },
     "generateNPCIntents": {
@@ -72,6 +87,7 @@ Edit `tabs/ai-instructions.json`.
       "custom": "..."
     },
     "generateNPCUpdates": {
+      "relationship_initialization": "...",
       "relationship_change_updates": "...",
       "party_management": "...",
       "custom": "..."
@@ -93,12 +109,15 @@ Edit `tabs/ai-instructions.json`.
 |------|---------------|
 | `generateStory` | `How to Use the Narrator`, `Turn Structure`, `Turn Boundaries and Endings`, `Player Agency`, `Combat Narration`, `Victory and Downtime`, `Character Behavior`, `Style Principles`, `custom` |
 | `generateInitialStart` | `Opening Structure`, `Style Principles`, `custom` |
-| `generateActionInfo` | `custom` |
+| `generateActionInfo` | `impact`, `custom` |
 | `generateCharacterBackground` | `prompt`, `custom` |
+| `generateDialogue` | `Style, Tone, and Length`, `custom` |
+| `generateConversationStarters` | `Conversation Starter Guidance`, `custom` |
+| `generateNpcChatSummary` | `Summary Guidance`, `custom` |
 | `generateNPCIntents` | `core_principles`, `when_to_generate`, `what_is_not_action`, `description_economy`, `summary_established_beats`, `action_format`, `story_driver`, `custom` |
 | `generateNewNPC` | `custom` |
 | `generateNPCDetails` | `character_creator_instructions`, `personality_archetype_information`, `style`, `cliche_avoidance`, `hidden_info`, `personality`, `faction_affiliation`, `abilities`, `basic_info`, `custom` |
-| `generateNPCUpdates` | `relationship_change_updates`, `party_management`, `custom` |
+| `generateNPCUpdates` | `relationship_initialization`, `relationship_change_updates`, `party_management`, `custom` |
 | `generateLocationDetails` | `custom` |
 | `generateRegionDetails` | `custom` |
 | `generateEncounters` | `custom` |
@@ -121,6 +140,12 @@ Assesses action difficulty and determines skill checks:
 - Notes about world-specific action types
 - Specific conditions or outcomes to specific actions
 
+The `impact` section is editable: it guides how the AI rates an action's impact, which the engine uses as a damage multiplier. Override it to shift how hard actions hit in your world; see the reference for the value ranges.
+
+## NPC chat tasks
+
+Players can open a direct chat with a scene NPC. Three tasks power it: `generateDialogue` (the NPC's chat replies, editable key `Style, Tone, and Length`), `generateConversationStarters` (the two suggested openers shown when a chat begins, editable key `Conversation Starter Guidance`), and `generateNpcChatSummary` (the summary spliced into the story when a chat ends, editable key `Summary Guidance`). These merge per section like every other task, so only the listed keys plus `custom` persist on save. See the reference for details.
+
 ## generateNPCIntents
 
 Controls NPC intent generation — what NPCs decide to do each turn in combat and social scenes. Use the `custom` key to add world-specific guidance.
@@ -131,7 +156,7 @@ Controls how the engine fills in details for generated NPCs — hiddenInfo conte
 
 ## generateNPCUpdates
 
-Controls how NPC state changes are applied after each turn. Two sections are editable: `relationship_change_updates` (how relationship values move in response to the story) and `party_management` (when NPCs join, leave, or follow the party). Use `custom` for world-specific rules.
+Controls how NPC state changes are applied after each turn. Three sections are editable: `relationship_initialization` (how the AI picks a starting relationship for an NPC whose definition omits one), `relationship_change_updates` (how relationship values move in response to the story), and `party_management` (when NPCs join, leave, or follow the party). Use `custom` for world-specific rules.
 
 ## generateNewNPC
 

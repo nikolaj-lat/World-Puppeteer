@@ -15,8 +15,8 @@ interface Trait {
   startingItems: InventoryDefinition[]                       // ✅ Items granted on permanent trait acquisition (not via triggers); item must be an existing item key
   abilities: string[]             // ✅ Ability names unlocked (deduplicated if multiple sources)
   requirements: TraitRequirement[] // ⚠️ Prerequisites for level-up trait picks (defaults to [] if omitted)
-  unlockedBy: string[]            // ✅ Trait prerequisites (OR logic), existing trait keys — level-up picks only
-  excludedBy: string[]            // ✅ Trait conflicts, existing trait keys — level-up picks only
+  unlockedBy: string[]            // ✅ Prerequisites (OR logic): existing trait keys or story start ids
+  excludedBy: string[]            // ✅ Conflicts: existing trait keys or story start ids
   vulnerabilities?: string[]      // ✅ Damage types that deal 1.5x damage to the player (can be empty [])
   resistances?: string[]          // ✅ Damage types that deal 0.5x damage to the player (can be empty [])
   immunities?: string[]           // ✅ Damage types that deal 0x damage to the player (can be empty [])
@@ -92,7 +92,7 @@ interface CharacterLevelTraitRequirement {
 | `trait` | with `variable` | Has trait with that name | `{ type: "trait", variable: "fire affinity", amount: 1 }` |
 | `characterLevel` | no `variable` | Character level >= amount | `{ type: "characterLevel", amount: 5 }` |
 
-**Requirements gate level-up trait picks only.** Starting trait selection at character creation ignores `requirements`, `unlockedBy`, and `excludedBy` entirely — a player can pick any trait its category offers, regardless of these fields. All three fields only shape which traits appear in the level-up pick list (see Level-Up Trait Picks below). If a trait must never be a starting option, keep it out of every `traitCategories` entry rather than relying on requirements.
+**Requirements gate level-up trait picks only.** Starting trait selection at character creation ignores `requirements`: as far as this field is concerned, a player can pick any trait its category offers. `unlockedBy` and `excludedBy` do apply at character creation, following the evaluation order in Trait Dependencies below. If a trait must never be a starting option, keep it out of every `traitCategories` entry rather than relying on requirements.
 
 ## Damage Modifiers (vulnerabilities, resistances, immunities)
 
@@ -130,7 +130,22 @@ interface TraitSubcategory {
 Categories group traits and limit selections during character creation. Players must select between 0 and `maxSelections` traits from each category; the limit applies to the category as a whole, however its traits are grouped. In character creation, subcategory traits are listed first, then the ungrouped root `traits`.
 
 
-Category selection at character creation ignores `requirements`, `unlockedBy`, and `excludedBy` — those fields only affect level-up trait picks.
+Category selection at character creation ignores `requirements` (level-up picks only). `unlockedBy` and `excludedBy` constrain which traits each category offers: see Trait Dependencies below. Category order in `traitCategories` is meaningful for those dependencies.
+
+## Trait Dependencies (unlockedBy and excludedBy)
+
+Both fields list ids of traits or story starts:
+
+- `unlockedBy` (OR logic): the trait is only offered when at least one listed dependency is satisfied, that is, a listed trait is selected or a listed story start is the chosen one.
+- `excludedBy`: the trait is withheld when any listed dependency is satisfied.
+
+Evaluation order matters. The story start is chosen first, then trait categories are evaluated in the order they appear in `traitCategories`:
+
+- A story start dependency always takes effect.
+- A dependency on another trait only constrains choices in categories that come after the referenced trait's own category.
+- A dependency that is neither an earlier-category trait nor a story start leaves the trait unconditionally unlocked.
+
+Changing an earlier selection, whether the story start or a trait in an earlier category, removes later selections that are no longer eligible. Both fields also filter the level-up pick list (see Level-Up Trait Picks below).
 
 ## Modifier Application Order
 
@@ -184,14 +199,14 @@ Traits can also be earned during play through level-up picks, configured in `pro
 When a player has pending picks, the game lists every pool trait that:
 
 1. The character doesn't already have
-2. Passes its `unlockedBy` / `excludedBy` conditions
+2. Passes its `unlockedBy` / `excludedBy` conditions (see Trait Dependencies above)
 3. Meets all its `requirements`
 
 The player picks one, and it applies immediately exactly like a starting trait — skill/attribute/resource modifiers, abilities, and starting items all take effect.
 
 Notes:
 - An empty `levelUpTraitPool` means no picks are ever granted, regardless of cadence.
-- This is the ONLY place `requirements`, `unlockedBy`, and `excludedBy` matter — starting trait selection ignores all three.
+- This is the ONLY place `requirements` matters; `unlockedBy` and `excludedBy` also shape character creation (see Trait Dependencies above).
 - Level-up traits don't need to appear in any `traitCategories` entry; a trait can be pool-only (never a starting option) or both.
 
 See the settings documentation for the full `progressionSettings` schema.
@@ -224,8 +239,8 @@ A trigger-granted trait applies its attribute/skill/resource modifiers and abili
 | `requirements[].variable` (skill) | `tabs/skills.json` |
 | `requirements[].variable` (trait) | Keys from `traits` in same file |
 | `vulnerabilities[]`, `resistances[]`, `immunities[]` | `combatSettings.damageTypes` in `tabs/settings.json` |
-| `unlockedBy[]` | Keys from `traits` in same file (validated) |
-| `excludedBy[]` | Keys from `traits` in same file (validated) |
+| `unlockedBy[]` | Keys from `traits` in same file, or story start ids from `tabs/story-starts.json` |
+| `excludedBy[]` | Keys from `traits` in same file, or story start ids from `tabs/story-starts.json` |
 | `traitCategories[].traits[]` | Keys from `traits` in same file |
 | `traitCategories[].subcategories[].traits[]` | Keys from `traits` in same file |
 | `progressionSettings.levelUpTraitPool` (in `tabs/settings.json`) | Keys from `traits` in same file |

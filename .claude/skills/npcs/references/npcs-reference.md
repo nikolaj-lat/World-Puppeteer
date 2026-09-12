@@ -8,10 +8,11 @@ Complete documentation for `tabs/npcs.json`.
 interface NPC {
   name: string                    // ✅ Display name, must match object key
   type: string                    // ✅ Key from npc-types.json or ""
-  currentLocation: string         // ✅ Key from locations.json or "". Matching ignores casing and whitespace
-  currentArea: string             // ✅ Area within location or "". A location with areas needs both currentLocation and currentArea; an area-less location places by location only
+  currentLocation: string         // ✅ Key from locations.json or "". Matching ignores casing and whitespace. Blank means off-stage until placed (e.g. by an npc-placement trigger effect)
+  currentArea: string             // ✅ Area within location or "". Blank means "somewhere in this location": the NPC can appear in any area there. Set an area only to pin the NPC to it
   gender?: string                 // ✅ "male", "female", or "non-binary"
   faction?: string                // ✅ Key from factions.json
+  relationship?: number           // ✅ Starting attitude toward the player, -100..100; 0 is genuinely Neutral. Omit to let the AI initialize it on the NPC's first turn in the scene (see Relationship below)
   basicInfo?: string              // ✅ Immediately available info
   hiddenInfo?: string             // ✅ Info revealed via interaction
   visualDescription?: string      // ✅ Used for portrait generation
@@ -27,6 +28,9 @@ interface NPC {
   vulnerabilities?: string[]      // ✅ 1.5× damage from these types. Unions with npc-type's vulnerabilities
   resistances?: string[]          // ✅ 0.5× damage from these types. Unions with npc-type's resistances
   immunities?: string[]           // ✅ 0× damage from these types. Unions with npc-type's immunities
+  successBonus?: number           // ✅ Flat bonus to the NPC's action success score. 0 (the default) leaves rolls unchanged; clamps to -1000..1000, and 25 points is one full success tier (see Combat Tuning below)
+  damageModifier?: number         // ✅ Percent change to the NPC's outgoing damage: 0 (the default) unchanged, -100 removes it, 100 doubles it. Clamps to -100..10000 (see Combat Tuning below)
+  damageReductionModifier?: number // ✅ Percent reduction to damage the NPC takes: 0 (the default) unchanged, 100 is true immunity. Clamps to 0..100 (see Combat Tuning below)
   activeBuffs?: ActiveBuff[]      // ✅ See ActiveBuff schema below
   known?: boolean                 // ✅ Whether NPC appears in player journal
   lastSeenLocation?: string       // ✅ Preserved if predefined, but auto-updated when NPC is nearby. Shown in journal as "Last seen at..."
@@ -47,7 +51,6 @@ interface NPC {
   deathXPAwarded?: boolean        // ✅ Whether XP will be given on death
   properName?: string             // ⚠️ The NPC's true name. Defaults to name if omitted. Set it (different from name) for a hidden-identity NPC: name is the current display name, properName is revealed later. The identity counts as revealed once the two match, and a reveal flips name to properName
   status: string                  // ❌ Always set to ''. Free-form runtime text; mortality is no longer encoded here (see Death Countdown below)
-  relationship: number            // ❌ Always set to 0
   lastSeenTick: number            // ❌ Always set to -1. Value of -1 means immune to cleanup until first seen
 }
 ```
@@ -147,6 +150,54 @@ Standard-tier NPCs (`trivial`, `weak`, `average`, `strong`) die instantly at 0 H
 ### Party-Member Promotion
 
 A party-member NPC below `elite` is promoted to `elite` when it levels up alongside the party, so long-term companions become major NPCs (gaining the death countdown and higher HP/damage modifiers).
+
+## Combat Tuning
+
+Three optional fields tune an individual NPC's combat math. Each defaults to 0 (no change) when omitted. Out-of-range values survive in hand-written JSON; the engine clamps them at read time.
+
+### successBonus
+
+A flat bonus to the NPC's action success score, in the player success-score space. NPC rolls sample a score inside the rolled tier's band, add `successBonus`, then re-derive the tier from the total. 25 points is one full success tier, so `successBonus: 25` shifts every roll up a tier and `-25` shifts every roll down one. Clamps to -1000..1000; at 0 the roll distribution is unchanged.
+
+An NPC's natural roll always lands at basic success or better, so a negative bonus is how you make an NPC fumble. Applies to any acting NPC, ally or enemy.
+
+### damageModifier
+
+Percent change to the NPC's outgoing damage: 0 unchanged, -100 removes it entirely, 100 doubles it. Clamps to -100..10000. Multiplies with per-attack impact and affects damage only; healing the NPC gives lands at normal strength.
+
+### damageReductionModifier
+
+Percent reduction to damage the NPC takes: 0 unchanged, 100 is true immunity. It is applied after all other bonuses, so at 100 nothing leaks through. Clamps to 0..100: values above 100 saturate at full immunity, and negative values read as 0. Reduces damage from any attacker, player or NPC alike; healing the NPC receives lands at full strength.
+
+## Relationship
+
+`relationship` is the NPC's attitude toward the player, from -100 to 100, mapped to named stages by the world's `relationshipStages`. An authored value is preserved exactly, including 0: authoring `relationship: 0` means genuinely Neutral. Values outside -100..100 are an authoring error.
+
+When the field is omitted, the NPC starts with a pending relationship, and the AI initializes it on the first turn the NPC is in the scene. The AI picks an absolute score (not a delta) inferred from `basicInfo`, `hiddenInfo`, `personality`, `faction`, and the story so far, so the rest of the NPC record indirectly sets the starting attitude. A creator-editable AI-instruction section guides this initialization (see the ai-instructions skill).
+
+While the relationship is pending, the story prompt gives the narrator no attitude cue; NPC chat and the npc-relationship / npc-relationship-stage trigger conditions read it as 0 and the neutral stage.
+
+## Placement
+
+A blank or omitted `currentArea` means "somewhere in this location": the NPC can appear in any area there. Authoring an NPC by location alone is legitimate; choose an area only when the NPC should be pinned to it. In a location that has areas, treat a blank `currentArea` as an explicit choice rather than an accident.
+
+`currentLocation` may also be blank: such an NPC is off-stage until placed, for example by an npc-placement trigger effect.
+
+## Naming
+
+Avoid giving an NPC (key, `name`, or `properName`) any of these names: `allSceneNPCs`, `anySceneNPC`, `allPartyNPCs`, `anyPartyNPC`. They are reserved trigger selector tokens; an NPC answering to one takes over that token, and the selector becomes unusable in that world.
+
+Name resolution works the same across the engine: record keys and display names match interchangeably, case-insensitively, and a `name` match on any NPC beats a `properName` match. Display names are not unique, so an effect naming a shared display name reaches every NPC with that name: keep names unique when you need precise targeting.
+
+## NPC Chat
+
+Players can tap an NPC to talk to it directly. The chat reads the NPC's `basicInfo` (description), `personality` (voice and tone), `hiddenInfo` (the NPC knows this about itself and can let it slip), `faction`, `relationship` (as the attitude stage), status and HP, plus the world background and relevant world lore. Other NPCs present in the scene are seen only by name and `basicInfo`.
+
+Chat is available outside combat and only with living NPCs. When a conversation ends, it is summarized into the story. Creator-editable AI-instruction sections exist for dialogue style, conversation starters, and the conversation summary (see the ai-instructions skill).
+
+## Triggers
+
+NPC state is readable and writable from world triggers: the npc-health, npc-health-percent, npc-in-scene, npc-in-party, npc-realm, npc-region, npc-location, and npc-area conditions, and the npc-health, npc-in-party, npc-portrait, and npc-placement effects. Full semantics live in the triggers reference. Death detection is npc-health equals 0. The npc-placement and npc-in-party effects act on NPCs that are still up; npc-health effects can revive downed allies, after which they can be moved or recruited again.
 
 ## What the AI Sees About an NPC
 

@@ -11,7 +11,7 @@ interface StoryStart {
   storyStart: string                // ✅ Opening narrative for AI to expand
   locations: string[]               // ✅ Valid location keys from locations.json
   locationAreas: string[]           // ✅ Valid area keys, or [] for any area
-  startingQuests?: string[]         // ✅ Quest names to set as 'available'
+  startingQuests?: string[]         // ✅ Quest ids or unique quest names; hidden quests become 'available' at start
   firstQuest?: string               // ✅ Freeform instruction for AI quest generation on turn 0
   startingItems?: InventoryDefinition[]  // ✅ Additional starting items
   startingPartyNPCs?: string[]      // ✅ NPC keys that join party at start
@@ -27,6 +27,8 @@ interface StoryStart {
 - ❌ **Always overwritten**: Set by initialization regardless of what exists in config
 
 `allowPlayerInput` is engine-controlled: only the built-in story start named exactly "Write Your Own" keeps it (forced on, with an empty `storyStart`). Do not set it on authored starts.
+
+**Name uniqueness:** keep story start display names unique. Story starts can be referenced from elsewhere in the config (for example from a trait's `unlockedBy` or `excludedBy`) by id or by name; a name shared with another definition resolves to nothing, while an exact id always resolves.
 
 ## InventoryDefinition Schema
 
@@ -46,15 +48,15 @@ When a game starts with a story start, fields are processed in this order:
 ### 1. Quest Registration
 
 ```
-All world config quests -> created with status: 'hidden'
+All world config quests -> registered ('hidden' unless the quest sets an initialStatus)
       |
-startingQuests quests -> status changed to 'available'
+startingQuests quests -> hidden quests promoted to 'available'; already accepted quests keep their status
       |
 firstQuest -> on turn 0, injects instruction into AI quest generation
 ```
 
 **Key difference:**
-- `startingQuests`: Array of quest names from `tabs/quests.json` - immediately sets their status to `'available'`
+- `startingQuests`: Array of quest ids or unique quest names from `tabs/quests.json` - promotes those quests from `'hidden'` to `'available'` at start; a quest already accepted (e.g. via its `initialStatus`) keeps its status
 - `firstQuest`: Freeform text instruction - forces AI to generate a quest matching this description on turn 0
 
 These are independent systems.
@@ -138,7 +140,7 @@ Use this when one story-start has a distinctly different tone, scope, or quest c
 |-------|------------|
 | `locations` | `tabs/locations.json` (keys, not names) |
 | `locationAreas` | `areas` object within referenced locations |
-| `startingQuests` | `tabs/quests.json` (quest names) |
+| `startingQuests` | `tabs/quests.json` (quest ids, or unique quest names) |
 | `firstQuest` | Freeform text (no reference) |
 | `startingItems[].item` | `tabs/items.json` (item keys or names) |
 | `startingPartyNPCs` | `tabs/npcs.json` (keys, not names) |
