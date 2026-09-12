@@ -63,7 +63,7 @@ Make a character for an anime close-up on the face and upper shoulders in the of
 node .claude/skills/image-gen/scripts/upload-image.mjs -n [npc-name-lowercase] images/generated/<file>.png
 ```
 
-This uploads, prints the URL, and moves the file to `images/uploaded/{name}-{hash}.png`.
+This uploads to official Voyage hosting (moderated; requires Creator API setup and a pinned world), prints the canonical URL, and moves the file to `images/uploaded/{name}-{hash}.png`. Portraits use the default target; pass `-t AREA_IMAGE`, `-t LOCATION_IMAGE`, or `-t REGION_MAP_IMAGE` for other image kinds.
 
 10. Add the returned URL as `"portraitUrl"` on the NPC entry in `tabs/npcs.json`
 

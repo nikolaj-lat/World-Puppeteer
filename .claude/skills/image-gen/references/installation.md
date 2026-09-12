@@ -2,16 +2,10 @@
 
 ## 1. Gemini API Key
 
-Get one at https://aistudio.google.com/apikey.
+Get one at https://aistudio.google.com/apikey, then open `.claude/secrets.env` and paste it directly after the `=`:
 
-macOS / Linux — add to `~/.zshrc`:
-```bash
-export GEMINI_API_KEY="your-key-here"
 ```
-
-Windows (PowerShell) — set as a user environment variable:
-```powershell
-[Environment]::SetEnvironmentVariable('GEMINI_API_KEY', 'your-key-here', 'User')
+GEMINI_API_KEY=your-key-here
 ```
 
 The script auto-sources this at runtime on both platforms.

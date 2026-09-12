@@ -4,8 +4,19 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { execSync } from "node:child_process";
 import { parseArgs } from "node:util";
+import { fileURLToPath } from "node:url";
 
-// Source API key from shell profile if not already set
+// Source API key from .claude/secrets.env first, then fall back to the
+// legacy shell-profile locations, if not already in the environment.
+if (!process.env.GEMINI_API_KEY) {
+  try {
+    const secretsPath = path.join(path.dirname(fileURLToPath(import.meta.url)), "../../../secrets.env");
+    const line = fs.readFileSync(secretsPath, "utf8").split("\n")
+      .map((l) => l.match(/^\s*GEMINI_API_KEY\s*=\s*"?([^"\s#]+)"?\s*$/))
+      .find(Boolean);
+    if (line) process.env.GEMINI_API_KEY = line[1];
+  } catch {}
+}
 if (!process.env.GEMINI_API_KEY) {
   try {
     if (process.platform === "win32") {

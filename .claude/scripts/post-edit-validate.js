@@ -102,7 +102,33 @@ if (!parsed) {
   process.exit(0);
 }
 
-if (validation.errors.length === 0) {
+// Remote engine validation (synchronous, authoritative). Toggle off with
+// WP_REMOTE_VALIDATE=off or "remoteValidation": "off" in .creator-api.json;
+// skipped silently when no API key is configured yet. The remote validates the
+// same merged tabs the local validator just saw (draft stage while editing).
+let remote = null;
+try {
+  const remoteOut = execSync('node .claude/scripts/api/remote-validate.js --stage draft --json', {
+    cwd: projectDir,
+    encoding: 'utf8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+  });
+  remote = JSON.parse(remoteOut);
+} catch (err) {
+  // exit 3 = unavailable; stdout still carries the JSON with the reason
+  try { remote = JSON.parse(err.stdout || ''); } catch { remote = null; }
+}
+const remoteRan = remote?.available === true;
+
+// Surfacing rule: remote findings are authoritative. Local ERRORS tagged
+// 'mirror' (checks the engine also performs) defer to the remote verdict when
+// it ran; 'wp-only' local errors (checks the engine cannot perform) always
+// block. Warnings always surface. When remote is unreachable, everything
+// local surfaces, marked as a local-only verdict.
+const localBlocking = validation.errors.filter((e) => !remoteRan || e.category !== 'mirror');
+const remoteErrors = remoteRan ? remote.errors : [];
+
+if (localBlocking.length === 0 && remoteErrors.length === 0) {
   // No errors - run build
   try {
     execSync('node .claude/scripts/build.js', {
@@ -116,13 +142,18 @@ if (validation.errors.length === 0) {
   process.exit(0);
 }
 
-// Errors found - analyze and suggest fixes
-const errorDetails = validation.errors.map(e => {
-  let msg = `${e.path || 'unknown'}: ${e.message}`;
-  if (e.expected) msg += ` (valid: ${e.expected})`;
-  if (e.actual) msg += ` (got: ${e.actual})`;
-  return { msg, error: e };
-});
+// Errors found - analyze and suggest fixes. Remote and local findings are
+// presented as one undifferentiated list; the agent fixes errors, it does not
+// need to know which validator produced them.
+const errorDetails = [
+  ...remoteErrors.map(e => ({ msg: `${e.path || 'unknown'}: ${e.message}`, error: e })),
+  ...localBlocking.map(e => {
+    let msg = `${e.path || 'unknown'}: ${e.message}`;
+    if (e.expected) msg += ` (valid: ${e.expected})`;
+    if (e.actual) msg += ` (got: ${e.actual})`;
+    return { msg, error: e };
+  }),
+];
 
 // Detect what kind of fixes are needed
 const needsSettings = errorDetails.some(d =>
@@ -206,10 +237,15 @@ if (hasSkillSuggestions) {
 }
 
 const errorMessages = errorDetails.map(d => d.msg).join('\n');
+// Only worth mentioning when a key IS configured (someone opted into remote
+// validation and this run lost it); a keyless checkout stays silent.
+const coverageNote = remoteRan || remote?.configured !== true
+  ? ''
+  : `\n\n(note: remote engine validation did not run${remote?.reason ? `: ${remote.reason}` : ''})`;
 
 const output = {
   decision: 'block',
-  reason: `VALIDATION ERRORS:\n${errorMessages}${suggestions}`
+  reason: `VALIDATION ERRORS:\n${errorMessages}${suggestions}${coverageNote}`
 };
 
 console.log(JSON.stringify(output));

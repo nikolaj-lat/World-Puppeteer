@@ -30,6 +30,14 @@
         ]
       },
       {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/create-secrets.js"
+          }
+        ]
+      },
+      {
         "matcher": "compact",
         "hooks": [
           {
@@ -56,6 +64,17 @@
           {
             "type": "command",
             "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/check-background-agents.js"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Read|Edit|Write|Grep|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node $CLAUDE_PROJECT_DIR/.claude/scripts/guard-secrets.js"
           }
         ]
       }

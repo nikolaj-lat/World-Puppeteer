@@ -41,25 +41,35 @@ node --version
 
 Open this folder in your editor and start a Claude Code session. Claude Code hooks will run automatically on session start.
 
-## Step 5 (Optional): Image Generation
+## Step 5 (Optional): Voyage Creator API
+
+Connect directly to Voyage: pull/push the world, live engine validation on every edit, official image uploads, and the moderation preflight.
+
+1. Create an API key in [Voyage Studio](https://alpha.voyage.io/studio) by opening its Settings in the bottom right, and in the "API keys" section writing in a label like `World Puppeteer` before clicking Generate and copying the key.
+
+2. Open `.claude/secrets.env` and paste your key directly after the `=`:
+
+   ```
+   VOYAGE_CREATOR_API_KEY=your-key-here
+   ```
+
+3. In a Claude Code session, paste your world's link and ask for it to be pulled, e.g.:
+
+   > Pull https://voyage.io/world/AbCdEfGhIjKl/my-world
+
+   The first pull pins that world for this checkout and syncs it into `tabs/` (any existing tabs are backed up to `config-backups/` first).
+
+## Step 6 (Optional): Gemini Image Generation
 
 To generate images (portraits, covers, etc.) using Google Gemini:
 
 1. Get an API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
 
-2. Add the key to your environment:
+2. Open `.claude/secrets.env` and paste your key directly after the `=`:
 
-   **macOS / Linux** — add to `~/.zshrc` or `~/.bashrc`:
-   ```bash
-   export GEMINI_API_KEY="your-key-here"
    ```
-   Then reload: `source ~/.zshrc`
-
-   **Windows (PowerShell)**:
-   ```powershell
-   [Environment]::SetEnvironmentVariable('GEMINI_API_KEY', 'your-key-here', 'User')
+   GEMINI_API_KEY=your-key-here
    ```
-   Then restart your terminal.
 
 3. Install the Gemini SDK in your home directory:
 

@@ -469,8 +469,13 @@ function buildResourceKeySet(config) {
     : new Set();
 }
 
-function createError(path, message, severity = 'error') {
-  return { path, message, severity };
+// category: 'wp-only' = a check the remote engine validation cannot perform
+// (tab/build shape, editorial strictness, coverage gaps); 'mirror' = a check the
+// engine also performs, where the remote verdict is authoritative. The post-edit
+// hook and push suppress mirror-category ERRORS whenever remote validation ran;
+// warnings always surface. Default is wp-only so new checks are never hidden.
+function createError(path, message, severity = 'error', category = 'wp-only') {
+  return { path, message, severity, category };
 }
 
 function getJsonLength(obj) {
@@ -3542,28 +3547,79 @@ function validateLocationCoordinates(config, errors) {
 // MAIN
 // ============================================================================
 
+// AI-instruction section keys owned by the engine, per task. A stored creator key
+// that collides with one of these is SILENTLY stripped on save (the platform
+// keeps arbitrary custom-named keys, so only these collisions lose content).
+// Neither the engine's validation nor the Studio flags this, so this check is
+// the only place it can be caught before the content vanishes.
+const ENGINE_OWNED_AI_KEYS = {
+  generateStory: ['Output Format', 'Speech Delivery Cues', 'Player Input Mode', 'Voice Tags', 'Visual Focus Tags', 'Combat Hit Tags', 'Arrival Tag'],
+  generateInitialStart: ['Opening Format', 'Scene Goals', 'Active Situation', 'Dialog and Exposition', 'Format Requirements', 'Pacing Guardrails'],
+  generateActionInfo: ['core_task', 'possibility_assessment', 'difficulty_and_skills', 'skill_selection', 'context_modifiers', 'special_rules', 'conflicting_intents'],
+  generateConversationStarters: ['Output Contract'],
+  generateDialogue: ['Task and Output Contract', 'Character Consistency', 'Knowledge Boundaries', 'Player Action Tag', 'End Conversation Tag'],
+  generateNpcChatSummary: ['Output Contract'],
+  generateNPCIntents: ['context_precedence', 'combat_tactics', 'intent_types_utility', 'intent_types_combat', 'intent_types_other', 'targeting_rules', 'character_name_requirements'],
+  generateNewNPC: ['overview', 'naming_conventions', 'npc_type', 'tier_assignment', 'health_percent', 'gender', 'visual_description', 'visual_tags'],
+  generateLocationDetails: ['location_detail_generator', 'terminology', 'location_archetype_information', 'location_instructions', 'hidden_info', 'areas', 'area_details'],
+  generateRegionDetails: ['creator_instructions', 'archetype_information', 'terminology', 'names', 'basic_info', 'locations', 'surprising_elements', 'restrictions', 'style'],
+  generateEncounters: ['encounter_instructions', 'encounter_requirements'],
+};
+
+function validateAiInstructionKeys(config, errors) {
+  if (!config.aiInstructions || typeof config.aiInstructions !== 'object') return;
+  for (const [taskId, instructions] of Object.entries(config.aiInstructions)) {
+    const engineOwned = ENGINE_OWNED_AI_KEYS[taskId];
+    if (!engineOwned || !instructions || typeof instructions !== 'object' || Array.isArray(instructions)) continue;
+    for (const key of Object.keys(instructions)) {
+      if (engineOwned.includes(key)) {
+        errors.push(createError(
+          `aiInstructions.${taskId}.${key}`,
+          `"${key}" is an engine-owned section for ${taskId}; a stored key with this name is silently stripped on save and its content is lost. Rename or remove it`,
+        ));
+      }
+    }
+  }
+}
+
 function validate(config) {
   const errors = [];
   const warnings = [];
 
-  validateRequiredFields(config, errors);
-  validateReferenceIntegrity(config, errors);
-  validateTriggers(config, errors);
-  validateRelationshipStages(config, errors);
-  validateGameplayMusicSettings(config, errors);
-  validateCharacterCreationSettings(config, errors);
-  validateTraitCategories(config, errors);
-  validateNarrativeEvents(config, errors);
-  validateArcs(config, errors);
-  validateDamageTypes(config, errors);
-  validateCharacterLimits(config, errors, warnings);
-  validateTypeChecks(config, errors);
-  validateProgressionSettings(config, errors);
-  validateNameKeyMatch(config, errors);
-  validateLocationRequiredFields(config, errors);
-  validateRealmRequiredFields(config, errors);
-  validateLocationCoordinates(config, errors);
-  validateUnknownFields(config, errors);
+  // Runs a validator whose checks the remote engine also performs; its findings
+  // are tagged 'mirror' so reports can defer to the remote verdict when one ran.
+  const asMirror = (fn) => {
+    const start = errors.length;
+    fn();
+    for (let i = start; i < errors.length; i++) errors[i].category = 'mirror';
+  };
+
+  validateRequiredFields(config, errors); // wp-only: tab shape + editorial policy
+  asMirror(() => validateReferenceIntegrity(config, errors));
+  // Quest authoring fields the engine does not value-check (initialStatus is not
+  // in the runtime codec; onCompleteEffects get reference checks only remotely)
+  for (const issue of errors) {
+    if (typeof issue.path === 'string' && (issue.path.includes('.initialStatus') || issue.path.includes('.onCompleteEffects'))) {
+      issue.category = 'wp-only';
+    }
+  }
+  validateTriggers(config, errors); // wp-only: semantic rules + questTriggers/draft-stage limits
+  asMirror(() => validateRelationshipStages(config, errors));
+  asMirror(() => validateGameplayMusicSettings(config, errors));
+  asMirror(() => validateCharacterCreationSettings(config, errors));
+  validateTraitCategories(config, errors); // wp-only: subcategory shape rules
+  validateNarrativeEvents(config, errors); // wp-only: non-empty title/beats, targetTurns rule
+  validateArcs(config, errors); // wp-only: id/key parity the engine lacks
+  asMirror(() => validateDamageTypes(config, errors));
+  asMirror(() => validateCharacterLimits(config, errors, warnings));
+  asMirror(() => validateTypeChecks(config, errors));
+  asMirror(() => validateProgressionSettings(config, errors));
+  asMirror(() => validateNameKeyMatch(config, errors));
+  asMirror(() => validateLocationRequiredFields(config, errors));
+  asMirror(() => validateRealmRequiredFields(config, errors));
+  asMirror(() => validateLocationCoordinates(config, errors));
+  asMirror(() => validateUnknownFields(config, errors));
+  validateAiInstructionKeys(config, errors); // wp-only: keys silently stripped on save
 
   // Checks tagged with severity 'warning' mirror engine sanitization (clamp/truncate/drop)
   // rather than rejection, so they must not fail validation.

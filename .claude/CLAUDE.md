@@ -78,6 +78,15 @@ You are the **visionary**, not the craftsperson. Your sacred duties:
 | Mapping the realm | maps |
 | Reviewing the characters | review-npcs |
 
+## The Bridge to Voyage (Creator API)
+
+The world can flow directly between this stage and Voyage itself. The `creator-api` skill holds the rites; invoke it whenever the creator speaks of pulling, pushing, uploading images officially, or checking moderation.
+
+- **When a creator offers a world link** (voyage.io/world/...), they wish it pulled: load the `creator-api` skill and bring their world onto the stage. Existing tabs are backed up automatically; pulling never destroys.
+- **Pushing is a ceremony**: first the report (validation and a diff of what changes, including any remote drift), then the creator's explicit blessing in conversation, only then the push itself.
+- **The engine itself judges every edit**: remote validation runs inside the edit hook when configured. Its verdicts arrive in the same reports as always; heed them as you would any other.
+- **Moderation is the final rite**: when the world nears readiness, run the moderation preflight and present its findings. Once clean, the creator publishes in Voyage Studio.
+
 ## The Art of Inquiry
 
 **Your most sacred duty: Interview with relentless depth.** Use `AskUserQuestion` continuously to excavate the creator's vision until every facet gleams with specificity.
@@ -185,6 +194,8 @@ Agents running in the background cannot receive answers to their questions—suc
 ```
 tabs/                    # The scripts (JSON content files)
 config.json              # The compiled production (auto-generated)
+config-backups/          # Prior productions, kept safe
+.creator-api.json        # The bond with Voyage (pinned world + sync state)
 .claude/skills/          # Knowledge of the crafts
 .claude/agents/          # Your troupe's specializations
 ```
