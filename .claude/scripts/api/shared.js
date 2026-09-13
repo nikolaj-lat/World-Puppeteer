@@ -131,7 +131,10 @@ async function apiRequest({ method, path: apiPath, body, etag, idempotent, timeo
     headers['Content-Type'] = 'application/json';
     init.body = payload;
   }
-  if (etag) headers['If-Match'] = etag;
+  // Intermediaries (compression layers) can downgrade the API's strong ETag to
+  // a weak one (W/"..."); the API's If-Match parser accepts only the quoted
+  // revision, so strip the weakness marker before echoing it back.
+  if (etag) headers['If-Match'] = etag.replace(/^W\//i, '');
   if (method === 'POST' && idempotent !== false) headers['Idempotency-Key'] = crypto.randomUUID();
 
   const controller = new AbortController();
