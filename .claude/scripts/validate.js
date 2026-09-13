@@ -446,7 +446,7 @@ const LIMITS = {
     itemCategory: 60,
     itemSlotName: 64,
     itemSlotCategory: 60,
-    damageType: 60,
+    damageType: 90,
     attributeName: 64,
     nameFilterReplacement: 64,
     premadeCharacter: 20_000,
