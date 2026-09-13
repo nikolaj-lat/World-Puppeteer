@@ -112,6 +112,7 @@ try {
     cwd: projectDir,
     encoding: 'utf8',
     stdio: ['pipe', 'pipe', 'pipe'],
+    maxBuffer: 64 * 1024 * 1024,
   });
   remote = JSON.parse(remoteOut);
 } catch (err) {

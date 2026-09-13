@@ -1879,7 +1879,7 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
     const triggerName = typeof trigger.name === 'string' ? trigger.name : String(key);
     if (triggerName.startsWith(RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX)
         || (!isArrayForm && String(key).startsWith(RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX))) {
-      errors.push(createError(`${basePath}.name`, `Trigger names beginning "${RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX}" are reserved for engine-generated quest progress and cannot be authored`));
+      errors.push(createError(`${basePath}.name`, `Trigger names beginning "${RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX}" are reserved for engine-derived quest progress triggers. Delete it: the engine regenerates these from each quest's completionCondition on save (a pull done before this check existed may have left them in tabs)`));
     }
 
     // Validate individual trigger size
@@ -2800,6 +2800,9 @@ function validateUnknownFields(config, errors) {
       'embeddingId', 'portraitUrl', 'portraitFocusX', 'portraitFocusY', 'portraitZoom',
       'needsDetailGeneration', 'deathXPAwarded', 'worldVoiceId',
       'relationship', 'successBonus', 'damageModifier', 'damageReductionModifier',
+      // Engine-materialized fields present in stored drafts a pull brings down
+      'status', 'lastSeenTick', 'playerNotes', 'deathDamageContributors',
+      'incapacitatedTurns', 'portraitUrlSource', 'cutoutUrl', 'cutoutSourceUrl',
     ]),
     locations: new Set([
       'name', 'basicInfo', 'x', 'y', 'radius', 'region', 'complexityType',
@@ -2811,7 +2814,7 @@ function validateUnknownFields(config, errors) {
       'name', 'basicInfo', 'x', 'y', 'realm', 'factions', 'hiddenInfo', 'known', 'npcLevelRange', 'images',
     ]),
     realms: new Set([
-      'name', 'basicInfo', 'known',
+      'name', 'basicInfo', 'known', 'embeddingId',
     ]),
     factions: new Set([
       'name', 'basicInfo', 'factionType', 'hiddenInfo', 'embeddingId', 'detailType', 'known',
@@ -2821,10 +2824,12 @@ function validateUnknownFields(config, errors) {
       'imageUrl', 'imageFocusX', 'imageFocusY', 'imageZoom',
     ]),
     abilities: new Set([
-      'name', 'description', 'requirements', 'bonus', 'cooldown',
+      'name', 'description', 'requirements', 'bonus', 'cooldown', 'lastUsedTick',
     ]),
     skills: new Set([
       'name', 'attribute', 'type', 'description', 'startingItems',
+      // Engine-materialized fields present in stored drafts a pull brings down
+      'level', 'xp', 'xpToNextLevel',
     ]),
     traits: new Set([
       'name', 'description', 'traitNarrativeEffects', 'attributes', 'skills', 'resources',
@@ -2838,6 +2843,12 @@ function validateUnknownFields(config, errors) {
       'name', 'questType', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
       'questGiverNPC', 'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
       'objectives', 'activeObjectiveId', 'nextStep', 'initialStatus', 'onCompleteEffects',
+      // Engine-materialized fields present in stored drafts a pull brings down
+      'id', 'definitionKey', 'creationTick', 'status', 'contentOrigin', 'questGiverNPCKey',
+      'detectionTick', 'acceptedTick', 'expiryTick', 'startingArea', 'completedTick',
+      'abandonedTick', 'rejectedTick', 'connectingAreaName', 'questAreas', 'questStepPhase',
+      'hasVisitedLocation', 'hasVisitedStartingArea', 'objectiveCompleted', 'offeredAtLocation',
+      'arcId', 'arcEscalationAtCreation', 'arcQuestOrdinal', 'embeddingId',
     ]),
     storyStarts: new Set([
       'name', 'description', 'storyStart', 'locations', 'locationAreas',
@@ -2855,6 +2866,8 @@ function validateUnknownFields(config, errors) {
     ]),
     narrativeEvents: new Set([
       'title', 'beats', 'targetTurns', 'onCompleteEffects',
+      // Engine-materialized fields present in stored drafts a pull brings down
+      'id', 'status', 'turnsActive', 'completedTick', 'startingLocation',
     ]),
   };
 
@@ -3801,7 +3814,14 @@ function main() {
     printReport(result, displayPath, verbose);
   }
 
-  process.exit(result.errors.length > 0 ? 1 : 0);
+  // exitCode, never process.exit(): exit() can kill the process before large
+  // piped stdout finishes flushing, handing callers truncated JSON.
+  process.exitCode = result.errors.length > 0 ? 1 : 0;
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+// The creator-surface root lists double as the pull/push projection filter.
+module.exports = { REQUIRED_TOP_LEVEL, OPTIONAL_TOP_LEVEL, RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX };

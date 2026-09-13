@@ -15,6 +15,50 @@ const TABS_DIR = path.join(PROJECT_ROOT, 'tabs');
 const BACKUP_DIR = path.join(PROJECT_ROOT, 'config-backups');
 const SPLIT_SCRIPT = path.join(__dirname, '..', 'split.js');
 
+const {
+  REQUIRED_TOP_LEVEL,
+  OPTIONAL_TOP_LEVEL,
+  RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX,
+} = require('../validate.js');
+
+// The creator-writable surface. A stored draft fetched from the API is a
+// COMPLETE GameState carrying runtime roots too (gameConfig, engineState,
+// embeddings, chatLog, ...); those never belong in tabs. Push preserves them
+// by overlaying the projected tabs onto the freshly fetched remote document.
+const CREATOR_ROOTS = new Set([...REQUIRED_TOP_LEVEL, ...OPTIONAL_TOP_LEVEL, 'unassignedAreas']);
+
+/**
+ * Reduce a full GameState to the creator surface: keep creator roots only and
+ * drop engine-derived quest progress triggers (the engine regenerates those
+ * from each quest's completionCondition on save).
+ * Returns { projected, droppedRoots, strippedTriggers }.
+ */
+function projectToCreatorSurface(initialGameState) {
+  const projected = {};
+  const droppedRoots = [];
+  for (const [key, value] of Object.entries(initialGameState ?? {})) {
+    if (CREATOR_ROOTS.has(key)) projected[key] = value;
+    else droppedRoots.push(key);
+  }
+  let strippedTriggers = 0;
+  for (const section of ['triggers', 'questTriggers']) {
+    const root = projected[section];
+    if (!root || typeof root !== 'object' || Array.isArray(root)) continue;
+    const kept = {};
+    for (const [id, trigger] of Object.entries(root)) {
+      const name = typeof trigger?.name === 'string' ? trigger.name : String(id);
+      if (String(id).startsWith(RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX)
+          || name.startsWith(RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX)) {
+        strippedTriggers++;
+        continue;
+      }
+      kept[id] = trigger;
+    }
+    projected[section] = kept;
+  }
+  return { projected, droppedRoots, strippedTriggers };
+}
+
 function listTabFiles() {
   try {
     return fs.readdirSync(TABS_DIR).filter((f) => f.endsWith('.json'));
@@ -78,4 +122,4 @@ function splitIntoTabs(config) {
   }
 }
 
-module.exports = { BACKUP_DIR, TABS_DIR, backupMergedTabs, mergeTabs, mergedHash, splitIntoTabs, tabsAreEmpty };
+module.exports = { BACKUP_DIR, CREATOR_ROOTS, TABS_DIR, backupMergedTabs, mergeTabs, mergedHash, projectToCreatorSurface, splitIntoTabs, tabsAreEmpty };

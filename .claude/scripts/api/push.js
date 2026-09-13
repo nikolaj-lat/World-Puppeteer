@@ -19,11 +19,11 @@
 const path = require('path');
 const { execFileSync } = require('child_process');
 const { apiRequest, canonicalJson, loadState, saveState, sha256, PROJECT_ROOT } = require('./shared');
-const { mergeTabs } = require('./tabs');
+const { CREATOR_ROOTS, mergeTabs, projectToCreatorSurface } = require('./tabs');
 
 function runJson(script, args) {
   try {
-    const out = execFileSync('node', [script, ...args], { cwd: PROJECT_ROOT, encoding: 'utf8' });
+    const out = execFileSync('node', [script, ...args], { cwd: PROJECT_ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
     return JSON.parse(out);
   } catch (err) {
     if (err.stdout) {
@@ -56,7 +56,12 @@ async function main() {
     process.exit(1);
   }
 
-  const candidate = mergeTabs();
+  // Tabs should only hold the creator surface; project anyway so leftovers
+  // from an old faithful pull (runtime roots, derived triggers) never ship.
+  const { projected: candidate, droppedRoots, strippedTriggers } = projectToCreatorSurface(mergeTabs());
+  if (droppedRoots.length > 0 || strippedTriggers > 0) {
+    console.log(`NOTE: ignoring non-creator content found in tabs (${[...droppedRoots, strippedTriggers > 0 ? `${strippedTriggers} engine-derived trigger(s)` : ''].filter(Boolean).join(', ')}). Re-pull to clean tabs up.`);
+  }
   const candidateHash = sha256(canonicalJson(candidate));
 
   // 1. Remote publish-stage validation (authoritative). No file argument:
@@ -85,11 +90,14 @@ async function main() {
     process.exit(1);
   }
 
-  // 3. Fetch remote for etag + drift report.
+  // 3. Fetch remote for etag + drift report. All comparisons run on the
+  //    creator surface: runtime roots change every play session and must not
+  //    read as drift.
   const response = await apiRequest({ method: 'GET', path: `/worlds/${encodeURIComponent(state.shortId)}` });
   const world = response.json?.data?.world ?? response.json?.data;
   const etag = response.headers.get('etag');
-  const remoteHash = sha256(canonicalJson(world.initialGameState));
+  const remoteCreator = projectToCreatorSurface(world.initialGameState).projected;
+  const remoteHash = sha256(canonicalJson(remoteCreator));
 
   if (remoteHash === candidateHash) {
     saveState({ lastSyncedAt: new Date().toISOString(), lastSyncedHash: candidateHash });
@@ -101,7 +109,7 @@ async function main() {
   const remoteDrifted = baseKnown && remoteHash !== state.lastSyncedHash;
   console.log(`World: ${state.shortId} ("${world.title}")`);
   console.log(`Local changes vs remote (section level):`);
-  const changes = sectionDiffSummary('remote', world.initialGameState, 'local', candidate);
+  const changes = sectionDiffSummary('remote', remoteCreator, 'local', candidate);
   console.log(changes.length ? changes.join('\n') : '  (none at section level)');
   if (remoteDrifted) {
     console.log('\nWARNING: the remote has drifted since the last sync (edits made outside WP).');
@@ -115,21 +123,29 @@ async function main() {
     process.exit(2);
   }
 
-  // 4. Full replace, metadata preserved, only initialGameState swapped.
+  // 4. Full replace: world metadata preserved, runtime/system roots preserved
+  //    from the fresh remote document, creator roots replaced by the tabs
+  //    (tabs are canonical, so a creator root absent from tabs is removed).
+  const nextInitialGameState = { ...world.initialGameState };
+  for (const root of CREATOR_ROOTS) delete nextInitialGameState[root];
+  Object.assign(nextInitialGameState, candidate);
   await apiRequest({
     method: 'PUT',
     path: `/worlds/${encodeURIComponent(state.shortId)}`,
-    body: { world: { ...world, initialGameState: candidate } },
+    body: { world: { ...world, initialGameState: nextInitialGameState } },
     etag,
   });
 
-  // 5. Verify by re-reading.
+  // 5. Verify by re-reading (creator surface only; the save funnel is allowed
+  //    to touch runtime roots and to re-derive quest progress triggers).
   const verify = await apiRequest({ method: 'GET', path: `/worlds/${encodeURIComponent(state.shortId)}` });
   const verifiedWorld = verify.json?.data?.world ?? verify.json?.data;
-  const verifiedHash = sha256(canonicalJson(verifiedWorld.initialGameState));
+  const verifiedHash = sha256(canonicalJson(projectToCreatorSurface(verifiedWorld.initialGameState).projected));
   if (verifiedHash !== candidateHash) {
-    console.error('Push completed but the re-read does not match what was sent. Investigate before editing further.');
-    process.exit(1);
+    console.error('Push completed but the re-read creator content does not exactly match what was sent.');
+    console.error('This can be legitimate (the save funnel materializes some quest fields); run pull to reconcile tabs with the stored result.');
+    process.exitCode = 1;
+    return;
   }
   saveState({ lastSyncedAt: new Date().toISOString(), lastSyncedHash: candidateHash });
   console.log('Pushed and verified.');

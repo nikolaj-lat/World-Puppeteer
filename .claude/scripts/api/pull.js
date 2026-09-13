@@ -22,7 +22,7 @@
 const { execFileSync } = require('child_process');
 const path = require('path');
 const { apiRequest, canonicalJson, loadState, saveState, sha256, PROJECT_ROOT } = require('./shared');
-const { backupMergedTabs, mergeTabs, splitIntoTabs, tabsAreEmpty } = require('./tabs');
+const { backupMergedTabs, mergeTabs, projectToCreatorSurface, splitIntoTabs, tabsAreEmpty } = require('./tabs');
 
 // Accepts a bare shortId or a pasted world/studio link and returns the shortId.
 function resolveShortId(arg) {
@@ -62,10 +62,13 @@ async function main() {
     process.exit(1);
   }
 
-  const remoteState = world.initialGameState;
+  // The stored draft is a complete GameState; tabs only ever hold the creator
+  // surface. Runtime roots stay on the server (push preserves them), and
+  // engine-derived quest progress triggers are dropped (regenerated on save).
+  const { projected: remoteState, droppedRoots, strippedTriggers } = projectToCreatorSurface(world.initialGameState);
   const remoteHash = sha256(canonicalJson(remoteState));
   const localIsEmpty = tabsAreEmpty();
-  const localHash = localIsEmpty ? null : sha256(canonicalJson(mergeTabs()));
+  const localHash = localIsEmpty ? null : sha256(canonicalJson(projectToCreatorSurface(mergeTabs()).projected));
 
   if (localHash === remoteHash) {
     saveState({ shortId, lastSyncedAt: new Date().toISOString(), lastSyncedHash: remoteHash });
@@ -82,6 +85,12 @@ async function main() {
   execFileSync('node', [path.join(__dirname, '..', 'build.js')], { cwd: PROJECT_ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
   saveState({ shortId, lastSyncedAt: new Date().toISOString(), lastSyncedHash: remoteHash });
   console.log(`Pulled ${shortId} ("${world.title}") into tabs/ and rebuilt config.json.`);
+  if (droppedRoots.length > 0) {
+    console.log(`Left on the server (runtime/system state, preserved by push): ${droppedRoots.join(', ')}`);
+  }
+  if (strippedTriggers > 0) {
+    console.log(`Dropped ${strippedTriggers} engine-derived quest progress trigger(s); the engine regenerates them from each quest's completionCondition on save.`);
+  }
 }
 
 main().catch((err) => {

@@ -16,7 +16,7 @@
 
 const fs = require('fs');
 const { apiRequest, isConfigured, loadState } = require('./shared');
-const { mergeTabs } = require('./tabs');
+const { mergeTabs, projectToCreatorSurface } = require('./tabs');
 
 function isDisabled() {
   if ((process.env.WP_REMOTE_VALIDATE || '').toLowerCase() === 'off') return 'WP_REMOTE_VALIDATE=off';
@@ -44,18 +44,24 @@ async function main() {
         for (const issue of result.warnings) console.log(`  warn  ${issue.code} ${issue.path}: ${issue.message}`);
       }
     }
-    process.exit(exitCode);
+    // exitCode, never process.exit(): exit() can truncate large piped stdout
+    // before it flushes, handing callers unparseable JSON.
+    process.exitCode = exitCode;
   };
 
   const disabled = isDisabled();
-  if (disabled) emit({ available: false, reason: disabled }, 3);
-  if (!isConfigured()) emit({ available: false, reason: 'no API key configured (see SETUP.md)' }, 3);
+  if (disabled) return emit({ available: false, reason: disabled }, 3);
+  if (!isConfigured()) return emit({ available: false, reason: 'no API key configured (see SETUP.md)' }, 3);
 
   let initialGameState;
   try {
-    initialGameState = fileArg ? JSON.parse(fs.readFileSync(fileArg, 'utf8')) : mergeTabs();
+    // Project so leftovers from an old faithful pull (runtime roots, derived
+    // triggers) never reach the wire; also keeps the payload lean.
+    initialGameState = fileArg
+      ? JSON.parse(fs.readFileSync(fileArg, 'utf8'))
+      : projectToCreatorSurface(mergeTabs()).projected;
   } catch (err) {
-    emit({ available: false, reason: `could not read config: ${err.message}` }, 3);
+    return emit({ available: false, reason: `could not read config: ${err.message}` }, 3);
   }
 
   try {
