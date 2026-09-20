@@ -121,14 +121,14 @@ interface NpcRelationshipStageCondition {
 
 ```typescript
 interface NpcBooleanCondition {
-  type: 'npc-in-scene' | 'npc-in-party'
+  type: 'npc-in-scene' | 'npc-in-party' | 'npc-in-combat'
   npc: string                       // NPC name from tabs/npcs.json, or a selector (anySceneNPC / anyPartyNPC)
   operator: 'equals' | 'notEquals'
   value: boolean
 }
 
 interface NpcStringCondition {
-  type: 'npc-realm' | 'npc-region' | 'npc-location' | 'npc-area'
+  type: 'npc-realm' | 'npc-region' | 'npc-location' | 'npc-area' | 'npc-type'
   npc: string                       // NPC name from tabs/npcs.json, or a selector (anySceneNPC / anyPartyNPC)
   operator: 'equals' | 'notEquals' | 'contains' | 'notContains' | 'regex'
   value: string
@@ -136,8 +136,11 @@ interface NpcStringCondition {
 ```
 
 - `npc-in-scene` checks whether the NPC is in the current scene; `npc-in-party` whether it is a party member.
+- `npc-in-combat` is true when the NPC either takes a combat action this turn or is targeted by one, from any attacker. It is the same signal that starts combat music. It describes this turn only: it goes false again on the first turn nobody swings.
+- An `npc-in-combat` condition sends the trigger to the Planning phase (see Phase Partitioning) so its effects reach this turn's narration. Adding a `story` or `story-text` condition to the same trigger moves it to the State phase instead, where the fight has already been narrated; keep the story check on a separate trigger when you want the combat-phase timing.
 - `npc-location` / `npc-area` compare the NPC's stored location and area strings. After a `moveAway` the stored value is an empty string: `equals ''` matches, `contains` never does.
 - `npc-realm` / `npc-region` derive from the NPC's current location (the location resolves to its region, the region to its realm). When the NPC is off-stage or the chain does not resolve, the condition matches no operator, `notEquals` / `notContains` included.
+- `npc-type` compares the NPC's type key from `tabs/npc-types.json`, so `value` is a key of that file rather than a type's display name. An NPC whose type resolves to nothing compares against its raw stored type string.
 
 ### Boolean Conditions
 
@@ -504,7 +507,7 @@ Routing per trigger, first match wins:
 |-------------|-------|
 | Any `action` or `action-text` condition | Planning (with the actions) |
 | Any `story` or `story-text` condition | State |
-| Any `action-success-level` condition | Planning (mechanics: after outcomes and combat damage) |
+| Any `action-success-level` or `npc-in-combat` condition | Planning (mechanics: after outcomes and combat damage) |
 | `phase: 'planning'` | Planning (mechanics) |
 | Anything else | State |
 
@@ -555,7 +558,8 @@ Trigger names beginning `__generated_quest_progress__/` are reserved for engine-
 |-------|------------|
 | `conditions[].entity` (known-entity) | `tabs/npcs.json`, `tabs/factions.json`, `tabs/realms.json`, `tabs/regions.json`, `tabs/locations.json` |
 | `conditions[].value` (party-*) | `tabs/realms.json`, `tabs/regions.json`, `tabs/locations.json` |
-| `conditions[].npc` (npc-relationship, npc-relationship-stage, npc-health, npc-health-percent, npc-in-scene, npc-in-party, npc-realm, npc-region, npc-location, npc-area) | `tabs/npcs.json`, or a selector (`anySceneNPC` / `anyPartyNPC`) |
+| `conditions[].npc` (npc-relationship, npc-relationship-stage, npc-health, npc-health-percent, npc-in-scene, npc-in-party, npc-in-combat, npc-realm, npc-region, npc-location, npc-area, npc-type) | `tabs/npcs.json`, or a selector (`anySceneNPC` / `anyPartyNPC`) |
+| `conditions[].value` (npc-type) | `tabs/npc-types.json` |
 | `conditions[].skill` (skill-value) | `tabs/skills.json` (id or display name) |
 | `conditions[].resource` | `resourceSettings.resources` in `tabs/settings.json` |
 | `conditions[].value` (player-traits) | `tabs/traits.json` |

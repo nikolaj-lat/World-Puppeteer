@@ -60,6 +60,8 @@ const VALID_TRIGGER_CONDITION_TYPES = [
   'npc-region',
   'npc-location',
   'npc-area',
+  'npc-in-combat',
+  'npc-type',
 ];
 
 const VALID_TRIGGER_EFFECT_TYPES = [
@@ -141,6 +143,7 @@ const TRIGGER_NPC_SELECTORS = [...TRIGGER_NPC_EFFECT_SELECTORS, ...TRIGGER_NPC_C
 const NPC_CONDITION_TYPES = [
   'npc-relationship', 'npc-relationship-stage', 'npc-health', 'npc-health-percent',
   'npc-in-scene', 'npc-in-party', 'npc-realm', 'npc-region', 'npc-location', 'npc-area',
+  'npc-in-combat', 'npc-type',
 ];
 const NPC_EFFECT_TYPES = ['npc-relationship', 'npc-health', 'npc-in-party', 'npc-portrait', 'npc-placement'];
 
@@ -1342,6 +1345,7 @@ function buildQuestEventRefs(config) {
     regionKeys: config.regions ? new Set(Object.keys(config.regions)) : new Set(),
     locationKeys: config.locations ? new Set(Object.keys(config.locations)) : new Set(),
     areaKeys,
+    npcTypeKeys: config.npcTypes ? new Set(Object.keys(config.npcTypes)) : new Set(),
     skillKeys: config.skills ? new Set(Object.keys(config.skills)) : new Set(),
     attributeNames: new Set((config.attributeSettings?.attributeNames ?? []).filter((a) => typeof a === 'string').map(normalizeText)),
     relationshipStageNames: new Set(authoredStageNames.map(normalizeText)),
@@ -1938,10 +1942,10 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
 
         // Operator validation based on condition type
         if (cond.operator) {
-          const isStringCondition = ['story-text', 'action-text', 'party-realm', 'party-region', 'party-location', 'party-area', 'read-string', 'quest-status', 'narrative-event-status', 'npc-relationship-stage', 'npc-realm', 'npc-region', 'npc-location', 'npc-area'].includes(cond.type);
+          const isStringCondition = ['story-text', 'action-text', 'party-realm', 'party-region', 'party-location', 'party-area', 'read-string', 'quest-status', 'narrative-event-status', 'npc-relationship-stage', 'npc-realm', 'npc-region', 'npc-location', 'npc-area', 'npc-type'].includes(cond.type);
           // action-success-level uses the number-operator set (ordinal comparison over its enum)
           const isNumberCondition = ['player-level', 'game-tick', 'player-resource', 'read-number', 'npc-relationship', 'skill-value', 'npc-health', 'npc-health-percent', 'action-success-level'].includes(cond.type);
-          const isBooleanCondition = ['read-boolean', 'npc-in-scene', 'npc-in-party'].includes(cond.type);
+          const isBooleanCondition = ['read-boolean', 'npc-in-scene', 'npc-in-party', 'npc-in-combat'].includes(cond.type);
           const isArrayCondition = ['player-traits', 'quests-completed', 'read-array'].includes(cond.type);
 
           if (isStringCondition && !VALID_STRING_OPERATORS.includes(cond.operator)) {
@@ -2020,6 +2024,12 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
           if (!refs[refSet].has(cond.value)) {
             errors.push(createError(`${condPath}.value`, `References non-existent ${label}: ${cond.value}`, 'warning'));
           }
+        }
+
+        // npc-type values reference an NPC type key
+        if (cond.type === 'npc-type' && typeof cond.value === 'string' && cond.value !== ''
+            && !refs.npcTypeKeys.has(cond.value)) {
+          errors.push(createError(`${condPath}.value`, `References non-existent NPC type: ${cond.value}`, 'warning'));
         }
       });
     }

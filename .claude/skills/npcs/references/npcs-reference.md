@@ -197,7 +197,7 @@ Chat is available outside combat and only with living NPCs. When a conversation 
 
 ## Triggers
 
-NPC state is readable and writable from world triggers: the npc-health, npc-health-percent, npc-in-scene, npc-in-party, npc-realm, npc-region, npc-location, and npc-area conditions, and the npc-health, npc-in-party, npc-portrait, and npc-placement effects. Full semantics live in the triggers reference. Death detection is npc-health equals 0. The npc-placement and npc-in-party effects act on NPCs that are still up; npc-health effects can revive downed allies, after which they can be moved or recruited again.
+NPC state is readable and writable from world triggers: the npc-health, npc-health-percent, npc-in-scene, npc-in-party, npc-in-combat, npc-realm, npc-region, npc-location, npc-area, and npc-type conditions, and the npc-health, npc-in-party, npc-portrait, and npc-placement effects. Full semantics live in the triggers reference. Death detection is npc-health equals 0. The npc-placement and npc-in-party effects act on NPCs that are still up; npc-health effects can revive downed allies, after which they can be moved or recruited again.
 
 ## What the AI Sees About an NPC
 

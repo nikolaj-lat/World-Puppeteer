@@ -285,7 +285,7 @@ For `basic` quests, defines where the AI generates the quest location:
 
 ## Auto-Generated Triggers
 
-For `detailed` quests with a `story`-type `completionCondition`, the system auto-generates a hidden completion trigger:
+For any quest with a `story`-type `completionCondition`, the system auto-generates a hidden completion trigger:
 
 ```typescript
 {

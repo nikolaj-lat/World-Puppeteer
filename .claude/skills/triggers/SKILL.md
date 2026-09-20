@@ -48,10 +48,11 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 
 ### Mechanical Conditions (Code-Evaluated)
 
-**String conditions** (`party-realm`, `party-region`, `party-location`, `party-area`, `story-text`, `action-text`, `npc-realm`, `npc-region`, `npc-location`, `npc-area`):
+**String conditions** (`party-realm`, `party-region`, `party-location`, `party-area`, `story-text`, `action-text`, `npc-realm`, `npc-region`, `npc-location`, `npc-area`, `npc-type`):
 ```typescript
 { type: '...', operator: 'equals' | 'notEquals' | 'contains' | 'notContains' | 'regex', value: 'string' }
 // For npc-*, also include: npc. An off-stage or unresolved NPC matches no operator, notEquals/notContains included
+// npc-type compares the NPC type key from tabs/npc-types.json, not a type's display name
 ```
 
 **Number conditions** (`player-level`, `game-tick`, `player-resource`, `npc-relationship`, `skill-value`, `npc-health`, `npc-health-percent`):
@@ -75,10 +76,11 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 // Compares against the NPC's current stage name from the world's relationshipStages; a score matching no stage reads as 'Neutral'
 ```
 
-**Boolean conditions** (`known-entity`, `npc-in-scene`, `npc-in-party`):
+**Boolean conditions** (`known-entity`, `npc-in-scene`, `npc-in-party`, `npc-in-combat`):
 ```typescript
 { type: 'known-entity', operator: 'equals' | 'notEquals', value: boolean, entity: 'entityName' }
-{ type: 'npc-in-scene' | 'npc-in-party', operator: 'equals' | 'notEquals', value: boolean, npc: 'npcName' }
+{ type: 'npc-in-scene' | 'npc-in-party' | 'npc-in-combat', operator: 'equals' | 'notEquals', value: boolean, npc: 'npcName' }
+// npc-in-combat covers attacking or being attacked this turn, and describes this turn only
 ```
 
 **NPC selectors:** every `npc` field takes an authored NPC name, or `anySceneNPC` / `anyPartyNPC` in conditions (passes if any NPC in the set matches) and `allSceneNPCs` / `allPartyNPCs` in effects (fans out; `npc-portrait` takes a name only). A wrong-slot selector resolves to nothing; avoid giving NPCs those four names.

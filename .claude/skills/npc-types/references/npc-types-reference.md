@@ -65,3 +65,4 @@ Stacking: Static resistances and buff resistances multiply. 0.5x (static) x 0.5x
 | Field | Location |
 |-------|----------|
 | `type` | `tabs/npcs.json` - NPCs reference types by key |
+| Type key | `tabs/triggers.json` - the `npc-type` condition's `value` gates on a type key |
