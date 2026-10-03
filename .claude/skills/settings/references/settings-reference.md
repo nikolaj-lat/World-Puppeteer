@@ -251,10 +251,61 @@ Example:
 }
 ```
 
+## successLevelSettings
+
+```typescript
+successLevelSettings: SuccessLevelSettings  // ✅ Required top-level field; the example world carries the stock ladder below
+
+interface SuccessLevelSettings {
+  firstSuccessfulTierId: string   // ✅ id of the lowest tier that counts as a success; it and every higher band succeed
+  tiers: SuccessTier[]            // ✅ Contiguous whole-number score bands; list order does not matter, bands do
+}
+
+interface SuccessTier {
+  id: string                      // ✅ Unique key, referenced by firstSuccessfulTierId
+  name: string                    // ✅ Player-facing outcome name, unique ignoring case and surrounding spaces. action-success-level trigger conditions name tiers by this
+  minScore: number | null         // ✅ Lowest adjusted score in the band; null only on the lowest tier
+  maxScore: number | null         // ✅ Highest adjusted score in the band; null only on the highest tier. The next tier starts one point higher
+  prompt: string                  // ✅ Narration note for this outcome; {{characterName}} is replaced with the acting character's name
+  imageUrl?: string | null        // ✅ Optional image shown with the result, on official Latitude image hosting
+}
+```
+
+The success ladder turns a player's skill-check score into a named outcome. The score (see Skill Check Formula) is adjusted down by 2 per 10 character levels, and the tier whose band contains the adjusted score is the outcome. The tier's `name` is the success level shown to players and recorded on the action, and its `prompt` is the note the narrator receives for that action. Simple actions (no check needed) and impossible actions do not use the ladder. NPC actions never use it either; they keep the engine's fixed bands (see NPC Success Rolls).
+
+Every tier from `firstSuccessfulTierId` upward is a success; tiers below it are failures. Successful tiers also carry a strength from 0 (the first successful tier) to 1 (the highest tier), spaced evenly across the successful tiers; a ladder with a single successful tier gives it full strength. Strength is what combat reads:
+
+| Action | Effect of a successful tier with strength `s` |
+|---|---|
+| Attack or heal | Base damage `8 + 20 × s` (rounded), before the level bonus and the usual multipliers. A simple action uses 16. Failures deal nothing |
+| Evade or defend | Incoming damage reduced by `0.5 + 1.6 × s`, capped at 1.0, so any success from roughly a third of the way up the successful tiers fully nullifies the hit. A simple action fully nullifies |
+| preventAttack or subdue | Full effect on any success |
+| Buff | Buff potency `0.2 + 0.8 × s`; the damage boost granted by a buff intent is `0.1 + 0.4 × s` |
+| Combat conflict | When a player's defend or evade contests an NPC attack, a player success with strength 0.5 or more turns the NPC's attack into a failure; a weaker success limits it to mixed results |
+
+The highest tier is the critical outcome; the lowest failing tier is the critical failure.
+
+Bands are whole numbers and contiguous: each tier starts one point above the previous tier's `maxScore`, with no gaps or overlaps, only the lowest tier has `minScore: null`, and only the highest tier has `maxScore: null`. Ids are unique, and names are unique ignoring case and surrounding spaces. During play the engine falls back to the stock ladder in place of a ladder that breaks these rules; an authored world must carry a valid ladder of its own.
+
+Stock ladder (the one in the example world):
+
+| Tier | `id` | Band | Outcome |
+|---|---|---|---|
+| Critical Failure | `critical-failure` | up to -66 | failure |
+| Failure | `failure` | -65 to -51 | failure |
+| Mixed Results | `mixed-results` | -50 to -26 | success, strength 0 (first successful tier) |
+| Basic Success | `basic-success` | -25 to -1 | success, strength 0.25 |
+| Success | `success` | 0 to 24 | success, strength 0.5 |
+| Great Success | `great-success` | 25 to 49 | success, strength 0.75 |
+| Critical Success | `critical-success` | 50 and up | success, strength 1 |
+
+Renaming a tier changes what `action-success-level` conditions must name; a condition naming a tier the ladder no longer has stays inactive (see the triggers reference).
+
 ## Skill Check Formula
 
 ```
 successScore = totalBonus - totalDifficulty
+adjustedScore = successScore - floor(characterLevel / 10) * 2   (placed on the success ladder)
 
 totalBonus = skillBonus + attributeBonus + earlyGameBonus + randomBonus + modifierBonus
 
@@ -263,6 +314,8 @@ Where:
   attributeBonus = (effectiveAttribute - 10) * attributeBonusModifier
   earlyGameBonus = 10 (if gameTick < 50, else 0)
 ```
+
+The attribute is the one linked by the relevant skill, taken from the world's skill definition or, failing that, the character's own skill entry. The link resolves against the character's attributes by exact key first, then ignoring case and spacing. A skill whose attribute matches none of the character's attributes contributes no attribute bonus at all.
 
 ## Combat Balance System
 
@@ -379,11 +432,11 @@ Every attack carries an **impact** value from **50 to 200** (100 = normal) that 
 
 ### Evasion
 
-A character that takes a **defend / evade action on a turn** reduces the incoming damage of attacks against them that turn. The reduction scales with how well the defend roll succeeded; a reduction of 1.0 or higher fully nullifies the hit (it lands but deals 0). This is an active, per-turn choice driven by the defend roll, not a passive stat.
+A character that takes a **defend / evade action on a turn** reduces the incoming damage of attacks against them that turn. For players the reduction is `0.5 + 1.6 × strength` of the resolved success tier, capped at 1.0 (see successLevelSettings); a reduction of 1.0 fully nullifies the hit (it lands but deals 0), and a failed roll gives no reduction. This is an active, per-turn choice driven by the defend roll, not a passive stat.
 
 ### NPC Success Rolls
 
-An NPC attack's success level is fixed RNG each turn (NPCs have no skills or attributes to roll):
+An NPC attack's success level is fixed RNG each turn (NPCs have no skills or attributes to roll). NPC rolls use the engine's own fixed bands and names, independent of the world's `successLevelSettings`:
 
 | Outcome | Chance |
 |---|---|
@@ -392,7 +445,7 @@ An NPC attack's success level is fixed RNG each turn (NPCs have no skills or att
 | success | 40% |
 | basic success | 30% |
 
-The only way an NPC attack drops below "basic success" is **combat conflict**: when a player's defend action succeeds, it degrades the attacking NPC's outcome (a strong defense turns the NPC's attack into a failure).
+The only way an NPC attack drops below "basic success" is **combat conflict**: when a player's defend or evade action succeeds against it, the attacking NPC's outcome is degraded. A player success with strength 0.5 or more (Success or better on the stock ladder) turns the NPC's attack into a failure; a weaker success limits it to mixed results. The conflict only touches the contested NPC intent, so an NPC's other actions that turn resolve normally.
 
 ### Encounter Health Budget
 
@@ -449,6 +502,8 @@ Leveling stops at `maxCharacterLevel`.
 | `itemSettings.itemSlots[].category` | Must match `itemCategories` values |
 | `combatSettings.damageTypes` | Used by NPC vulnerabilities/resistances/immunities and as the keys of `combatSettings.damageTypePresentation` |
 | `worldVoices` keys | Referenced by `npcs[].worldVoiceId` and `premadeCharacters[].worldVoiceId` |
+| `successLevelSettings.tiers[].name` | Named by `action-success-level` conditions in `tabs/triggers.json` |
+| `successLevelSettings.firstSuccessfulTierId` | A `tiers[].id` in the same section |
 | `attributeSettings.attributeNames` | Used in trait and skill attribute associations |
 | `progressionSettings.levelUpTraitPool` | Trait keys from `tabs/traits.json` (see the traits skill) |
 | `resourceSettings` keys | Used by ability and trait resource modifiers |

@@ -25,8 +25,8 @@ interface Location {
   visited?: boolean                 // ❌ Always false at creation
   lastVisitedTick?: number          // ❌ Always 0 at creation
   visitedAreas?: string[]           // ❌ Always [] at creation
-  questOriginArcId?: string         // ✅ Auto-generated for quest-spawned locations. Links to the arc that spawned this location; provides arc context to AI detail generation
-  questOriginQuestId?: string       // ✅ Auto-generated for quest-spawned locations. Links to the quest that spawned this location; provides quest design brief to AI detail generation
+  questOriginArcId?: string         // ❌ Engine-set for quest-spawned locations (links to the spawning arc); stripped on save
+  questOriginQuestId?: string       // ❌ Engine-set for quest-spawned locations (links to the spawning quest); stripped on save
 }
 
 type ComplexityType = 'simple' | 'complex' | 'wilderness'
@@ -51,6 +51,7 @@ Locations sit within half of `locationSettings.regionSize` of the region center 
 
 ```typescript
 interface Area {
+  name?: string         // Optional display label. The area's key remains its identity for paths, story starts, and NPC placement
   description: string   // Brief description of the area
   paths: string[]       // Connected area names (must be bidirectional)
   images?: { establishingShot?: SceneImage }  // Establishing-shot image with its crop (same shape as on the location). When imageUrl is absent, the engine generates an image during play and saves it back; an existing image is never regenerated

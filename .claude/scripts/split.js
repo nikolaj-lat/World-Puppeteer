@@ -11,7 +11,7 @@
  *
  * Creates these files (granular split for easier editing):
  *   - settings.json       (game balance: attributes, skills, combat, items, progression,
- *                          music, character creation, relationship stages,
+ *                          music, character creation, relationship stages, success levels,
  *                          imageModelSource, worldVoices)
  *   - realms.json         (realm definitions)
  *   - regions.json        (region definitions)
@@ -53,6 +53,7 @@ const SECTIONS = {
     'gameplayMusicSettings',
     'characterCreationSettings',
     'relationshipStages',
+    'successLevelSettings',
     'imageModelSource',
     'worldVoices',
   ],
@@ -100,7 +101,7 @@ function main() {
     console.error('Splits a world config into granular section files.');
     console.error('Output defaults to tabs/ directory if not specified.');
     console.error('');
-    console.error('  - settings.json        (attributes, skills, combat, items, music, image model source, world voices)');
+    console.error('  - settings.json        (attributes, skills, combat, items, music, relationship stages, success levels, image model source, world voices)');
     console.error('  - realms.json          (realm definitions)');
     console.error('  - regions.json         (region definitions)');
     console.error('  - locations.json       (location definitions)');
@@ -173,7 +174,8 @@ function main() {
 
     if (Object.keys(section).length > 0) {
       const outputPath = path.join(outputDir, `${sectionName}.json`);
-      fs.writeFileSync(outputPath, JSON.stringify(section, null, 2));
+      // Canonical tab format: UTF-8 without escaping, 2-space indent, trailing newline
+      fs.writeFileSync(outputPath, `${JSON.stringify(section, null, 2)}\n`);
       console.log(`Created: ${sectionName}.json (${Object.keys(section).length} fields)`);
     }
   }
@@ -194,7 +196,7 @@ function main() {
       meta[key] = config[key];
     }
 
-    fs.writeFileSync(metaPath, JSON.stringify(meta, null, 2));
+    fs.writeFileSync(metaPath, `${JSON.stringify(meta, null, 2)}\n`);
   }
 
   console.log(`\nSplit complete. Files written to: ${outputDir}`);

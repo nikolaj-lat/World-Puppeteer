@@ -182,7 +182,17 @@ Optional. Per-entity-type art-direction instructions (`npcs`, `locations`, `area
 
 Use these as starting points for new worlds. Customize to fit your world's tone.
 
-After a full pass through every applied section, add each section's mod entry to `tabs/meta.json`'s `mods` array (deduped by `shortId`).
+Each template below names the mod it comes from. Tracking the mod is optional: add its entry to `tabs/meta.json`'s `mods` array (deduped by `shortId`) only when the creator wants the world to follow that mod's updates. A tracked mod owns the sections it supplies, and a later mod version can overwrite edits made inside those sections, so keep world-specific rules in a separate custom key rather than editing a mod-owned section. Ask before adding a mod entry.
+
+Mod-owned sections:
+
+| Mod | Sections it owns |
+|-----|------------------|
+| Meteion/Sonnet Plus: Story Instruction Set (`zSPtWkM96eXW`) | generateStory `Character Behavior` and `Style Principles`, generateInitialStart `Style Principles`, `narratorStyle` |
+| Sephii/Intent Brain (`O54Ae4LfHaYb`) | generateNPCIntents `custom` |
+| Sephii/Enhanced NPC Details (`0atz0zSoRSXV`) | generateNPCDetails `custom` |
+| Meteion/Cliche Filter Plus (`0bt3nPRLuqvh`) | generateNewNPC `custom` and `nameFilterSettings` |
+| Sephii/Enhanced Quest Generation Guidance Instructions (`4oG5VwpUH4lW`) | `storySettings.questGenerationGuidance` |
 
 ### generateStory - Victory and Downtime
 
@@ -195,7 +205,7 @@ When players are resting, slow time down to a crawl. Let them enjoy the moment.
 
 ### generateStory - Character Behavior
 
-Add `{shortId: "zSPtWkM96eXW", version: 9}` to meta.json.mods
+From Meteion/Sonnet Plus: Story Instruction Set. Optional tracking entry: `{shortId: "zSPtWkM96eXW", version: 9}` in meta.json.mods (mod-owned section; see above)
 
 ```
 
@@ -218,7 +228,7 @@ Add `{shortId: "zSPtWkM96eXW", version: 9}` to meta.json.mods
 
 ### generateStory - Style Principles
 
-Add `{shortId: "zSPtWkM96eXW", version: 9}` to meta.json.mods
+From Meteion/Sonnet Plus: Story Instruction Set. Optional tracking entry: `{shortId: "zSPtWkM96eXW", version: 9}` in meta.json.mods (mod-owned section; see above)
 
 ```
 
@@ -259,7 +269,7 @@ Add `{shortId: "zSPtWkM96eXW", version: 9}` to meta.json.mods
 
 ### generateInitialStart - Style Principles
 
-Add `{shortId: "zSPtWkM96eXW", version: 9}` to meta.json.mods
+From Meteion/Sonnet Plus: Story Instruction Set. Optional tracking entry: `{shortId: "zSPtWkM96eXW", version: 9}` in meta.json.mods (mod-owned section; see above)
 
 ```
 
@@ -288,7 +298,7 @@ Add `{shortId: "zSPtWkM96eXW", version: 9}` to meta.json.mods
 
 ### narratorStyle
 
-Add `{shortId: "zSPtWkM96eXW", version: 9}` to meta.json.mods
+From Meteion/Sonnet Plus: Story Instruction Set. Optional tracking entry: `{shortId: "zSPtWkM96eXW", version: 9}` in meta.json.mods (mod-owned section; see above)
 
 ```
 - Prioritize plot and dialogue over description
@@ -307,7 +317,7 @@ Add `{shortId: "zSPtWkM96eXW", version: 9}` to meta.json.mods
 
 ### generateNPCIntents - custom
 
-Add `{shortId: "O54Ae4LfHaYb", version: 3}` to meta.json.mods
+From Sephii/Intent Brain. Optional tracking entry: `{shortId: "O54Ae4LfHaYb", version: 3}` in meta.json.mods (mod-owned section; see above)
 
 ```
 ##INTENT GENERATION BRAIN
@@ -405,7 +415,7 @@ After this checklist, generate intents using the format below.
 
 ### generateNPCDetails - custom
 
-Add `{shortId: "0atz0zSoRSXV", version: 3}` to meta.json.mods
+From Sephii/Enhanced NPC Details. Optional tracking entry: `{shortId: "0atz0zSoRSXV", version: 3}` in meta.json.mods (mod-owned section; see above)
 
 ```
 HIGHEST PRIORITY INSTRUCTIONS
@@ -463,7 +473,7 @@ Adapt to each character. Do not copy the example.
 
 ### generateNewNPC - custom
 
-Add `{shortId: "0bt3nPRLuqvh", version: 13}` to meta.json.mods
+From Meteion/Cliche Filter Plus. Optional tracking entry: `{shortId: "0bt3nPRLuqvh", version: 13}` in meta.json.mods (mod-owned section; see above)
 
 ```
 **Critical NPC Naming Instructions**
@@ -487,7 +497,7 @@ Do not default to intuitive or familiar-sounding fantasy names. Derive names fro
 
 ### storySettings - questGenerationGuidance
 
-Add `{shortId: "4oG5VwpUH4lW", version: 2}` to meta.json.mods
+From Sephii/Enhanced Quest Generation Guidance Instructions. Optional tracking entry: `{shortId: "4oG5VwpUH4lW", version: 2}` in meta.json.mods (mod-owned section; see above)
 
 ```
 ## Creator Quest Generation Guidance

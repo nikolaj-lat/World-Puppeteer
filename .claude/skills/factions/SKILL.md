@@ -24,12 +24,12 @@ The factions authored here are the world's complete roster: the engine uses them
 
 | Field | When to Include |
 |-------|-----------------|
-| `known` | Set to `false` to hide at game start. Omit otherwise |
+| `known` | `true` for factions the party knows from the start. `false`, or no `known` at all, hides the faction until the story names it |
 
 ## Never Include
 
 Omit these fields (auto-set at runtime):
-- `detailType`, `embeddingId`, `embedding`
+- `embeddingId`, `embedding`
 
 ## basicInfo Format
 
@@ -55,7 +55,7 @@ Both narrative depth AND gameplay-useful information should be included.
 
 ## Discovery Mechanics
 
-Factions default to `known: true` at runtime unless the config explicitly sets `known: false`. Use `known: false` for secret organizations, hidden cults, or factions the player must discover through gameplay.
+`known` has no default. A faction with `known: true` is in the journal from the start; one with `known: false`, or with no `known` field, stays hidden until discovered. Set `known: true` on every faction the party should recognize from turn one, and leave secret organizations, hidden cults, and factions the player must discover through gameplay hidden.
 
 A hidden faction becomes known when the latest story text contains its full `name` as a whole word (case and spacing insensitive), or when a `known-entity` trigger effect sets `known`. Give hidden factions distinctive names that can plausibly appear verbatim in narration.
 

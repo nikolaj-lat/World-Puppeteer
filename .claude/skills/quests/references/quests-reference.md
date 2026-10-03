@@ -13,8 +13,8 @@ interface QuestBaseDefinition {
   questStatement: string          // ✅ One-sentence quest description
   mainObjective: string           // ✅ Primary goal text shown in quest log
   completionCondition?: QuestCompletionCondition  // ✅ How quest completion is detected (see below); omit for quests completed only by explicit effects
-  initialStatus?: 'hidden' | 'planned' | 'available' | 'accepted'  // ✅ Directive consumed at world start (default: hidden); see below
-  questGiverNPC?: string          // ✅ Key from npcs.json
+  status?: 'hidden' | 'planned' | 'available' | 'accepted'  // ⚠️ Starting status (default: hidden); see Starting Status below
+  questGiverNPC?: string          // ❌ Stripped on save; the engine assigns givers to quests it generates or details. Name the giver in questSource and questDesignBrief
   questDesignBrief?: string       // ✅ Free-form design guidance for AI quest generation
   conclusive?: boolean            // ⚠️ Whether completing this quest concludes its parent arc (default: false)
   objectives?: Record<string, QuestObjective>  // ✅ Authored objective ladder, keyed by objective id
@@ -68,9 +68,9 @@ Legacy plain-string completion conditions are auto-converted to the `story` form
 
 `completionCondition` is optional, and omitting it is a first-class choice for trigger-driven quests. A quest without one completes only through explicit effects: `quest-progress` reaching completion, or `quest-complete`, fired by triggers, narrative events, or another quest's `onCompleteEffects`. There is no AI-judged fallback.
 
-## initialStatus
+## Starting Status
 
-`initialStatus` is a directive consumed at world start (default `hidden`):
+`status` is the quest's starting status, authored like any other starting value (default `hidden`). Play moves it on from there. An authored world can begin a quest only at one of these four values; the later lifecycle statuses are reached through play:
 
 | Value | At world start |
 |-------|----------------|
@@ -81,13 +81,13 @@ Legacy plain-string completion conditions are auto-converted to the `story` form
 
 When several quests start `accepted`, all stay accepted and the last one becomes the active quest.
 
-The runtime quest carries only `status`; `initialStatus` exists on the definition and is consumed when the story starts.
+Worlds written before this field was renamed may still carry `initialStatus`. That key is no longer part of the schema and is not read, so move its value to `status`.
 
 ## Planned Quests and Duplicate Avoidance
 
 `planned` sits between `hidden` and `available`: the quest is invisible to players, but it reserves its storyline. The AI quest generator treats a planned quest as "do not duplicate", and if the planned quest has an arc, no new quest is generated for that arc while it stands. Standing `available` offers discourage duplicate generation the same way.
 
-To make a future quest shape and deduplicate AI generation, author it `planned` (via `initialStatus` or a `quest-plan` trigger effect); `hidden` keeps a quest purely invisible, without feeding duplicate avoidance.
+To make a future quest shape and deduplicate AI generation, author it `planned` (via `status` or a `quest-plan` trigger effect); `hidden` keeps a quest purely invisible, without feeding duplicate avoidance.
 
 A planned or hidden quest can still accumulate objective progress silently, with no player-facing quest toasts.
 
@@ -101,7 +101,7 @@ interface Quest {
   questStatement?: string         // ✅ From definition
   mainObjective?: string          // ✅ From definition
   completionCondition?: QuestCompletionCondition  // ✅ From definition (legacy strings auto-converted to story form); stays absent when omitted
-  questGiverNPC?: string          // ✅ From definition
+  questGiverNPC?: string          // ❌ Engine-assigned for generated quests; an authored value is stripped on save
   spatialRelationship?: SpatialRelationship  // ✅ From definition (basic only)
   questDesignBrief?: string       // ✅ From definition
   conclusive?: boolean            // ⚠️ From definition (default: false)
@@ -118,12 +118,12 @@ interface Quest {
   definitionKey?: string          // ❌ Engine-assigned link back to the authored quest file
   creationTick: number            // ❌ Always current tick
   detailType: 'basic' | 'detailed'  // ❌ Always set from definition
-  status: QuestStatus             // ❌ Engine-managed; starts from the initialStatus directive (default 'hidden')
+  status: QuestStatus             // ⚠️ Starts from the authored status (default 'hidden'); play moves it on from there
   contentOrigin: 'authored' | 'generated'  // ❌ 'authored' for world-defined quests, 'generated' for engine-created quests
 
-  // === ARC FIELDS (auto-generated for engine quests, survives spread if set) ===
-  arcId?: string                  // ✅ Links quest to an Arc (auto-generated for engine quests)
-  arcEscalationAtCreation?: number  // ✅ Arc escalation level snapshot at quest creation (auto-generated for engine quests)
+  // === ARC FIELDS (engine-set on generated quests; stripped from authored files) ===
+  arcId?: string                  // ❌ Engine-set link to the quest's arc (generated quests only); stripped on save
+  arcEscalationAtCreation?: number  // ❌ Engine snapshot of arc escalation at quest creation; stripped on save
 
   // === RUNTIME STATE (set during gameplay) ===
   questType?: 'acquire' | 'rescue' | 'combat' | 'assassination' | 'social' | 'investigate'  // Quest category (never read by engine)
@@ -173,9 +173,9 @@ Definition -> hidden -> planned -> available -> accepted -> completed
 | Status | Description | How to Reach |
 |--------|-------------|--------------|
 | `hidden` | Quest exists but invisible to player; can accumulate objective progress silently | Default at creation |
-| `planned` | Invisible to players, but reserves its storyline against duplicate AI generation | `initialStatus: 'planned'` or a `quest-plan` effect |
-| `available` | Quest can be discovered/offered | `initialStatus: 'available'`, story start, or a `quest-init` effect |
-| `accepted` | Player actively pursuing | Player accepts the offer, `initialStatus: 'accepted'`, or a `quest-accept` effect |
+| `planned` | Invisible to players, but reserves its storyline against duplicate AI generation | Authored `status: 'planned'` or a `quest-plan` effect |
+| `available` | Quest can be discovered/offered | Authored `status: 'available'`, story start, or a `quest-init` effect |
+| `accepted` | Player actively pursuing | Player accepts the offer, authored `status: 'accepted'`, or a `quest-accept` effect |
 | `rejected` | Player declined the offer | Player rejects the offer |
 | `completed` | Objectives achieved | Completion trigger fires, quest progress reaches completion, or the referenced narrative event completes |
 | `abandoned` | Player gave up | Player abandons quest |
@@ -312,7 +312,7 @@ Basic quests never get auto-generated triggers regardless of `completionConditio
 
 ## Making Quests Available
 
-Quests start as `hidden` unless `initialStatus` says otherwise (see initialStatus above). Ways to move them along:
+Quests start as `hidden` unless their authored `status` says otherwise (see Starting Status above). Ways to move them along:
 
 **Via Story Start:**
 ```json
@@ -325,7 +325,7 @@ Quests start as `hidden` unless `initialStatus` says otherwise (see initialStatu
 }
 ```
 
-`startingQuests` entries resolve by quest file id or unique name. At story start, hidden quests listed here are promoted to `available`; quests already accepted (for example via `initialStatus: 'accepted'`) are skipped.
+`startingQuests` entries resolve by quest file id or unique name. At story start, hidden quests listed here are promoted to `available`; quests already accepted (for example via an authored `status: 'accepted'`) are skipped.
 
 Note: `firstQuest` is a separate freeform text field for AI quest generation - it doesn't reference predefined quests.
 
@@ -381,7 +381,6 @@ While a narrative event is active, generated-quest creation is fully suppressed 
 | Field | References |
 |-------|------------|
 | `questLocation` | `tabs/locations.json` |
-| `questGiverNPC` | `tabs/npcs.json` |
 | `completionCondition.eventId` | Keys in the `narrativeEvents` world section (see the narrative-events skill) |
 | `startingQuests` | Quest file ids or unique names in `tabs/quests.json` (from story-starts.json) |
 | `firstQuest` | Freeform text instruction (NOT a quest key) |

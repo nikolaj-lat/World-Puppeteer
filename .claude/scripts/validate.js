@@ -108,7 +108,8 @@ const VALID_TRIGGER_EFFECT_TYPES = [
 // Known status values for quest-status / narrative-event-status conditions.
 // Unrecognized values only warn (engine compares raw strings).
 const VALID_QUEST_STATUSES = ['hidden', 'planned', 'available', 'expired', 'accepted', 'completed', 'abandoned', 'rejected'];
-// Creator-authorable subset used by quests[].initialStatus (terminal statuses are runtime history)
+// Starting statuses an authored quest may use in quests[].status (the later lifecycle
+// statuses are reached through play)
 const VALID_QUEST_INITIAL_STATUSES = ['hidden', 'planned', 'available', 'accepted'];
 const VALID_NARRATIVE_EVENT_STATUSES = ['inactive', 'active', 'stopped', 'completed'];
 const VALID_QUEST_OBJECTIVE_STATUSES = ['hidden', 'active', 'completed'];
@@ -119,18 +120,35 @@ const VALID_EFFECT_TARGETS = ['allPlayers', 'satisfyingPlayers'];
 // 'state' is accepted by the schema but never read (legacy routing applies)
 const VALID_TRIGGER_PHASES = ['planning', 'state'];
 
-// Ordered action outcomes for the action-success-level condition (worst to best).
-// The engine's "simple" outcome and a missing outcome never match any operator.
-const VALID_ACTION_SUCCESS_LEVELS = [
-  'impossible',
-  'critical failure',
-  'failure',
-  'mixed results',
-  'basic success',
-  'success',
-  'great success',
-  'critical success',
+// Stock success tier names (lowest to highest), used by action-success-level values
+// when the world does not author successLevelSettings. An authored ladder replaces
+// them. The engine's "simple" and "impossible" outcomes never match any operator.
+const DEFAULT_SUCCESS_TIER_NAMES = [
+  'Critical Failure',
+  'Failure',
+  'Mixed Results',
+  'Basic Success',
+  'Success',
+  'Great Success',
+  'Critical Success',
 ];
+const SUCCESS_TIER_COUNT_MIN = 2;
+
+// Tier names match the way the engine matches them: NFC, case-folded, trimmed,
+// internal whitespace collapsed.
+function normalizeTierName(value) {
+  return normalizeText(value).replace(/\s+/g, ' ');
+}
+
+function getSuccessTierLabels(config) {
+  const tiers = config?.successLevelSettings?.tiers;
+  if (Array.isArray(tiers) && tiers.length > 0) {
+    return tiers
+      .map((tier) => (tier && typeof tier.name === 'string' ? tier.name : ''))
+      .filter((name) => name.trim() !== '');
+  }
+  return DEFAULT_SUCCESS_TIER_NAMES;
+}
 
 // Reserved NPC selector tokens for the npc field of NPC conditions/effects.
 // Conditions take the any* pair, effects take the all* pair; npc-portrait takes a name only.
@@ -150,8 +168,8 @@ const NPC_EFFECT_TYPES = ['npc-relationship', 'npc-health', 'npc-in-party', 'npc
 // Engine-generated quest progress triggers live under this reserved name prefix
 const RESERVED_QUEST_PROGRESS_TRIGGER_PREFIX = '__generated_quest_progress__/';
 
-// Default relationship stage names, used for npc-relationship-stage value checks
-// when the world omits relationshipStages (engine defaults apply)
+// Stock relationship stage names, used for npc-relationship-stage value checks
+// when the world's relationshipStages section is missing or unusable
 const DEFAULT_RELATIONSHIP_STAGE_NAMES = [
   'Nemesis', 'Antagonist', 'Hostile', 'Unfriendly', 'Cold', 'Neutral',
   'Warm', 'Friendly', 'Confidant', 'Ally', 'Devoted',
@@ -263,6 +281,13 @@ const REQUIRED_TOP_LEVEL = [
   'mods',
   'characterCreationSettings',
   'endGame',
+  // The Creator API validates authored worlds in creator mode, which overlays the
+  // submission onto a starter state with every creator root removed and backfills
+  // nothing, so these codec-required roots must be present. Their empty forms are
+  // invalid; start from the stock values in examples/minimal-world.json.
+  'relationshipStages',
+  'gameplayMusicSettings',
+  'successLevelSettings',
 ];
 
 const REQUIRED_ATTRIBUTE_SETTINGS = [
@@ -386,6 +411,9 @@ const LIMITS = {
     semanticTriggers: 500,
     mechanicalTriggers: 4_000,
     abilities: 1_500,
+    skills: 250,
+    // successLevelSettings.tiers; the engine also requires at least SUCCESS_TIER_COUNT_MIN
+    successTiers: 20,
     triggerConditions: 5,
     triggerEffects: 10,
     abilityRequirements: 10,
@@ -443,6 +471,10 @@ const LIMITS = {
     triggerEffectInstruction: 1_000,
     triggerEffectValue: 100,
     currencyName: 64,
+    successTierId: 128,
+    successTierName: 120,
+    successTierPrompt: 5_000,
+    successTierImageUrl: 2_048,
   },
   // Per-element character limits for settings arrays
   settingsEntries: {
@@ -533,12 +565,6 @@ const OPTIONAL_TOP_LEVEL = [
   'imageModelSource',
   // Authored voice catalog referenced by npcs[].worldVoiceId / premadeCharacters[].worldVoiceId
   'worldVoices',
-  // Required by the V36 schema, but the engine falls back to its own defaults
-  // when omitted, and stages must cover -100..100 with no gap when present.
-  'relationshipStages',
-  // Same omit-for-defaults shape, and stricter: the platform REJECTS an empty
-  // catalog (the section merges atomically), so present-but-empty is never valid.
-  'gameplayMusicSettings',
   // Top-level in the merged tabs shape (tabs/world-background.json); build.js
   // hoists it into storySettings.worldBackground in the compiled config.
   'worldBackground',
@@ -554,8 +580,12 @@ function validateRequiredFields(config, errors) {
 
   // Unknown top-level fields
   const knownTopLevel = new Set([...REQUIRED_TOP_LEVEL, ...OPTIONAL_TOP_LEVEL]);
+  // Version markers the engine stamps itself and strips from authored input
+  const engineStampedTopLevel = new Set(['heroesVersion', 'compatibilityRevision']);
   for (const field of Object.keys(config)) {
-    if (!knownTopLevel.has(field)) {
+    if (engineStampedTopLevel.has(field)) {
+      errors.push(createError(field, `${field} is stamped by the engine and stripped from authored worlds: remove it`));
+    } else if (!knownTopLevel.has(field)) {
       errors.push(createError(field, `Unknown field: ${field} — remove it`));
     }
   }
@@ -843,9 +873,12 @@ function validateReferenceIntegrity(config, errors) {
     const questEffectRefs = buildQuestEventRefs(config);
 
     for (const [questId, quest] of Object.entries(config.quests)) {
-      // initialStatus - creator-authorable subset of quest statuses
-      if (quest.initialStatus !== undefined && !VALID_QUEST_INITIAL_STATUSES.includes(quest.initialStatus)) {
-        errors.push(createError(`quests.${questId}.initialStatus`, `Invalid initialStatus: ${JSON.stringify(quest.initialStatus)}. Valid: ${VALID_QUEST_INITIAL_STATUSES.join(', ')}`));
+      // status - the quest's starting status; only the four starting values can be authored
+      if (quest.initialStatus !== undefined) {
+        errors.push(createError(`quests.${questId}.initialStatus`, 'initialStatus was renamed to status and is no longer read: move the value to quests[].status and remove initialStatus'));
+      }
+      if (quest.status !== undefined && !VALID_QUEST_INITIAL_STATUSES.includes(quest.status)) {
+        errors.push(createError(`quests.${questId}.status`, `Quest cannot start as ${JSON.stringify(quest.status)}. Use one of: ${VALID_QUEST_INITIAL_STATUSES.join(', ')}`));
       }
 
       // onCompleteEffects - optional array validated like trigger effects
@@ -1631,7 +1664,7 @@ function validateGameplayMusicSettings(config, errors) {
   } else {
     const familyKeys = Object.keys(tracks);
     if (familyKeys.length === 0) {
-      errors.push(createError('gameplayMusicSettings.tracks', 'Catalog must contain at least one track family (or omit gameplayMusicSettings entirely to use the engine defaults)'));
+      errors.push(createError('gameplayMusicSettings.tracks', 'Catalog must contain at least one track family; start from the stock catalog in examples/minimal-world.json'));
     }
     if (familyKeys.length > GAMEPLAY_MUSIC_LIMITS.families) {
       errors.push(createError('gameplayMusicSettings.tracks', `Too many track families: ${familyKeys.length} (max: ${GAMEPLAY_MUSIC_LIMITS.families})`));
@@ -1781,8 +1814,115 @@ function validateTraitCategories(config, errors) {
   }
 }
 
-// When relationshipStages is present it must cover every score from -100 to 100 with
-// no gaps or overlaps; omitting the section entirely uses the engine defaults instead.
+// Mirrors the engine's success-level invariants: the ladder must be a contiguous set
+// of whole-number score bands with unique ids and names, and firstSuccessfulTierId
+// must name one of them. Presence is enforced by REQUIRED_TOP_LEVEL.
+function validateSuccessLevelSettings(config, errors) {
+  const settings = config.successLevelSettings;
+  if (settings === undefined) return;
+
+  if (!settings || typeof settings !== 'object' || Array.isArray(settings)) {
+    errors.push(createError('successLevelSettings', `Expected object, got ${Array.isArray(settings) ? 'array' : typeof settings}. Start from the stock ladder in examples/minimal-world.json`));
+    return;
+  }
+
+  const tiers = settings.tiers;
+  if (!Array.isArray(tiers)) {
+    errors.push(createError('successLevelSettings.tiers', 'Missing required field: tiers (array of score bands). Start from the stock ladder in examples/minimal-world.json'));
+    return;
+  }
+  if (typeof settings.firstSuccessfulTierId !== 'string') {
+    errors.push(createError('successLevelSettings.firstSuccessfulTierId', 'Missing required field: firstSuccessfulTierId (id of the lowest tier that counts as a success)'));
+  }
+  if (tiers.length < SUCCESS_TIER_COUNT_MIN || tiers.length > LIMITS.counts.successTiers) {
+    errors.push(createError('successLevelSettings.tiers', `Use between ${SUCCESS_TIER_COUNT_MIN} and ${LIMITS.counts.successTiers} tiers (found ${tiers.length})`));
+  }
+
+  const fieldLimits = {
+    id: LIMITS.fields.successTierId,
+    name: LIMITS.fields.successTierName,
+    prompt: LIMITS.fields.successTierPrompt,
+    imageUrl: LIMITS.fields.successTierImageUrl,
+  };
+  const ids = new Set();
+  const names = new Set();
+  const validTiers = [];
+
+  tiers.forEach((tier, index) => {
+    const path = `successLevelSettings.tiers[${index}]`;
+    if (!tier || typeof tier !== 'object' || Array.isArray(tier)) {
+      errors.push(createError(path, `Expected object, got ${Array.isArray(tier) ? 'array' : typeof tier}`));
+      return;
+    }
+
+    for (const field of ['id', 'name', 'prompt']) {
+      if (typeof tier[field] !== 'string') {
+        errors.push(createError(`${path}.${field}`, `Missing required field: ${field}`));
+      }
+    }
+    for (const [field, limit] of Object.entries(fieldLimits)) {
+      if (typeof tier[field] === 'string' && tier[field].length > limit) {
+        errors.push(createError(`${path}.${field}`, `${field} too long: ${tier[field].length} chars (max: ${limit})`));
+      }
+    }
+
+    if (tier.imageUrl !== undefined && tier.imageUrl !== null && typeof tier.imageUrl !== 'string') {
+      errors.push(createError(`${path}.imageUrl`, `Expected string or null, got ${typeof tier.imageUrl}`));
+    } else if (typeof tier.imageUrl === 'string' && tier.imageUrl !== '' && !isOfficialImageHostingUrl(tier.imageUrl)) {
+      errors.push(createError(`${path}.imageUrl`, 'imageUrl must use an official Latitude image-hosting URL (https, on Latitude image infrastructure)'));
+    }
+
+    if (typeof tier.id === 'string') {
+      if (tier.id.trim() === '' || ids.has(tier.id)) {
+        errors.push(createError(`${path}.id`, 'Tier ids must be nonempty and unique'));
+      }
+      ids.add(tier.id);
+    }
+    if (typeof tier.name === 'string') {
+      const normalizedName = normalizeTierName(tier.name);
+      if (!normalizedName || names.has(normalizedName)) {
+        errors.push(createError(`${path}.name`, 'Tier names must be nonblank and unique (ignoring case and surrounding spaces)'));
+      }
+      names.add(normalizedName);
+    }
+
+    let boundsOk = true;
+    for (const bound of ['minScore', 'maxScore']) {
+      if (tier[bound] !== null && !Number.isSafeInteger(tier[bound])) {
+        errors.push(createError(`${path}.${bound}`, `${bound} must be a whole number, or null on the lowest (minScore) / highest (maxScore) tier only`));
+        boundsOk = false;
+      }
+    }
+    if (!boundsOk) return;
+    if (tier.minScore !== null && tier.maxScore !== null && tier.minScore > tier.maxScore) {
+      errors.push(createError(`${path}.maxScore`, 'maxScore must be at least minScore'));
+      return;
+    }
+    validTiers.push({ index, tier });
+  });
+
+  if (typeof settings.firstSuccessfulTierId === 'string' && !ids.has(settings.firstSuccessfulTierId)) {
+    errors.push(createError('successLevelSettings.firstSuccessfulTierId', `firstSuccessfulTierId ${JSON.stringify(settings.firstSuccessfulTierId)} does not name a tier id`));
+  }
+
+  // Band coverage is only meaningful once every tier has usable bounds
+  if (validTiers.length !== tiers.length) return;
+  const ordered = [...validTiers].sort((a, b) => (a.tier.minScore ?? -Infinity) - (b.tier.minScore ?? -Infinity));
+  ordered.forEach(({ index, tier }, rank) => {
+    const path = `successLevelSettings.tiers[${index}]`;
+    if ((rank === 0) !== (tier.minScore === null)) {
+      errors.push(createError(`${path}.minScore`, 'Only the lowest tier has minScore null'));
+    }
+    if ((rank === ordered.length - 1) !== (tier.maxScore === null)) {
+      errors.push(createError(`${path}.maxScore`, 'Only the highest tier has maxScore null'));
+    }
+    const previous = ordered[rank - 1]?.tier;
+    if (previous && (previous.maxScore === null || tier.minScore !== previous.maxScore + 1)) {
+      errors.push(createError(`${path}.minScore`, "Each tier starts one point above the previous tier's maxScore, with no gaps or overlaps"));
+    }
+  });
+}
+
 function validateRelationshipStages(config, errors) {
   const stages = config.relationshipStages;
   if (stages === undefined) return;
@@ -1793,7 +1933,7 @@ function validateRelationshipStages(config, errors) {
   }
 
   if (stages.length === 0) {
-    errors.push(createError('relationshipStages', 'Relationship stages must cover every score from -100 to 100. Omit the section entirely to use the engine defaults.'));
+    errors.push(createError('relationshipStages', 'Relationship stages must cover every score from -100 to 100. Start from the stock ladder in examples/minimal-world.json'));
     return;
   }
 
@@ -1959,12 +2099,18 @@ function validateTriggerSection(section, triggersValue, refs, config, errors) {
           }
         }
 
-        // action-success-level: value must be one of the ordered outcome literals
+        // action-success-level: value names a success tier (matched ignoring case and
+        // spacing). The engine keeps a condition that names no tier but it never fires,
+        // so mirror that as a warning rather than an error.
         if (cond.type === 'action-success-level') {
-          if (cond.value === undefined) {
-            errors.push(createError(`${condPath}.value`, 'Missing required field: value'));
-          } else if (!VALID_ACTION_SUCCESS_LEVELS.includes(cond.value)) {
-            errors.push(createError(`${condPath}.value`, `Invalid action success level: ${JSON.stringify(cond.value)}. Valid: ${VALID_ACTION_SUCCESS_LEVELS.join(', ')}`));
+          if (typeof cond.value !== 'string' || cond.value.trim() === '') {
+            errors.push(createError(`${condPath}.value`, 'Missing required field: value (a success tier name)'));
+          } else {
+            const tierLabels = getSuccessTierLabels(config);
+            const tierNames = new Set(tierLabels.map(normalizeTierName));
+            if (!tierNames.has(normalizeTierName(cond.value))) {
+              errors.push(createError(`${condPath}.value`, `No success tier named ${JSON.stringify(cond.value)}; this condition is inactive until a tier with this name exists. Tiers: ${tierLabels.join(', ')}`, 'warning'));
+            }
           }
         }
 
@@ -2203,6 +2349,13 @@ function validateCharacterLimits(config, errors, warnings) {
     const count = Object.keys(config.abilities).length;
     if (count > LIMITS.counts.abilities) {
       errors.push(createError('abilities', `Too many abilities: ${count} (max: ${LIMITS.counts.abilities})`));
+    }
+  }
+
+  if (config.skills) {
+    const count = Object.keys(config.skills).length;
+    if (count > LIMITS.counts.skills) {
+      errors.push(createError('skills', `Too many skills: ${count} (max: ${LIMITS.counts.skills})`));
     }
   }
 
@@ -2799,35 +2952,35 @@ function validateProgressionSettings(config, errors) {
 
 function validateUnknownFields(config, errors) {
   // Known fields per entity type
+  // Runtime-only record fields (an NPC's status, aliases, lastSeen*, activeBuffs,
+  // visualTags; a quest's id, creationTick, questGiverNPC; a lore entry's ticks; a
+  // narrative event's status; ...) are stripped by the engine on save and by pull, so
+  // they are deliberately absent from these sets: authoring one reads as an unknown field.
   const KNOWN_FIELDS = {
     npcs: new Set([
       'name', 'properName', 'type', 'currentLocation', 'currentArea', 'gender', 'faction',
-      'basicInfo', 'hiddenInfo', 'visualDescription', 'visualTags', 'personality',
-      'abilities', 'aliases', 'level', 'hpMax', 'hpCurrent', 'healthMultiplier', 'tier', 'vulnerabilities',
-      'resistances', 'immunities', 'activeBuffs', 'known', 'lastSeenLocation',
-      'lastSeenArea', 'currentCoordinates', 'detailType', 'voiceTag',
-      'questOriginArcId', 'questOriginQuestId', 'embedding',
+      'basicInfo', 'hiddenInfo', 'visualDescription', 'personality',
+      'abilities', 'level', 'hpMax', 'hpCurrent', 'healthMultiplier', 'tier', 'vulnerabilities',
+      'resistances', 'immunities', 'known', 'detailType', 'voiceTag', 'embedding',
       'embeddingId', 'portraitUrl', 'portraitFocusX', 'portraitFocusY', 'portraitZoom',
-      'needsDetailGeneration', 'deathXPAwarded', 'worldVoiceId',
-      'relationship', 'successBonus', 'damageModifier', 'damageReductionModifier',
-      // Engine-materialized fields present in stored drafts a pull brings down
-      'status', 'lastSeenTick', 'playerNotes', 'deathDamageContributors',
-      'incapacitatedTurns', 'portraitUrlSource', 'cutoutUrl', 'cutoutSourceUrl',
+      'worldVoiceId', 'relationship', 'successBonus', 'damageModifier', 'damageReductionModifier',
+      'cutoutUrl', 'cutoutSourceUrl',
     ]),
     locations: new Set([
       'name', 'basicInfo', 'x', 'y', 'radius', 'region', 'complexityType',
       'detailType', 'areas', 'factions', 'hiddenInfo', 'visualTags', 'images',
-      'embeddingId', 'known', 'npcLevelRange', 'visited', 'lastVisitedTick', 'visitedAreas',
-      'questOriginArcId', 'questOriginQuestId',
+      'embeddingId', 'known', 'npcLevelRange',
     ]),
     regions: new Set([
       'name', 'basicInfo', 'x', 'y', 'realm', 'factions', 'hiddenInfo', 'known', 'npcLevelRange', 'images',
+      // Engine-materialized field present in stored drafts a pull brings down
+      'embeddingId',
     ]),
     realms: new Set([
       'name', 'basicInfo', 'known', 'embeddingId',
     ]),
     factions: new Set([
-      'name', 'basicInfo', 'factionType', 'hiddenInfo', 'embeddingId', 'detailType', 'known',
+      'name', 'basicInfo', 'factionType', 'hiddenInfo', 'embeddingId', 'known',
     ]),
     itemTypes: new Set([
       'name', 'category', 'description', 'bonuses', 'slot', 'mediaContent',
@@ -2850,15 +3003,11 @@ function validateUnknownFields(config, errors) {
       'name', 'description', 'vulnerabilities', 'resistances', 'immunities',
     ]),
     quests: new Set([
-      'name', 'questType', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
-      'questGiverNPC', 'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
-      'objectives', 'activeObjectiveId', 'nextStep', 'initialStatus', 'onCompleteEffects',
-      // Engine-materialized fields present in stored drafts a pull brings down
-      'id', 'definitionKey', 'creationTick', 'status', 'contentOrigin', 'questGiverNPCKey',
-      'detectionTick', 'acceptedTick', 'expiryTick', 'startingArea', 'completedTick',
-      'abandonedTick', 'rejectedTick', 'connectingAreaName', 'questAreas', 'questStepPhase',
-      'hasVisitedLocation', 'hasVisitedStartingArea', 'objectiveCompleted', 'offeredAtLocation',
-      'arcId', 'arcEscalationAtCreation', 'arcQuestOrdinal', 'embeddingId',
+      'name', 'questSource', 'questStatement', 'mainObjective', 'completionCondition',
+      'questDesignBrief', 'conclusive', 'detailType', 'spatialRelationship', 'questLocation',
+      'objectives', 'activeObjectiveId', 'nextStep', 'onCompleteEffects', 'status', 'embeddingId',
+      // Legacy key: the quest check reports it with a rename hint instead of a generic unknown-field error
+      'initialStatus',
     ]),
     storyStarts: new Set([
       'name', 'description', 'storyStart', 'locations', 'locationAreas',
@@ -2876,8 +3025,6 @@ function validateUnknownFields(config, errors) {
     ]),
     narrativeEvents: new Set([
       'title', 'beats', 'targetTurns', 'onCompleteEffects',
-      // Engine-materialized fields present in stored drafts a pull brings down
-      'id', 'status', 'turnsActive', 'completedTick', 'startingLocation',
     ]),
   };
 
@@ -2910,6 +3057,9 @@ function validateUnknownFields(config, errors) {
     ]),
     otherSettings: new Set([
       'npcHealthPerLevel', 'npcMinHealth', 'visualNovelModeByDefault',
+    ]),
+    successLevelSettings: new Set([
+      'firstSuccessfulTierId', 'tiers',
     ]),
     progressionSettings: new Set([
       'startingCharacterLevelUpRequirement', 'extraRequiredXPPerCharacterLevel',
@@ -2945,6 +3095,8 @@ function validateUnknownFields(config, errors) {
   const KNOWN_NESTED = {
     // Location areas
     locationArea: new Set(['name', 'description', 'paths', 'images', 'visualTags']),
+    // Success tiers (successLevelSettings.tiers[] entries)
+    successTier: new Set(['id', 'name', 'minScore', 'maxScore', 'prompt', 'imageUrl']),
     // Scene images: { crop: { focus: { x, y }, zoom }, imageUrl? } keyed by shot name
     locationImages: new Set(['establishingShot']),
     regionImages: new Set(['map']),
@@ -2997,6 +3149,13 @@ function validateUnknownFields(config, errors) {
         ));
       }
     }
+  }
+
+  // Success tiers
+  if (Array.isArray(config.successLevelSettings?.tiers)) {
+    config.successLevelSettings.tiers.forEach((tier, i) => {
+      checkNested(`successLevelSettings.tiers[${i}]`, tier, KNOWN_NESTED.successTier);
+    });
   }
 
   // Scene images ({ crop: { focus: { x, y }, zoom }, imageUrl? }) on locations, areas, regions.
@@ -3619,8 +3778,8 @@ function validate(config) {
 
   validateRequiredFields(config, errors); // wp-only: tab shape + editorial policy
   asMirror(() => validateReferenceIntegrity(config, errors));
-  // Quest authoring fields the engine does not value-check (initialStatus is not
-  // in the runtime codec; onCompleteEffects get reference checks only remotely)
+  // Quest authoring issues the engine reports differently (initialStatus is a legacy
+  // key it only flags as unknown; onCompleteEffects get reference checks only remotely)
   for (const issue of errors) {
     if (typeof issue.path === 'string' && (issue.path.includes('.initialStatus') || issue.path.includes('.onCompleteEffects'))) {
       issue.category = 'wp-only';
@@ -3628,6 +3787,7 @@ function validate(config) {
   }
   validateTriggers(config, errors); // wp-only: semantic rules + questTriggers/draft-stage limits
   asMirror(() => validateRelationshipStages(config, errors));
+  asMirror(() => validateSuccessLevelSettings(config, errors));
   asMirror(() => validateGameplayMusicSettings(config, errors));
   asMirror(() => validateCharacterCreationSettings(config, errors));
   validateTraitCategories(config, errors); // wp-only: subcategory shape rules

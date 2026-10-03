@@ -19,7 +19,7 @@
 const path = require('path');
 const { execFileSync } = require('child_process');
 const { apiRequest, canonicalJson, loadState, saveState, sha256, PROJECT_ROOT } = require('./shared');
-const { CREATOR_ROOTS, mergeTabs, projectToCreatorSurface } = require('./tabs');
+const { CREATOR_ROOTS, diffPaths, mergeTabs, projectToCreatorSurface, stripEngineMaintained } = require('./tabs');
 
 function runJson(script, args) {
   try {
@@ -140,10 +140,21 @@ async function main() {
   //    to touch runtime roots and to re-derive quest progress triggers).
   const verify = await apiRequest({ method: 'GET', path: `/worlds/${encodeURIComponent(state.shortId)}` });
   const verifiedWorld = verify.json?.data?.world ?? verify.json?.data;
-  const verifiedHash = sha256(canonicalJson(projectToCreatorSurface(verifiedWorld.initialGameState).projected));
+  const verifiedCreator = projectToCreatorSurface(verifiedWorld.initialGameState).projected;
+  const verifiedHash = sha256(canonicalJson(verifiedCreator));
   if (verifiedHash !== candidateHash) {
-    console.error('Push completed but the re-read creator content does not exactly match what was sent.');
-    console.error('This can be legitimate (the save funnel materializes some quest fields); run pull to reconcile tabs with the stored result.');
+    // The save funnel stamps engine bookkeeping (embedding ids, quest and narrative
+    // event runtime fields, lore ticks) onto authored records. Compare without
+    // those so only authored differences are reported, by path.
+    const authoredDiff = diffPaths(stripEngineMaintained(candidate), stripEngineMaintained(verifiedCreator));
+    if (authoredDiff.length === 0) {
+      saveState({ lastSyncedAt: new Date().toISOString(), lastSyncedHash: candidateHash });
+      console.log('Pushed and verified. The stored copy differs only in engine bookkeeping fields; run pull to bring those into tabs.');
+      return;
+    }
+    console.error('Push completed but the stored creator content differs from what was sent at these authored paths:');
+    for (const line of authoredDiff) console.error(`  ${line}`);
+    console.error('Some of this can be legitimate (the save funnel fills in defaults); run pull to reconcile tabs with the stored result.');
     process.exitCode = 1;
     return;
   }

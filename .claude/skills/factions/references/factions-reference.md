@@ -11,8 +11,7 @@ interface Faction {
   factionType: 'minor' | 'major'   // ✅ major: passed to new-region generation, journal label "World"; minor: journal label "Local"
   hiddenInfo?: string              // ✅ Secret information revealed via gameplay
   embeddingId?: string             // ✅ Reference to embeddings record
-  detailType: 'basic' | 'detailed' // ❌ Always set to 'detailed' at creation
-  known?: boolean                  // ✅ Defaults to true; set false to hide at game start
+  known?: boolean                  // ✅ true: in the journal from the start. false or omitted: hidden until the story names the faction
 }
 ```
 
@@ -23,17 +22,9 @@ interface Faction {
 
 ## Initialization Behavior
 
-When the engine builds a faction from its definition at game start:
+Factions are copied into the game exactly as authored; no field is overwritten or defaulted at game start.
 
-```typescript
-return {
-    ...factionDefinition,  // ALL config fields preserved first
-    detailType: 'detailed',  // ALWAYS overwritten
-    known: factionDefinition.known !== false,  // Defaults to true
-}
-```
-
-Factions have `detailType` always overwritten. The `known` field honors the config value (defaults to `true` if omitted).
+A faction is known only when `known` is `true`. With `known: false`, or with no `known` field at all, it is hidden: absent from the journal and reading as not known to `known-entity` trigger conditions, until the latest story text names it in full as a whole word or a `known-entity` effect reveals it.
 
 ## Factions Are Authored Content
 

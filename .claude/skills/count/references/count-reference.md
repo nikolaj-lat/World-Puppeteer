@@ -65,6 +65,10 @@ Complete character and count limits for world configs.
 | Trigger effect instruction | 1,000 chars |
 | Trigger condition value | 100 chars |
 | Trigger effect value | 100 chars |
+| successLevelSettings.tiers[].id | 128 chars |
+| successLevelSettings.tiers[].name | 120 chars |
+| successLevelSettings.tiers[].prompt | 5,000 chars |
+| successLevelSettings.tiers[].imageUrl | 2,048 chars |
 
 ## Count Limits
 
@@ -74,6 +78,8 @@ Complete character and count limits for world configs.
 | Semantic triggers (story/action conditions) | 500 |
 | Mechanical triggers (all other conditions) | 4,000 |
 | Abilities | 1,500 |
+| Skills | 250 |
+| Success tiers (successLevelSettings.tiers) | 2 to 20 |
 | Trigger conditions (per trigger) | 5 |
 | Trigger effects (per trigger) | 10 |
 | Individual trigger size | 10,000 chars |

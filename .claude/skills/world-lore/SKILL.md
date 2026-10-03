@@ -22,12 +22,11 @@ World lore entries are **specific discoverable knowledge** - facts, history, leg
 
 | Field | When to Include |
 |-------|-----------------|
-| `embeddingId` | Only when using pre-computed embeddings (rare) |
 
 ## Never Include
 
 Omit these fields (auto-generated at runtime):
-- `type`, `gameTick`, `lastUsedTick`, `embedding`
+- `type`, `gameTick`, `lastUsedTick`, `embedding`, `embeddingId` (the server derives embeddings itself and strips authored values on save)
 
 ## text Format
 

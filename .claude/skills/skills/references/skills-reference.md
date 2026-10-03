@@ -39,15 +39,7 @@ Compare total to the difficulty target for success/failure.
 
 ### Success Levels
 
-Based on how much the roll exceeds the target:
-
-| Result | Condition |
-|--------|-----------|
-| Critical Success | Exceeds by large margin |
-| Success | Meets or exceeds target |
-| Partial Success | Just below target |
-| Failure | Below target |
-| Critical Failure | Below by large margin |
+The score is adjusted down by 2 per 10 character levels and then placed on the world's success ladder (`successLevelSettings` in `tabs/settings.json`; see the settings reference). Each tier is a named score band. Tiers from the first successful tier upward are successes of increasing strength; tiers below it are failures. The stock ladder, lowest to highest: Critical Failure, Failure, Mixed Results, Basic Success, Success, Great Success, Critical Success.
 
 ## Skill XP
 

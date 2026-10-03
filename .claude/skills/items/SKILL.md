@@ -45,6 +45,7 @@ Omit these fields (calculated at runtime):
 
 ### Readable
 - `category: "Readable"`, no slot
+- Add `"Readable"` to `itemSettings.itemCategories` in `tabs/settings.json`; like every category, it must be listed there
 - Include `mediaContent` with the text to display
 - Always `bonuses: []`
 

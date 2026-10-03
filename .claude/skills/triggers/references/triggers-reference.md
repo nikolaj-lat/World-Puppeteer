@@ -87,14 +87,15 @@ interface NumberCondition {
 interface ActionSuccessLevelCondition {
   type: 'action-success-level'
   operator: 'equals' | 'notEquals' | 'greaterThan' | 'lessThan' | 'greaterThanOrEqual' | 'lessThanOrEqual'
-  value: string                     // 'impossible' | 'critical failure' | 'failure' | 'mixed results' | 'basic success' | 'success' | 'great success' | 'critical success'
+  value: string                     // A success tier name from the world's successLevelSettings; stock ladder: 'Critical Failure' | 'Failure' | 'Mixed Results' | 'Basic Success' | 'Success' | 'Great Success' | 'Critical Success'
 }
 ```
 
-Compares the player's action outcome this turn against the outcome ladder, ordered worst to best: `impossible`, `critical failure`, `failure`, `mixed results`, `basic success`, `success`, `great success`, `critical success`. Comparisons are ordinal over that order, so `greaterThan 'failure'` means `mixed results` or better.
+Compares the tier the player's action resolved to this turn against the tier `value` names. Tiers are ordered by their score bands, lowest to highest (see successLevelSettings in the settings reference), so on the stock ladder `greaterThan 'Failure'` means Mixed Results or better. `equals` and `notEquals` compare tier identity; the range operators compare band order. Names match ignoring case and surrounding or repeated spacing, so `'critical success'` and `'Critical Success'` name the same stock tier.
 
 - Evaluated **per player** against that player's own action outcome, and player-scoped: it participates in `scope: 'player'` targeting and `satisfyingPlayers` effect targets.
-- A trivial action the engine resolves as simple, and a player with no evaluated action this turn, match **no** operator, `notEquals` included.
+- A trivial action the engine resolves as simple, an impossible action, and a player with no evaluated action this turn, match **no** operator, `notEquals` included.
+- A `value` that names no tier in the world's ladder leaves the condition inactive: it matches no operator until a tier with that name exists. Renaming a tier therefore silences every condition that used the old name.
 - An `action-success-level` condition sends the trigger to the Planning phase (see Phase Partitioning) and is rejected when authored alongside a `story` or `story-text` condition: skill-check results are a Planning fact and this turn's story does not exist yet. Put the story check on a separate trigger.
 
 ### NPC Relationship Conditions
@@ -560,6 +561,7 @@ Trigger names beginning `__generated_quest_progress__/` are reserved for engine-
 | `conditions[].value` (party-*) | `tabs/realms.json`, `tabs/regions.json`, `tabs/locations.json` |
 | `conditions[].npc` (npc-relationship, npc-relationship-stage, npc-health, npc-health-percent, npc-in-scene, npc-in-party, npc-in-combat, npc-realm, npc-region, npc-location, npc-area, npc-type) | `tabs/npcs.json`, or a selector (`anySceneNPC` / `anyPartyNPC`) |
 | `conditions[].value` (npc-type) | `tabs/npc-types.json` |
+| `conditions[].value` (action-success-level) | A tier `name` in `successLevelSettings` (`tabs/settings.json`), or a stock ladder name when the world defines none |
 | `conditions[].skill` (skill-value) | `tabs/skills.json` (id or display name) |
 | `conditions[].resource` | `resourceSettings.resources` in `tabs/settings.json` |
 | `conditions[].value` (player-traits) | `tabs/traits.json` |

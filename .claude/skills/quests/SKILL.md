@@ -25,10 +25,9 @@ Edit `tabs/quests.json`.
 | Field | When to Include |
 |-------|-----------------|
 | `completionCondition` | When the quest should complete off story matching or a narrative event: `{ "type": "story", "query": "..." }` or `{ "type": "narrative-event-completed", "eventId": "..." }`. Omit for trigger-driven quests that complete only through explicit `quest-progress` / `quest-complete` effects |
-| `initialStatus` | When the quest should start the story as `planned`, `available`, or `accepted` instead of the default `hidden` |
+| `status` | When the quest should start the story as `planned`, `available`, or `accepted` instead of the default `hidden` |
 | `spatialRelationship` | Required when `detailType: 'basic'` - defines where quest takes place |
 | `questLocation` | For `detailed` quests with a specific location - key from locations.json. Omit for a locationless detailed quest that starts directly in objective mode |
-| `questGiverNPC` | Only when a specific NPC gives the quest |
 | `objectives` | Only when the quest has an authored objective ladder, revealed/completed via trigger effects |
 | `activeObjectiveId` | Only to point at an objective authored with status `active` |
 | `nextStep` | Only for initial guidance - normally managed by objective and next-step trigger effects |
@@ -38,11 +37,13 @@ Edit `tabs/quests.json`.
 
 Omit these fields (auto-set or runtime-only):
 - `questType`
-- `id`, `definitionKey`, `creationTick`, `status`, `detectionTick`, `acceptedTick`
+- `id`, `definitionKey`, `creationTick`, `detectionTick`, `acceptedTick`
 - `expiryTick`, `completedTick`, `abandonedTick`, `rejectedTick`
 - `startingArea`, `connectingAreaName`, `questAreas`
 - `questStepPhase`, `hasVisitedLocation`, `hasVisitedStartingArea`, `objectiveCompleted`
-- `offeredAtLocation`, `questGiverNPCKey`, `arcQuestOrdinal`, `contentOrigin`
+- `offeredAtLocation`, `questGiverNPC`, `questGiverNPCKey`, `arcQuestOrdinal`, `contentOrigin`
+
+`questGiverNPC` is engine-assigned when the AI generates or details a quest, and an authored value is stripped on save. Name the giver in `questSource` and introduce them in `questDesignBrief` instead.
 - `conclusive`, `arcId`, `arcEscalationAtCreation`
 
 ## detailType Selection
@@ -99,16 +100,16 @@ Format: "[Subject] [situation that creates urgency or motivation]"
 
 ## Starting Statuses and Making Quests Available
 
-Quests start `hidden` unless `initialStatus` sets a different starting status, applied at world start:
+Quests start `hidden` unless `status` sets a different starting status. Only these four values can be authored; play moves the quest through the rest of its lifecycle:
 
-| `initialStatus` | At world start |
-|-----------------|----------------|
+| `status` | At world start |
+|----------|----------------|
 | `hidden` (default) | Invisible; activate later via story start or triggers |
 | `planned` | Invisible, but reserves its storyline against duplicate AI quest generation |
 | `available` | On offer from turn 0 |
 | `accepted` | Fully accepted at turn 0 (location revealed, party guidance active) |
 
-The AI quest generator avoids duplicating `planned` and `available` quests. To reserve a future quest's storyline, author it `planned` (via `initialStatus` or a `quest-plan` effect); `hidden` keeps it purely invisible.
+The AI quest generator avoids duplicating `planned` and `available` quests. To reserve a future quest's storyline, author it `planned` (via `status` or a `quest-plan` effect); `hidden` keeps it purely invisible. The older `initialStatus` key is no longer read: move its value to `status`.
 
 **Via Story Start** (recommended for starting quests):
 ```json
@@ -161,12 +162,11 @@ interface QuestDefinition {
   questStatement: string
   mainObjective: string
   completionCondition?: QuestCompletionCondition
-  initialStatus?: 'hidden' | 'planned' | 'available' | 'accepted'
+  status?: 'hidden' | 'planned' | 'available' | 'accepted'
   questDesignBrief?: string
   detailType: 'basic' | 'detailed'
   spatialRelationship?: SpatialRelationship
   questLocation?: string
-  questGiverNPC?: string
   objectives?: Record<string, QuestObjective>
   activeObjectiveId?: string
   nextStep?: QuestNextStep

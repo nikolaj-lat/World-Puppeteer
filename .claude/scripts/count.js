@@ -71,6 +71,8 @@ const COUNT_LIMITS = {
   semanticTriggers: 500, // triggers with story/action conditions
   mechanicalTriggers: 4_000, // triggers without story/action conditions
   abilities: 1_500,
+  skills: 250,
+  successTiers: 20, // successLevelSettings.tiers; the engine also requires at least 2
   triggerConditions: 5, // per trigger
   triggerEffects: 10, // per trigger
   triggerSize: 10_000, // per trigger
@@ -280,6 +282,15 @@ function analyzeConfig(config) {
     result.counts.abilities = { used: count, limit: COUNT_LIMITS.abilities };
   }
 
+  if (config.skills) {
+    const count = Object.keys(config.skills).length;
+    result.counts.skills = { used: count, limit: COUNT_LIMITS.skills };
+  }
+
+  if (Array.isArray(config.successLevelSettings?.tiers)) {
+    result.counts.successTiers = { used: config.successLevelSettings.tiers.length, limit: COUNT_LIMITS.successTiers };
+  }
+
   // itemSettings.currencyName field limit
   if (config.itemSettings && typeof config.itemSettings.currencyName === 'string') {
     result.fields['itemSettings.currencyName'] = {
@@ -433,7 +444,11 @@ function analyzeConfig(config) {
     }
   }
 
-  // AI Instructions analysis (limits are per task; generateNPCIntents gets a larger allowance)
+  // AI Instructions analysis (limits are per task; generateNPCIntents gets a larger allowance).
+  // Tasks are objects keyed by section name (legacy arrays are still read). Each section is
+  // measured as text; the combined cap is measured on the task's compact JSON, as the engine
+  // does, but without the engine-default free-growth credit, so this reading runs slightly
+  // conservative. validate.js applies the credited figure.
   if (config.aiInstructions) {
     for (const [taskId, taskInstructions] of Object.entries(config.aiInstructions)) {
       const individualLimit = taskId === 'generateNPCIntents'
@@ -441,36 +456,25 @@ function analyzeConfig(config) {
         : AI_INSTRUCTION_INDIVIDUAL_LIMIT;
       const combinedLimit = AI_INSTRUCTION_COMBINED_LIMIT_BY_TASK[taskId]
         ?? AI_INSTRUCTION_COMBINED_LIMIT;
-      let taskTotal = 0;
-      if (Array.isArray(taskInstructions)) {
-        for (let i = 0; i < taskInstructions.length; i++) {
-          const instr = taskInstructions[i];
-          if (typeof instr === 'string') {
-            const len = instr.length;
-            taskTotal += len;
-            if (len > individualLimit) {
-              result.aiInstructions.individual.push({
-                path: `aiInstructions.${taskId}[${i}]`,
-                used: len,
-                limit: individualLimit,
-              });
-            }
-          } else if (instr && typeof instr === 'object' && instr.instruction) {
-            const len = instr.instruction.length;
-            taskTotal += len;
-            if (len > individualLimit) {
-              result.aiInstructions.individual.push({
-                path: `aiInstructions.${taskId}[${i}].instruction`,
-                used: len,
-                limit: individualLimit,
-              });
-            }
-          }
+      const isArrayShape = Array.isArray(taskInstructions);
+      const sections = isArrayShape
+        ? taskInstructions.map((instr, i) => [String(i), typeof instr === 'string' ? instr : instr?.instruction])
+        : taskInstructions && typeof taskInstructions === 'object'
+          ? Object.entries(taskInstructions)
+          : [];
+      for (const [key, text] of sections) {
+        if (typeof text !== 'string') continue;
+        if (text.length > individualLimit) {
+          result.aiInstructions.individual.push({
+            path: isArrayShape ? `aiInstructions.${taskId}[${key}]` : `aiInstructions.${taskId}.${key}`,
+            used: text.length,
+            limit: individualLimit,
+          });
         }
       }
       result.aiInstructions.perTask.push({
         path: `aiInstructions.${taskId}`,
-        used: taskTotal,
+        used: getJsonLength(taskInstructions),
         limit: combinedLimit,
       });
     }

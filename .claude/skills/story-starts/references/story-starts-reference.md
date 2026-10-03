@@ -48,7 +48,7 @@ When a game starts with a story start, fields are processed in this order:
 ### 1. Quest Registration
 
 ```
-All world config quests -> registered ('hidden' unless the quest sets an initialStatus)
+All world config quests -> registered ('hidden' unless the quest authors a starting status)
       |
 startingQuests quests -> hidden quests promoted to 'available'; already accepted quests keep their status
       |
@@ -56,7 +56,7 @@ firstQuest -> on turn 0, injects instruction into AI quest generation
 ```
 
 **Key difference:**
-- `startingQuests`: Array of quest ids or unique quest names from `tabs/quests.json` - promotes those quests from `'hidden'` to `'available'` at start; a quest already accepted (e.g. via its `initialStatus`) keeps its status
+- `startingQuests`: Array of quest ids or unique quest names from `tabs/quests.json` - promotes those quests from `'hidden'` to `'available'` at start; a quest already accepted (e.g. via its authored `status`) keeps its status
 - `firstQuest`: Freeform text instruction - forces AI to generate a quest matching this description on turn 0
 
 These are independent systems.

@@ -22,7 +22,7 @@ Edit `tabs/npcs.json`.
 | `personality` | Four traits using personality psychology (see format below) |
 | `hiddenInfo` | Full paragraph - mix of narrative secrets and gameplay-useful information |
 | `abilities` | At least five abilities + fighting style summary (see format below) |
-| `tier` | Always set to `mythic` for combat NPCs (determines intent complexity) |
+| `tier` | Pick by role: `trivial` or `weak` for fodder, `average` for most named NPCs, `strong` or `elite` for champions and lieutenants, `boss` for arc villains, `mythic` only for legends. Tier scales HP and damage and gives `elite` and above a death countdown; the multipliers are in the reference |
 | `level` | Always set to 1 or higher - each level adds +2 to an NPC's base damage (see guidelines below). Omitting it or setting `0` means the NPC scales from the party's level when first seen |
 | `hpMax` | Always set - see HP guidelines below. Used exactly as written |
 | `known` | Always set to `true` |
@@ -34,7 +34,6 @@ Edit `tabs/npcs.json`.
 |-------|-----------------|
 | `faction` | Only for major plot-relevant faction membership |
 | `relationship` | Set -100 to 100 to fix the starting attitude toward the player (0 is genuinely Neutral). Omit to let the AI infer it from the rest of the record on the NPC's first scene |
-| `aliases` | Include when NPC is commonly referred to by title, epithet, or nickname in the story (e.g. `"the captain"`, `"Reed"`). Only list exact strings the narrator or other NPCs would literally speak — these are matched verbatim during dialogue speaker attribution |
 | `properName` | Set when an NPC starts under a placeholder `name` (e.g. `"Hooded Stranger"`) but has a true identity revealed later. `name` is the current display name; `properName` is the true name. The identity counts as revealed once the two match — a reveal flips `name` to `properName`. Omit when the NPC is known from the start |
 | `worldVoiceId` | Key from the world's `worldVoices` catalog. Overrides the generic `voiceTag` pick for this NPC. Include when the world defines a curated voice for the character |
 | `vulnerabilities`, `resistances`, `immunities` | Damage types from `combatSettings.damageTypes`. Include only when the NPC should take modified damage from specific types; they union with the npcType's lists |
@@ -53,6 +52,7 @@ Omit these fields (auto-set or unused):
 - `lastSeenLocation`, `lastSeenArea`, `playerNotes`
 - `needsDetailGeneration`, `deathXPAwarded`
 - `healthMultiplier`
+- `aliases` (engine-maintained from renames and observed names; an authored list is stripped on save, so put titles and nicknames in `hiddenInfo` or the display `name`)
 
 `status` is reset to `""` by the engine. Near death, dying, and dead are a runtime incapacitation counter (1 = near death, 2 = dying, 3 = dead) that creators never set. To spawn an NPC already down, use `hpMax: 0` with `hpCurrent: 0` instead.
 
@@ -69,6 +69,8 @@ Three sentences covering role, appearance, and dress:
 3. One short sentence about their clothes/equipment
 
 Format: "A [gender] [species] [role]. [Build] with [hair], [eyes], [species features in detail]. Wears [X]."
+
+Keep the appearance sentences to what a camera would see: build, hair, eyes, skin, scars, gear, clothing. Portraits are rendered from them, so character words such as "keen, intelligent eyes", "a regal bearing", or "a scowl of determination" belong in `personality`, not here.
 
 ## personality Format
 
@@ -142,7 +144,6 @@ interface NPC {
   hiddenInfo?: string
   personality?: string[]
   abilities?: string[]
-  aliases?: string[]
   level?: number
   hpMax?: number
   healthMultiplier?: number

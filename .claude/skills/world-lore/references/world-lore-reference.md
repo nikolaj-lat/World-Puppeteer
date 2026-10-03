@@ -7,15 +7,15 @@ Complete documentation for `tabs/world-lore.json`.
 ```typescript
 interface WorldLoreEntry {
   text: string                    // ✅ The lore content itself
-  embeddingId?: string            // ✅ Reference to embeddings record (auto-generated if omitted)
+  embeddingId?: string            // ❌ Server-derived; an authored value is stripped on save
 }
 
 // Converted to Memory at runtime
 interface Memory {
   text: string                    // ✅ Copied from WorldLoreEntry.text
   embeddingId: string             // ⚠️ Generated if not predefined
-  gameTick: number                // ✅ Can be set; worldLore entries identified by gameTick === 0
-  lastUsedTick: number            // ⚠️ Set when memory is retrieved
+  gameTick: number                // ❌ Engine-set to 0 for worldLore entries; an authored value is stripped on save
+  lastUsedTick: number            // ❌ Engine-set when the memory is retrieved; an authored value is stripped on save
 }
 ```
 

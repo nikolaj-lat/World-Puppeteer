@@ -16,39 +16,39 @@ interface NPC {
   basicInfo?: string              // ✅ Immediately available info
   hiddenInfo?: string             // ✅ Info revealed via interaction
   visualDescription?: string      // ✅ Used for portrait generation
-  visualTags?: string[]           // ✅ Only used for image caching
+  visualTags?: string[]           // ❌ Engine-written image cache; an authored value is stripped on save
   personality?: string[]          // ✅ Prose descriptions of personality traits
   abilities?: string[]            // ✅ Prose descriptions of abilities
-  aliases?: string[]              // ✅ Alternate names/titles (e.g. "the captain", "Reed") used only to match input/dialogue to this NPC; never sent to the AI
+  aliases?: string[]              // ❌ Engine-maintained: an authored list is stripped on save. The engine records renames and observed display names here itself and uses them to match input and dialogue to the NPC
   level?: number                  // ⚠️ Set explicitly (1 or higher) for any NPC that should be stronger; an explicit level is used as-is. If omitted or set to 0, the engine rolls a level near the party average when the NPC first becomes visible (so it reflects the party's level at that moment), then clamps it into the npcLevelRange of the NPC's location (or, if the location has none, its region). Each NPC level adds +2 to base damage
   hpMax?: number                  // ⚠️ Used exactly as written when authored; the engine never raises it to its own calculation. If undefined, derived live from level, tier, healthMultiplier, and difficulty. Set 0 (with hpCurrent 0) to spawn the NPC dead/dying
   hpCurrent?: number              // ⚠️ Defaults to hpMax if undefined; clamped to the final hpMax
   healthMultiplier?: number       // ✅ Scales calculated max HP. 1 is normal, 10 is ten times normal, 0.5 is half. Clamped to 0.1–100 (non-numeric values are treated as 1)
-  tier?: 'trivial' | 'weak' | 'average' | 'strong' | 'elite' | 'boss' | 'mythic'                  // ⚠️ Defaults to 'average' if omitted. Affects HP calculation AND combat intent complexity. Named NPCs the story introduces keep their generated tier
+  tier?: 'trivial' | 'weak' | 'average' | 'strong' | 'elite' | 'boss' | 'mythic'                  // ⚠️ Defaults to 'average' if omitted. Scales HP and damage, gives elite and above the death countdown, shapes detail generation, and is shown to the AI as context. Named NPCs the story introduces keep their generated tier
   vulnerabilities?: string[]      // ✅ 1.5× damage from these types. Unions with npc-type's vulnerabilities
   resistances?: string[]          // ✅ 0.5× damage from these types. Unions with npc-type's resistances
   immunities?: string[]           // ✅ 0× damage from these types. Unions with npc-type's immunities
   successBonus?: number           // ✅ Flat bonus to the NPC's action success score. 0 (the default) leaves rolls unchanged; clamps to -1000..1000, and 25 points is one full success tier (see Combat Tuning below)
   damageModifier?: number         // ✅ Percent change to the NPC's outgoing damage: 0 (the default) unchanged, -100 removes it, 100 doubles it. Clamps to -100..10000 (see Combat Tuning below)
   damageReductionModifier?: number // ✅ Percent reduction to damage the NPC takes: 0 (the default) unchanged, 100 is true immunity. Clamps to 0..100 (see Combat Tuning below)
-  activeBuffs?: ActiveBuff[]      // ✅ See ActiveBuff schema below
+  activeBuffs?: ActiveBuff[]      // ❌ Runtime buffs the engine applies during play; an authored list is stripped on save (schema below)
   known?: boolean                 // ✅ Whether NPC appears in player journal
-  lastSeenLocation?: string       // ✅ Preserved if predefined, but auto-updated when NPC is nearby. Shown in journal as "Last seen at..."
-  lastSeenArea?: string           // ✅ Preserved if predefined, but auto-updated when NPC is nearby. Shown in journal with lastSeenLocation
-  currentCoordinates?: number[]   // ✅ [x, y] for wilderness positioning
+  lastSeenLocation?: string       // ❌ Engine-tracked as the NPC moves; stripped on save. Shown in journal as "Last seen at..."
+  lastSeenArea?: string           // ❌ Engine-tracked as the NPC moves; stripped on save. Shown in journal with lastSeenLocation
+  currentCoordinates?: number[]   // ❌ Engine-set [x, y] for wilderness positioning; stripped on save
   detailType?: 'basic' | 'detailed'  // ⚠️ Defaults to 'detailed' if undefined. If 'detailed', generateNPCDetails won't run
   voiceTag?: string               // ✅ Voice tag for speech synthesis (see voice-tags.md)
   worldVoiceId?: string           // ✅ Key from the world's worldVoices catalog. Overrides the generic voiceTag pick for this NPC; works whether or not the voice is exposed in character creation
   portraitFocusX?: number         // ✅ Horizontal crop focus for an authored portrait. 0..100, defaults to 50 (centered). Generated portraits ignore it
   portraitFocusY?: number         // ✅ Vertical crop focus for an authored portrait. 0..100, defaults to 0 (top). Generated portraits ignore it
   portraitZoom?: number           // ✅ Zoom level for the portrait crop. 100..300, defaults to 100 (no zoom). Generated portraits ignore it
-  questOriginArcId?: string       // ✅ Auto-generated for quest-spawned NPCs. Links to the arc that spawned this NPC; provides arc theme/secrets to AI detail generation
-  questOriginQuestId?: string     // ✅ Auto-generated for quest-spawned NPCs. Links to the quest that spawned this NPC; provides quest design brief to AI detail generation
-  embedding?: number[]            // ✅ Auto-generated
-  embeddingId?: string            // ✅ Auto-generated
+  questOriginArcId?: string       // ❌ Engine-set for quest-spawned NPCs (links to the spawning arc); stripped on save
+  questOriginQuestId?: string     // ❌ Engine-set for quest-spawned NPCs (links to the spawning quest); stripped on save
+  embedding?: number[]            // ❌ Server-derived; stripped on save
+  embeddingId?: string            // ❌ Server-derived; stripped on save
   portraitUrl?: string            // ✅ .png portrait image URL
-  needsDetailGeneration?: boolean // ✅ Flag to async trigger  generateNPCDetails
-  deathXPAwarded?: boolean        // ✅ Whether XP will be given on death
+  needsDetailGeneration?: boolean // ❌ Engine flag for pending detail generation; stripped on save
+  deathXPAwarded?: boolean        // ❌ Engine bookkeeping for XP already granted on death; stripped on save
   properName?: string             // ⚠️ The NPC's true name. Defaults to name if omitted. Set it (different from name) for a hidden-identity NPC: name is the current display name, properName is revealed later. The identity counts as revealed once the two match, and a reveal flips name to properName
   status: string                  // ❌ Always set to ''. Free-form runtime text; mortality is no longer encoded here (see Death Countdown below)
   lastSeenTick: number            // ❌ Always set to -1. Value of -1 means immune to cleanup until first seen
@@ -114,19 +114,14 @@ Each tier also scales NPC damage output (engine constants, not configurable):
 | average | 1.0 | Base damage |
 | strong | 1.12 | +12% damage |
 | elite | 1.25 | +25% damage |
-| boss | 1.35 | +35% damage |
+| boss | 1.4 | +40% damage |
 | mythic | 1.55 | +55% damage |
 
-### Combat Intent Complexity
+Because both multipliers climb with tier, a cast where every fighter is `mythic` hits and soaks uniformly hard. Spread tiers by role so the difference between a guard and the final boss is felt.
 
-Tier determines how many intents an NPC generates in combat and their tactical sophistication:
+### Other Tier Effects
 
-| Tier | Intents | Behavior |
-|------|---------|----------|
-| trivial / weak | 1 | Simple, direct actions |
-| average | 1-2 | Basic tactics |
-| strong | 2 | Uses abilities when appropriate |
-| elite / boss / mythic | 2-3 | Tactical and dramatic |
+The tier is part of the NPC context the AI sees, so it colors how the NPC is written and played. When the engine generates an NPC's details, `strong` and higher tiers get more distinctive, creatively seeded detail generation. Intent generation does not change its shape by tier: an NPC's actions in combat come from its abilities, details, and the scene.
 
 ### Death Countdown (Major NPCs)
 
@@ -145,6 +140,7 @@ Standard-tier NPCs (`trivial`, `weak`, `average`, `strong`) die instantly at 0 H
 - Positive healing clears near death and dying.
 - A dead character is revived only by explicit healing (an NPC, a player action, an item, a spell, or a story event) in non-permadeath games. Passive recharge and ordinary rest never revive.
 - Under permadeath, a dead character cannot be revived.
+- Dead NPCs keep their records. A basic dead NPC is dropped once it has been out of the scene and unseen for a long stretch (about 50 turns). A detailed dead NPC stays in the world for good, though after about 10 turns away from the scene its placement is cleared, so the body no longer sits in a location or area.
 - Recover and Revive restore 35% of max health.
 
 ### Party-Member Promotion
@@ -157,7 +153,7 @@ Three optional fields tune an individual NPC's combat math. Each defaults to 0 (
 
 ### successBonus
 
-A flat bonus to the NPC's action success score, in the player success-score space. NPC rolls sample a score inside the rolled tier's band, add `successBonus`, then re-derive the tier from the total. 25 points is one full success tier, so `successBonus: 25` shifts every roll up a tier and `-25` shifts every roll down one. Clamps to -1000..1000; at 0 the roll distribution is unchanged.
+A flat bonus to the NPC's action success score. NPC rolls use the engine's fixed outcome bands, independent of the world's `successLevelSettings`: a roll samples a score inside the rolled band, adds `successBonus`, then re-derives the band from the total. 25 points is one full band, so `successBonus: 25` shifts every roll up a band and `-25` shifts every roll down one. Clamps to -1000..1000; at 0 the roll distribution is unchanged.
 
 An NPC's natural roll always lands at basic success or better, so a negative bonus is how you make an NPC fumble. Applies to any acting NPC, ally or enemy.
 
@@ -171,7 +167,7 @@ Percent reduction to damage the NPC takes: 0 unchanged, 100 is true immunity. It
 
 ## Relationship
 
-`relationship` is the NPC's attitude toward the player, from -100 to 100, mapped to named stages by the world's `relationshipStages`. An authored value is preserved exactly, including 0: authoring `relationship: 0` means genuinely Neutral. Values outside -100..100 are an authoring error.
+`relationship` is the NPC's attitude toward the player, from -100 to 100, mapped to named stages by the world's `relationshipStages`. An authored value is preserved exactly, including 0: authoring `relationship: 0` means genuinely Neutral. Values outside -100..100 are an authoring error. Prompts that carry the relationship show the current stage name together with the world's full ladder of stage names from worst to best, so a custom stage name such as "Stranger" is understood in context.
 
 When the field is omitted, the NPC starts with a pending relationship, and the AI initializes it on the first turn the NPC is in the scene. The AI picks an absolute score (not a delta) inferred from `basicInfo`, `hiddenInfo`, `personality`, `faction`, and the story so far, so the rest of the NPC record indirectly sets the starting attitude. A creator-editable AI-instruction section guides this initialization (see the ai-instructions skill).
 

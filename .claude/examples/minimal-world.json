@@ -75,6 +75,596 @@
   "gameModes": {},
   "worldVoices": {},
   "characterCreationMusic": "nonfantasy",
+  "relationshipStages": [
+    {
+      "name": "Nemesis",
+      "minScore": -100,
+      "maxScore": -81
+    },
+    {
+      "name": "Antagonist",
+      "minScore": -80,
+      "maxScore": -61
+    },
+    {
+      "name": "Hostile",
+      "minScore": -60,
+      "maxScore": -41
+    },
+    {
+      "name": "Unfriendly",
+      "minScore": -40,
+      "maxScore": -21
+    },
+    {
+      "name": "Cold",
+      "minScore": -20,
+      "maxScore": -1
+    },
+    {
+      "name": "Neutral",
+      "minScore": 0,
+      "maxScore": 0
+    },
+    {
+      "name": "Warm",
+      "minScore": 1,
+      "maxScore": 20
+    },
+    {
+      "name": "Friendly",
+      "minScore": 21,
+      "maxScore": 40
+    },
+    {
+      "name": "Confidant",
+      "minScore": 41,
+      "maxScore": 60
+    },
+    {
+      "name": "Ally",
+      "minScore": 61,
+      "maxScore": 80
+    },
+    {
+      "name": "Devoted",
+      "minScore": 81,
+      "maxScore": 100
+    }
+  ],
+  "gameplayMusicSettings": {
+    "characterCreationTrackId": "CharacterCreationFuturistic",
+    "tracks": {
+      "CharacterCreationFantasy": {
+        "cues": [
+          "character-creation"
+        ],
+        "variants": [
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/FantasyCharacterSelectA.wav"
+          },
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/FantasyCharacterSelectB.wav"
+          },
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/FantasyCharacterSelectC.wav"
+          }
+        ]
+      },
+      "CharacterCreationFuturistic": {
+        "cues": [
+          "character-creation"
+        ],
+        "variants": [
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/FuturisticCharacterCreateA.wav"
+          },
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/FuturisticCharacterCreateB.wav"
+          },
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/FuturisticCharacterCreateC.wav"
+          }
+        ]
+      },
+      "Investigatory": {
+        "matchTags": [
+          "investigation",
+          "searching",
+          "clues",
+          "hidden",
+          "sneaking",
+          "spying",
+          "detective",
+          "tracking"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Investigatory1_NAR_REENCODED.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Investigatory1_PLY.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Investigatory2_NAR_REENCODED.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Investigatory2_PLY_REENCODED.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Investigatory3_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Investigatory3_PLY.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Investigatory4_NAR_REENCODED.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Investigatory4_PLY.ogg"
+          }
+        ]
+      },
+      "Apprehensive": {
+        "matchTags": [
+          "dread",
+          "ominous",
+          "lurking",
+          "danger",
+          "warning",
+          "threatening",
+          "tense",
+          "anxious",
+          "uneasy",
+          "foreboding",
+          "suspicious",
+          "nervous"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Apprehensive_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Apprehensive_PLY_REENCODED.ogg"
+          }
+        ]
+      },
+      "Awestruck": {
+        "matchTags": [
+          "wonder",
+          "magnificent",
+          "ancient",
+          "revelation",
+          "sacred",
+          "overwhelming",
+          "majestic",
+          "vast",
+          "breathtaking",
+          "awe",
+          "mystical",
+          "divine",
+          "grandeur",
+          "discovery"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Awestruck_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Awestruck_PLY.ogg"
+          }
+        ]
+      },
+      "Calm": {
+        "matchTags": [
+          "peaceful",
+          "safe",
+          "rest",
+          "serene",
+          "tranquil",
+          "relaxed",
+          "shelter",
+          "stillness",
+          "meditative",
+          "comfort"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Calm_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Calm_PLY.ogg"
+          }
+        ]
+      },
+      "Dead": {
+        "matchTags": [
+          "death",
+          "killed",
+          "fallen",
+          "tragedy",
+          "grief",
+          "devastating",
+          "perished",
+          "fatal"
+        ],
+        "cues": [
+          "dead"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dead1_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dead1_PLY.ogg",
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dead1.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dead2_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dead2_PLY.ogg",
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dead2.ogg"
+          },
+          {
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dead3_PLY.ogg",
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dead3.ogg"
+          },
+          {
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dead4_PLY.ogg",
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dead4.ogg"
+          }
+        ]
+      },
+      "Distraught": {
+        "matchTags": [
+          "distress",
+          "turmoil",
+          "betrayal",
+          "anguish",
+          "conflict",
+          "desperate",
+          "troubled",
+          "dilemma",
+          "confrontation",
+          "argument",
+          "tension",
+          "accusation",
+          "rejection",
+          "bitter"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Distraught_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Distraught_PLY.ogg"
+          }
+        ]
+      },
+      "Eulogizing": {
+        "matchTags": [
+          "mourning",
+          "memorial",
+          "funeral",
+          "tribute",
+          "remembrance",
+          "farewell",
+          "honoring",
+          "grave"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Eulogizing_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Eulogizing_PLY.ogg"
+          }
+        ]
+      },
+      "Exuberant": {
+        "matchTags": [
+          "excitement",
+          "energetic",
+          "wild",
+          "celebration",
+          "dancing",
+          "festival",
+          "jubilant",
+          "excited",
+          "revelry",
+          "exhilarating",
+          "raucous",
+          "festive"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Exuberant_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Exuberant_PLY.ogg"
+          }
+        ]
+      },
+      "Fighting": {
+        "matchTags": [
+          "combat",
+          "battle",
+          "fighting",
+          "attack",
+          "clash",
+          "warfare",
+          "strike",
+          "assault"
+        ],
+        "cues": [
+          "combat"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Fighting1_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Fighting1_PLY_REENCODED.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Fighting2_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Fighting2_PLY_REENCODED.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Fighting3_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Fighting3_PLY_REENCODED.ogg"
+          }
+        ]
+      },
+      "Happy": {
+        "matchTags": [
+          "cheerful",
+          "pleasant",
+          "friendly",
+          "lighthearted",
+          "warm",
+          "kind",
+          "reunion",
+          "welcome",
+          "hopeful",
+          "gentle",
+          "tender"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Happy_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Happy_PLY.ogg"
+          }
+        ]
+      },
+      "Morose": {
+        "matchTags": [
+          "melancholy",
+          "somber",
+          "gloomy",
+          "lonely",
+          "bleak",
+          "empty",
+          "weary",
+          "sorrowful",
+          "resigned",
+          "loss",
+          "regret",
+          "desolate"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Morose_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Morose_PLY.ogg"
+          }
+        ]
+      },
+      "Pursued": {
+        "matchTags": [
+          "chase",
+          "fleeing",
+          "escape",
+          "pursuit",
+          "hunted",
+          "running",
+          "urgent",
+          "panic",
+          "frantic"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Pursued_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Pursued_PLY.ogg"
+          }
+        ]
+      },
+      "Spooked": {
+        "matchTags": [
+          "horror",
+          "supernatural",
+          "haunted",
+          "eerie",
+          "ghost",
+          "creepy",
+          "cursed",
+          "unnatural",
+          "sinister",
+          "macabre",
+          "unsettling"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Spooked1_NAR_REENCODED.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Spooked1_PLY.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Spooked2_NAR_REENCODED.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Spooked2_PLY_REENCODED.ogg"
+          }
+        ]
+      },
+      "Triumphant": {
+        "matchTags": [
+          "victory",
+          "triumph",
+          "heroic",
+          "conquered",
+          "achievement",
+          "glory",
+          "champion",
+          "winning",
+          "victorious",
+          "glorious",
+          "legendary",
+          "celebrated"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Triumphant_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Triumphant_PLY.ogg"
+          }
+        ]
+      },
+      "Unconscious": {
+        "matchTags": [
+          "dream",
+          "unconscious",
+          "vision",
+          "trance",
+          "ethereal",
+          "floating",
+          "surreal",
+          "sleep"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Unconscious1_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Unconscious1_PLY.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Unconscious2_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Unconscious2_PLY.ogg"
+          }
+        ]
+      },
+      "Travelling": {
+        "matchTags": [
+          "journey",
+          "travel",
+          "road",
+          "adventure",
+          "exploring",
+          "trek",
+          "wandering",
+          "path",
+          "expedition",
+          "voyage",
+          "roaming"
+        ],
+        "cues": [
+          "travel"
+        ],
+        "variants": [
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Travelling1_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Travelling1_PLY.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Travelling2_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Travelling2_PLY.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Travelling3_NAR.ogg",
+            "gameplayUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Travelling3_PLY.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Travelling4_NAR.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Travelling5_NAR.ogg"
+          },
+          {
+            "narrationUrl": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Travelling6_NAR.ogg"
+          }
+        ]
+      },
+      "Near_Dead": {
+        "cues": [
+          "near-death"
+        ],
+        "variants": [
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Near_Dead1.ogg"
+          },
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Near_Dead2.ogg"
+          }
+        ]
+      },
+      "Dying": {
+        "cues": [
+          "dying"
+        ],
+        "variants": [
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dying1.ogg"
+          },
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Dying2.ogg"
+          }
+        ]
+      },
+      "Recover": {
+        "cues": [
+          "recovery"
+        ],
+        "variants": [
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Recover1.ogg"
+          },
+          {
+            "url": "https://latitude-standard-pull-zone-1.b-cdn.net/site_assets/heroes/audio/music/Recover2.ogg"
+          }
+        ]
+      }
+    }
+  },
+  "successLevelSettings": {
+    "firstSuccessfulTierId": "mixed-results",
+    "tiers": [
+      {
+        "id": "critical-failure",
+        "name": "Critical Failure",
+        "minScore": null,
+        "maxScore": -66,
+        "imageUrl": "",
+        "prompt": "[Note: {{characterName}} tries to do the action, but it fails in a dramatic, catastrophic way - if enemies are present, consider framing the failure as partly the result of an enemy's cleverness, tactics, or intervention that thwarts the attempt, rather than the player merely being inept.]"
+      },
+      {
+        "id": "failure",
+        "name": "Failure",
+        "minScore": -65,
+        "maxScore": -51,
+        "imageUrl": "",
+        "prompt": "[Note: {{characterName}} tries to do the action, but it fails - if enemies are present, consider framing the failure as partly the result of an enemy's cleverness, tactics, or intervention that thwarts the attempt, rather than the player merely being inept.]"
+      },
+      {
+        "id": "mixed-results",
+        "name": "Mixed Results",
+        "minScore": -50,
+        "maxScore": -26,
+        "imageUrl": "",
+        "prompt": "[Note: {{characterName}} does the action, but it is only partially successful with mixed results.]"
+      },
+      {
+        "id": "basic-success",
+        "name": "Basic Success",
+        "minScore": -25,
+        "maxScore": -1,
+        "imageUrl": "",
+        "prompt": "[Note: {{characterName}}'s action is successful.]"
+      },
+      {
+        "id": "success",
+        "name": "Success",
+        "minScore": 0,
+        "maxScore": 24,
+        "imageUrl": "",
+        "prompt": "[Note: {{characterName}}'s action is quite successful.]"
+      },
+      {
+        "id": "great-success",
+        "name": "Great Success",
+        "minScore": 25,
+        "maxScore": 49,
+        "imageUrl": "",
+        "prompt": "[Note: {{characterName}}'s action is very successful.]"
+      },
+      {
+        "id": "critical-success",
+        "name": "Critical Success",
+        "minScore": 50,
+        "maxScore": null,
+        "imageUrl": "",
+        "prompt": "[Note: {{characterName}}'s action is amazingly successful in an awesome way.]"
+      }
+    ]
+  },
   "worldLore": {},
   "triggers": {},
   "questTriggers": {},
@@ -192,7 +782,7 @@
   "otherSettings": {
     "npcHealthPerLevel": 10,
     "npcMinHealth": 0,
-    "visualNovelModeByDefault": false
+    "visualNovelModeByDefault": true
   },
   "progressionSettings": {
     "startingCharacterLevelUpRequirement": 500,

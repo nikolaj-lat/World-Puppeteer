@@ -66,8 +66,9 @@ Format: `{ type: 'story' | 'action', query: 'natural language description' }`
 
 **Action outcome condition** (`action-success-level`):
 ```typescript
-{ type: 'action-success-level', operator: 'equals' | 'notEquals' | 'greaterThan' | 'lessThan' | 'greaterThanOrEqual' | 'lessThanOrEqual', value: 'impossible' | 'critical failure' | 'failure' | 'mixed results' | 'basic success' | 'success' | 'great success' | 'critical success' }
-// Ordinal over that worst-to-best order, per player, this turn's action. Simple actions and players with no evaluated action match nothing, notEquals included. Rejected alongside story / story-text conditions: put the story check on a separate trigger
+{ type: 'action-success-level', operator: 'equals' | 'notEquals' | 'greaterThan' | 'lessThan' | 'greaterThanOrEqual' | 'lessThanOrEqual', value: 'tier name' }
+// value names a tier from the world's successLevelSettings (stock ladder, lowest to highest: Critical Failure, Failure, Mixed Results, Basic Success, Success, Great Success, Critical Success), matched ignoring case and spacing
+// Ordinal over the tiers' score-band order, per player, this turn's action. Simple actions, impossible actions, players with no evaluated action, and a value naming no tier match nothing, notEquals included. Rejected alongside story / story-text conditions: put the story check on a separate trigger
 ```
 
 **NPC relationship stage condition** (`npc-relationship-stage`):
@@ -247,7 +248,7 @@ Firing itself is unchanged: a mechanical player condition still fires when at le
 - **Recurring**: Without `recurring: true`, triggers fire only once ever
 - **Identical story instructions deduplicate**: two triggers firing with the same `story` instruction text produce ONE instruction to the AI — duplicating an effect for emphasis does not work
 - **Host / DM input**: `action` and `action-text` conditions only evaluate real player inputs — host and DM story directions are ignored
-- **Missing subjects match nothing**: an NPC condition whose NPC is absent, off-stage, or unresolved, a `skill-value` check on a character without the skill, and `action-success-level` on a simple or unevaluated action all match no operator, `notEquals` included
+- **Missing subjects match nothing**: an NPC condition whose NPC is absent, off-stage, or unresolved, a `skill-value` check on a character without the skill, and `action-success-level` on a simple or unevaluated action, or naming a tier the world does not define, all match no operator, `notEquals` included
 - **Reserved names**: trigger names starting `__generated_quest_progress__/` belong to engine-generated quest progress and cannot be authored
 
 ## Schema

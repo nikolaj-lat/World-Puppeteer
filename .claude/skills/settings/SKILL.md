@@ -141,6 +141,7 @@ These must be configured per-world:
 | `characterCreationMusic` | Optional top-level field. `"fantasy"` or `"nonfantasy"` background music for the character-creation screen. Defaults to `"fantasy"` |
 | `imageModelSource` | Optional top-level field. Pins which platform-provided image model renders all generated images (portraits, location/area images, region maps) while editing the world; games created from it start with this as their default but can pick their own. One of `falai-gpt-image-2-low`, `falai-gpt-image-2`, `google-nano-banana-lite`, `google-nano-banana-pro`, `falai-flux-2-dev`. Omit to use the platform's current default |
 | `worldVoices` | Optional top-level field. Catalog of reusable voice presets (see worldVoices below) that NPCs and premade characters reference by `worldVoiceId` |
+| `successLevelSettings` | Required top-level field: the world's outcome ladder as named score bands with narration notes; `firstSuccessfulTierId` marks where failure turns into success. Start from the stock ladder in the example world (Critical Failure through Critical Success) and keep it unless the world wants different outcomes. Trigger `action-success-level` conditions name tiers by their `name` |
 
 ## worldVoices
 
@@ -172,12 +173,27 @@ interface Settings {
   characterCreationMusic?: 'fantasy' | 'nonfantasy'
   imageModelSource?: 'falai-gpt-image-2-low' | 'falai-gpt-image-2' | 'google-nano-banana-lite' | 'google-nano-banana-pro' | 'falai-flux-2-dev'
   worldVoices?: Record<string, WorldVoice>
+  successLevelSettings: SuccessLevelSettings
 }
 
 interface OtherSettings {
   npcHealthPerLevel: number
   npcMinHealth: number
   visualNovelModeByDefault?: boolean
+}
+
+interface SuccessLevelSettings {
+  firstSuccessfulTierId: string
+  tiers: SuccessTier[]
+}
+
+interface SuccessTier {
+  id: string
+  name: string
+  minScore: number | null
+  maxScore: number | null
+  prompt: string
+  imageUrl?: string | null
 }
 
 interface WorldVoice {

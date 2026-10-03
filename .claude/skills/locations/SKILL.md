@@ -46,6 +46,7 @@ For locations with distinct internal spaces, define interconnected areas.
 Each area needs:
 - `description`: Freeform description of the area
 - `paths`: Array of connected area names
+- `name` (optional): Display label only. The area's key is its identity for `paths`, story starts, and NPC placement
 - `images.establishingShot`: The area's establishing-shot image, `{ crop: { focus: { x, y }, zoom }, imageUrl }`. `crop` (focus x/y and zoom) is required whenever the image object is present; `imageUrl` is optional. When `imageUrl` is absent, the engine generates an image during play and saves it back; an existing image is never regenerated
 
 Do not set `visualTags` on areas.
@@ -100,6 +101,7 @@ interface Location {
 }
 
 interface Area {
+  name?: string
   description: string
   paths: string[]
   images?: { establishingShot?: SceneImage }

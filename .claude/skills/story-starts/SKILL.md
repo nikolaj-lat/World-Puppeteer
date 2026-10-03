@@ -65,7 +65,7 @@ Three-part structure:
 ## Quest Integration
 
 **startingQuests vs firstQuest:**
-- `startingQuests`: Array of quest ids or unique quest names from `tabs/quests.json` - at game start, hidden quests are promoted to `'available'`; quests already accepted (e.g. via a quest's `initialStatus`) keep their status
+- `startingQuests`: Array of quest ids or unique quest names from `tabs/quests.json` - at game start, hidden quests are promoted to `'available'`; quests already accepted (e.g. via a quest's authored `status`) keep their status
 - `firstQuest`: Freeform text instruction - on turn 0, forces AI to generate a quest matching this description
 
 These are independent systems. Use `startingQuests` for predefined quests, use `firstQuest` for AI-generated opening quests.
