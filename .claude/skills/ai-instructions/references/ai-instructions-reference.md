@@ -204,15 +204,15 @@ Generates new NPCs dynamically during gameplay.
 
 ### ItemGenerationAndUsage
 
-World-specific guidance on items — how they are discovered, generated, obtained, used, consumed, equipped, transformed, and removed. Appended to the engine's item-update and item-definition prompts so the AI honors the world's economy, magic system, and item conventions when handling player inventory and creating new items mid-game. Custom-only.
+World-specific guidance on items — how they are discovered, generated, obtained, used, consumed, equipped, transformed, and removed. Appended to the engine's item-update and item-definition prompts so the AI honors the world's economy, magic system, and item conventions when handling player inventory and creating new items mid-game. No built-in sections; add `custom` and/or your own named keys.
 
 ### summarization
 
-Condenses past story into the running summary the narrator reads. Custom-only; use it to name what must never be dropped from summaries (standing oaths, faction standing, unresolved debts).
+Condenses past story into the running summary the narrator reads. No built-in sections; add `custom` and/or your own named keys to name what must never be dropped from summaries (standing oaths, faction standing, unresolved debts).
 
 ### generateLearnedAbilities
 
-Defines abilities characters learn mid-game. Custom-only; use it for world rules on what can be learned and how learned abilities should be named and scoped.
+Defines abilities characters learn mid-game. No built-in sections; add `custom` and/or your own named keys for world rules on what can be learned and how learned abilities should be named and scoped.
 
 ## storySettings
 

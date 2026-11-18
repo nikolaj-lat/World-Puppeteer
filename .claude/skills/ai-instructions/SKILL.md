@@ -131,6 +131,8 @@ Add any other key to a task to append additional guidance after the built-in sec
 2. **Editable key set to `""`** blanks the section entirely. It no longer falls back to the default, so use `""` (not a single space) when you want a built-in section gone. An undefined key keeps the default.
 3. **Key matching a reserved engine section** (one the engine writes itself and does not list above) is stripped on save and never reaches the prompt. If a custom key disappears after saving, it collided with a reserved name: pick a different key name.
 
+Prefer one clearly named key per distinct concern over a single crowded `custom` section; each key becomes its own titled section in the prompt.
+
 For `generateCharacterBackground`, note that `prompt` now produces a portrait-only `appearance` (what the image generator needs); anything about appearance that matters in play belongs in the background text.
 
 ## generateActionInfo
@@ -160,11 +162,11 @@ Controls how NPC state changes are applied after each turn. Three sections are e
 
 ## generateNewNPC
 
-Controls dynamic NPC generation during gameplay. Custom-only — use for world-specific guidance on what kinds of NPCs the engine should create on the fly.
+Controls dynamic NPC generation during gameplay. No built-in sections; add `custom` and/or your own named keys for world-specific guidance on what kinds of NPCs the engine should create on the fly.
 
 ## ItemGenerationAndUsage
 
-World-specific guidance on how items are discovered, generated, obtained, used, consumed, equipped, transformed, and removed. Appended to the engine's item-update and item-definition prompts so the AI honors the world's economy and item rules. Custom-only.
+World-specific guidance on how items are discovered, generated, obtained, used, consumed, equipped, transformed, and removed. Appended to the engine's item-update and item-definition prompts so the AI honors the world's economy and item rules. No built-in sections; add `custom` and/or your own named keys.
 
 ## narratorStyle
 
