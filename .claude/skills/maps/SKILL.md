@@ -31,7 +31,7 @@ const coordRange = regionSize / 2 // e.g., 50
 - **Region coordinates** (in regions.json): Position within the realm grid (e.g., x:0, y:1)
 - **Location coordinates** (in locations.json): Position within the region, where 0,0 is center
 - `regionSize: 100` means location coordinates span -50 to 50
-- **Y-axis**: Positive y goes UP (invert for CSS: `top = centerY - (loc.y * scale)`)
+- **Y-axis**: Positive y is north and goes UP, for both region and location coordinates. Invert for CSS: `top = centerY - (loc.y * scale)` for locations, `gridRow = maxY - r.y + 1` for regions
 
 ## Data Grouping
 
@@ -68,6 +68,9 @@ function getGridBounds(regionList) {
   return { minX, maxX, minY, maxY };
 }
 // Grid dimensions: (maxX - minX + 1) columns, (maxY - minY + 1) rows
+// +y is north, so the highest y is the top row (CSS grid lines are 1-based)
+const gridColumn = r.x - minX + 1;
+const gridRow = maxY - r.y + 1;
 ```
 
 ## Location Positioning
@@ -91,7 +94,7 @@ const top = centerY - (loc.y * scale) - scaledDiameter / 2; // NEGATIVE for y in
 1. Read config files (settings, realms, regions, locations)
 2. Group regions by realm, locations by region
 3. For each realm, determine grid bounds from region coordinates
-4. Render realm as CSS grid, place regions at their x,y positions
+4. Render realm as CSS grid, place regions using `gridColumn`/`gridRow` (north at top)
 5. Within each region cell, plot locations using the positioning formula
 6. Add hover tooltips for regions (name, description) and locations (name, x, y, radius, description)
 7. Write to `stuff/world-map.html`, open in browser

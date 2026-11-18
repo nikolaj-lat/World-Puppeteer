@@ -62,7 +62,7 @@ Regions use integer grid coordinates. **Within a realm, regions must be adjacent
 **Design guidance:**
 - Place related regions adjacent to each other
 - Consider travel routes when positioning
-- North is -y, South is +y, East is +x, West is -x
+- North is +y, South is -y, East is +x, West is -x
 - Regions at same coordinates in different realms can represent parallel locations
 
 ## Region Scope
