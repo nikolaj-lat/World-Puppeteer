@@ -34,19 +34,21 @@ interface SceneImage {
 Regions occupy integer positions on a 2D grid. The grid extends infinitely in all directions.
 
 ```
-        North (-y)
+        North (+y)
            ↑
 West (-x) ← → East (+x)
            ↓
-        South (+y)
+        South (-y)
 ```
+
+The same orientation applies to location `x`/`y` within a region: +y is north, -y is south.
 
 ### Grid Layout Example
 
 ```
-Region (0,0)  Region (1,0)  Region (2,0)
-Region (0,1)  Region (1,1)  Region (2,1)
 Region (0,2)  Region (1,2)  Region (2,2)
+Region (0,1)  Region (1,1)  Region (2,1)
+Region (0,0)  Region (1,0)  Region (2,0)
 ```
 
 ### Cross-Region Travel
