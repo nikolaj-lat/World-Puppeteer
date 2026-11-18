@@ -98,6 +98,21 @@ function canonicalJson(value) {
   return JSON.stringify(value);
 }
 
+// Order-sensitive serialization for detecting reorders made in Studio (e.g.
+// story start order). Top-level section order only reflects how tabs merge,
+// so it is sorted; every nested key order is kept as stored. storySettings is
+// split across tabs (worldBackground lives in its own file), so its key order
+// is a merge artifact too and is sorted as well.
+const MERGE_ORDERED_SECTIONS = new Set(['storySettings']);
+
+function orderedJson(value) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return JSON.stringify(value);
+  const section = (k) => (MERGE_ORDERED_SECTIONS.has(k) && value[k] && typeof value[k] === 'object' && !Array.isArray(value[k])
+    ? `{${Object.keys(value[k]).sort().map((sk) => `${JSON.stringify(sk)}:${JSON.stringify(value[k][sk])}`).join(',')}}`
+    : JSON.stringify(value[k]));
+  return `{${Object.keys(value).sort().map((k) => `${JSON.stringify(k)}:${section(k)}`).join(',')}}`;
+}
+
 async function sleep(seconds) {
   await new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
@@ -188,6 +203,7 @@ module.exports = {
   SECRETS_PATH,
   STATE_PATH,
   apiRequest,
+  orderedJson,
   canonicalJson,
   compactJson,
   getApiBase,

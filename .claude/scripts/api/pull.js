@@ -21,7 +21,7 @@
 
 const { execFileSync } = require('child_process');
 const path = require('path');
-const { apiRequest, canonicalJson, loadState, saveState, sha256, PROJECT_ROOT } = require('./shared');
+const { apiRequest, canonicalJson, orderedJson, loadState, saveState, sha256, PROJECT_ROOT } = require('./shared');
 const { backupMergedTabs, mergeTabs, projectToCreatorSurface, splitIntoTabs, tabsAreEmpty } = require('./tabs');
 
 // Accepts a bare shortId or a pasted world/studio link and returns the shortId.
@@ -68,12 +68,20 @@ async function main() {
   const { projected: remoteState, droppedRoots, strippedTriggers } = projectToCreatorSurface(world.initialGameState);
   const remoteHash = sha256(canonicalJson(remoteState));
   const localIsEmpty = tabsAreEmpty();
-  const localHash = localIsEmpty ? null : sha256(canonicalJson(projectToCreatorSurface(mergeTabs()).projected));
+  const localProjected = localIsEmpty ? null : projectToCreatorSurface(mergeTabs()).projected;
+  const localHash = localIsEmpty ? null : sha256(canonicalJson(localProjected));
+  // canonicalJson sorts keys, so an order-only change (e.g. story starts
+  // reordered in Studio) hashes identically. Compare stored order too.
+  const orderMatches = !localIsEmpty && orderedJson(localProjected) === orderedJson(remoteState);
 
-  if (localHash === remoteHash) {
-    saveState({ shortId, lastSyncedAt: new Date().toISOString(), lastSyncedHash: remoteHash });
+  if (localHash === remoteHash && orderMatches) {
+    saveState({ shortId, lastSyncedAt: new Date().toISOString(), lastSyncedHash: remoteHash, lastSyncedOrderHash: sha256(orderedJson(remoteState)) });
     console.log(`In sync with ${shortId} ("${world.title}"). Nothing changed.`);
     return;
+  }
+
+  if (localHash === remoteHash && !orderMatches) {
+    console.log('Content matches Voyage but key order differs (e.g. story start order); rewriting tabs to match.');
   }
 
   if (!localIsEmpty) {
@@ -83,7 +91,7 @@ async function main() {
 
   splitIntoTabs(remoteState);
   execFileSync('node', [path.join(__dirname, '..', 'build.js')], { cwd: PROJECT_ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
-  saveState({ shortId, lastSyncedAt: new Date().toISOString(), lastSyncedHash: remoteHash });
+  saveState({ shortId, lastSyncedAt: new Date().toISOString(), lastSyncedHash: remoteHash, lastSyncedOrderHash: sha256(orderedJson(remoteState)) });
   console.log(`Pulled ${shortId} ("${world.title}") into tabs/ and rebuilt config.json.`);
   if (droppedRoots.length > 0) {
     console.log(`Left on the server (runtime/system state, preserved by push): ${droppedRoots.join(', ')}`);
