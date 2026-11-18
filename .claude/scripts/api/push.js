@@ -18,7 +18,7 @@
 
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { apiRequest, canonicalJson, loadState, saveState, sha256, PROJECT_ROOT } = require('./shared');
+const { apiRequest, canonicalJson, orderedJson, loadState, saveState, sha256, PROJECT_ROOT } = require('./shared');
 const { CREATOR_ROOTS, diffPaths, mergeTabs, projectToCreatorSurface, stripEngineMaintained } = require('./tabs');
 
 function runJson(script, args) {
@@ -37,12 +37,14 @@ function sectionDiffSummary(labelA, a, labelB, b) {
   const keys = new Set([...Object.keys(a ?? {}), ...Object.keys(b ?? {})]);
   const changed = [];
   for (const key of [...keys].sort()) {
-    // canonical (key-sorted) comparison so pure key-order differences never
-    // show up as changes
+    // canonical (key-sorted) comparison for content, plus a stored-order
+    // comparison so a pure reorder (e.g. story start order) is reported too
     const left = a?.[key] === undefined ? undefined : canonicalJson(a[key]);
     const right = b?.[key] === undefined ? undefined : canonicalJson(b[key]);
     if (left !== right) {
       changed.push(`  ${key}: ${left === undefined ? 'absent' : `${left.length} chars`} (${labelA}) -> ${right === undefined ? 'absent' : `${right.length} chars`} (${labelB})`);
+    } else if (left !== undefined && orderedJson({ [key]: a[key] }) !== orderedJson({ [key]: b[key] })) {
+      changed.push(`  ${key}: key order differs (${labelA}) -> (${labelB})`);
     }
   }
   return changed;
@@ -63,6 +65,8 @@ async function main() {
     console.log(`NOTE: ignoring non-creator content found in tabs (${[...droppedRoots, strippedTriggers > 0 ? `${strippedTriggers} engine-derived trigger(s)` : ''].filter(Boolean).join(', ')}). Re-pull to clean tabs up.`);
   }
   const candidateHash = sha256(canonicalJson(candidate));
+  // Order-sensitive hash: canonicalJson sorts keys, which hides reorders
+  const candidateOrderHash = sha256(orderedJson(candidate));
 
   // 1. Remote publish-stage validation (authoritative). No file argument:
   //    remote-validate merges the tabs itself, byte-identical to `candidate`.
@@ -98,15 +102,19 @@ async function main() {
   const etag = response.headers.get('etag');
   const remoteCreator = projectToCreatorSurface(world.initialGameState).projected;
   const remoteHash = sha256(canonicalJson(remoteCreator));
+  const remoteOrderHash = sha256(orderedJson(remoteCreator));
 
-  if (remoteHash === candidateHash) {
-    saveState({ lastSyncedAt: new Date().toISOString(), lastSyncedHash: candidateHash });
+  if (remoteHash === candidateHash && remoteOrderHash === candidateOrderHash) {
+    saveState({ lastSyncedAt: new Date().toISOString(), lastSyncedHash: candidateHash, lastSyncedOrderHash: candidateOrderHash });
     console.log('Remote already matches local tabs. Nothing to push.');
     return;
   }
 
   const baseKnown = Boolean(state.lastSyncedHash);
-  const remoteDrifted = baseKnown && remoteHash !== state.lastSyncedHash;
+  // Drift includes order-only changes made in Studio (e.g. reordered story
+  // starts) when an order baseline is known; a push would silently undo them.
+  const remoteDrifted = baseKnown && (remoteHash !== state.lastSyncedHash
+    || (Boolean(state.lastSyncedOrderHash) && remoteOrderHash !== state.lastSyncedOrderHash));
   console.log(`World: ${state.shortId} ("${world.title}")`);
   console.log(`Local changes vs remote (section level):`);
   const changes = sectionDiffSummary('remote', remoteCreator, 'local', candidate);
@@ -148,7 +156,7 @@ async function main() {
     // those so only authored differences are reported, by path.
     const authoredDiff = diffPaths(stripEngineMaintained(candidate), stripEngineMaintained(verifiedCreator));
     if (authoredDiff.length === 0) {
-      saveState({ lastSyncedAt: new Date().toISOString(), lastSyncedHash: candidateHash });
+      saveState({ lastSyncedAt: new Date().toISOString(), lastSyncedHash: candidateHash, lastSyncedOrderHash: sha256(orderedJson(verifiedCreator)) });
       console.log('Pushed and verified. The stored copy differs only in engine bookkeeping fields; run pull to bring those into tabs.');
       return;
     }
@@ -158,7 +166,7 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  saveState({ lastSyncedAt: new Date().toISOString(), lastSyncedHash: candidateHash });
+  saveState({ lastSyncedAt: new Date().toISOString(), lastSyncedHash: candidateHash, lastSyncedOrderHash: sha256(orderedJson(verifiedCreator)) });
   console.log('Pushed and verified.');
 }
 
