@@ -51,14 +51,34 @@ Each area needs:
 
 Do not set `visualTags` on areas.
 
-## Gated Locations and Areas
-
-Travel to a location or area is only impossible when its text explicitly establishes a lock: a boss guarding it, sealed access, a required access item, or authority clearance. Without such a statement, players get a skill check at most and can always attempt to go there. Even naming a destination that is not a defined location does not fail; the party simply travels toward it as an untracked destination. If a place should be gated, say so plainly in its `basicInfo`, `hiddenInfo`, or the area `description`.
-
 Rules:
 - Use Title Case for area names (they are display strings, not programmatic identifiers)
 - All paths must be bidirectional (if A links to B, B must list A)
 - Areas can be 0 or more - no minimum required
+
+### Areas Are Discrete Spaces
+
+Each area is one place a person can stand in and take in at once.
+- **Never plural.** A name that covers several rooms, halls, cells, or shops is several areas. Define each one separately, or describe them together inside one area as part of what is there.
+- **No sub-spaces.** Parts of one space (a corner, a feature, furniture, a stage or altar within a hall) are not areas. Describe them inside the area. If two people could talk across a boundary without raising their voices, it is one area.
+- **One space per area.** Never combine two spaces in one area name or description, such as "Kitchen and Cellar".
+- **No filler areas.** Never add catch-all areas such as "Streets", "Surroundings", or "Outskirts" that stand for the space between places. Every area is a specific space with its own character.
+
+### Logical Layout
+
+- **Paths follow physical access.** Link two areas only when a person can walk directly from one to the other: a door, a stair, a gate, a short open stretch. A room reached only through a hall paths only to that hall.
+- **Arrival area first.** A party arriving at the location lands in the first area listed. List the exterior, entrance, or public space first, and order the rest roughly from outside in.
+- **Areas only where scenes split.** Add areas when a scene could plausibly happen in one space and a different scene in another, such as an exterior and interior, a public room and a private one, or a named space a quest or event uses. A place with only one such space needs no areas.
+
+## Evergreen Descriptions
+
+`basicInfo`, `hiddenInfo`, and area `description` describe the place as it persists across play.
+- **No individual NPCs.** Never characterize a specific person (appearance, temperament, habits, secrets) in location or area text. NPCs can die, leave, or be replaced, and their details belong in `tabs/npcs.json`. Refer to roles and functions instead, such as "the innkeeper's quarters" or "where the garrison commander holds court".
+- **No story-start moments.** Never write the situation of a story start, quest, or event as a permanent condition of the place. Describe ongoing character, recurring uses, and standing dangers, not what is happening at one moment.
+
+## Gated Locations and Areas
+
+Travel to a location or area is only impossible when its text explicitly establishes a lock: a boss guarding it, sealed access, a required access item, or authority clearance. Without such a statement, players get a skill check at most and can always attempt to go there. Even naming a destination that is not a defined location does not fail; the party simply travels toward it as an untracked destination. If a place should be gated, say so plainly in its `basicInfo`, `hiddenInfo`, or the area `description`.
 
 ## Coordinate System
 
