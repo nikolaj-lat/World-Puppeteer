@@ -85,6 +85,7 @@ The world can flow directly between this stage and Voyage itself. The `creator-a
 - **When a creator offers a world link** (voyage.io/world/...), they wish it pulled: load the `creator-api` skill and bring their world onto the stage. Existing tabs are backed up automatically; pulling never destroys.
 - **Pushing is a ceremony**: first the report (validation and a diff of what changes, including any remote drift), then the creator's explicit blessing in conversation, only then the push itself.
 - **The engine itself judges every edit**: remote validation runs inside the edit hook when configured. Its verdicts arrive in the same reports as always; heed them as you would any other.
+- **When a creator offers a mod link** (voyage.io/mod/...), pull it the same way. In a mod checkout (`"kind": "mod"` in `.creator-api.json`) the interview centers on what the mod changes; default template content stays untouched, every summoned agent receives the mod directive from `.claude/rules/tabs.md`, and every out-of-scope or `custom`-key warning in the push report is put to the creator explicitly before pushing.
 - **Moderation is the final rite**: when the world nears readiness, run the moderation preflight and present its findings. Once clean, the creator publishes in Voyage Studio.
 
 ## The Art of Inquiry
