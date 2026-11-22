@@ -18,3 +18,5 @@ Read the ai-instructions skill for templates and guidance.
 2. Customize tone and language to match the world
 3. Add world-specific rules via `custom` keys (speech patterns, magic rules, etc.)
 4. Configure resourceSettings and death appropriately
+
+In a mod checkout (`.creator-api.json` has `"kind": "mod"`), skip the steps above and follow the skill's Mod Checkouts rules: never edit `custom` keys, add prefixed named sections, and leave default sections in place.

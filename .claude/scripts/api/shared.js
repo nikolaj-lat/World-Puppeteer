@@ -6,7 +6,7 @@
  * - Reads the API key from .claude/secrets.env (dotenv format, single line:
  *   VOYAGE_CREATOR_API_KEY=...). The key is never exported, logged, or echoed.
  * - Reads/writes .creator-api.json in the project root: machine-written sync
- *   state (shortId, lastSyncedHash, lastSyncedAt) plus optional user settings
+ *   state (shortId, kind 'world'|'mod', lastSyncedHash, lastSyncedAt) plus optional user settings
  *   (apiBase, remoteValidation, usageGuard), which saveState's merge preserves.
  * - Adds Authorization, a UUID Idempotency-Key on mutating POSTs, honors
  *   Retry-After on 429/503 (studio_unavailable is a clean, safe retry),
@@ -181,6 +181,63 @@ async function apiRequest({ method, path: apiPath, body, etag, idempotent, timeo
   throw error;
 }
 
+// A mod checkout pins a world whose isMod flag is true; pull records it as kind.
+function isModCheckout() {
+  return loadState().kind === 'mod';
+}
+
+/*
+ * The mod's patch against the blank world template, from GET /mods/{id}/changes,
+ * normalized into key paths (arrays of segments, so record ids containing dots
+ * or slashes stay intact). Observed response shape:
+ *   data.sections[] = { field, label, files[] }
+ *   files[] = { path, id?, removed, contentJson }
+ * - No id (settings objects): contentJson is a partial object holding only the
+ *   changed keys, e.g. {"regionMapBorderFeatheringEnabled":true} -> one entry
+ *   per key under the field. Non-object content covers the whole field.
+ * - id on a collection (storyStarts, npcs, ...): the record id -> [field, id].
+ * - aiInstructions ids are "task / Subsection" -> [field, task, Subsection].
+ * removed: true means the mod deletes that template content on apply.
+ * Returns { available: true, entries: [{ segments, removed }], sections }, or
+ * { available: false, reason } when the API host does not expose the endpoint
+ * yet (some hosts answer 404 not_found); callers then treat scope as unknown.
+ */
+async function fetchModScope(shortId) {
+  let response;
+  try {
+    response = await apiRequest({ method: 'GET', path: `/mods/${encodeURIComponent(shortId)}/changes` });
+  } catch (err) {
+    if (err.status === 404) return { available: false, reason: `this API host has no mod changes endpoint (${err.code || 'not_found'})` };
+    throw err;
+  }
+  const sections = response.json?.data?.sections ?? [];
+  const entries = [];
+  for (const section of sections) {
+    const field = section?.field;
+    if (typeof field !== 'string') continue;
+    for (const file of section.files ?? []) {
+      const removed = file?.removed === true;
+      if (typeof file?.id === 'string' && file.id.length > 0) {
+        const idSegments = field === 'aiInstructions' ? file.id.split(' / ') : [file.id];
+        entries.push({ segments: [field, ...idSegments], removed });
+        continue;
+      }
+      let content;
+      try { content = JSON.parse(file?.contentJson ?? 'null'); } catch { content = null; }
+      if (!removed && content && typeof content === 'object' && !Array.isArray(content) && Object.keys(content).length > 0) {
+        for (const key of Object.keys(content)) entries.push({ segments: [field, key], removed });
+      } else {
+        entries.push({ segments: [field], removed });
+      }
+    }
+  }
+  return { available: true, entries, sections };
+}
+
+function formatScopeEntry(entry) {
+  return `${entry.segments.join(' > ')}${entry.removed ? ' (removed)' : ''}`;
+}
+
 module.exports = {
   CreatorApiError,
   DEFAULT_API_BASE,
@@ -190,8 +247,11 @@ module.exports = {
   apiRequest,
   canonicalJson,
   compactJson,
+  fetchModScope,
+  formatScopeEntry,
   getApiBase,
   isConfigured,
+  isModCheckout,
   loadState,
   redact,
   saveState,

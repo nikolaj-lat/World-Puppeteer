@@ -145,6 +145,61 @@ function diffPaths(a, b, limit = 40) {
   return out;
 }
 
+/**
+ * Every differing path between two creator surfaces, as
+ * { segments, kind: 'add' | 'change' | 'delete' }. Objects recurse; arrays and
+ * primitives are leaves. A whole-record add/delete is reported once, at the
+ * record, not per field.
+ */
+function changedPaths(remote, local) {
+  const out = [];
+  const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+  const walk = (left, right, segments) => {
+    if (canonicalJson(left) === canonicalJson(right)) return;
+    if (left === undefined) return out.push({ segments, kind: 'add' });
+    if (right === undefined) return out.push({ segments, kind: 'delete' });
+    if (!isObject(left) || !isObject(right)) return out.push({ segments, kind: 'change' });
+    for (const key of [...new Set([...Object.keys(left), ...Object.keys(right)])].sort()) {
+      walk(left[key], right[key], [...segments, key]);
+    }
+  };
+  walk(remote ?? {}, local ?? {}, []);
+  return out;
+}
+
+const startsWith = (segments, prefix) => prefix.length <= segments.length && prefix.every((seg, i) => segments[i] === seg);
+
+// aiInstructions.<task>.custom: editing it in a mod almost always conflicts with
+// the host world's own custom text when the mod is applied.
+const isCustomAiInstruction = (segments) => segments.length >= 3 && segments[0] === 'aiInstructions' && segments[2] === 'custom';
+
+/**
+ * Sort local-vs-remote differences of a mod checkout against the mod's patch
+ * scope (fetchModScope entries; null when the host cannot report scope).
+ * - additions: new content; normal mod work, never flagged
+ * - inScope: edits/deletes under something the patch already covers
+ * - outOfScopeEdits / outOfScopeDeletes: touch content the patch does not cover,
+ *   i.e. default template content that would change/vanish in every host world.
+ *   With unknown scope every edit/delete of existing content lands here.
+ * - customEdits: any aiInstructions.<task>.custom change, in scope or not.
+ * Nothing here blocks a push; push relays it as warnings.
+ */
+function classifyModChanges(remoteCreator, candidate, scopeEntries) {
+  const result = { additions: [], inScope: [], outOfScopeEdits: [], outOfScopeDeletes: [], customEdits: [] };
+  for (const change of changedPaths(remoteCreator, candidate)) {
+    if (isCustomAiInstruction(change.segments)) result.customEdits.push(change);
+    if (change.kind === 'add') {
+      result.additions.push(change);
+      continue;
+    }
+    const covered = Array.isArray(scopeEntries) && scopeEntries.some((entry) => startsWith(change.segments, entry.segments));
+    if (covered) result.inScope.push(change);
+    else if (change.kind === 'delete') result.outOfScopeDeletes.push(change);
+    else result.outOfScopeEdits.push(change);
+  }
+  return result;
+}
+
 function listTabFiles() {
   try {
     return fs.readdirSync(TABS_DIR).filter((f) => f.endsWith('.json'));
@@ -208,4 +263,4 @@ function splitIntoTabs(config) {
   }
 }
 
-module.exports = { BACKUP_DIR, CREATOR_ROOTS, TABS_DIR, backupMergedTabs, diffPaths, mergeTabs, mergedHash, projectToCreatorSurface, splitIntoTabs, stripEngineMaintained, tabsAreEmpty };
+module.exports = { BACKUP_DIR, CREATOR_ROOTS, TABS_DIR, backupMergedTabs, changedPaths, classifyModChanges, diffPaths, mergeTabs, mergedHash, projectToCreatorSurface, splitIntoTabs, stripEngineMaintained, tabsAreEmpty };

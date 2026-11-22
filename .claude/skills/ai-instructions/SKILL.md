@@ -15,6 +15,17 @@ Edit `tabs/ai-instructions.json`.
 2. **Customize for tone** - Adjust language to match your world (grimdark, comedic, epic, etc.)
 3. **Add world-specific rules** - Use `custom` keys for setting-specific guidance
 
+### Mod Checkouts
+
+When `.creator-api.json` has `"kind": "mod"`, the Approach above does not apply. A mod is a diff against the blank template, applied on top of every host world.
+
+| Rule | Detail |
+|------|--------|
+| Never edit `custom` | Never add, change, or remove any `aiInstructions.[task].custom` key. It almost always conflicts with the host world's own custom text when the mod is applied. Pre-existing mods that already use `custom` are grandfathered; leave their text alone unless the creator explicitly asks. |
+| Add named sections | Put mod guidance in new keys: `aiInstructions.[task]["[Mod Name]: [Section Name]"]`. A distinctive prefix avoids collisions with host-world sections. |
+| Leave defaults in place | Never copy the Starting Templates over existing sections, and never delete, rename, or rewrite default sections the mod is not meant to change. |
+| Report blockers | If the request can only be met by editing `custom` or a default section, stop and report that back instead of editing. |
+
 ### World-Specific Additions
 
 - **Magic system** rules and terminology

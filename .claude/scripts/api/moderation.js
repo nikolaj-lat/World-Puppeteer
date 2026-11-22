@@ -18,15 +18,24 @@ async function main() {
   const run = process.argv.includes('--run');
   const state = loadState();
   if (!state.shortId) {
-    console.error('No world pinned; run pull first.');
+    console.error('Nothing pinned; run pull first.');
     process.exit(1);
   }
   const basePath = `/worlds/${encodeURIComponent(state.shortId)}/moderation`;
   const response = run
     ? await apiRequest({ method: 'POST', path: basePath, body: {}, timeoutMs: 120_000 })
     : await apiRequest({ method: 'GET', path: basePath });
-  console.log(`Moderation ${run ? 'run result' : 'state'} for ${state.shortId}:`);
+  console.log(`Moderation ${run ? 'run result' : 'state'} for ${state.kind === 'mod' ? 'mod' : 'world'} ${state.shortId}:`);
   console.log(JSON.stringify(response.json?.data ?? response.json, null, 2));
+  if (state.kind === 'mod') {
+    // Not every API host exposes this yet; it is informational, so never fail on it.
+    try {
+      const count = await apiRequest({ method: 'GET', path: `/mods/${encodeURIComponent(state.shortId)}/consumer-count` });
+      console.log(`\nMod consumers (host worlds using it): ${count.json?.data?.consumerCount ?? 'unknown'}`);
+    } catch (err) {
+      console.log(`\nMod consumer count unavailable: ${err.message}`);
+    }
+  }
   console.log('\nReminder: World Puppeteer cannot publish. When this is clean, publish in Voyage Studio.');
 }
 
